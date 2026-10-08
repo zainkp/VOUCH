@@ -1,6 +1,17 @@
-import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
+import { api, ApiError, PassportDataResponse } from '../../services/api';
+import { 
+  mapWorkerProfile, 
+  mapWorkRecord, 
+  mapSkillConfidence 
+} from '../../services/adapters';
+import { 
+  WorkerProfile, 
+  WorkRecord, 
+  SkillEvidenceBreakdown 
+} from '../../types';
 import { 
   ShieldCheck, 
   ArrowLeft, 
@@ -11,16 +22,54 @@ import {
   FileText,
   Calendar,
   ExternalLink,
-  ChevronRight
+  Loader2,
+  AlertCircle
 } from 'lucide-react';
 
 export const PublicPassportPage: React.FC = () => {
-  const { worker, workRecords, skills } = useApp();
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+  const { worker: fallbackWorker, workRecords: fallbackWorks, skills: fallbackSkills } = useApp();
+  const { id, slug } = useParams<{ id?: string; slug?: string }>();
+
+  const targetSlug = slug || id || 'ravi-kumar-82a7';
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [passportWorker, setPassportWorker] = useState<WorkerProfile>(fallbackWorker);
+  const [passportWorks, setPassportWorks] = useState<WorkRecord[]>(fallbackWorks);
+  const [passportSkills, setPassportSkills] = useState<SkillEvidenceBreakdown[]>(fallbackSkills);
   const [copied, setCopied] = useState(false);
 
-  const displayPassportId = id || worker.passportId;
+  useEffect(() => {
+    const fetchPassport = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const data: PassportDataResponse = await api.getPassport(targetSlug);
+        const mappedWorks = (data.work_history || []).map(mapWorkRecord);
+        const mappedWorker = mapWorkerProfile(data.worker);
+        const mappedSkills = (data.demonstrated_skills || []).map((s, idx) => 
+          mapSkillConfidence(s, idx)
+        );
+
+        setPassportWorker(mappedWorker);
+        setPassportWorks(mappedWorks);
+        setPassportSkills(mappedSkills.length > 0 ? mappedSkills : fallbackSkills);
+      } catch (err: any) {
+        console.warn('Could not fetch passport from API slug, falling back to local state:', err);
+        // If not found on backend or error, gracefully display fallback context
+        setPassportWorker(fallbackWorker);
+        setPassportWorks(fallbackWorks);
+        setPassportSkills(fallbackSkills);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPassport();
+  }, [targetSlug, fallbackWorker, fallbackWorks, fallbackSkills]);
+
+  const displayPassportId = passportWorker.passportId || `VOUCH-${targetSlug.toUpperCase()}`;
 
   const handleShare = () => {
     if (navigator.clipboard) {
@@ -34,8 +83,26 @@ export const PublicPassportPage: React.FC = () => {
     window.print();
   };
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#FAF8F5] text-[#121614] flex flex-col items-center justify-center p-6">
+        <div className="bg-white rounded-3xl border border-[#E5E1D8] p-8 text-center space-y-4 max-w-sm w-full shadow-xs">
+          <Loader2 className="w-8 h-8 text-[#1E3B2B] animate-spin mx-auto" />
+          <div className="space-y-1">
+            <h2 className="font-display font-bold text-lg text-[#121614]">
+              Loading VOUCH Passport...
+            </h2>
+            <p className="text-xs text-[#737A75]">
+              Retrieving cryptographic credential and verified evidence ledger.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#121614] flex flex-col">
+    <div className="min-h-screen bg-[#FAF8F5] text-[#121614] flex flex-col font-sans selection:bg-[#1E3B2B] selection:text-white">
       {/* Top Navigation Banner */}
       <header className="bg-white border-b border-[#E5E1D8] sticky top-0 z-40 px-4 py-3 sm:px-8">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
@@ -64,7 +131,7 @@ export const PublicPassportPage: React.FC = () => {
             </button>
             <Link
               to="/worker"
-              className="px-3.5 py-1.5 rounded-lg bg-[#1E3B2B] text-white text-xs font-semibold hover:bg-[#14281D] transition-colors"
+              className="px-3.5 py-1.5 rounded-lg bg-[#1E3B2B] text-white text-xs font-semibold hover:bg-[#14281D] transition-colors cursor-pointer"
             >
               Open in App
             </Link>
@@ -87,7 +154,7 @@ export const PublicPassportPage: React.FC = () => {
                   GOVERNMENT OF INDIA · VOCATIONAL EVIDENCE PASSPORT
                 </span>
                 <h1 className="font-display font-extrabold text-2xl sm:text-3xl tracking-tight text-white">
-                  {worker.name}
+                  {passportWorker.name}
                 </h1>
                 <p className="text-xs text-[#FAF8F5]/80 mt-0.5">
                   Passport ID: {displayPassportId} · Issued Mangaluru Center
@@ -100,7 +167,7 @@ export const PublicPassportPage: React.FC = () => {
                 VERIFIED CREDENTIAL
               </span>
               <span className="text-white/70 mt-1 text-[11px]">
-                Audit Completeness: {worker.passportCompleteness}%
+                Evidence Completeness: {passportWorker.passportCompleteness}%
               </span>
             </div>
           </div>
@@ -112,8 +179,8 @@ export const PublicPassportPage: React.FC = () => {
               <div className="sm:col-span-3 flex justify-center sm:justify-start">
                 <div className="w-32 h-40 rounded-xl overflow-hidden border-2 border-[#1E3B2B] shadow-md bg-gray-100 relative">
                   <img
-                    src={worker.avatarUrl}
-                    alt={worker.name}
+                    src={passportWorker.avatarUrl}
+                    alt={passportWorker.name}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute bottom-1 right-1 bg-white/90 px-1 py-0.5 rounded text-[8px] font-mono font-bold text-[#1E3B2B]">
@@ -126,23 +193,23 @@ export const PublicPassportPage: React.FC = () => {
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div>
                     <span className="text-[10px] font-mono text-[#737A75] uppercase block">Trade</span>
-                    <span className="font-bold text-sm text-[#1E3B2B]">{worker.trade}</span>
+                    <span className="font-bold text-sm text-[#1E3B2B]">{passportWorker.trade}</span>
                   </div>
                   <div>
                     <span className="text-[10px] font-mono text-[#737A75] uppercase block">Experience</span>
-                    <span className="font-bold text-sm text-[#121614]">{worker.experienceYears} Years Documented</span>
+                    <span className="font-bold text-sm text-[#121614]">{passportWorker.experienceYears} Years Documented</span>
                   </div>
                   <div>
                     <span className="text-[10px] font-mono text-[#737A75] uppercase block">Base Location</span>
-                    <span className="font-medium text-[#121614]">{worker.location}</span>
+                    <span className="font-medium text-[#121614]">{passportWorker.location}</span>
                   </div>
                   <div>
                     <span className="text-[10px] font-mono text-[#737A75] uppercase block">Languages</span>
-                    <span className="font-medium text-[#121614]">{worker.languages.join(' · ')}</span>
+                    <span className="font-medium text-[#121614]">{passportWorker.languages?.join(' · ') || 'Kannada · Hindi · English'}</span>
                   </div>
                 </div>
                 <p className="text-xs text-[#4A524D] bg-[#FAF8F5] p-3 rounded-xl border border-[#E5E1D8] mt-2">
-                  {worker.bio}
+                  {passportWorker.bio}
                 </p>
               </div>
 
@@ -164,7 +231,7 @@ export const PublicPassportPage: React.FC = () => {
               DEMONSTRATED SKILLS CONFIDENCE
             </h2>
             <div className="space-y-3">
-              {skills.map((skill) => (
+              {passportSkills.map((skill) => (
                 <div
                   key={skill.id}
                   className="p-4 rounded-xl border border-[#E5E1D8] bg-[#FAF8F5] flex flex-col sm:flex-row sm:items-center justify-between gap-3"
@@ -193,10 +260,10 @@ export const PublicPassportPage: React.FC = () => {
           {/* Recent Confirmed Work Records */}
           <div className="p-6 sm:p-10">
             <h2 className="font-display font-bold text-lg text-[#121614] mb-4">
-              VERIFIED WORK LEDGER ({workRecords.length} ENTRIES)
+              VERIFIED WORK LEDGER ({passportWorks.length} ENTRIES)
             </h2>
             <div className="space-y-3">
-              {workRecords.slice(0, 4).map((record) => (
+              {passportWorks.slice(0, 6).map((record) => (
                 <div
                   key={record.id}
                   className="p-4 rounded-xl border border-[#E5E1D8] hover:border-[#1E3B2B] transition-colors bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-3"
@@ -228,8 +295,12 @@ export const PublicPassportPage: React.FC = () => {
                   </div>
 
                   <div className="shrink-0 flex items-center space-x-2">
-                    <span className="px-2 py-1 rounded text-[11px] font-mono font-bold bg-[#EBF6EE] text-[#059669]">
-                      ✓ CONFIRMED
+                    <span className={`px-2 py-1 rounded text-[11px] font-mono font-bold ${
+                      record.status === 'CONFIRMED'
+                        ? 'bg-[#EBF6EE] text-[#059669]'
+                        : 'bg-amber-50 text-amber-800'
+                    }`}>
+                      {record.status === 'CONFIRMED' ? '✓ CONFIRMED' : 'AWAITING VOUCH'}
                     </span>
                   </div>
                 </div>

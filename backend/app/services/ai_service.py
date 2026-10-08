@@ -43,7 +43,7 @@ def fallback_extract(text: str) -> WorkExtractionResponse:
         trade = "Carpentry"
     elif any(w in text_lower for w in ["weld", "steel", "fabricat"]):
         trade = "Welding"
-    elif any(w in text_lower for w in ["car", "engine", "motor", "brake", "oil"]):
+    elif any(w in text_lower for w in ["car", "truck", "vehicle", "brake", "transmission", "clutch"]):
         trade = "Automotive / Mechanical"
 
     skills: List[str] = []
@@ -58,12 +58,23 @@ def fallback_extract(text: str) -> WorkExtractionResponse:
     if not skills:
         skills = ["Trade Installation & Repair"]
 
-    qty_match = re.search(r'\b(\d+)\s+([a-zA-Z]+)', text)
+    qty_words = {
+        "one": 1.0, "two": 2.0, "three": 3.0, "four": 4.0, "five": 5.0,
+        "six": 6.0, "seven": 7.0, "eight": 8.0, "nine": 9.0, "ten": 10.0,
+        "twelve": 12.0, "twenty": 20.0
+    }
     quantity = None
     quantity_unit = None
+
+    qty_match = re.search(r'\b(\d+)\s+([a-zA-Z]+)', text)
     if qty_match:
         quantity = float(qty_match.group(1))
         quantity_unit = qty_match.group(2)
+    else:
+        for word, val in qty_words.items():
+            if re.search(rf'\b{word}\b', text_lower):
+                quantity = val
+                break
         
     title = "Commercial Electrical Installation"
     if "panel" in text_lower:

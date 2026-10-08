@@ -1,7 +1,8 @@
 from typing import List, Dict, Any, Tuple
 from app.schemas.evidence import Evidence, EvidenceType
 from app.schemas.confirmation import Confirmation, ConfirmationStatus, VerifierType
-from app.schemas.worker import SkillConfidence
+from app.schemas.worker import SkillConfidence, ConfidenceTier
+
 
 WEIGHTS = {
     "DECLARATION": 10,
@@ -92,8 +93,11 @@ def calculate_skill_confidence(skill_name: str, relevant_works: List[Dict[str, A
     if total_docs > 0:
         explanation += f", {total_docs} document{'s' if total_docs > 1 else ''}"
         
+    tier = ConfidenceTier.HIGH if final_confidence >= 70 else (ConfidenceTier.MEDIUM if final_confidence >= 40 else ConfidenceTier.LOW)
+
     return SkillConfidence(
         skill_name=skill_name,
+        tier=tier,
         confidence=final_confidence,
         work_count=work_count,
         confirmation_count=total_confirmations,

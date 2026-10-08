@@ -1,9 +1,10 @@
 import uuid
 import logging
 from typing import List, Dict, Any, Optional
-from datetime import datetime
+from datetime import datetime, timezone
 from app.core.firebase import get_db
 from app.services.evidence_engine import calculate_work_confidence, calculate_skill_confidence
+from app.schemas.worker import PassportCompleteness
 
 logger = logging.getLogger("vouch.data")
 
@@ -11,6 +12,7 @@ logger = logging.getLogger("vouch.data")
 _MEMORY_STORE = {
     "worker": {
         "id": "ravi_kumar_001",
+        "user_id": "user_ravi_001",
         "name": "Ravi Kumar",
         "trade": "Electrical Technician",
         "experience_years": 9,
@@ -147,12 +149,77 @@ _MEMORY_STORE = {
                     "work_record_id": "work_003",
                     "verifier_name": "Coastal Foods Plant Manager",
                     "verifier_type": "SUPERVISOR",
+                    "relationship": "Plant Maintenance Head",
                     "status": "PENDING",
                     "token": "tok_verify_motor_001",
+                    "requested_at": "2026-08-30T16:00:00Z",
+                    "responded_at": None,
                     "created_at": "2026-08-30T16:00:00Z",
                     "verified_at": None
                 }
             ]
+        }
+    ],
+    "confirmations": [
+        {
+            "id": "conf_001",
+            "work_record_id": "work_001",
+            "worker_id": "ravi_kumar_001",
+            "verifier_name": "Anil Sharma",
+            "verifier_type": "SUPERVISOR",
+            "relationship": "Site Supervisor",
+            "status": "CONFIRMED",
+            "token": "tok_demo_anil",
+            "note": "Main switchgear aligned and tested according to safety standards.",
+            "requested_at": "2026-10-02T15:00:00Z",
+            "responded_at": "2026-10-03T09:30:00Z",
+            "created_at": "2026-10-02T15:00:00Z",
+            "verified_at": "2026-10-03T09:30:00Z"
+        },
+        {
+            "id": "conf_002",
+            "work_record_id": "work_001",
+            "worker_id": "ravi_kumar_001",
+            "verifier_name": "Metro Infra Contracting",
+            "verifier_type": "EMPLOYER",
+            "relationship": "General Contractor Employer",
+            "status": "CONFIRMED",
+            "token": "tok_demo_metro",
+            "note": "Work completed on schedule for commercial client.",
+            "requested_at": "2026-10-02T15:00:00Z",
+            "responded_at": "2026-10-03T11:00:00Z",
+            "created_at": "2026-10-02T15:00:00Z",
+            "verified_at": "2026-10-03T11:00:00Z"
+        },
+        {
+            "id": "conf_003",
+            "work_record_id": "work_002",
+            "worker_id": "ravi_kumar_001",
+            "verifier_name": "Rajesh Hegde",
+            "verifier_type": "CUSTOMER",
+            "relationship": "Apartment Complex Resident Committee",
+            "status": "CONFIRMED",
+            "token": "tok_demo_rajesh",
+            "note": "Conduit wiring for all 12 units completed cleanly.",
+            "requested_at": "2026-09-18T16:00:00Z",
+            "responded_at": "2026-09-19T08:00:00Z",
+            "created_at": "2026-09-18T16:00:00Z",
+            "verified_at": "2026-09-19T08:00:00Z"
+        },
+        {
+            "id": "conf_004",
+            "work_record_id": "work_003",
+            "worker_id": "ravi_kumar_001",
+            "verifier_name": "Coastal Foods Plant Manager",
+            "verifier_type": "SUPERVISOR",
+            "relationship": "Plant Maintenance Head",
+            "status": "PENDING",
+            "token": "tok_verify_motor_001",
+            "note": None,
+            "requested_at": "2026-08-30T16:00:00Z",
+            "responded_at": None,
+            "created_at": "2026-08-30T16:00:00Z",
+            "verified_at": None
         }
     ]
 }
@@ -173,6 +240,12 @@ def sync_seed_to_firestore():
             if not w_ref.get().exists:
                 w_ref.set(w)
                 logger.info(f"Seeded work record {w['id']} to Firestore")
+                
+        for c in _MEMORY_STORE["confirmations"]:
+            c_ref = db.collection("confirmations").document(c["id"])
+            if not c_ref.get().exists:
+                c_ref.set(c)
+                logger.info(f"Seeded confirmation {c['id']} to dedicated Firestore collection")
     except Exception as e:
         logger.warning(f"Could not seed Firestore (using in-memory store): {e}")
 
@@ -229,21 +302,25 @@ def get_work_record_by_id(work_id: str) -> Optional[Dict[str, Any]]:
 
 def create_work_record(worker_id: str, data: Dict[str, Any]) -> Dict[str, Any]:
     work_id = f"work_{uuid.uuid4().hex[:8]}"
+    now_iso = datetime.now(timezone.utc).isoformat()
     record = {
         "id": work_id,
         "worker_id": worker_id,
         "title": data.get("title"),
         "description": data.get("description"),
-        "date": data.get("date") or datetime.utcnow().strftime("%Y-%m-%d"),
+        "date": data.get("date") or datetime.now(timezone.utc).strftime("%Y-%m-%d"),
         "location": data.get("location") or "Mangaluru",
         "quantity": data.get("quantity"),
         "quantity_unit": data.get("quantity_unit"),
         "trade": data.get("trade") or "Electrical",
         "skills": data.get("skills", []),
+        "employer_name": data.get("employer_name"),
+        "project_name": data.get("project_name"),
+        "organization_id": data.get("organization_id"),
         "status": "PENDING",
         "evidence": [],
         "confirmations": [],
-        "created_at": datetime.utcnow().isoformat() + "Z"
+        "created_at": now_iso
     }
     record["confidence"] = calculate_work_confidence([], [])
     
@@ -260,13 +337,22 @@ def create_work_record(worker_id: str, data: Dict[str, Any]) -> Dict[str, Any]:
 
 def add_evidence(work_id: str, evidence_data: Dict[str, Any]) -> Dict[str, Any]:
     ev_id = f"ev_{uuid.uuid4().hex[:8]}"
+    now_iso = datetime.now(timezone.utc).isoformat()
     new_evidence = {
         "id": ev_id,
         "work_record_id": work_id,
         "type": evidence_data.get("type", "PHOTO"),
         "url": evidence_data.get("url"),
         "description": evidence_data.get("description", ""),
-        "created_at": datetime.utcnow().isoformat() + "Z"
+        "supports_skills": evidence_data.get("supports_skills", []),
+        "added_by_user_id": evidence_data.get("added_by_user_id"),
+        "added_by_name": evidence_data.get("added_by_name"),
+        "is_self_submitted": evidence_data.get("is_self_submitted", True),
+        "verification_status": evidence_data.get("verification_status", "SELF_SUBMITTED"),
+        "confirmed_by_name": evidence_data.get("confirmed_by_name"),
+        "confirmed_by_role": evidence_data.get("confirmed_by_role"),
+        "is_private": evidence_data.get("is_private", False),
+        "created_at": now_iso
     }
     
     for w in _MEMORY_STORE["work_records"]:
@@ -289,19 +375,37 @@ def add_evidence(work_id: str, evidence_data: Dict[str, Any]) -> Dict[str, Any]:
             
     return new_evidence
 
-def request_confirmation(work_id: str, verifier_name: str, verifier_type: str) -> Dict[str, Any]:
+def request_confirmation(
+    work_id: str,
+    verifier_name: str,
+    verifier_type: str,
+    relationship: Optional[str] = None,
+    note: Optional[str] = None
+) -> Dict[str, Any]:
+    work = get_work_record_by_id(work_id)
+    worker_id = work.get("worker_id", "ravi_kumar_001") if work else "ravi_kumar_001"
+
     conf_id = f"conf_{uuid.uuid4().hex[:8]}"
     token = f"tok_{uuid.uuid4().hex[:12]}"
+    now_iso = datetime.now(timezone.utc).isoformat()
+    
     new_conf = {
         "id": conf_id,
         "work_record_id": work_id,
+        "worker_id": worker_id,
         "verifier_name": verifier_name,
         "verifier_type": verifier_type,
+        "relationship": relationship,
         "status": "PENDING",
         "token": token,
-        "created_at": datetime.utcnow().isoformat() + "Z",
+        "note": note,
+        "requested_at": now_iso,
+        "responded_at": None,
+        "created_at": now_iso,
         "verified_at": None
     }
+    
+    _MEMORY_STORE.setdefault("confirmations", []).append(new_conf)
     
     for w in _MEMORY_STORE["work_records"]:
         if w["id"] == work_id:
@@ -311,6 +415,9 @@ def request_confirmation(work_id: str, verifier_name: str, verifier_type: str) -
     db = get_db()
     if db:
         try:
+            # 1. Dedicated confirmations collection write
+            db.collection("confirmations").document(conf_id).set(new_conf)
+            # 2. Update embedded cache in work record for MVP read convenience
             w_ref = db.collection("work_records").document(work_id)
             doc = w_ref.get()
             if doc.exists:
@@ -319,12 +426,37 @@ def request_confirmation(work_id: str, verifier_name: str, verifier_type: str) -
                 confs.append(new_conf)
                 w_ref.update({"confirmations": confs})
         except Exception as e:
-            logger.warning(f"Error updating confirmations in Firestore: {e}")
+            logger.warning(f"Error persisting confirmation in Firestore: {e}")
             
     return new_conf
 
 def get_confirmation_by_token(token: str) -> Optional[Dict[str, Any]]:
-    # Search across work records
+    # 1. Direct lookup in Firestore confirmations collection by token
+    db = get_db()
+    if db:
+        try:
+            from google.cloud.firestore_v1.base_query import FieldFilter
+            docs = list(db.collection("confirmations").where(filter=FieldFilter("token", "==", token)).limit(1).stream())
+            if docs:
+                conf = docs[0].to_dict()
+                work = get_work_record_by_id(conf["work_record_id"])
+                return {
+                    "confirmation": conf,
+                    "work_record": work
+                }
+        except Exception as e:
+            logger.warning(f"Error querying confirmation directly by token from Firestore: {e}")
+            
+    # 2. Direct lookup in memory store confirmations list
+    for c in _MEMORY_STORE.get("confirmations", []):
+        if c.get("token") == token:
+            work = get_work_record_by_id(c["work_record_id"])
+            return {
+                "confirmation": c,
+                "work_record": work
+            }
+            
+    # 3. Fallback scan in work_records embedded list
     records = get_work_records()
     for w in records:
         for c in w.get("confirmations", []):
@@ -335,22 +467,35 @@ def get_confirmation_by_token(token: str) -> Optional[Dict[str, Any]]:
                 }
     return None
 
-def resolve_confirmation(token: str, decision: str) -> Optional[Dict[str, Any]]:
+def resolve_confirmation(token: str, decision: str, note: Optional[str] = None) -> Optional[Dict[str, Any]]:
     match = get_confirmation_by_token(token)
     if not match:
         return None
         
     conf = match["confirmation"]
     work = match["work_record"]
+    conf_id = conf["id"]
     work_id = work["id"]
+    now_iso = datetime.now(timezone.utc).isoformat()
     
     conf["status"] = decision
-    conf["verified_at"] = datetime.utcnow().isoformat() + "Z"
-    
-    # If confirmed, mark overall work record as confirmed
+    conf["responded_at"] = now_iso
+    conf["verified_at"] = now_iso
+    if note:
+        conf["note"] = note
+        
     if decision == "CONFIRMED":
         work["status"] = "CONFIRMED"
         
+    # Update memory store confirmations
+    for c in _MEMORY_STORE.get("confirmations", []):
+        if c.get("token") == token:
+            c["status"] = decision
+            c["responded_at"] = now_iso
+            c["verified_at"] = now_iso
+            if note:
+                c["note"] = note
+                
     for w in _MEMORY_STORE["work_records"]:
         if w["id"] == work_id:
             if decision == "CONFIRMED":
@@ -358,11 +503,25 @@ def resolve_confirmation(token: str, decision: str) -> Optional[Dict[str, Any]]:
             for c in w.get("confirmations", []):
                 if c.get("token") == token:
                     c["status"] = decision
-                    c["verified_at"] = conf["verified_at"]
-                    
+                    c["responded_at"] = now_iso
+                    c["verified_at"] = now_iso
+                    if note:
+                        c["note"] = note
+                        
     db = get_db()
     if db:
         try:
+            # 1. Update document in dedicated confirmations collection
+            c_update = {
+                "status": decision,
+                "responded_at": now_iso,
+                "verified_at": now_iso
+            }
+            if note:
+                c_update["note"] = note
+            db.collection("confirmations").document(conf_id).update(c_update)
+            
+            # 2. Update embedded array on work_record
             w_ref = db.collection("work_records").document(work_id)
             doc = w_ref.get()
             if doc.exists:
@@ -371,7 +530,10 @@ def resolve_confirmation(token: str, decision: str) -> Optional[Dict[str, Any]]:
                 for c in confs:
                     if c.get("token") == token:
                         c["status"] = decision
-                        c["verified_at"] = conf["verified_at"]
+                        c["responded_at"] = now_iso
+                        c["verified_at"] = now_iso
+                        if note:
+                            c["note"] = note
                 update_dict = {"confirmations": confs}
                 if decision == "CONFIRMED":
                     update_dict["status"] = "CONFIRMED"
@@ -404,9 +566,22 @@ def _enrich_worker_data(worker_dict: Dict[str, Any]) -> Dict[str, Any]:
         
     overall_conf = int(total_confidence_sum / len(demonstrated_skills)) if demonstrated_skills else 0
     
+    has_history = len(works) > 0
+    has_ev = any(len(w.get("evidence", [])) > 0 for w in works)
+    has_conf = total_confirms > 0
+    completeness_score = 25 + (25 if has_history else 0) + (25 if has_ev else 0) + (25 if has_conf else 0)
+
     enriched = dict(worker_dict)
     enriched["work_count"] = len(works)
     enriched["confirmation_count"] = total_confirms
     enriched["overall_confidence"] = overall_conf
     enriched["demonstrated_skills"] = demonstrated_skills
+    enriched["passport_completeness"] = PassportCompleteness(
+        score=completeness_score,
+        profile_complete=True,
+        has_work_history=has_history,
+        has_evidence=has_ev,
+        has_confirmations=has_conf,
+        breakdown=f"Profile verified, {len(works)} projects, {total_confirms} confirmations."
+    )
     return enriched

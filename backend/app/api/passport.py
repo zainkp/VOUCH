@@ -18,6 +18,8 @@ def get_public_passport(public_slug: str, request: Request):
     base_url = str(request.base_url).rstrip("/")
     share_url = f"{base_url}/passport/{public_slug}"
     
+    completeness_score = worker["passport_completeness"].score if worker.get("passport_completeness") else None
+
     return PassportData(
         worker=worker,
         overall_evidence_confidence=worker["overall_confidence"],
@@ -26,5 +28,6 @@ def get_public_passport(public_slug: str, request: Request):
         total_evidence_count=total_ev,
         total_confirmations_count=total_conf,
         public_slug=public_slug,
-        share_url=share_url
+        share_url=share_url,
+        passport_completeness=completeness_score
     )

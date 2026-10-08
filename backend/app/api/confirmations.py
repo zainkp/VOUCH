@@ -18,7 +18,9 @@ def create_confirmation_request(payload: ConfirmationRequest):
     created = request_confirmation(
         payload.work_record_id,
         payload.verifier_name,
-        payload.verifier_type
+        payload.verifier_type,
+        payload.relationship,
+        payload.note
     )
     return created
 
@@ -36,7 +38,9 @@ def get_verification_details(token: str):
         "token": token,
         "verifier_name": conf["verifier_name"],
         "verifier_type": conf["verifier_type"],
+        "relationship": conf.get("relationship"),
         "status": conf["status"],
+        "note": conf.get("note"),
         "work": {
             "title": work["title"],
             "description": work["description"],
@@ -52,7 +56,7 @@ def get_verification_details(token: str):
 
 @router.post("/{token}/confirm")
 def submit_verification_decision(token: str, payload: ConfirmationDecision):
-    resolved = resolve_confirmation(token, payload.decision)
+    resolved = resolve_confirmation(token, payload.decision, payload.note)
     if not resolved:
         raise HTTPException(status_code=404, detail="Invalid or expired verification token")
         
