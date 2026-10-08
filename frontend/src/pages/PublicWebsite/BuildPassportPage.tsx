@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { PublicNavbar } from './PublicNavbar';
 import { PublicFooter } from './PublicFooter';
+import { ScrollReveal } from '../../components/ScrollReveal';
 import { useApp } from '../../context/AppContext';
 import { 
   ShieldCheck, 
@@ -13,7 +14,7 @@ import {
   MapPin, 
   Layers, 
   Camera, 
-  CheckCheck,
+  CheckCheck, 
   FileCheck,
   Sparkles
 } from 'lucide-react';
@@ -110,25 +111,26 @@ export const BuildPassportPage: React.FC = () => {
     <div className="min-h-screen bg-[#FAF8F5] text-[#121614] flex flex-col">
       <PublicNavbar />
 
-      <main className="flex-1 pt-28 sm:pt-36 pb-20">
+      <main className="flex-1 pt-28 sm:pt-36 pb-20 animate-page-enter">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           
-          {/* Progress Indicator */}
-          <div className="mb-10">
-            <div className="flex items-center justify-between text-xs font-mono text-[#737A75] mb-2">
-              <span className="font-bold text-[#1E3B2B]">PASSPORT ONBOARDING</span>
-              <span>STEP {step} OF 4</span>
+          <ScrollReveal delay={0}>
+            {/* Progress Indicator */}
+            <div className="mb-10">
+              <div className="flex items-center justify-between text-xs font-mono text-[#737A75] mb-2">
+                <span className="font-bold text-[#1E3B2B]">PASSPORT ONBOARDING</span>
+                <span>STEP {step} OF 4</span>
+              </div>
+              <div className="w-full h-1.5 bg-[#E5E1D8] rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-[#1E3B2B] transition-all duration-300"
+                  style={{ width: `${(step / 4) * 100}%` }}
+                ></div>
+              </div>
             </div>
-            <div className="w-full h-1.5 bg-[#E5E1D8] rounded-full overflow-hidden">
-              <div
-                className="h-full bg-[#1E3B2B] transition-all duration-300"
-                style={{ width: `${(step / 4) * 100}%` }}
-              ></div>
-            </div>
-          </div>
 
-          {/* Form Card */}
-          <div className="bg-white rounded-3xl p-6 sm:p-10 border border-[#E5E1D8] shadow-[0_20px_50px_rgba(18,22,20,0.06)]">
+            {/* Form Card */}
+            <div className="bg-white rounded-3xl p-6 sm:p-10 border border-[#E5E1D8] shadow-[0_20px_50px_rgba(18,22,20,0.06)]">
             
             {/* STEP 1: Basic Information */}
             {step === 1 && (
@@ -225,7 +227,7 @@ export const BuildPassportPage: React.FC = () => {
                   </span>
                   <button
                     onClick={() => setStep(2)}
-                    className="px-7 py-3.5 rounded-xl bg-[#1E3B2B] text-white font-bold text-sm hover:bg-[#14281D] transition-colors flex items-center space-x-2 cursor-pointer shadow-sm"
+                    className="px-7 py-3.5 rounded-xl bg-[#1E3B2B] text-white font-bold text-sm hover:bg-[#14281D] transition-colors flex items-center space-x-2 cursor-pointer shadow-sm vouch-btn"
                   >
                     <span>Next: Select Skills</span>
                     <ArrowRight className="w-4 h-4 text-[#C27A38]" />
@@ -276,7 +278,7 @@ export const BuildPassportPage: React.FC = () => {
                 <div className="mt-8 pt-6 border-t border-[#ECE8E0] flex items-center justify-between">
                   <button
                     onClick={() => setStep(1)}
-                    className="px-5 py-3 rounded-xl border border-[#E5E1D8] text-xs font-bold text-[#4A524D] hover:bg-gray-50 flex items-center space-x-1 cursor-pointer"
+                    className="px-5 py-3 rounded-xl border border-[#E5E1D8] text-xs font-bold text-[#4A524D] hover:bg-gray-50 flex items-center space-x-1 cursor-pointer vouch-btn"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back</span>
@@ -284,7 +286,7 @@ export const BuildPassportPage: React.FC = () => {
                   <button
                     onClick={() => setStep(3)}
                     disabled={selectedSkills.length === 0}
-                    className="px-7 py-3.5 rounded-xl bg-[#1E3B2B] text-white font-bold text-sm hover:bg-[#14281D] disabled:opacity-50 transition-colors flex items-center space-x-2 cursor-pointer shadow-sm"
+                    className="px-7 py-3.5 rounded-xl bg-[#1E3B2B] text-white font-bold text-sm hover:bg-[#14281D] disabled:opacity-50 transition-colors flex items-center space-x-2 cursor-pointer shadow-sm vouch-btn"
                   >
                     <span>Next: Add First Work Record</span>
                     <ArrowRight className="w-4 h-4 text-[#C27A38]" />
@@ -395,14 +397,14 @@ export const BuildPassportPage: React.FC = () => {
                 <div className="mt-8 pt-6 border-t border-[#ECE8E0] flex items-center justify-between">
                   <button
                     onClick={() => setStep(2)}
-                    className="px-5 py-3 rounded-xl border border-[#E5E1D8] text-xs font-bold text-[#4A524D] hover:bg-gray-50 flex items-center space-x-1 cursor-pointer"
+                    className="px-5 py-3 rounded-xl border border-[#E5E1D8] text-xs font-bold text-[#4A524D] hover:bg-gray-50 flex items-center space-x-1 cursor-pointer vouch-btn"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back</span>
                   </button>
                   <button
                     onClick={handleFinishOnboarding}
-                    className="px-8 py-3.5 rounded-xl bg-[#1E3B2B] text-white font-bold text-sm hover:bg-[#14281D] transition-colors flex items-center space-x-2 cursor-pointer shadow-md"
+                    className="px-8 py-3.5 rounded-xl bg-[#1E3B2B] text-white font-bold text-sm hover:bg-[#14281D] transition-colors flex items-center space-x-2 cursor-pointer shadow-md vouch-btn"
                   >
                     <span>Generate My Passport</span>
                     <Sparkles className="w-4 h-4 text-[#C27A38]" />
@@ -449,7 +451,7 @@ export const BuildPassportPage: React.FC = () => {
 
                 <button
                   onClick={() => navigate('/worker')}
-                  className="w-full sm:w-auto px-9 py-4 rounded-xl bg-[#1E3B2B] text-white font-bold text-sm hover:bg-[#14281D] shadow-md inline-flex items-center justify-center space-x-2 cursor-pointer"
+                  className="w-full sm:w-auto px-9 py-4 rounded-xl bg-[#1E3B2B] text-white font-bold text-sm hover:bg-[#14281D] shadow-md inline-flex items-center justify-center space-x-2 cursor-pointer vouch-btn"
                 >
                   <span>Enter Worker Application</span>
                   <ArrowRight className="w-4 h-4 text-[#C27A38]" />
@@ -458,6 +460,7 @@ export const BuildPassportPage: React.FC = () => {
             )}
 
           </div>
+          </ScrollReveal>
 
         </div>
       </main>

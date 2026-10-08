@@ -11,6 +11,7 @@ import {
   AlertTriangle,
   ExternalLink
 } from 'lucide-react';
+import { ScrollReveal } from '../../components/ScrollReveal';
 
 export const EvidenceSection: React.FC = () => {
   const [activeEvidenceTab, setActiveEvidenceTab] = useState<'photo' | 'test' | 'signoff'>('photo');
@@ -20,63 +21,68 @@ export const EvidenceSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-14 sm:mb-16">
-          <p className="text-xs font-mono uppercase tracking-widest text-[#059669] font-bold mb-3">
-            04 / THE CORE DIFFERENTIATOR
-          </p>
-          <h2 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-6xl text-[#121614] tracking-tight leading-[1.08] mb-6">
-            DON&apos;T JUST SAY<br />
-            YOU CAN DO IT.<br />
-            <span className="text-[#1E3B2B]">SHOW IT.</span>
-          </h2>
-          <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed">
-            Vouch builds confidence around individual skills from documented work and independent confirmations — not arbitrary star ratings.
-          </p>
-        </div>
+        <ScrollReveal delay={0} duration={600}>
+          <div className="max-w-3xl mb-14 sm:mb-16">
+            <p className="text-xs font-mono uppercase tracking-widest text-[#059669] font-bold mb-3">
+              04 / THE CORE DIFFERENTIATOR
+            </p>
+            <h2 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-6xl text-[#121614] tracking-tight leading-[1.08] mb-6">
+              DON&apos;T JUST SAY<br />
+              YOU CAN DO IT.<br />
+              <span className="text-[#1E3B2B]">SHOW IT.</span>
+            </h2>
+            <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed">
+              Vouch builds confidence around individual skills from documented work and independent confirmations — not arbitrary star ratings.
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Contrast Callout: Why Star Ratings Fail vs Evidence */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14 sm:mb-16">
-          
-          {/* Why Star Ratings Fail (Do Not Use) */}
-          <div className="bg-[#FAF8F5] rounded-2xl p-6 sm:p-7 border border-[#E5E1D8] relative">
-            <div className="flex items-center space-x-2 text-[#C27A38] text-xs font-mono font-bold uppercase mb-3">
-              <XCircle className="w-4 h-4" />
-              <span>THE FLAW IN CONSUMER APP RATINGS</span>
+        <ScrollReveal delay={100} duration={600}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14 sm:mb-16">
+            
+            {/* Why Star Ratings Fail (Do Not Use) */}
+            <div className="bg-[#FAF8F5] rounded-2xl p-6 sm:p-7 border border-[#E5E1D8] relative">
+              <div className="flex items-center space-x-2 text-[#C27A38] text-xs font-mono font-bold uppercase mb-3">
+                <XCircle className="w-4 h-4" />
+                <span>THE FLAW IN CONSUMER APP RATINGS</span>
+              </div>
+              <div className="flex items-center space-x-2 mb-4">
+                <span className="text-2xl tracking-widest line-through text-gray-400">★★★★★</span>
+                <span className="text-xs font-mono bg-red-100 text-red-700 px-2 py-0.5 rounded font-bold">
+                  BIASED & MEANINGLESS
+                </span>
+              </div>
+              <p className="text-sm text-[#4A524D] leading-relaxed">
+                Star ratings tell a contractor nothing about technical competence. A plumber could get 5 stars for being polite, or 1 star because traffic made them late. Consumer ratings lack trade context, verifiable proof, and accountability.
+              </p>
             </div>
-            <div className="flex items-center space-x-2 mb-4">
-              <span className="text-2xl tracking-widest line-through text-gray-400">★★★★★</span>
-              <span className="text-xs font-mono bg-red-100 text-red-700 px-2 py-0.5 rounded font-bold">
-                BIASED & MEANINGLESS
-              </span>
-            </div>
-            <p className="text-sm text-[#4A524D] leading-relaxed">
-              Star ratings tell a contractor nothing about technical competence. A plumber could get 5 stars for being polite, or 1 star because traffic made them late. Consumer ratings lack trade context, verifiable proof, and accountability.
-            </p>
-          </div>
 
-          {/* How Vouch Solves It */}
-          <div className="bg-[#EBF6EE] rounded-2xl p-6 sm:p-7 border border-[#059669]/30 relative">
-            <div className="flex items-center space-x-2 text-[#059669] text-xs font-mono font-bold uppercase mb-3">
-              <ShieldCheck className="w-4 h-4" />
-              <span>THE VOUCH CONFIDENCE MODEL</span>
+            {/* How Vouch Solves It */}
+            <div className="bg-[#EBF6EE] rounded-2xl p-6 sm:p-7 border border-[#059669]/30 relative">
+              <div className="flex items-center space-x-2 text-[#059669] text-xs font-mono font-bold uppercase mb-3">
+                <ShieldCheck className="w-4 h-4" />
+                <span>THE VOUCH CONFIDENCE MODEL</span>
+              </div>
+              <div className="flex items-center space-x-2 mb-4">
+                <span className="text-sm font-bold uppercase tracking-wider text-[#1E3B2B] font-mono bg-white px-3 py-1 rounded-md border border-[#059669]/20">
+                  EMPIRICAL SKILL CONFIDENCE
+                </span>
+                <span className="text-xs font-mono bg-[#059669] text-white px-2 py-0.5 rounded font-bold">
+                  AUDITABLE
+                </span>
+              </div>
+              <p className="text-sm text-[#1E3B2B] leading-relaxed">
+                Confidence is mathematically calibrated per skill: volume of verified work orders, photographic evidence of code compliance, and signed confirmations from licensed site engineers and supervisors.
+              </p>
             </div>
-            <div className="flex items-center space-x-2 mb-4">
-              <span className="text-sm font-bold uppercase tracking-wider text-[#1E3B2B] font-mono bg-white px-3 py-1 rounded-md border border-[#059669]/20">
-                EMPIRICAL SKILL CONFIDENCE
-              </span>
-              <span className="text-xs font-mono bg-[#059669] text-white px-2 py-0.5 rounded font-bold">
-                AUDITABLE
-              </span>
-            </div>
-            <p className="text-sm text-[#1E3B2B] leading-relaxed">
-              Confidence is mathematically calibrated per skill: volume of verified work orders, photographic evidence of code compliance, and signed confirmations from licensed site engineers and supervisors.
-            </p>
-          </div>
 
-        </div>
+          </div>
+        </ScrollReveal>
 
         {/* Visual Deep Dive: Interactive Evidence Audit Box */}
-        <div className="bg-white rounded-3xl border border-[#E5E1D8] shadow-[0_16px_40px_rgba(18,22,20,0.06)] overflow-hidden">
+        <ScrollReveal delay={150} duration={650}>
+          <div className="bg-white rounded-3xl border border-[#E5E1D8] shadow-[0_16px_40px_rgba(18,22,20,0.06)] overflow-hidden">
           
           {/* Skill Title Banner */}
           <div className="p-6 sm:p-8 bg-[#F4EFEB] border-b border-[#E5E1D8] flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -278,6 +284,7 @@ export const EvidenceSection: React.FC = () => {
           </div>
 
         </div>
+        </ScrollReveal>
 
       </div>
     </section>

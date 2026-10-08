@@ -1,5 +1,6 @@
 import React from 'react';
 import { Quote, ShieldCheck } from 'lucide-react';
+import { ScrollReveal } from '../../components/ScrollReveal';
 
 export const TestimonialsSection: React.FC = () => {
   return (
@@ -7,98 +8,106 @@ export const TestimonialsSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-14 sm:mb-16">
-          <div className="inline-flex items-center space-x-2 px-2.5 py-1 rounded bg-[#EFECE6] border border-[#E5E1D8] mb-3 text-[11px] font-mono text-[#737A75]">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#1E3B2B]" />
-            <span>ILLUSTRATIVE PILOT EXPERIENCES</span>
+        <ScrollReveal delay={0} duration={600}>
+          <div className="max-w-3xl mb-14 sm:mb-16">
+            <div className="inline-flex items-center space-x-2 px-2.5 py-1 rounded bg-[#EFECE6] border border-[#E5E1D8] mb-3 text-[11px] font-mono text-[#737A75]">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#1E3B2B]" />
+              <span>ILLUSTRATIVE PILOT EXPERIENCES</span>
+            </div>
+            <h2 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-6xl text-[#121614] tracking-tight leading-[1.08] mb-6">
+              GROUNDED IN<br />
+              <span className="text-[#1E3B2B]">FIELD REALITY.</span>
+            </h2>
+            <p className="text-lg text-[#4A524D] leading-relaxed">
+              How verified trade evidence impacts the day-to-day decisions of workers, jobsite supervisors, and general contractors.
+            </p>
           </div>
-          <h2 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-6xl text-[#121614] tracking-tight leading-[1.08] mb-6">
-            GROUNDED IN<br />
-            <span className="text-[#1E3B2B]">FIELD REALITY.</span>
-          </h2>
-          <p className="text-lg text-[#4A524D] leading-relaxed">
-            How verified trade evidence impacts the day-to-day decisions of workers, jobsite supervisors, and general contractors.
-          </p>
-        </div>
+        </ScrollReveal>
 
         {/* 3 Concise Perspectives: Worker, Supervisor, Contractor */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
           {/* 1. Worker Perspective */}
-          <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E5E1D8] shadow-xs flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-mono uppercase tracking-wider text-[#1E3B2B] font-bold bg-[#EBF6EE] px-2.5 py-1 rounded">
-                  WORKER PERSPECTIVE
-                </span>
-                <Quote className="w-5 h-5 text-[#E5E1D8]" />
-              </div>
-              <p className="text-sm text-[#121614] leading-relaxed mb-6 font-normal">
-                &quot;Before Vouch, my seven years of electrical installations were trapped with past contractors. When I moved cities, I had to accept apprentice pay for the first month. Now my passport proves my skill before I pick up a single wire.&quot;
-              </p>
-            </div>
-            <div className="pt-4 border-t border-[#ECE8E0] flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-100 border border-[#E5E1D8]">
-                <img
-                  src="https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?w=150&auto=format&fit=crop&q=80"
-                  alt="Ravi Kumar"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+          <ScrollReveal delay={0} duration={650} className="h-full flex flex-col">
+            <div className="h-full bg-white rounded-2xl p-6 sm:p-7 border border-[#E5E1D8] shadow-xs flex flex-col justify-between">
               <div>
-                <h3 className="font-bold text-sm text-[#121614]">Ravi Kumar</h3>
-                <p className="text-xs text-[#737A75]">Lead Electrician · Mangaluru</p>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs font-mono uppercase tracking-wider text-[#1E3B2B] font-bold bg-[#EBF6EE] px-2.5 py-1 rounded">
+                    WORKER PERSPECTIVE
+                  </span>
+                  <Quote className="w-5 h-5 text-[#E5E1D8]" />
+                </div>
+                <p className="text-sm text-[#121614] leading-relaxed mb-6 font-normal">
+                  &quot;Before Vouch, my seven years of electrical installations were trapped with past contractors. When I moved cities, I had to accept apprentice pay for the first month. Now my passport proves my skill before I pick up a single wire.&quot;
+                </p>
+              </div>
+              <div className="pt-4 border-t border-[#ECE8E0] flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-100 border border-[#E5E1D8]">
+                  <img
+                    src="https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?w=150&auto=format&fit=crop&q=80"
+                    alt="Ravi Kumar"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h3 className="font-bold text-sm text-[#121614]">Ravi Kumar</h3>
+                  <p className="text-xs text-[#737A75]">Lead Electrician · Mangaluru</p>
+                </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* 2. Supervisor Perspective */}
-          <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E5E1D8] shadow-xs flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-mono uppercase tracking-wider text-[#C27A38] font-bold bg-[#F8EFE6] px-2.5 py-1 rounded">
-                  SUPERVISOR PERSPECTIVE
-                </span>
-                <Quote className="w-5 h-5 text-[#E5E1D8]" />
-              </div>
-              <p className="text-sm text-[#121614] leading-relaxed mb-6 font-normal">
-                &quot;Field supervisors don&apos;t have time to write formal letters. With Vouch, a technician sends me a verification link and I review photos and confirm with one tap on WhatsApp. It honors their honest craftsmanship without paperwork.&quot;
-              </p>
-            </div>
-            <div className="pt-4 border-t border-[#ECE8E0] flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-full bg-[#EFECE6] border border-[#E5E1D8] flex items-center justify-center font-bold text-sm text-[#1E3B2B]">
-                MS
-              </div>
+          <ScrollReveal delay={100} duration={650} className="h-full flex flex-col">
+            <div className="h-full bg-white rounded-2xl p-6 sm:p-7 border border-[#E5E1D8] shadow-xs flex flex-col justify-between">
               <div>
-                <h3 className="font-bold text-sm text-[#121614]">Mahesh Shetty</h3>
-                <p className="text-xs text-[#737A75]">Site Supervisor · ABC Electricals</p>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs font-mono uppercase tracking-wider text-[#C27A38] font-bold bg-[#F8EFE6] px-2.5 py-1 rounded">
+                    SUPERVISOR PERSPECTIVE
+                  </span>
+                  <Quote className="w-5 h-5 text-[#E5E1D8]" />
+                </div>
+                <p className="text-sm text-[#121614] leading-relaxed mb-6 font-normal">
+                  &quot;Field supervisors don&apos;t have time to write formal letters. With Vouch, a technician sends me a verification link and I review photos and confirm with one tap on WhatsApp. It honors their honest craftsmanship without paperwork.&quot;
+                </p>
+              </div>
+              <div className="pt-4 border-t border-[#ECE8E0] flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-full bg-[#EFECE6] border border-[#E5E1D8] flex items-center justify-center font-bold text-sm text-[#1E3B2B]">
+                  MS
+                </div>
+                <div>
+                  <h3 className="font-bold text-sm text-[#121614]">Mahesh Shetty</h3>
+                  <p className="text-xs text-[#737A75]">Site Supervisor · ABC Electricals</p>
+                </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* 3. Contractor Perspective */}
-          <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E5E1D8] shadow-xs flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-mono uppercase tracking-wider text-[#059669] font-bold bg-[#EBF6EE] px-2.5 py-1 rounded">
-                  CONTRACTOR PERSPECTIVE
-                </span>
-                <Quote className="w-5 h-5 text-[#E5E1D8]" />
-              </div>
-              <p className="text-sm text-[#121614] leading-relaxed mb-6 font-normal">
-                &quot;We don&apos;t rely on word-of-mouth or generic CVs. When we brought in a commercial panel crew, being able to review their insulation Megger test sheets and verifier notes eliminated our commissioning rework risks entirely.&quot;
-              </p>
-            </div>
-            <div className="pt-4 border-t border-[#ECE8E0] flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-full bg-[#EFECE6] border border-[#E5E1D8] flex items-center justify-center font-bold text-sm text-[#059669]">
-                SR
-              </div>
+          <ScrollReveal delay={200} duration={650} className="h-full flex flex-col">
+            <div className="h-full bg-white rounded-2xl p-6 sm:p-7 border border-[#E5E1D8] shadow-xs flex flex-col justify-between">
               <div>
-                <h3 className="font-bold text-sm text-[#121614]">Sunil Rao</h3>
-                <p className="text-xs text-[#737A75]">Project Director · Apex Buildcon</p>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs font-mono uppercase tracking-wider text-[#059669] font-bold bg-[#EBF6EE] px-2.5 py-1 rounded">
+                    CONTRACTOR PERSPECTIVE
+                  </span>
+                  <Quote className="w-5 h-5 text-[#E5E1D8]" />
+                </div>
+                <p className="text-sm text-[#121614] leading-relaxed mb-6 font-normal">
+                  &quot;We don&apos;t rely on word-of-mouth or generic CVs. When we brought in a commercial panel crew, being able to review their insulation Megger test sheets and verifier notes eliminated our commissioning rework risks entirely.&quot;
+                </p>
+              </div>
+              <div className="pt-4 border-t border-[#ECE8E0] flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-full bg-[#EFECE6] border border-[#E5E1D8] flex items-center justify-center font-bold text-sm text-[#059669]">
+                  SR
+                </div>
+                <div>
+                  <h3 className="font-bold text-sm text-[#121614]">Sunil Rao</h3>
+                  <p className="text-xs text-[#737A75]">Project Director · Apex Buildcon</p>
+                </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
         </div>
 

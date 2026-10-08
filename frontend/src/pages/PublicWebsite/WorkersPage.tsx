@@ -24,6 +24,7 @@ import {
   XCircle,
   FileCheck
 } from 'lucide-react';
+import { ScrollReveal } from '../../components/ScrollReveal';
 
 export const WorkersPage: React.FC = () => {
   // Interactive Confirmation Simulator State
@@ -34,7 +35,7 @@ export const WorkersPage: React.FC = () => {
     <div className="min-h-screen bg-[#FAF8F5] text-[#121614] flex flex-col selection:bg-[#EBF6EE] selection:text-[#1E3B2B]">
       <PublicNavbar />
 
-      <main className="flex-1 pt-28 sm:pt-36">
+      <main className="flex-1 pt-28 sm:pt-36 animate-page-enter">
         
         {/* ==================================================
             SECTION 1: WORKER HERO
@@ -44,47 +45,55 @@ export const WorkersPage: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
               
               <div className="lg:col-span-7">
-                <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-[#EBF6EE] text-[#059669] text-xs font-mono font-bold uppercase mb-6 border border-[#059669]/20">
-                  <ShieldCheck className="w-4 h-4 text-[#059669]" />
-                  <span>FOR SKILLED TRADESPEOPLE & TECHNICIANS</span>
-                </div>
+                <ScrollReveal delay={0}>
+                  <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-[#EBF6EE] text-[#059669] text-xs font-mono font-bold uppercase mb-6 border border-[#059669]/20">
+                    <ShieldCheck className="w-4 h-4 text-[#059669]" />
+                    <span>FOR SKILLED TRADESPEOPLE & TECHNICIANS</span>
+                  </div>
 
-                <h1 className="font-display font-extrabold text-4xl sm:text-6xl lg:text-7xl text-[#121614] tracking-tight leading-[1.04] mb-6">
-                  YOUR EXPERIENCE<br />
-                  <span className="text-[#1E3B2B]">BELONGS TO YOU.</span>
-                </h1>
+                  <h1 className="font-display font-extrabold text-4xl sm:text-6xl lg:text-7xl text-[#121614] tracking-tight leading-[1.04] mb-6">
+                    YOUR EXPERIENCE<br />
+                    <span className="text-[#1E3B2B]">BELONGS TO YOU.</span>
+                  </h1>
+                </ScrollReveal>
 
-                <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed mb-8 max-w-2xl">
-                  Years of work shouldn&apos;t disappear when a project ends or when you move to another employer. Vouch turns your real-world experience into a professional identity you can carry with you.
-                </p>
+                <ScrollReveal delay={100}>
+                  <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed mb-8 max-w-2xl">
+                    Years of work shouldn&apos;t disappear when a project ends or when you move to another employer. Vouch turns your real-world experience into a professional identity you can carry with you.
+                  </p>
+                </ScrollReveal>
 
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3.5 sm:space-y-0 sm:space-x-4">
-                  <Link
-                    to="/build-passport"
-                    className="inline-flex items-center justify-center space-x-2 px-8 py-4 rounded-xl bg-[#1E3B2B] text-white font-semibold text-base hover:bg-[#14281D] active:scale-[0.98] transition-all shadow-sm group"
-                  >
-                    <span>BUILD YOUR PASSPORT</span>
-                    <ArrowRight className="w-4 h-4 text-[#C27A38] group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                  <Link
-                    to="/how-it-works"
-                    className="inline-flex items-center justify-center space-x-2 px-6 py-4 rounded-xl border border-[#E5E1D8] bg-white text-[#121614] hover:bg-[#FAF8F5] text-base font-medium transition-colors"
-                  >
-                    <span>SEE HOW IT WORKS</span>
-                    <ChevronRight className="w-4 h-4 text-[#737A75]" />
-                  </Link>
-                </div>
+                <ScrollReveal delay={180}>
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3.5 sm:space-y-0 sm:space-x-4">
+                    <Link
+                      to="/build-passport"
+                      className="inline-flex items-center justify-center space-x-2 px-8 py-4 rounded-xl bg-[#1E3B2B] text-white font-semibold text-base hover:bg-[#14281D] active:scale-[0.98] transition-all shadow-sm group vouch-btn"
+                    >
+                      <span>BUILD YOUR PASSPORT</span>
+                      <ArrowRight className="w-4 h-4 text-[#C27A38] group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                    <Link
+                      to="/how-it-works"
+                      className="inline-flex items-center justify-center space-x-2 px-6 py-4 rounded-xl border border-[#E5E1D8] bg-white text-[#121614] hover:bg-[#FAF8F5] text-base font-medium transition-colors vouch-btn"
+                    >
+                      <span>SEE HOW IT WORKS</span>
+                      <ChevronRight className="w-4 h-4 text-[#737A75]" />
+                    </Link>
+                  </div>
+                </ScrollReveal>
               </div>
 
               {/* Documentary Worker Photography */}
               <div className="lg:col-span-5">
-                <div className="relative rounded-2xl overflow-hidden border border-[#E5E1D8] shadow-lg bg-gray-100 aspect-[4/5]">
-                  <img
-                    src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=1000&auto=format&fit=crop&q=80"
-                    alt="Skilled electrical technician working on main switchboard installation"
-                    className="w-full h-full object-cover filter saturate-[0.95]"
-                  />
-                </div>
+                <ScrollReveal delay={160} variant="image">
+                  <div className="relative rounded-2xl overflow-hidden border border-[#E5E1D8] shadow-lg bg-gray-100 aspect-[4/5] reveal-image-container">
+                    <img
+                      src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=1000&auto=format&fit=crop&q=80"
+                      alt="Skilled electrical technician working on main switchboard installation"
+                      className="w-full h-full object-cover filter saturate-[0.95] reveal-image-zoom"
+                    />
+                  </div>
+                </ScrollReveal>
               </div>
 
             </div>
@@ -98,143 +107,149 @@ export const WorkersPage: React.FC = () => {
         <section className="py-20 sm:py-28 bg-[#FAF8F5] border-b border-[#E5E1D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <div className="max-w-3xl mb-16">
-              <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-3">
-                THE PROBLEM WITH UNRECORDED WORK
-              </span>
-              <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#121614] tracking-tight leading-[1.08] mb-6">
-                YOU&apos;VE BUILT THE EXPERIENCE.<br />
-                <span className="text-[#1E3B2B]">NOW KEEP THE PROOF.</span>
-              </h2>
-              <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed">
-                Most skilled workers carry years of experience in their heads, in paper records, in old messages, or through people who remember their work. Vouch brings that experience together into one professional identity.
-              </p>
-            </div>
+            <ScrollReveal delay={0}>
+              <div className="max-w-3xl mb-16">
+                <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-3">
+                  THE PROBLEM WITH UNRECORDED WORK
+                </span>
+                <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#121614] tracking-tight leading-[1.08] mb-6">
+                  YOU&apos;VE BUILT THE EXPERIENCE.<br />
+                  <span className="text-[#1E3B2B]">NOW KEEP THE PROOF.</span>
+                </h2>
+                <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed">
+                  Most skilled workers carry years of experience in their heads, in paper records, in old messages, or through people who remember their work. Vouch brings that experience together into one professional identity.
+                </p>
+              </div>
+            </ScrollReveal>
 
             {/* Editorial Contrast — Without vs With Vouch */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
               
               {/* Without Vouch */}
-              <div className="bg-[#FAF8F5] p-8 sm:p-10 rounded-2xl border border-[#E5E1D8] relative overflow-hidden">
-                <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#E5E1D8]">
-                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#9E4545] flex items-center space-x-2">
-                    <XCircle className="w-4 h-4 text-[#9E4545]" />
-                    <span>WITHOUT VOUCH</span>
-                  </span>
-                  <span className="text-xs text-[#737A75]">Fragile & Lost Over Time</span>
+              <ScrollReveal delay={100}>
+                <div className="bg-[#FAF8F5] p-8 sm:p-10 rounded-2xl border border-[#E5E1D8] relative overflow-hidden h-full">
+                  <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#E5E1D8]">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#9E4545] flex items-center space-x-2">
+                      <XCircle className="w-4 h-4 text-[#9E4545]" />
+                      <span>WITHOUT VOUCH</span>
+                    </span>
+                    <span className="text-xs text-[#737A75]">Fragile & Lost Over Time</span>
+                  </div>
+
+                  <div className="space-y-5">
+                    <div className="flex items-start space-x-4">
+                      <div className="w-8 h-8 rounded-lg bg-[#FAF0F0] text-[#9E4545] flex items-center justify-center shrink-0 mt-0.5">
+                        <FileText className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-[#121614] text-base mb-1">Paper Records</h4>
+                        <p className="text-sm text-[#737A75] leading-relaxed">
+                          Physical receipts, handwritten job notes, and yellowed work orders that get lost, torn, or misplaced between moves.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="w-8 h-8 rounded-lg bg-[#FAF0F0] text-[#9E4545] flex items-center justify-center shrink-0 mt-0.5">
+                        <Briefcase className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-[#121614] text-base mb-1">Verbal References</h4>
+                        <p className="text-sm text-[#737A75] leading-relaxed">
+                          Saying &quot;I worked 4 years on industrial switchgear&quot; with no proof when the hiring contractor doesn&apos;t know you.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="w-8 h-8 rounded-lg bg-[#FAF0F0] text-[#9E4545] flex items-center justify-center shrink-0 mt-0.5">
+                        <Camera className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-[#121614] text-base mb-1">Scattered Messages</h4>
+                        <p className="text-sm text-[#737A75] leading-relaxed">
+                          Photos trapped in old phone galleries, WhatsApp chats, and deleted group threads that can never be audited.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="w-8 h-8 rounded-lg bg-[#FAF0F0] text-[#9E4545] flex items-center justify-center shrink-0 mt-0.5">
+                        <Lock className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-[#121614] text-base mb-1">Employer-Dependent Reputation</h4>
+                        <p className="text-sm text-[#737A75] leading-relaxed">
+                          When you leave a company or a contractor shuts down, your standing resets to zero in every new city or firm.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-
-                <div className="space-y-5">
-                  <div className="flex items-start space-x-4">
-                    <div className="w-8 h-8 rounded-lg bg-[#FAF0F0] text-[#9E4545] flex items-center justify-center shrink-0 mt-0.5">
-                      <FileText className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-[#121614] text-base mb-1">Paper Records</h4>
-                      <p className="text-sm text-[#737A75] leading-relaxed">
-                        Physical receipts, handwritten job notes, and yellowed work orders that get lost, torn, or misplaced between moves.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4">
-                    <div className="w-8 h-8 rounded-lg bg-[#FAF0F0] text-[#9E4545] flex items-center justify-center shrink-0 mt-0.5">
-                      <Briefcase className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-[#121614] text-base mb-1">Verbal References</h4>
-                      <p className="text-sm text-[#737A75] leading-relaxed">
-                        Saying &quot;I worked 4 years on industrial switchgear&quot; with no proof when the hiring contractor doesn&apos;t know you.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4">
-                    <div className="w-8 h-8 rounded-lg bg-[#FAF0F0] text-[#9E4545] flex items-center justify-center shrink-0 mt-0.5">
-                      <Camera className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-[#121614] text-base mb-1">Scattered Messages</h4>
-                      <p className="text-sm text-[#737A75] leading-relaxed">
-                        Photos trapped in old phone galleries, WhatsApp chats, and deleted group threads that can never be audited.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4">
-                    <div className="w-8 h-8 rounded-lg bg-[#FAF0F0] text-[#9E4545] flex items-center justify-center shrink-0 mt-0.5">
-                      <Lock className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-[#121614] text-base mb-1">Employer-Dependent Reputation</h4>
-                      <p className="text-sm text-[#737A75] leading-relaxed">
-                        When you leave a company or a contractor shuts down, your standing resets to zero in every new city or firm.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              </ScrollReveal>
 
               {/* With Vouch */}
-              <div className="bg-white p-8 sm:p-10 rounded-2xl border-2 border-[#1E3B2B] shadow-lg relative overflow-hidden">
-                <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#E5E1D8]">
-                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#059669] flex items-center space-x-2">
-                    <CheckCircle2 className="w-4 h-4 text-[#059669]" />
-                    <span>WITH VOUCH</span>
-                  </span>
-                  <span className="text-xs font-bold text-[#1E3B2B]">Permanent & Worker-Owned</span>
+              <ScrollReveal delay={200}>
+                <div className="bg-white p-8 sm:p-10 rounded-2xl border-2 border-[#1E3B2B] shadow-lg relative overflow-hidden h-full">
+                  <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#E5E1D8]">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#059669] flex items-center space-x-2">
+                      <CheckCircle2 className="w-4 h-4 text-[#059669]" />
+                      <span>WITH VOUCH</span>
+                    </span>
+                    <span className="text-xs font-bold text-[#1E3B2B]">Permanent & Worker-Owned</span>
+                  </div>
+
+                  <div className="space-y-5">
+                    <div className="flex items-start space-x-4">
+                      <div className="w-8 h-8 rounded-lg bg-[#EBF6EE] text-[#059669] flex items-center justify-center shrink-0 mt-0.5">
+                        <Layers className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-[#121614] text-base mb-1">Structured Work History</h4>
+                        <p className="text-sm text-[#4A524D] leading-relaxed">
+                          Every project, location, and technical responsibility logged into an audit-ready, chronological record.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="w-8 h-8 rounded-lg bg-[#EBF6EE] text-[#059669] flex items-center justify-center shrink-0 mt-0.5">
+                        <Camera className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-[#121614] text-base mb-1">Photographic & Test Evidence</h4>
+                        <p className="text-sm text-[#4A524D] leading-relaxed">
+                          Real jobsite photos, calibrated test readouts, and handover certificates linked directly to specific trades.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="w-8 h-8 rounded-lg bg-[#EBF6EE] text-[#059669] flex items-center justify-center shrink-0 mt-0.5">
+                        <CheckCheck className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-[#121614] text-base mb-1">Third-Party Confirmations</h4>
+                        <p className="text-sm text-[#4A524D] leading-relaxed">
+                          Direct digital confirmations from site engineers, licensed contractors, and customers who watched you work.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="w-8 h-8 rounded-lg bg-[#EBF6EE] text-[#059669] flex items-center justify-center shrink-0 mt-0.5">
+                        <QrCode className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-[#121614] text-base mb-1">Portable Professional Passport</h4>
+                        <p className="text-sm text-[#4A524D] leading-relaxed">
+                          One clean URL and instant QR code that you own forever, proving your seniority from day one on any site.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-
-                <div className="space-y-5">
-                  <div className="flex items-start space-x-4">
-                    <div className="w-8 h-8 rounded-lg bg-[#EBF6EE] text-[#059669] flex items-center justify-center shrink-0 mt-0.5">
-                      <Layers className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-[#121614] text-base mb-1">Structured Work History</h4>
-                      <p className="text-sm text-[#4A524D] leading-relaxed">
-                        Every project, location, and technical responsibility logged into an audit-ready, chronological record.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4">
-                    <div className="w-8 h-8 rounded-lg bg-[#EBF6EE] text-[#059669] flex items-center justify-center shrink-0 mt-0.5">
-                      <Camera className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-[#121614] text-base mb-1">Photographic & Test Evidence</h4>
-                      <p className="text-sm text-[#4A524D] leading-relaxed">
-                        Real jobsite photos, calibrated test readouts, and handover certificates linked directly to specific trades.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4">
-                    <div className="w-8 h-8 rounded-lg bg-[#EBF6EE] text-[#059669] flex items-center justify-center shrink-0 mt-0.5">
-                      <CheckCheck className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-[#121614] text-base mb-1">Third-Party Confirmations</h4>
-                      <p className="text-sm text-[#4A524D] leading-relaxed">
-                        Direct digital confirmations from site engineers, licensed contractors, and customers who watched you work.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4">
-                    <div className="w-8 h-8 rounded-lg bg-[#EBF6EE] text-[#059669] flex items-center justify-center shrink-0 mt-0.5">
-                      <QrCode className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-[#121614] text-base mb-1">Portable Professional Passport</h4>
-                      <p className="text-sm text-[#4A524D] leading-relaxed">
-                        One clean URL and instant QR code that you own forever, proving your seniority from day one on any site.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              </ScrollReveal>
 
             </div>
 
@@ -251,110 +266,114 @@ export const WorkersPage: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               
               <div className="lg:col-span-5">
-                <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-3">
-                  RECORDING YOUR WORK
-                </span>
-                <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#121614] tracking-tight leading-[1.08] mb-6">
-                  EVERY JOB ADDS<br />
-                  <span className="text-[#1E3B2B]">TO YOUR STORY.</span>
-                </h2>
-                <p className="text-lg text-[#4A524D] leading-relaxed mb-6">
-                  Log the work you&apos;ve already completed. Whether it was a commercial panel retrofit or a multi-floor wiring project, every job builds permanent equity in your professional passport.
-                </p>
-                <div className="space-y-3 font-medium text-sm text-[#121614]">
-                  <div className="flex items-center space-x-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#059669]" />
-                    <span>Takes less than 2 minutes per job</span>
+                <ScrollReveal delay={0}>
+                  <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-3">
+                    RECORDING YOUR WORK
+                  </span>
+                  <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#121614] tracking-tight leading-[1.08] mb-6">
+                    EVERY JOB ADDS<br />
+                    <span className="text-[#1E3B2B]">TO YOUR STORY.</span>
+                  </h2>
+                  <p className="text-lg text-[#4A524D] leading-relaxed mb-6">
+                    Log the work you&apos;ve already completed. Whether it was a commercial panel retrofit or a multi-floor wiring project, every job builds permanent equity in your professional passport.
+                  </p>
+                  <div className="space-y-3 font-medium text-sm text-[#121614]">
+                    <div className="flex items-center space-x-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-[#059669]" />
+                      <span>Takes less than 2 minutes per job</span>
+                    </div>
+                    <div className="flex items-center space-x-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-[#059669]" />
+                      <span>Works with past projects or today&apos;s active site</span>
+                    </div>
+                    <div className="flex items-center space-x-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-[#059669]" />
+                      <span>AI structures your rough notes into verified credentials</span>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#059669]" />
-                    <span>Works with past projects or today&apos;s active site</span>
-                  </div>
-                  <div className="flex items-center space-x-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#059669]" />
-                    <span>AI structures your rough notes into verified credentials</span>
-                  </div>
-                </div>
+                </ScrollReveal>
               </div>
 
               {/* Large Visual Work-Record Composition */}
               <div className="lg:col-span-7">
-                <div className="bg-white rounded-2xl border-2 border-[#1E3B2B] shadow-xl p-6 sm:p-8 relative">
-                  
-                  {/* Record Header */}
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 border-b border-[#E5E1D8] gap-3">
-                    <div>
-                      <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#1E3B2B] bg-[#EBF6EE] px-2.5 py-1 rounded">
-                        LOGGED WORK RECORD
-                      </span>
-                      <h3 className="font-display font-extrabold text-2xl text-[#121614] mt-2">
-                        COMMERCIAL PANEL INSTALLATION
-                      </h3>
-                      <div className="flex items-center space-x-3 text-xs text-[#737A75] mt-1 font-mono">
-                        <span className="flex items-center space-x-1">
-                          <MapPin className="w-3.5 h-3.5" />
-                          <span>Mangaluru</span>
+                <ScrollReveal delay={120}>
+                  <div className="bg-white rounded-2xl border-2 border-[#1E3B2B] shadow-xl p-6 sm:p-8 relative">
+                    
+                    {/* Record Header */}
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 border-b border-[#E5E1D8] gap-3">
+                      <div>
+                        <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#1E3B2B] bg-[#EBF6EE] px-2.5 py-1 rounded">
+                          LOGGED WORK RECORD
                         </span>
-                        <span>·</span>
-                        <span>September 2026</span>
+                        <h3 className="font-display font-extrabold text-2xl text-[#121614] mt-2">
+                          COMMERCIAL PANEL INSTALLATION
+                        </h3>
+                        <div className="flex items-center space-x-3 text-xs text-[#737A75] mt-1 font-mono">
+                          <span className="flex items-center space-x-1">
+                            <MapPin className="w-3.5 h-3.5" />
+                            <span>Mangaluru</span>
+                          </span>
+                          <span>·</span>
+                          <span>September 2026</span>
+                        </div>
+                      </div>
+                      <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#EBF6EE] text-[#059669] text-xs font-mono font-bold border border-[#059669]/20">
+                        <Check className="w-3.5 h-3.5" />
+                        <span>CONFIRMED RECORD</span>
                       </div>
                     </div>
-                    <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#EBF6EE] text-[#059669] text-xs font-mono font-bold border border-[#059669]/20">
-                      <Check className="w-3.5 h-3.5" />
-                      <span>CONFIRMED RECORD</span>
-                    </div>
-                  </div>
 
-                  {/* Scope & Quantity */}
-                  <div className="py-5 border-b border-[#E5E1D8]">
-                    <span className="text-xs font-mono uppercase text-[#737A75] block mb-1">SCOPE OF WORK</span>
-                    <p className="text-base text-[#121614] font-medium">
-                      6 electrical panels installed with 415V three-phase busbars, surge protection devices, and load balancing across 3 commercial floors.
-                    </p>
-                  </div>
-
-                  {/* Associated Skills */}
-                  <div className="py-5 border-b border-[#E5E1D8]">
-                    <span className="text-xs font-mono uppercase text-[#737A75] block mb-2">DEMONSTRATED SKILLS</span>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-3 py-1.5 rounded-lg bg-[#FAF8F5] border border-[#E5E1D8] text-xs font-bold text-[#121614] flex items-center space-x-1.5">
-                        <Sparkles className="w-3.5 h-3.5 text-[#059669]" />
-                        <span>Panel Installation</span>
-                      </span>
-                      <span className="px-3 py-1.5 rounded-lg bg-[#FAF8F5] border border-[#E5E1D8] text-xs font-bold text-[#121614] flex items-center space-x-1.5">
-                        <Sparkles className="w-3.5 h-3.5 text-[#059669]" />
-                        <span>Electrical Wiring</span>
-                      </span>
-                      <span className="px-3 py-1.5 rounded-lg bg-[#FAF8F5] border border-[#E5E1D8] text-xs font-bold text-[#121614]">
-                        Load Balancing
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Attached Evidence & Confirmation Footprint */}
-                  <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8]">
-                      <div className="flex items-center space-x-2 text-xs font-bold text-[#121614] mb-1">
-                        <Camera className="w-4 h-4 text-[#1E3B2B]" />
-                        <span>ATTACHED EVIDENCE</span>
-                      </div>
-                      <p className="text-xs text-[#737A75] font-mono">
-                        4 photos · 1 work document (Megger Test)
+                    {/* Scope & Quantity */}
+                    <div className="py-5 border-b border-[#E5E1D8]">
+                      <span className="text-xs font-mono uppercase text-[#737A75] block mb-1">SCOPE OF WORK</span>
+                      <p className="text-base text-[#121614] font-medium">
+                        6 electrical panels installed with 415V three-phase busbars, surge protection devices, and load balancing across 3 commercial floors.
                       </p>
                     </div>
 
-                    <div className="p-3.5 rounded-xl bg-[#EBF6EE] border border-[#059669]/20">
-                      <div className="flex items-center space-x-2 text-xs font-bold text-[#059669] mb-1">
-                        <CheckCircle2 className="w-4 h-4 text-[#059669]" />
-                        <span>CONFIRMED BY</span>
+                    {/* Associated Skills */}
+                    <div className="py-5 border-b border-[#E5E1D8]">
+                      <span className="text-xs font-mono uppercase text-[#737A75] block mb-2">DEMONSTRATED SKILLS</span>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="px-3 py-1.5 rounded-lg bg-[#FAF8F5] border border-[#E5E1D8] text-xs font-bold text-[#121614] flex items-center space-x-1.5">
+                          <Sparkles className="w-3.5 h-3.5 text-[#059669]" />
+                          <span>Panel Installation</span>
+                        </span>
+                        <span className="px-3 py-1.5 rounded-lg bg-[#FAF8F5] border border-[#E5E1D8] text-xs font-bold text-[#121614] flex items-center space-x-1.5">
+                          <Sparkles className="w-3.5 h-3.5 text-[#059669]" />
+                          <span>Electrical Wiring</span>
+                        </span>
+                        <span className="px-3 py-1.5 rounded-lg bg-[#FAF8F5] border border-[#E5E1D8] text-xs font-bold text-[#121614]">
+                          Load Balancing
+                        </span>
                       </div>
-                      <p className="text-xs text-[#1E3B2B] font-medium">
-                        ABC Electricals · Site Supervisor ✓
-                      </p>
                     </div>
-                  </div>
 
-                </div>
+                    {/* Attached Evidence & Confirmation Footprint */}
+                    <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8]">
+                        <div className="flex items-center space-x-2 text-xs font-bold text-[#121614] mb-1">
+                          <Camera className="w-4 h-4 text-[#1E3B2B]" />
+                          <span>ATTACHED EVIDENCE</span>
+                        </div>
+                        <p className="text-xs text-[#737A75] font-mono">
+                          4 photos · 1 work document (Megger Test)
+                        </p>
+                      </div>
+
+                      <div className="p-3.5 rounded-xl bg-[#EBF6EE] border border-[#059669]/20">
+                        <div className="flex items-center space-x-2 text-xs font-bold text-[#059669] mb-1">
+                          <CheckCircle2 className="w-4 h-4 text-[#059669]" />
+                          <span>CONFIRMED BY</span>
+                        </div>
+                        <p className="text-xs text-[#1E3B2B] font-medium">
+                          ABC Electricals · Site Supervisor ✓
+                        </p>
+                      </div>
+                    </div>
+
+                  </div>
+                </ScrollReveal>
               </div>
 
             </div>
@@ -369,163 +388,173 @@ export const WorkersPage: React.FC = () => {
         <section className="py-20 sm:py-28 bg-[#FAF8F5] border-b border-[#E5E1D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <div className="max-w-3xl mb-16">
-              <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-3">
-                EMPIRICAL EVIDENCE ENGINE
-              </span>
-              <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#121614] tracking-tight leading-[1.08] mb-6">
-                DON&apos;T JUST SAY<br />
-                WHAT YOU CAN DO.<br />
-                <span className="text-[#1E3B2B]">SHOW IT.</span>
-              </h2>
-              <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed">
-                Add photos, documents, work details and other evidence that support the skills you&apos;ve demonstrated. Confidence is never an arbitrary score — it is backed by empirical proof.
-              </p>
-            </div>
+            <ScrollReveal delay={0}>
+              <div className="max-w-3xl mb-16">
+                <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-3">
+                  EMPIRICAL EVIDENCE ENGINE
+                </span>
+                <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#121614] tracking-tight leading-[1.08] mb-6">
+                  DON&apos;T JUST SAY<br />
+                  WHAT YOU CAN DO.<br />
+                  <span className="text-[#1E3B2B]">SHOW IT.</span>
+                </h2>
+                <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed">
+                  Add photos, documents, work details and other evidence that support the skills you&apos;ve demonstrated. Confidence is never an arbitrary score — it is backed by empirical proof.
+                </p>
+              </div>
+            </ScrollReveal>
 
             {/* Visual Evidence Composition */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               
               {/* Evidence Media & Artifacts Showcase */}
-              <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl border border-[#E5E1D8] shadow-sm">
-                
-                {/* Evidence Category Selector */}
-                <div className="flex items-center space-x-2 pb-5 border-b border-[#E5E1D8] mb-6 overflow-x-auto">
-                  <button
-                    onClick={() => setActiveEvidenceTab('photo')}
-                    className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center space-x-2 ${
-                      activeEvidenceTab === 'photo'
-                        ? 'bg-[#1E3B2B] text-white'
-                        : 'bg-[#FAF8F5] text-[#4A524D] hover:text-[#121614]'
-                    }`}
-                  >
-                    <Camera className="w-3.5 h-3.5" />
-                    <span>Jobsite Photo</span>
-                  </button>
-                  <button
-                    onClick={() => setActiveEvidenceTab('document')}
-                    className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center space-x-2 ${
-                      activeEvidenceTab === 'document'
-                        ? 'bg-[#1E3B2B] text-white'
-                        : 'bg-[#FAF8F5] text-[#4A524D] hover:text-[#121614]'
-                    }`}
-                  >
-                    <FileCheck className="w-3.5 h-3.5" />
-                    <span>Megger Test Certificate</span>
-                  </button>
-                  <button
-                    onClick={() => setActiveEvidenceTab('confirmation')}
-                    className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center space-x-2 ${
-                      activeEvidenceTab === 'confirmation'
-                        ? 'bg-[#1E3B2B] text-white'
-                        : 'bg-[#FAF8F5] text-[#4A524D] hover:text-[#121614]'
-                    }`}
-                  >
-                    <CheckCheck className="w-3.5 h-3.5" />
-                    <span>Supervisor Sign-Off</span>
-                  </button>
-                </div>
-
-                {/* Active Evidence Display */}
-                {activeEvidenceTab === 'photo' && (
-                  <div className="space-y-4">
-                    <div className="rounded-xl overflow-hidden border border-[#E5E1D8] aspect-video relative bg-black/5">
-                      <img
-                        src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&auto=format&fit=crop&q=80"
-                        alt="Clean conduit routing and panel busbars"
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute bottom-3 left-3 bg-[#121614]/85 text-white text-[11px] font-mono px-3 py-1 rounded backdrop-blur-xs">
-                        Item #01 · Main 415V LT Distribution Assembly
-                      </div>
+              <div className="lg:col-span-7">
+                <ScrollReveal delay={100}>
+                  <div className="bg-white p-6 sm:p-8 rounded-2xl border border-[#E5E1D8] shadow-sm">
+                    
+                    {/* Evidence Category Selector */}
+                    <div className="flex items-center space-x-2 pb-5 border-b border-[#E5E1D8] mb-6 overflow-x-auto">
+                      <button
+                        onClick={() => setActiveEvidenceTab('photo')}
+                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center space-x-2 ${
+                          activeEvidenceTab === 'photo'
+                            ? 'bg-[#1E3B2B] text-white'
+                            : 'bg-[#FAF8F5] text-[#4A524D] hover:text-[#121614]'
+                        }`}
+                      >
+                        <Camera className="w-3.5 h-3.5" />
+                        <span>Jobsite Photo</span>
+                      </button>
+                      <button
+                        onClick={() => setActiveEvidenceTab('document')}
+                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center space-x-2 ${
+                          activeEvidenceTab === 'document'
+                            ? 'bg-[#1E3B2B] text-white'
+                            : 'bg-[#FAF8F5] text-[#4A524D] hover:text-[#121614]'
+                        }`}
+                      >
+                        <FileCheck className="w-3.5 h-3.5" />
+                        <span>Megger Test Certificate</span>
+                      </button>
+                      <button
+                        onClick={() => setActiveEvidenceTab('confirmation')}
+                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center space-x-2 ${
+                          activeEvidenceTab === 'confirmation'
+                            ? 'bg-[#1E3B2B] text-white'
+                            : 'bg-[#FAF8F5] text-[#4A524D] hover:text-[#121614]'
+                        }`}
+                      >
+                        <CheckCheck className="w-3.5 h-3.5" />
+                        <span>Supervisor Sign-Off</span>
+                      </button>
                     </div>
-                    <p className="text-xs text-[#4A524D]">
-                      High-resolution visual proof of neat conduit layout, color-coded phase wiring, and torque-sealed lugs.
-                    </p>
-                  </div>
-                )}
 
-                {activeEvidenceTab === 'document' && (
-                  <div className="space-y-4">
-                    <div className="p-6 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8] font-mono text-xs">
-                      <div className="flex items-center justify-between border-b border-[#E5E1D8] pb-3 mb-3">
-                        <span className="font-bold text-[#121614]">INSULATION RESISTANCE TEST REPORT</span>
-                        <span className="text-[#059669] font-bold">PASSED (&lt; 0.85 MΩ)</span>
-                      </div>
-                      <div className="space-y-2 text-[#4A524D]">
-                        <p>Project: Mangaluru Commercial Hub · Floor 2 & 3</p>
-                        <p>Instrument: Fluke 1507 Calibrated Megohmmeter</p>
-                        <p>Phase R-Y-B to Earth: 1.2 GΩ · Insulation Integrity 100%</p>
-                      </div>
-                    </div>
-                    <p className="text-xs text-[#4A524D]">
-                      Technical documents and test certificates replace subjective claims with verifiable engineering proof.
-                    </p>
-                  </div>
-                )}
-
-                {activeEvidenceTab === 'confirmation' && (
-                  <div className="space-y-4">
-                    <div className="p-6 rounded-xl bg-[#EBF6EE] border border-[#059669]/20">
-                      <div className="flex items-center space-x-3 mb-3">
-                        <div className="w-10 h-10 rounded-full bg-[#1E3B2B] text-white flex items-center justify-center font-bold text-xs">
-                          AE
+                    {/* Active Evidence Display */}
+                    {activeEvidenceTab === 'photo' && (
+                      <div className="space-y-4">
+                        <div className="rounded-xl overflow-hidden border border-[#E5E1D8] aspect-video relative bg-black/5">
+                          <img
+                            src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&auto=format&fit=crop&q=80"
+                            alt="Clean conduit routing and panel busbars"
+                            className="w-full h-full object-cover"
+                          />
+                          <div className="absolute bottom-3 left-3 bg-[#121614]/85 text-white text-[11px] font-mono px-3 py-1 rounded backdrop-blur-xs">
+                            Item #01 · Main 415V LT Distribution Assembly
+                          </div>
                         </div>
-                        <div>
-                          <h4 className="font-bold text-[#121614] text-sm">ABC Electricals Pvt Ltd</h4>
-                          <p className="text-xs text-[#059669] font-mono">Site Supervisor Confirmation ✓</p>
-                        </div>
+                        <p className="text-xs text-[#4A524D]">
+                          High-resolution visual proof of neat conduit layout, color-coded phase wiring, and torque-sealed lugs.
+                        </p>
                       </div>
-                      <p className="text-xs text-[#1E3B2B] italic">
-                        &quot;Ravi Kumar executed the complete commercial panel assembly and passed full load commissioning on schedule.&quot;
-                      </p>
-                    </div>
-                    <p className="text-xs text-[#4A524D]">
-                      Independent confirmation logged with supervisor name, contact identity, and timestamp.
-                    </p>
-                  </div>
-                )}
+                    )}
 
+                    {activeEvidenceTab === 'document' && (
+                      <div className="space-y-4">
+                        <div className="p-6 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8] font-mono text-xs">
+                          <div className="flex items-center justify-between border-b border-[#E5E1D8] pb-3 mb-3">
+                            <span className="font-bold text-[#121614]">INSULATION RESISTANCE TEST REPORT</span>
+                            <span className="text-[#059669] font-bold">PASSED (&lt; 0.85 MΩ)</span>
+                          </div>
+                          <div className="space-y-2 text-[#4A524D]">
+                            <p>Project: Mangaluru Commercial Hub · Floor 2 & 3</p>
+                            <p>Instrument: Fluke 1507 Calibrated Megohmmeter</p>
+                            <p>Phase R-Y-B to Earth: 1.2 GΩ · Insulation Integrity 100%</p>
+                          </div>
+                        </div>
+                        <p className="text-xs text-[#4A524D]">
+                          Technical documents and test certificates replace subjective claims with verifiable engineering proof.
+                        </p>
+                      </div>
+                    )}
+
+                    {activeEvidenceTab === 'confirmation' && (
+                      <div className="space-y-4">
+                        <div className="p-6 rounded-xl bg-[#EBF6EE] border border-[#059669]/20">
+                          <div className="flex items-center space-x-3 mb-3">
+                            <div className="w-10 h-10 rounded-full bg-[#1E3B2B] text-white flex items-center justify-center font-bold text-xs">
+                              AE
+                            </div>
+                            <div>
+                              <h4 className="font-bold text-[#121614] text-sm">ABC Electricals Pvt Ltd</h4>
+                              <p className="text-xs text-[#059669] font-mono">Site Supervisor Confirmation ✓</p>
+                            </div>
+                          </div>
+                          <p className="text-xs text-[#1E3B2B] italic">
+                            &quot;Ravi Kumar executed the complete commercial panel assembly and passed full load commissioning on schedule.&quot;
+                          </p>
+                        </div>
+                        <p className="text-xs text-[#4A524D]">
+                          Independent confirmation logged with supervisor name, contact identity, and timestamp.
+                        </p>
+                      </div>
+                    )}
+
+                  </div>
+                </ScrollReveal>
               </div>
 
               {/* Explainable Skill Confidence Card (No Generic %) */}
-              <div className="lg:col-span-5 bg-white p-6 sm:p-8 rounded-2xl border-2 border-[#1E3B2B] shadow-lg">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#737A75] block mb-2">
-                  SKILL ASSOCIATION & CONFIDENCE
-                </span>
+              <div className="lg:col-span-5">
+                <ScrollReveal delay={200}>
+                  <div className="bg-white p-6 sm:p-8 rounded-2xl border-2 border-[#1E3B2B] shadow-lg">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#737A75] block mb-2">
+                      SKILL ASSOCIATION & CONFIDENCE
+                    </span>
 
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-display font-extrabold text-2xl text-[#121614]">
-                    Electrical Wiring
-                  </h3>
-                  <span className="px-3 py-1 rounded bg-[#EBF6EE] text-[#059669] font-mono text-xs font-bold border border-[#059669]/20">
-                    HIGH CONFIDENCE
-                  </span>
-                </div>
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="font-display font-extrabold text-2xl text-[#121614]">
+                        Electrical Wiring
+                      </h3>
+                      <span className="px-3 py-1 rounded bg-[#EBF6EE] text-[#059669] font-mono text-xs font-bold border border-[#059669]/20">
+                        HIGH CONFIDENCE
+                      </span>
+                    </div>
 
-                <p className="text-xs text-[#737A75] leading-relaxed mb-6">
-                  Confidence on Vouch is strictly calculated from verified work volume and third-party confirmations — never arbitrary star ratings.
-                </p>
+                    <p className="text-xs text-[#737A75] leading-relaxed mb-6">
+                      Confidence on Vouch is strictly calculated from verified work volume and third-party confirmations — never arbitrary star ratings.
+                    </p>
 
-                <div className="space-y-3 font-mono text-xs bg-[#FAF8F5] p-4 rounded-xl border border-[#E5E1D8]">
-                  <div className="flex items-center justify-between pb-2 border-b border-[#E5E1D8]">
-                    <span className="text-[#4A524D]">Work Records:</span>
-                    <span className="font-bold text-[#121614]">8 logged records</span>
+                    <div className="space-y-3 font-mono text-xs bg-[#FAF8F5] p-4 rounded-xl border border-[#E5E1D8]">
+                      <div className="flex items-center justify-between pb-2 border-b border-[#E5E1D8]">
+                        <span className="text-[#4A524D]">Work Records:</span>
+                        <span className="font-bold text-[#121614]">8 logged records</span>
+                      </div>
+                      <div className="flex items-center justify-between pb-2 border-b border-[#E5E1D8]">
+                        <span className="text-[#4A524D]">Evidence Items:</span>
+                        <span className="font-bold text-[#121614]">12 photos & documents</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-[#4A524D]">Confirmations:</span>
+                        <span className="font-bold text-[#059669]">3 supervisor sign-offs</span>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 pt-4 border-t border-[#E5E1D8] text-xs text-[#4A524D] flex items-center space-x-2">
+                      <ShieldCheck className="w-4 h-4 text-[#059669] shrink-0" />
+                      <span>Evidence confidence is fully explainable and auditable by hirers.</span>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between pb-2 border-b border-[#E5E1D8]">
-                    <span className="text-[#4A524D]">Evidence Items:</span>
-                    <span className="font-bold text-[#121614]">12 photos & documents</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[#4A524D]">Confirmations:</span>
-                    <span className="font-bold text-[#059669]">3 supervisor sign-offs</span>
-                  </div>
-                </div>
-
-                <div className="mt-6 pt-4 border-t border-[#E5E1D8] text-xs text-[#4A524D] flex items-center space-x-2">
-                  <ShieldCheck className="w-4 h-4 text-[#059669] shrink-0" />
-                  <span>Evidence confidence is fully explainable and auditable by hirers.</span>
-                </div>
+                </ScrollReveal>
               </div>
 
             </div>
@@ -543,97 +572,101 @@ export const WorkersPage: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               
               <div className="lg:col-span-6">
-                <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-3">
-                  INDEPENDENT CONFIRMATION
-                </span>
-                <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#121614] tracking-tight leading-[1.08] mb-6">
-                  LET THE PEOPLE<br />
-                  YOU&apos;VE WORKED WITH<br />
-                  <span className="text-[#1E3B2B]">BACK IT UP.</span>
-                </h2>
-                <p className="text-lg text-[#4A524D] leading-relaxed mb-6">
-                  Ask a supervisor, employer or customer to confirm the work you&apos;ve completed. They don&apos;t need to download an app or create an account — one tap on WhatsApp or SMS confirms your project instantly.
-                </p>
-                <div className="p-4 rounded-xl bg-white border border-[#E5E1D8] text-xs text-[#4A524D] flex items-start space-x-3">
-                  <Lock className="w-4 h-4 text-[#1E3B2B] shrink-0 mt-0.5" />
-                  <span>
-                    Confirmations are tamper-proof and linked permanently to your Vouch passport, building trust with future contractors.
+                <ScrollReveal delay={0}>
+                  <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-3">
+                    INDEPENDENT CONFIRMATION
                   </span>
-                </div>
+                  <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#121614] tracking-tight leading-[1.08] mb-6">
+                    LET THE PEOPLE<br />
+                    YOU&apos;VE WORKED WITH<br />
+                    <span className="text-[#1E3B2B]">BACK IT UP.</span>
+                  </h2>
+                  <p className="text-lg text-[#4A524D] leading-relaxed mb-6">
+                    Ask a supervisor, employer or customer to confirm the work you&apos;ve completed. They don&apos;t need to download an app or create an account — one tap on WhatsApp or SMS confirms your project instantly.
+                  </p>
+                  <div className="p-4 rounded-xl bg-white border border-[#E5E1D8] text-xs text-[#4A524D] flex items-start space-x-3">
+                    <Lock className="w-4 h-4 text-[#1E3B2B] shrink-0 mt-0.5" />
+                    <span>
+                      Confirmations are tamper-proof and linked permanently to your Vouch passport, building trust with future contractors.
+                    </span>
+                  </div>
+                </ScrollReveal>
               </div>
 
               {/* Interactive Simple Confirmation Flow Simulator */}
               <div className="lg:col-span-6">
-                <div className="bg-white rounded-2xl border-2 border-[#1E3B2B] shadow-xl p-6 sm:p-8">
-                  <div className="flex items-center justify-between pb-4 border-b border-[#E5E1D8] mb-6">
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#1E3B2B]">
-                      VERIFIER CONFIRMATION REQUEST
-                    </span>
-                    <span className="text-xs text-[#737A75] font-mono">VOUCH VERIFY</span>
-                  </div>
-
-                  {confirmedState === 'pending' ? (
-                    <div className="space-y-6">
-                      <div className="space-y-3 bg-[#FAF8F5] p-5 rounded-xl border border-[#E5E1D8]">
-                        <p className="text-sm font-medium text-[#121614]">
-                          <span className="font-bold text-[#1E3B2B]">Ravi Kumar</span> performed:
-                        </p>
-                        <h4 className="font-display font-extrabold text-xl text-[#121614]">
-                          Commercial electrical installation
-                        </h4>
-                        <div className="grid grid-cols-2 gap-2 text-xs font-mono text-[#737A75] pt-2 border-t border-[#E5E1D8]">
-                          <div>
-                            <span className="text-[#4A524D] block">Role:</span>
-                            <span className="font-bold text-[#121614]">Electrician</span>
-                          </div>
-                          <div>
-                            <span className="text-[#4A524D] block">Location:</span>
-                            <span className="font-bold text-[#121614]">Mangaluru</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <button
-                        onClick={() => setConfirmedState('confirmed')}
-                        className="w-full py-4 rounded-xl bg-[#1E3B2B] text-white font-bold text-base hover:bg-[#14281D] active:scale-[0.98] transition-all flex items-center justify-center space-x-2 shadow-sm"
-                      >
-                        <Check className="w-5 h-5 text-[#C27A38]" />
-                        <span>[ CONFIRM WORK ]</span>
-                      </button>
-                      <p className="text-[11px] text-center text-[#737A75]">
-                        Tap the button above to simulate how a supervisor confirms your record with one touch.
-                      </p>
+                <ScrollReveal delay={120}>
+                  <div className="bg-white rounded-2xl border-2 border-[#1E3B2B] shadow-xl p-6 sm:p-8">
+                    <div className="flex items-center justify-between pb-4 border-b border-[#E5E1D8] mb-6">
+                      <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#1E3B2B]">
+                        VERIFIER CONFIRMATION REQUEST
+                      </span>
+                      <span className="text-xs text-[#737A75] font-mono">VOUCH VERIFY</span>
                     </div>
-                  ) : (
-                    <div className="space-y-6 animate-fade-in-up">
-                      <div className="bg-[#EBF6EE] p-6 rounded-xl border-2 border-[#059669]/40 text-center">
-                        <div className="w-12 h-12 rounded-full bg-[#059669] text-white flex items-center justify-center mx-auto mb-3">
-                          <Check className="w-6 h-6" />
-                        </div>
-                        <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#059669] block mb-1">
-                          ✓ WORK CONFIRMED
-                        </span>
-                        <h4 className="font-display font-bold text-lg text-[#121614]">
-                          Confirmed by ABC Electricals
-                        </h4>
-                        <p className="text-xs text-[#1E3B2B] font-mono mt-1">
-                          Supervisor · Signed on 14 Sept 2026
-                        </p>
-                      </div>
 
-                      <div className="flex items-center justify-between text-xs pt-2">
-                        <span className="text-[#059669] font-bold">Evidence confidence updated to HIGH.</span>
+                    {confirmedState === 'pending' ? (
+                      <div className="space-y-6">
+                        <div className="space-y-3 bg-[#FAF8F5] p-5 rounded-xl border border-[#E5E1D8]">
+                          <p className="text-sm font-medium text-[#121614]">
+                            <span className="font-bold text-[#1E3B2B]">Ravi Kumar</span> performed:
+                          </p>
+                          <h4 className="font-display font-extrabold text-xl text-[#121614]">
+                            Commercial electrical installation
+                          </h4>
+                          <div className="grid grid-cols-2 gap-2 text-xs font-mono text-[#737A75] pt-2 border-t border-[#E5E1D8]">
+                            <div>
+                              <span className="text-[#4A524D] block">Role:</span>
+                              <span className="font-bold text-[#121614]">Electrician</span>
+                            </div>
+                            <div>
+                              <span className="text-[#4A524D] block">Location:</span>
+                              <span className="font-bold text-[#121614]">Mangaluru</span>
+                            </div>
+                          </div>
+                        </div>
+
                         <button
-                          onClick={() => setConfirmedState('pending')}
-                          className="text-[#737A75] hover:text-[#121614] underline font-mono"
+                          onClick={() => setConfirmedState('confirmed')}
+                          className="w-full py-4 rounded-xl bg-[#1E3B2B] text-white font-bold text-base hover:bg-[#14281D] active:scale-[0.98] transition-all flex items-center justify-center space-x-2 shadow-sm vouch-btn"
                         >
-                          Reset Demo
+                          <Check className="w-5 h-5 text-[#C27A38]" />
+                          <span>[ CONFIRM WORK ]</span>
                         </button>
+                        <p className="text-[11px] text-center text-[#737A75]">
+                          Tap the button above to simulate how a supervisor confirms your record with one touch.
+                        </p>
                       </div>
-                    </div>
-                  )}
+                    ) : (
+                      <div className="space-y-6 animate-fade-in-up">
+                        <div className="bg-[#EBF6EE] p-6 rounded-xl border-2 border-[#059669]/40 text-center">
+                          <div className="w-12 h-12 rounded-full bg-[#059669] text-white flex items-center justify-center mx-auto mb-3">
+                            <Check className="w-6 h-6" />
+                          </div>
+                          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#059669] block mb-1">
+                            ✓ WORK CONFIRMED
+                          </span>
+                          <h4 className="font-display font-bold text-lg text-[#121614]">
+                            Confirmed by ABC Electricals
+                          </h4>
+                          <p className="text-xs text-[#1E3B2B] font-mono mt-1">
+                            Supervisor · Signed on 14 Sept 2026
+                          </p>
+                        </div>
 
-                </div>
+                        <div className="flex items-center justify-between text-xs pt-2">
+                          <span className="text-[#059669] font-bold">Evidence confidence updated to HIGH.</span>
+                          <button
+                            onClick={() => setConfirmedState('pending')}
+                            className="text-[#737A75] hover:text-[#121614] underline font-mono"
+                          >
+                            Reset Demo
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                  </div>
+                </ScrollReveal>
               </div>
 
             </div>
@@ -648,129 +681,133 @@ export const WorkersPage: React.FC = () => {
         <section className="py-20 sm:py-28 bg-[#FAF8F5] border-b border-[#E5E1D8]">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-3">
-                THE CORE ARTIFACT
-              </span>
-              <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#121614] tracking-tight leading-[1.08] mb-4">
-                ONE PASSPORT.<br />
-                <span className="text-[#1E3B2B]">YEARS OF EXPERIENCE.</span>
-              </h2>
-              <p className="text-lg text-[#4A524D] leading-relaxed">
-                Your Vouch Passport belongs to you. Keep building it as your career moves from one employer to the next.
-              </p>
-            </div>
+            <ScrollReveal delay={0}>
+              <div className="text-center max-w-3xl mx-auto mb-16">
+                <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-3">
+                  THE CORE ARTIFACT
+                </span>
+                <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#121614] tracking-tight leading-[1.08] mb-4">
+                  ONE PASSPORT.<br />
+                  <span className="text-[#1E3B2B]">YEARS OF EXPERIENCE.</span>
+                </h2>
+                <p className="text-lg text-[#4A524D] leading-relaxed">
+                  Your Vouch Passport belongs to you. Keep building it as your career moves from one employer to the next.
+                </p>
+              </div>
+            </ScrollReveal>
 
             {/* Large Vouch Professional Passport */}
-            <div className="bg-white rounded-3xl border-2 border-[#1E3B2B] shadow-2xl p-6 sm:p-10 relative overflow-hidden">
-              
-              {/* Header */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-8 border-b border-[#E5E1D8] gap-6">
-                <div className="flex items-center space-x-5">
-                  <div className="w-20 h-20 rounded-2xl overflow-hidden border-2 border-[#1E3B2B] shadow-sm shrink-0">
-                    <img
-                      src="https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?w=300&auto=format&fit=crop&q=80"
-                      alt="Ravi Kumar portrait"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <div className="flex items-center space-x-2 mb-1">
-                      <span className="px-2.5 py-0.5 rounded bg-[#1E3B2B] text-white text-[10px] font-mono uppercase tracking-wider font-bold">
-                        VOUCH PASSPORT
-                      </span>
-                      <span className="text-xs font-mono text-[#737A75]">ID: VOUCH-IN-8821</span>
+            <ScrollReveal delay={120} variant="passport">
+              <div className="bg-white rounded-3xl border-2 border-[#1E3B2B] shadow-2xl p-6 sm:p-10 relative overflow-hidden">
+                
+                {/* Header */}
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-8 border-b border-[#E5E1D8] gap-6">
+                  <div className="flex items-center space-x-5">
+                    <div className="w-20 h-20 rounded-2xl overflow-hidden border-2 border-[#1E3B2B] shadow-sm shrink-0">
+                      <img
+                        src="https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?w=300&auto=format&fit=crop&q=80"
+                        alt="Ravi Kumar portrait"
+                        className="w-full h-full object-cover"
+                      />
                     </div>
-                    <h3 className="font-display font-extrabold text-3xl text-[#121614]">
-                      RAVI KUMAR
-                    </h3>
-                    <p className="text-sm text-[#4A524D] font-medium">
-                      Electrician · 7 years experience · Mangaluru
-                    </p>
+                    <div>
+                      <div className="flex items-center space-x-2 mb-1">
+                        <span className="px-2.5 py-0.5 rounded bg-[#1E3B2B] text-white text-[10px] font-mono uppercase tracking-wider font-bold">
+                          VOUCH PASSPORT
+                        </span>
+                        <span className="text-xs font-mono text-[#737A75]">ID: VOUCH-IN-8821</span>
+                      </div>
+                      <h3 className="font-display font-extrabold text-3xl text-[#121614]">
+                        RAVI KUMAR
+                      </h3>
+                      <p className="text-sm text-[#4A524D] font-medium">
+                        Electrician · 7 years experience · Mangaluru
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-3 w-full sm:w-auto">
+                    <Link
+                      to="/passport/ravi-kumar-8821"
+                      className="flex-1 sm:flex-none px-6 py-3 rounded-xl bg-[#1E3B2B] text-white font-bold text-xs hover:bg-[#14281D] transition-colors flex items-center justify-center space-x-2 shadow-sm vouch-btn"
+                    >
+                      <Share2 className="w-4 h-4 text-[#C27A38]" />
+                      <span>SHARE MY PASSPORT</span>
+                    </Link>
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-3 w-full sm:w-auto">
-                  <Link
-                    to="/passport/ravi-kumar-8821"
-                    className="flex-1 sm:flex-none px-6 py-3 rounded-xl bg-[#1E3B2B] text-white font-bold text-xs hover:bg-[#14281D] transition-colors flex items-center justify-center space-x-2 shadow-sm"
-                  >
-                    <Share2 className="w-4 h-4 text-[#C27A38]" />
-                    <span>SHARE MY PASSPORT</span>
-                  </Link>
+                {/* Passport Metrics Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-8 border-b border-[#E5E1D8]">
+                  <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8]">
+                    <span className="text-[10px] font-mono uppercase text-[#737A75] block mb-1">WORK HISTORY</span>
+                    <div className="font-display font-extrabold text-2xl text-[#121614]">12</div>
+                    <span className="text-xs text-[#4A524D]">work records</span>
+                  </div>
+                  <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8]">
+                    <span className="text-[10px] font-mono uppercase text-[#737A75] block mb-1">EVIDENCE</span>
+                    <div className="font-display font-extrabold text-2xl text-[#121614]">18</div>
+                    <span className="text-xs text-[#4A524D]">evidence items</span>
+                  </div>
+                  <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8]">
+                    <span className="text-[10px] font-mono uppercase text-[#737A75] block mb-1">CONFIRMATIONS</span>
+                    <div className="font-display font-extrabold text-2xl text-[#059669]">8</div>
+                    <span className="text-xs text-[#059669] font-medium">confirmations</span>
+                  </div>
+                  <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8]">
+                    <span className="text-[10px] font-mono uppercase text-[#737A75] block mb-1">EXPERIENCE</span>
+                    <div className="font-display font-extrabold text-2xl text-[#121614]">7 yrs</div>
+                    <span className="text-xs text-[#4A524D]">verified trade time</span>
+                  </div>
                 </div>
+
+                {/* Demonstrated Skills Breakdown */}
+                <div className="pt-8 space-y-4">
+                  <span className="text-xs font-mono uppercase tracking-wider text-[#737A75] font-bold block">
+                    DEMONSTRATED SKILLS & CONFIDENCE
+                  </span>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="p-5 rounded-2xl bg-[#FAF8F5] border border-[#E5E1D8]">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-bold text-[#121614] text-sm">Electrical Wiring</h4>
+                        <span className="text-[10px] font-mono font-bold bg-[#EBF6EE] text-[#059669] px-2 py-0.5 rounded border border-[#059669]/20">
+                          HIGH CONFIDENCE
+                        </span>
+                      </div>
+                      <p className="text-xs text-[#737A75]">
+                        8 records · 12 photos · 3 confirmations
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl bg-[#FAF8F5] border border-[#E5E1D8]">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-bold text-[#121614] text-sm">Panel Installation</h4>
+                        <span className="text-[10px] font-mono font-bold bg-[#EBF6EE] text-[#059669] px-2 py-0.5 rounded border border-[#059669]/20">
+                          HIGH CONFIDENCE
+                        </span>
+                      </div>
+                      <p className="text-xs text-[#737A75]">
+                        6 records · 10 photos · 3 confirmations
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl bg-[#FAF8F5] border border-[#E5E1D8]">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-bold text-[#121614] text-sm">Troubleshooting</h4>
+                        <span className="text-[10px] font-mono font-bold bg-[#EFECE6] text-[#C27A38] px-2 py-0.5 rounded border border-[#E5E1D8]">
+                          BUILDING EVIDENCE
+                        </span>
+                      </div>
+                      <p className="text-xs text-[#737A75]">
+                        2 records · 3 photos · 1 confirmation
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
               </div>
-
-              {/* Passport Metrics Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-8 border-b border-[#E5E1D8]">
-                <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8]">
-                  <span className="text-[10px] font-mono uppercase text-[#737A75] block mb-1">WORK HISTORY</span>
-                  <div className="font-display font-extrabold text-2xl text-[#121614]">12</div>
-                  <span className="text-xs text-[#4A524D]">work records</span>
-                </div>
-                <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8]">
-                  <span className="text-[10px] font-mono uppercase text-[#737A75] block mb-1">EVIDENCE</span>
-                  <div className="font-display font-extrabold text-2xl text-[#121614]">18</div>
-                  <span className="text-xs text-[#4A524D]">evidence items</span>
-                </div>
-                <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8]">
-                  <span className="text-[10px] font-mono uppercase text-[#737A75] block mb-1">CONFIRMATIONS</span>
-                  <div className="font-display font-extrabold text-2xl text-[#059669]">8</div>
-                  <span className="text-xs text-[#059669] font-medium">confirmations</span>
-                </div>
-                <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8]">
-                  <span className="text-[10px] font-mono uppercase text-[#737A75] block mb-1">EXPERIENCE</span>
-                  <div className="font-display font-extrabold text-2xl text-[#121614]">7 yrs</div>
-                  <span className="text-xs text-[#4A524D]">verified trade time</span>
-                </div>
-              </div>
-
-              {/* Demonstrated Skills Breakdown */}
-              <div className="pt-8 space-y-4">
-                <span className="text-xs font-mono uppercase tracking-wider text-[#737A75] font-bold block">
-                  DEMONSTRATED SKILLS & CONFIDENCE
-                </span>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="p-5 rounded-2xl bg-[#FAF8F5] border border-[#E5E1D8]">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-bold text-[#121614] text-sm">Electrical Wiring</h4>
-                      <span className="text-[10px] font-mono font-bold bg-[#EBF6EE] text-[#059669] px-2 py-0.5 rounded border border-[#059669]/20">
-                        HIGH CONFIDENCE
-                      </span>
-                    </div>
-                    <p className="text-xs text-[#737A75]">
-                      8 records · 12 photos · 3 confirmations
-                    </p>
-                  </div>
-
-                  <div className="p-5 rounded-2xl bg-[#FAF8F5] border border-[#E5E1D8]">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-bold text-[#121614] text-sm">Panel Installation</h4>
-                      <span className="text-[10px] font-mono font-bold bg-[#EBF6EE] text-[#059669] px-2 py-0.5 rounded border border-[#059669]/20">
-                        HIGH CONFIDENCE
-                      </span>
-                    </div>
-                    <p className="text-xs text-[#737A75]">
-                      6 records · 10 photos · 3 confirmations
-                    </p>
-                  </div>
-
-                  <div className="p-5 rounded-2xl bg-[#FAF8F5] border border-[#E5E1D8]">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-bold text-[#121614] text-sm">Troubleshooting</h4>
-                      <span className="text-[10px] font-mono font-bold bg-[#EFECE6] text-[#C27A38] px-2 py-0.5 rounded border border-[#E5E1D8]">
-                        BUILDING EVIDENCE
-                      </span>
-                    </div>
-                    <p className="text-xs text-[#737A75]">
-                      2 records · 3 photos · 1 confirmation
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
+            </ScrollReveal>
 
           </div>
         </section>
@@ -782,66 +819,70 @@ export const WorkersPage: React.FC = () => {
         <section className="py-20 sm:py-28 bg-[#F4EFEB] border-b border-[#E5E1D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-3">
-                PERMANENT CAREER EQUITY
-              </span>
-              <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#121614] tracking-tight leading-[1.08] mb-4">
-                ONE IDENTITY.<br />
-                <span className="text-[#1E3B2B]">EVERY JOB.</span>
-              </h2>
-              <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed">
-                Your professional identity shouldn&apos;t reset every time your employer changes.
-              </p>
-            </div>
-
-            {/* Visual Portability Progression */}
-            <div className="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-3xl border-2 border-[#1E3B2B] shadow-xl">
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-center text-center">
-                
-                {/* Step 1 */}
-                <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8]">
-                  <span className="text-[10px] font-mono font-bold text-[#737A75] block mb-1">PHASE 01</span>
-                  <h4 className="font-bold text-sm text-[#121614]">Employer 01</h4>
-                  <p className="text-[11px] text-[#737A75] mt-1">Industrial Wiring</p>
-                </div>
-
-                {/* Arrow */}
-                <div className="hidden md:flex justify-center text-[#1E3B2B] font-bold">
-                  <ArrowRight className="w-5 h-5 text-[#C27A38]" />
-                </div>
-
-                {/* Center Constant: Vouch Passport */}
-                <div className="p-6 rounded-2xl bg-[#1E3B2B] text-white shadow-md border-2 border-[#C27A38]">
-                  <span className="text-[9px] font-mono uppercase tracking-wider text-[#C27A38] block mb-1 font-bold">
-                    PERMANENT ASSET
-                  </span>
-                  <h3 className="font-display font-extrabold text-base text-white">
-                    VOUCH PASSPORT
-                  </h3>
-                  <p className="text-[11px] text-[#E5E1D8] mt-1">Follows the worker everywhere</p>
-                </div>
-
-                {/* Arrow */}
-                <div className="hidden md:flex justify-center text-[#1E3B2B] font-bold">
-                  <ArrowRight className="w-5 h-5 text-[#C27A38]" />
-                </div>
-
-                {/* Step 2 */}
-                <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8]">
-                  <span className="text-[10px] font-mono font-bold text-[#737A75] block mb-1">PHASE 02</span>
-                  <h4 className="font-bold text-sm text-[#121614]">New Project / City</h4>
-                  <p className="text-[11px] text-[#737A75] mt-1">Employer 02 & 03</p>
-                </div>
-
-              </div>
-
-              <div className="mt-8 pt-6 border-t border-[#E5E1D8] text-center">
-                <p className="text-sm text-[#4A524D] max-w-xl mx-auto">
-                  When you walk onto a new jobsite or meet a new hiring contractor, your 7 years of evidence and supervisor confirmations speak for you on day one.
+            <ScrollReveal delay={0}>
+              <div className="text-center max-w-3xl mx-auto mb-16">
+                <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-3">
+                  PERMANENT CAREER EQUITY
+                </span>
+                <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#121614] tracking-tight leading-[1.08] mb-4">
+                  ONE IDENTITY.<br />
+                  <span className="text-[#1E3B2B]">EVERY JOB.</span>
+                </h2>
+                <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed">
+                  Your professional identity shouldn&apos;t reset every time your employer changes.
                 </p>
               </div>
-            </div>
+            </ScrollReveal>
+
+            {/* Visual Portability Progression */}
+            <ScrollReveal delay={120}>
+              <div className="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-3xl border-2 border-[#1E3B2B] shadow-xl">
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-center text-center">
+                  
+                  {/* Step 1 */}
+                  <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8]">
+                    <span className="text-[10px] font-mono font-bold text-[#737A75] block mb-1">PHASE 01</span>
+                    <h4 className="font-bold text-sm text-[#121614]">Employer 01</h4>
+                    <p className="text-[11px] text-[#737A75] mt-1">Industrial Wiring</p>
+                  </div>
+
+                  {/* Arrow */}
+                  <div className="hidden md:flex justify-center text-[#1E3B2B] font-bold">
+                    <ArrowRight className="w-5 h-5 text-[#C27A38]" />
+                  </div>
+
+                  {/* Center Constant: Vouch Passport */}
+                  <div className="p-6 rounded-2xl bg-[#1E3B2B] text-white shadow-md border-2 border-[#C27A38]">
+                    <span className="text-[9px] font-mono uppercase tracking-wider text-[#C27A38] block mb-1 font-bold">
+                      PERMANENT ASSET
+                    </span>
+                    <h3 className="font-display font-extrabold text-base text-white">
+                      VOUCH PASSPORT
+                    </h3>
+                    <p className="text-[11px] text-[#E5E1D8] mt-1">Follows the worker everywhere</p>
+                  </div>
+
+                  {/* Arrow */}
+                  <div className="hidden md:flex justify-center text-[#1E3B2B] font-bold">
+                    <ArrowRight className="w-5 h-5 text-[#C27A38]" />
+                  </div>
+
+                  {/* Step 2 */}
+                  <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8]">
+                    <span className="text-[10px] font-mono font-bold text-[#737A75] block mb-1">PHASE 02</span>
+                    <h4 className="font-bold text-sm text-[#121614]">New Project / City</h4>
+                    <p className="text-[11px] text-[#737A75] mt-1">Employer 02 & 03</p>
+                  </div>
+
+                </div>
+
+                <div className="mt-8 pt-6 border-t border-[#E5E1D8] text-center">
+                  <p className="text-sm text-[#4A524D] max-w-xl mx-auto">
+                    When you walk onto a new jobsite or meet a new hiring contractor, your 7 years of evidence and supervisor confirmations speak for you on day one.
+                  </p>
+                </div>
+              </div>
+            </ScrollReveal>
 
           </div>
         </section>
@@ -853,35 +894,41 @@ export const WorkersPage: React.FC = () => {
         <section className="py-20 sm:py-28 bg-[#FAF8F5]">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             
-            <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-4">
-              START BUILDING YOUR IDENTITY
-            </span>
-            
-            <h2 className="font-display font-extrabold text-4xl sm:text-6xl text-[#121614] tracking-tight leading-[1.06] mb-6">
-              YOUR WORK ALREADY HAS VALUE.<br />
-              <span className="text-[#1E3B2B]">MAKE IT PORTABLE.</span>
-            </h2>
+            <ScrollReveal delay={0}>
+              <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-4">
+                START BUILDING YOUR IDENTITY
+              </span>
+              
+              <h2 className="font-display font-extrabold text-4xl sm:text-6xl text-[#121614] tracking-tight leading-[1.06] mb-6">
+                YOUR WORK ALREADY HAS VALUE.<br />
+                <span className="text-[#1E3B2B]">MAKE IT PORTABLE.</span>
+              </h2>
+            </ScrollReveal>
 
-            <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed mb-10 max-w-2xl mx-auto">
-              Start building a professional record around the work you&apos;ve already done. It takes less than 3 minutes to create your permanent passport.
-            </p>
+            <ScrollReveal delay={100}>
+              <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed mb-10 max-w-2xl mx-auto">
+                Start building a professional record around the work you&apos;ve already done. It takes less than 3 minutes to create your permanent passport.
+              </p>
+            </ScrollReveal>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-              <Link
-                to="/build-passport"
-                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-9 py-4 rounded-xl bg-[#1E3B2B] text-white font-bold text-base hover:bg-[#14281D] active:scale-[0.98] transition-all shadow-md group"
-              >
-                <span>BUILD YOUR PASSPORT</span>
-                <ArrowRight className="w-4 h-4 text-[#C27A38] group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                to="/how-it-works"
-                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-7 py-4 rounded-xl border border-[#E5E1D8] bg-white text-[#121614] hover:bg-[#FAF8F5] text-base font-medium transition-colors"
-              >
-                <span>HOW VOUCH WORKS</span>
-                <ChevronRight className="w-4 h-4 text-[#737A75]" />
-              </Link>
-            </div>
+            <ScrollReveal delay={160}>
+              <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <Link
+                  to="/build-passport"
+                  className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-9 py-4 rounded-xl bg-[#1E3B2B] text-white font-bold text-base hover:bg-[#14281D] active:scale-[0.98] transition-all shadow-md group vouch-btn"
+                >
+                  <span>BUILD YOUR PASSPORT</span>
+                  <ArrowRight className="w-4 h-4 text-[#C27A38] group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link
+                  to="/how-it-works"
+                  className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-7 py-4 rounded-xl border border-[#E5E1D8] bg-white text-[#121614] hover:bg-[#FAF8F5] text-base font-medium transition-colors vouch-btn"
+                >
+                  <span>HOW VOUCH WORKS</span>
+                  <ChevronRight className="w-4 h-4 text-[#737A75]" />
+                </Link>
+              </div>
+            </ScrollReveal>
 
           </div>
         </section>
