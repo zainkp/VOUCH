@@ -13,6 +13,7 @@ import { AboutPage } from './pages/PublicWebsite/AboutPage';
 import { LoginPage } from './pages/PublicWebsite/LoginPage';
 import { BuildPassportPage } from './pages/PublicWebsite/BuildPassportPage';
 import { PublicPassportPage } from './pages/PublicWebsite/PublicPassportPage';
+import { PublicVerifierPage } from './pages/PublicVerifierPage';
 
 // Verified Vouch Application Experiences
 import { WorkerAppPage } from './pages/WorkerAppPage';
@@ -34,10 +35,12 @@ export function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/build-passport" element={<BuildPassportPage />} />
 
-          {/* Vouch Application Portals */}
+          {/* Vouch Application Portals & Verification */}
           <Route path="/worker" element={<WorkerAppPage />} />
           <Route path="/contractor" element={<ContractorAppPage />} />
           <Route path="/passport/:id" element={<PublicPassportPage />} />
+          <Route path="/passport/p/:slug" element={<PublicPassportPage />} />
+          <Route path="/verify/:token" element={<PublicVerifierPage />} />
 
           {/* Catch-all Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
