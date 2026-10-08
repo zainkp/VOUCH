@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { 
   WorkerProfile, 
   WorkRecord, 
@@ -7,13 +7,23 @@ import {
   ViewRole,
   EvidenceItem 
 } from '../types';
-import { initialWorker, initialWorkRecords, initialSkills, nearbyWorkers } from '../data/mockData';
-import { calculateSkillConfidence, calculatePassportCompleteness } from '../utils/evidenceEngine';
+import { initialWorker, initialWorkRecords, initialSkills } from '../data/mockData';
+import { calculatePassportCompleteness } from '../utils/evidenceEngine';
+import { api, ApiError } from '../services/api';
+import { 
+  mapWorkerProfile, 
+  mapWorkRecord, 
+  mapSkillConfidence 
+} from '../services/adapters';
 
 interface AppContextType {
   worker: WorkerProfile;
   workRecords: WorkRecord[];
   skills: SkillEvidenceBreakdown[];
+  isLoading: boolean;
+  error: string | null;
+  refreshData: () => Promise<void>;
+  
   currentTab: 'home' | 'work' | 'passport' | 'profile';
   setCurrentTab: (tab: 'home' | 'work' | 'passport' | 'profile') => void;
   selectedWorkRecord: WorkRecord | null;
@@ -48,6 +58,7 @@ interface AppContextType {
     skillCount: number;
     confirmationCount: number;
     passportCompleteness: number;
+    overallConfidence: number;
   };
 }
 
@@ -57,6 +68,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [worker, setWorker] = useState<WorkerProfile>(initialWorker);
   const [workRecords, setWorkRecords] = useState<WorkRecord[]>(initialWorkRecords);
   const [skills, setSkills] = useState<SkillEvidenceBreakdown[]>(initialSkills);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
   const [currentTab, setCurrentTab] = useState<'home' | 'work' | 'passport' | 'profile'>('home');
   const [selectedWorkRecord, setSelectedWorkRecord] = useState<WorkRecord | null>(null);
   const [isAddWorkOpen, setIsAddWorkOpen] = useState(false);
@@ -67,28 +81,46 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [activeRole, setActiveRole] = useState<ViewRole>('worker');
   const [savedWorkerIds, setSavedWorkerIds] = useState<string[]>(['worker_001']);
 
-  // Recompute skill confidences and passport completeness whenever work records change
-  useEffect(() => {
-    const updatedSkills = skills.map(skill => {
-      const calculation = calculateSkillConfidence(skill.name, workRecords);
-      return {
-        ...skill,
-        confidenceLevel: calculation.confidenceLevel,
-        workRecordsCount: calculation.workRecordsCount,
-        evidenceCount: calculation.evidenceCount,
-        confirmationsCount: calculation.confirmationsCount,
-        supervisorConfirmationsCount: calculation.supervisorConfirmationsCount,
-        explanation: calculation.explanation,
-      };
-    });
-    setSkills(updatedSkills);
+  /**
+   * Primary API Data Loader for Worker Profile & Work History
+   * Connects GET /api/workers/me and GET /api/work
+   */
+  const loadApiData = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      // Concurrently fetch profile and work history from FastAPI backend
+      const [profileRes, workRes] = await Promise.all([
+        api.getMyProfile(),
+        api.getWork(),
+      ]);
 
-    const completeness = calculatePassportCompleteness(workRecords, worker);
-    setWorker(prev => ({
-      ...prev,
-      passportCompleteness: completeness,
-    }));
-  }, [workRecords]);
+      const mappedWorks = workRes.map(mapWorkRecord);
+      const completeness = calculatePassportCompleteness(mappedWorks);
+      const mappedWorker = mapWorkerProfile(profileRes, completeness);
+
+      const mappedSkills = (profileRes.demonstrated_skills || []).map((s, idx) => 
+        mapSkillConfidence(s, idx)
+      );
+
+      setWorker(mappedWorker);
+      setWorkRecords(mappedWorks);
+      setSkills(mappedSkills.length > 0 ? mappedSkills : initialSkills);
+    } catch (err: any) {
+      console.warn('Backend connection error in AppContext:', err);
+      if (err instanceof ApiError) {
+        setError(err.message);
+      } else {
+        setError('Could not connect to VOUCH backend server.');
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadApiData();
+  }, [loadApiData]);
 
   const addWorkRecord = (data: Partial<WorkRecord>): WorkRecord => {
     const supportedSkills = data.skills && data.skills.length > 0 ? data.skills : ['Electrical Wiring'];
@@ -108,22 +140,23 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         ];
 
     const newRecord: WorkRecord = {
-      id: `work_${Date.now()}`,
+      id: data.id || `work_${Date.now()}`,
       title: data.title || 'Untitled Work',
-      employer: data.employer || 'Self added',
+      employer: data.employer || 'Independent / Client Site',
       role: data.role || 'Technician',
-      date: data.date || new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+      date: data.date || new Date().toISOString().split('T')[0],
       description: data.description || '',
       location: data.location || 'Mangaluru',
       quantity: data.quantity || 1,
       quantityUnit: data.quantityUnit || 'units',
-      status: 'ADDED',
+      status: data.status || 'PENDING',
       imageUrl: data.imageUrl || 'https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?w=600&auto=format&fit=crop&q=80',
       skills: supportedSkills,
       evidenceCount: evidenceItems.length,
       evidenceItems,
-      confirmations: [],
-      createdAt: new Date().toISOString(),
+      confirmations: data.confirmations || [],
+      confidence: data.confidence || 0,
+      createdAt: data.createdAt || new Date().toISOString(),
     };
 
     setWorkRecords(prev => [newRecord, ...prev]);
@@ -148,7 +181,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             organization: organization || 'Direct Contractor',
             workTitle: r.title,
             status: 'CONFIRMED',
-            date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+            date: new Date().toISOString().split('T')[0],
             notes: notes || 'Verified quality and adherence to electrical safety specs.',
           };
           return {
@@ -173,8 +206,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             verifierType: 'SUPERVISOR',
             workTitle: r.title,
             status: 'REJECTED',
-            date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
-            notes: 'Insufficient load calculation data provided.',
+            date: new Date().toISOString().split('T')[0],
+            notes: 'Insufficient technical verification provided.',
           };
           return {
             ...r,
@@ -196,15 +229,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const isSavedWorker = (workerId: string) => savedWorkerIds.includes(workerId);
 
   const resetDemoData = () => {
-    setWorker(initialWorker);
-    setWorkRecords(initialWorkRecords);
-    setSkills(initialSkills);
-    setSelectedWorkRecord(null);
-    setSavedWorkerIds(['worker_001']);
+    loadApiData();
   };
 
   const totalConfirmations = workRecords.reduce(
-    (acc, r) => acc + r.confirmations.filter(c => c.status === 'CONFIRMED').length, 
+    (acc, r) => acc + (r.confirmations || []).filter(c => c.status === 'CONFIRMED').length, 
     0
   );
 
@@ -213,6 +242,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     skillCount: skills.length,
     confirmationCount: totalConfirmations,
     passportCompleteness: worker.passportCompleteness,
+    overallConfidence: worker.overallEvidenceConfidence || 0,
   };
 
   return (
@@ -221,6 +251,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         worker,
         workRecords,
         skills,
+        isLoading,
+        error,
+        refreshData: loadApiData,
         currentTab,
         setCurrentTab,
         selectedWorkRecord,
