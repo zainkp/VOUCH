@@ -77,3 +77,39 @@ class WorkerProfile(WorkerBase):
             elif "overall_evidence_confidence" in data and ("overall_confidence" not in data or data["overall_confidence"] == 0):
                 data["overall_confidence"] = data["overall_evidence_confidence"]
         return data
+
+class InitialWorkRecord(BaseModel):
+    title: str
+    description: Optional[str] = None
+    employer: Optional[str] = None
+    role: Optional[str] = None
+    location: Optional[str] = None
+    imageUrl: Optional[str] = None
+    skills: List[str] = Field(default_factory=list)
+    verifierName: Optional[str] = None
+    verifierRole: Optional[str] = None
+
+class WorkerOnboardingRequest(BaseModel):
+    name: str
+    trade: str
+    experience_years: int = Field(default=0)
+    location: str
+    bio: Optional[str] = None
+    profile_photo_url: Optional[str] = None
+    skills: List[str] = Field(default_factory=list)
+    languages: Optional[str] = None
+    initial_work: Optional[InitialWorkRecord] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def handle_onboarding_aliases(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            if "experienceYears" in data and ("experience_years" not in data or not data["experience_years"]):
+                try:
+                    data["experience_years"] = int(data["experienceYears"])
+                except (ValueError, TypeError):
+                    data["experience_years"] = 0
+            if "photoUrl" in data and "profile_photo_url" not in data:
+                data["profile_photo_url"] = data["photoUrl"]
+        return data
+

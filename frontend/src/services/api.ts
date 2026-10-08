@@ -287,6 +287,50 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
 }
 
 // ============================================================================
+export interface InitialWorkRecordPayload {
+  title: string;
+  description?: string;
+  employer?: string;
+  role?: string;
+  location?: string;
+  imageUrl?: string;
+  skills?: string[];
+  verifierName?: string;
+  verifierRole?: string;
+}
+
+export interface WorkerOnboardingPayload {
+  name: string;
+  trade: string;
+  experience_years: number;
+  location: string;
+  bio?: string;
+  profile_photo_url?: string;
+  skills?: string[];
+  languages?: string;
+  initial_work?: InitialWorkRecordPayload;
+}
+
+export interface WorkerClaimResponse {
+  field: string;
+  value: any;
+  source: string;
+}
+
+export interface WorkerProfileExtractionResponse {
+  occupation?: string | null;
+  experience_years_claimed?: number | null;
+  skills: string[];
+  location?: string | null;
+  employers: string[];
+  claims: WorkerClaimResponse[];
+}
+
+export interface AudioTranscriptionResponse {
+  transcript: string;
+}
+
+// ============================================================================
 // Centralized API Service Methods
 // ============================================================================
 
@@ -300,11 +344,24 @@ export const api = {
   },
 
   /**
-   * Worker Profile: Retrieves the authenticated or default worker profile
+   * Worker Profile: Retrieves the authenticated, active or default worker profile
    * GET /api/workers/me
    */
-  getMyProfile(): Promise<WorkerProfileResponse> {
-    return request<WorkerProfileResponse>('/workers/me');
+  getMyProfile(workerId?: string): Promise<WorkerProfileResponse> {
+    const activeId = workerId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vouch_active_worker_id') : null);
+    const query = activeId ? `?worker_id=${encodeURIComponent(activeId)}` : '';
+    return request<WorkerProfileResponse>(`/workers/me${query}`);
+  },
+
+  /**
+   * Create Worker: Persists new worker profile and optional initial work to Firestore
+   * POST /api/workers
+   */
+  createWorker(payload: WorkerOnboardingPayload): Promise<WorkerProfileResponse> {
+    return request<WorkerProfileResponse>('/workers', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
   },
 
   /**
@@ -319,8 +376,10 @@ export const api = {
    * List Work: Retrieves all work records for the active worker
    * GET /api/work
    */
-  getWork(): Promise<WorkRecordResponse[]> {
-    return request<WorkRecordResponse[]>('/work');
+  getWork(workerId?: string): Promise<WorkRecordResponse[]> {
+    const activeId = workerId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vouch_active_worker_id') : null);
+    const query = activeId ? `?worker_id=${encodeURIComponent(activeId)}` : '';
+    return request<WorkRecordResponse[]>(`/work${query}`);
   },
 
   /**
@@ -340,6 +399,36 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ text }),
     });
+  },
+
+  /**
+   * AI Profile Claim Extraction: Parses multilingual description into structured worker claims
+   * POST /api/ai/extract-profile
+   */
+  extractProfile(text: string): Promise<WorkerProfileExtractionResponse> {
+    return request<WorkerProfileExtractionResponse>('/ai/extract-profile', {
+      method: 'POST',
+      body: JSON.stringify({ text }),
+    });
+  },
+
+  /**
+   * AI Voice Transcription: Sends recorded audio to Gemini for speech-to-text transcription
+   * POST /api/ai/transcribe-audio
+   */
+  async transcribeAudio(file: Blob | File, filename?: string): Promise<AudioTranscriptionResponse> {
+    const formData = new FormData();
+    formData.append('file', file, filename || 'audio.webm');
+    const url = `${API_BASE_URL}/ai/transcribe-audio`;
+    const res = await fetch(url, {
+      method: 'POST',
+      body: formData,
+    });
+    if (!res.ok) {
+      const errData = await res.json().catch(() => null);
+      throw new ApiError(errData?.detail || `Audio transcription failed (${res.status})`, res.status);
+    }
+    return res.json();
   },
 
   /**
