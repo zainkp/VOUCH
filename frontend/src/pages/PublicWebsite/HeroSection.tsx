@@ -2,9 +2,12 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, QrCode, FileText, ChevronRight } from 'lucide-react';
 import { ScrollReveal } from '../../components/ScrollReveal';
+import { useApp } from '../../context/AppContext';
 
 export const HeroSection: React.FC = () => {
   const navigate = useNavigate();
+  const { isAuthenticated, activeRole } = useApp();
+  const buildPassportHref = isAuthenticated && activeRole === 'worker' ? '/build-passport' : '/login?redirect=/build-passport';
 
   return (
     <section className="relative pt-32 pb-20 sm:pt-36 sm:pb-28 lg:pt-40 lg:pb-32 overflow-hidden bg-[#FAF8F5]">
@@ -45,7 +48,7 @@ export const HeroSection: React.FC = () => {
             <ScrollReveal delay={180} duration={600}>
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3.5 sm:space-y-0 sm:space-x-4 mb-10 sm:mb-12">
                 <Link
-                  to="/build-passport"
+                  to={buildPassportHref}
                   className="vouch-btn inline-flex items-center justify-center space-x-2 px-7 py-4 rounded-xl bg-[#1E3B2B] text-[#FAF8F5] text-base font-semibold tracking-wide hover:bg-[#14281D] active:scale-[0.98] transition-all shadow-[0_4px_16px_rgba(30,59,43,0.18)]"
                 >
                   <span>Build Your Passport</span>

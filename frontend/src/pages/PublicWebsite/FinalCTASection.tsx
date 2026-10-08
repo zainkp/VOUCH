@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { ScrollReveal } from '../../components/ScrollReveal';
+import { useApp } from '../../context/AppContext';
 
 export const FinalCTASection: React.FC = () => {
+  const { isAuthenticated, activeRole } = useApp();
+  const buildPassportHref = isAuthenticated && activeRole === 'worker' ? '/build-passport' : '/login?redirect=/build-passport';
   return (
     <section className="py-24 sm:py-32 lg:py-36 bg-[#1E3B2B] text-white relative overflow-hidden">
       {/* Subtle background texture lines */}
@@ -39,7 +42,7 @@ export const FinalCTASection: React.FC = () => {
           <ScrollReveal delay={180}>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-5">
               <Link
-                to="/build-passport"
+                to={buildPassportHref}
                 className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-9 py-4 rounded-xl bg-[#FAF8F5] text-[#1E3B2B] text-base font-bold tracking-wide hover:bg-white active:scale-[0.98] transition-all shadow-[0_4px_20px_rgba(0,0,0,0.25)] vouch-btn"
               >
                 <span>Build Your Passport</span>

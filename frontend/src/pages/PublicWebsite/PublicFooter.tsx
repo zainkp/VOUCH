@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, Globe, ArrowUpRight } from 'lucide-react';
+import { useApp } from '../../context/AppContext';
 
 export const PublicFooter: React.FC = () => {
+  const { isAuthenticated, activeRole } = useApp();
+  const buildPassportHref = isAuthenticated && activeRole === 'worker' ? '/build-passport' : '/login?redirect=/build-passport';
   const [selectedLang, setSelectedLang] = useState('English');
 
   const languages = [
@@ -43,7 +46,7 @@ export const PublicFooter: React.FC = () => {
 
             <div className="pt-2 flex items-center space-x-3">
               <Link
-                to="/build-passport"
+                to={buildPassportHref}
                 className="inline-flex items-center space-x-2 text-xs font-mono font-bold text-[#FAF8F5] bg-[#1E3B2B] hover:bg-[#14281D] px-3.5 py-2 rounded-lg transition-colors shadow-2xs"
               >
                 <span>BUILD PASSPORT</span>
@@ -90,7 +93,7 @@ export const PublicFooter: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/build-passport" className="hover:text-[#1E3B2B] transition-colors font-medium text-[#1E3B2B]">
+                <Link to={buildPassportHref} className="hover:text-[#1E3B2B] transition-colors font-medium text-[#1E3B2B]">
                   Start Your Passport →
                 </Link>
               </li>

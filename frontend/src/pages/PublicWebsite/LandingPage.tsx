@@ -2,7 +2,6 @@ import React from 'react';
 import { PublicNavbar } from './PublicNavbar';
 import { HeroSection } from './HeroSection';
 import { ProblemSection } from './ProblemSection';
-import { HowItWorksSection } from './HowItWorksSection';
 import { PassportShowcaseSection } from './PassportShowcaseSection';
 import { EvidenceSection } from './EvidenceSection';
 import { WorkerSection } from './WorkerSection';
@@ -27,10 +26,7 @@ export const LandingPage: React.FC = () => {
         {/* 3. The Problem Section */}
         <ProblemSection />
 
-        {/* 4. How Vouch Works (WORK → EVIDENCE → CONFIRMATION → PASSPORT) */}
-        <HowItWorksSection />
-
-        {/* 5. Professional Passport Product Showcase */}
+        {/* 4. Professional Passport Product Showcase */}
         <PassportShowcaseSection />
 
         {/* 6. Evidence, Not Ratings */}

@@ -25,8 +25,12 @@ import {
   FileCheck
 } from 'lucide-react';
 import { ScrollReveal } from '../../components/ScrollReveal';
+import { useApp } from '../../context/AppContext';
 
 export const WorkersPage: React.FC = () => {
+  const { isAuthenticated, activeRole } = useApp();
+  const buildPassportHref = isAuthenticated && activeRole === 'worker' ? '/build-passport' : '/login?redirect=/build-passport';
+
   // Interactive Confirmation Simulator State
   const [confirmedState, setConfirmedState] = useState<'pending' | 'confirmed'>('pending');
   const [activeEvidenceTab, setActiveEvidenceTab] = useState<'photo' | 'document' | 'confirmation'>('photo');
@@ -48,35 +52,35 @@ export const WorkersPage: React.FC = () => {
                 <ScrollReveal delay={0}>
                   <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-[#EBF6EE] text-[#059669] text-xs font-mono font-bold uppercase mb-6 border border-[#059669]/20">
                     <ShieldCheck className="w-4 h-4 text-[#059669]" />
-                    <span>FOR SKILLED TRADESPEOPLE & TECHNICIANS</span>
+                    <span>FOR SKILLED ELECTRICIANS, PLUMBERS, CARPENTERS & TECHNICIANS</span>
                   </div>
 
                   <h1 className="font-display font-extrabold text-4xl sm:text-6xl lg:text-7xl text-[#121614] tracking-tight leading-[1.04] mb-6">
-                    YOUR EXPERIENCE<br />
-                    <span className="text-[#1E3B2B]">BELONGS TO YOU.</span>
+                    THE SKILLED WORKER&apos;S<br />
+                    <span className="text-[#1E3B2B]">PORTABLE PASSPORT.</span>
                   </h1>
                 </ScrollReveal>
 
                 <ScrollReveal delay={100}>
                   <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed mb-8 max-w-2xl">
-                    Years of work shouldn&apos;t disappear when a project ends or when you move to another employer. Vouch turns your real-world experience into a professional identity you can carry with you.
+                    You spent years mastering your trade on job sites. Why should your reputation stay trapped in someone else&apos;s phone? Vouch gives skilled tradespeople a portable, tamper-proof passport you own for life.
                   </p>
                 </ScrollReveal>
 
                 <ScrollReveal delay={180}>
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3.5 sm:space-y-0 sm:space-x-4">
                     <Link
-                      to="/build-passport"
+                      to={buildPassportHref}
                       className="inline-flex items-center justify-center space-x-2 px-8 py-4 rounded-xl bg-[#1E3B2B] text-white font-semibold text-base hover:bg-[#14281D] active:scale-[0.98] transition-all shadow-sm group vouch-btn"
                     >
-                      <span>BUILD YOUR PASSPORT</span>
+                      <span>BUILD YOUR WORKER PASSPORT</span>
                       <ArrowRight className="w-4 h-4 text-[#C27A38] group-hover:translate-x-1 transition-transform" />
                     </Link>
                     <Link
                       to="/how-it-works"
                       className="inline-flex items-center justify-center space-x-2 px-6 py-4 rounded-xl border border-[#E5E1D8] bg-white text-[#121614] hover:bg-[#FAF8F5] text-base font-medium transition-colors vouch-btn"
                     >
-                      <span>SEE HOW IT WORKS</span>
+                      <span>SEE HOW WORKERS USE VOUCH</span>
                       <ChevronRight className="w-4 h-4 text-[#737A75]" />
                     </Link>
                   </div>
@@ -102,7 +106,7 @@ export const WorkersPage: React.FC = () => {
 
 
         {/* ==================================================
-            SECTION 2: THE PROBLEM (Editorial Contrast)
+            SECTION 2: WHY SKILLED WORKERS NEED VOUCH
             ================================================== */}
         <section className="py-20 sm:py-28 bg-[#FAF8F5] border-b border-[#E5E1D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -110,14 +114,14 @@ export const WorkersPage: React.FC = () => {
             <ScrollReveal delay={0}>
               <div className="max-w-3xl mb-16">
                 <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-3">
-                  THE PROBLEM WITH UNRECORDED WORK
+                  WHY SKILLED WORKERS NEED VOUCH
                 </span>
                 <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#121614] tracking-tight leading-[1.08] mb-6">
-                  YOU&apos;VE BUILT THE EXPERIENCE.<br />
-                  <span className="text-[#1E3B2B]">NOW KEEP THE PROOF.</span>
+                  STOP STARTING FROM ZERO<br />
+                  <span className="text-[#1E3B2B]">ON EVERY NEW JOBSITE.</span>
                 </h2>
                 <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed">
-                  Most skilled workers carry years of experience in their heads, in paper records, in old messages, or through people who remember their work. Vouch brings that experience together into one professional identity.
+                  When you switch contractors or move to a new city, your hard work shouldn&apos;t get erased. Compare how tradespeople struggle under contractor-locked verbal references versus having a permanent, worker-owned professional passport.
                 </p>
               </div>
             </ScrollReveal>
@@ -131,7 +135,7 @@ export const WorkersPage: React.FC = () => {
                   <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#E5E1D8]">
                     <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#9E4545] flex items-center space-x-2">
                       <XCircle className="w-4 h-4 text-[#9E4545]" />
-                      <span>WITHOUT VOUCH</span>
+                      <span>THE OLD WAY · DEPENDENT ON CONTRACTORS</span>
                     </span>
                     <span className="text-xs text-[#737A75]">Fragile & Lost Over Time</span>
                   </div>
@@ -194,7 +198,7 @@ export const WorkersPage: React.FC = () => {
                   <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#E5E1D8]">
                     <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#059669] flex items-center space-x-2">
                       <CheckCircle2 className="w-4 h-4 text-[#059669]" />
-                      <span>WITH VOUCH</span>
+                      <span>THE VOUCH WAY · WORKER-OWNED</span>
                     </span>
                     <span className="text-xs font-bold text-[#1E3B2B]">Permanent & Worker-Owned</span>
                   </div>
@@ -258,7 +262,7 @@ export const WorkersPage: React.FC = () => {
 
 
         {/* ==================================================
-            SECTION 3: BUILD YOUR RECORD (Visual Composition)
+            SECTION 3: HOW WORKERS RECORD THEIR EXPERIENCE
             ================================================== */}
         <section className="py-20 sm:py-28 bg-[#F4EFEB] border-b border-[#E5E1D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -268,19 +272,19 @@ export const WorkersPage: React.FC = () => {
               <div className="lg:col-span-5">
                 <ScrollReveal delay={0}>
                   <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-3">
-                    RECORDING YOUR WORK
+                    HOW WORKERS RECORD EXPERIENCE · STEP 01
                   </span>
                   <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#121614] tracking-tight leading-[1.08] mb-6">
-                    EVERY JOB ADDS<br />
-                    <span className="text-[#1E3B2B]">TO YOUR STORY.</span>
+                    RECORD YOUR WORK<br />
+                    <span className="text-[#1E3B2B]">IN UNDER 2 MINUTES.</span>
                   </h2>
                   <p className="text-lg text-[#4A524D] leading-relaxed mb-6">
-                    Log the work you&apos;ve already completed. Whether it was a commercial panel retrofit or a multi-floor wiring project, every job builds permanent equity in your professional passport.
+                    Log the real projects you&apos;ve completed. Whether it was a commercial panel retrofit, plumbing run, or site installation, every job builds permanent equity in your personal passport.
                   </p>
                   <div className="space-y-3 font-medium text-sm text-[#121614]">
                     <div className="flex items-center space-x-2.5">
                       <CheckCircle2 className="w-4 h-4 text-[#059669]" />
-                      <span>Takes less than 2 minutes per job</span>
+                      <span>Takes less than 2 minutes directly from your phone</span>
                     </div>
                     <div className="flex items-center space-x-2.5">
                       <CheckCircle2 className="w-4 h-4 text-[#059669]" />
@@ -288,7 +292,7 @@ export const WorkersPage: React.FC = () => {
                     </div>
                     <div className="flex items-center space-x-2.5">
                       <CheckCircle2 className="w-4 h-4 text-[#059669]" />
-                      <span>AI structures your rough notes into verified credentials</span>
+                      <span>Structures rough site details into audit-ready credentials</span>
                     </div>
                   </div>
                 </ScrollReveal>
@@ -383,7 +387,7 @@ export const WorkersPage: React.FC = () => {
 
 
         {/* ==================================================
-            SECTION 4: EVIDENCE (Explainable, No Generic %)
+            SECTION 4: HOW WORKERS COLLECT EVIDENCE
             ================================================== */}
         <section className="py-20 sm:py-28 bg-[#FAF8F5] border-b border-[#E5E1D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -391,15 +395,14 @@ export const WorkersPage: React.FC = () => {
             <ScrollReveal delay={0}>
               <div className="max-w-3xl mb-16">
                 <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-3">
-                  EMPIRICAL EVIDENCE ENGINE
+                  HOW WORKERS COLLECT EVIDENCE · STEP 02
                 </span>
                 <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#121614] tracking-tight leading-[1.08] mb-6">
-                  DON&apos;T JUST SAY<br />
-                  WHAT YOU CAN DO.<br />
-                  <span className="text-[#1E3B2B]">SHOW IT.</span>
+                  COLLECT REAL ON-SITE EVIDENCE.<br />
+                  <span className="text-[#1E3B2B]">SHOW WHAT YOU CAN DO.</span>
                 </h2>
                 <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed">
-                  Add photos, documents, work details and other evidence that support the skills you&apos;ve demonstrated. Confidence is never an arbitrary score — it is backed by empirical proof.
+                  Contractors don&apos;t hire on empty claims — they hire on verified proof. Attach jobsite photos, Megger test readouts, and commissioning certificates directly to your skills. Your craftsmanship speaks for itself.
                 </p>
               </div>
             </ScrollReveal>
@@ -564,7 +567,7 @@ export const WorkersPage: React.FC = () => {
 
 
         {/* ==================================================
-            SECTION 5: CONFIRMATION (Simple Interaction)
+            SECTION 5: HOW CONFIRMATIONS WORK
             ================================================== */}
         <section className="py-20 sm:py-28 bg-[#F4EFEB] border-b border-[#E5E1D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -574,20 +577,19 @@ export const WorkersPage: React.FC = () => {
               <div className="lg:col-span-6">
                 <ScrollReveal delay={0}>
                   <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-3">
-                    INDEPENDENT CONFIRMATION
+                    HOW CONFIRMATIONS WORK · STEP 03
                   </span>
                   <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#121614] tracking-tight leading-[1.08] mb-6">
-                    LET THE PEOPLE<br />
-                    YOU&apos;VE WORKED WITH<br />
-                    <span className="text-[#1E3B2B]">BACK IT UP.</span>
+                    ONE-TAP SUPERVISOR CONFIRMATIONS.<br />
+                    <span className="text-[#1E3B2B]">ZERO HASSLE FOR YOUR BOSS.</span>
                   </h2>
                   <p className="text-lg text-[#4A524D] leading-relaxed mb-6">
-                    Ask a supervisor, employer or customer to confirm the work you&apos;ve completed. They don&apos;t need to download an app or create an account — one tap on WhatsApp or SMS confirms your project instantly.
+                    Ask a supervisor, site engineer, or contractor to confirm the work you completed. They don&apos;t need to download an app, register, or fill out paperwork — a single tap via WhatsApp or SMS verifies your record permanently.
                   </p>
                   <div className="p-4 rounded-xl bg-white border border-[#E5E1D8] text-xs text-[#4A524D] flex items-start space-x-3">
                     <Lock className="w-4 h-4 text-[#1E3B2B] shrink-0 mt-0.5" />
                     <span>
-                      Confirmations are tamper-proof and linked permanently to your Vouch passport, building trust with future contractors.
+                      Confirmations are cryptographically signed, tamper-proof, and linked permanently to your Vouch passport.
                     </span>
                   </div>
                 </ScrollReveal>
@@ -676,7 +678,7 @@ export const WorkersPage: React.FC = () => {
 
 
         {/* ==================================================
-            SECTION 6: THE PASSPORT (Hero Product Section)
+            SECTION 6: HOW YOUR PROFESSIONAL PASSPORT BENEFITS YOU
             ================================================== */}
         <section className="py-20 sm:py-28 bg-[#FAF8F5] border-b border-[#E5E1D8]">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -684,14 +686,14 @@ export const WorkersPage: React.FC = () => {
             <ScrollReveal delay={0}>
               <div className="text-center max-w-3xl mx-auto mb-16">
                 <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-3">
-                  THE CORE ARTIFACT
+                  HOW YOUR PASSPORT BENEFITS YOU · STEP 04
                 </span>
                 <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#121614] tracking-tight leading-[1.08] mb-4">
-                  ONE PASSPORT.<br />
-                  <span className="text-[#1E3B2B]">YEARS OF EXPERIENCE.</span>
+                  YOUR LIFELONG PASSPORT.<br />
+                  <span className="text-[#1E3B2B]">UNLOCK HIGHER PAY & RESPECT.</span>
                 </h2>
                 <p className="text-lg text-[#4A524D] leading-relaxed">
-                  Your Vouch Passport belongs to you. Keep building it as your career moves from one employer to the next.
+                  Your Vouch Passport unites your verified projects, on-site test evidence, and supervisor sign-offs into one credential. It gives contractors immediate clarity on your seniority so you get the pay you deserve.
                 </p>
               </div>
             </ScrollReveal>
@@ -822,14 +824,14 @@ export const WorkersPage: React.FC = () => {
             <ScrollReveal delay={0}>
               <div className="text-center max-w-3xl mx-auto mb-16">
                 <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-3">
-                  PERMANENT CAREER EQUITY
+                  PORTABLE BETWEEN EMPLOYERS, PROJECTS & CITIES
                 </span>
                 <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#121614] tracking-tight leading-[1.08] mb-4">
                   ONE IDENTITY.<br />
                   <span className="text-[#1E3B2B]">EVERY JOB.</span>
                 </h2>
                 <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed">
-                  Your professional identity shouldn&apos;t reset every time your employer changes.
+                  Your professional standing shouldn&apos;t reset to zero whenever a project wraps up, you shift contractors, or move to another city.
                 </p>
               </div>
             </ScrollReveal>
@@ -896,25 +898,25 @@ export const WorkersPage: React.FC = () => {
             
             <ScrollReveal delay={0}>
               <span className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold block mb-4">
-                START BUILDING YOUR IDENTITY
+                100% FREE FOR TRADESPEOPLE
               </span>
               
               <h2 className="font-display font-extrabold text-4xl sm:text-6xl text-[#121614] tracking-tight leading-[1.06] mb-6">
-                YOUR WORK ALREADY HAS VALUE.<br />
-                <span className="text-[#1E3B2B]">MAKE IT PORTABLE.</span>
+                YOUR CRAFT HAS REAL VALUE.<br />
+                <span className="text-[#1E3B2B]">START YOUR WORKER PASSPORT.</span>
               </h2>
             </ScrollReveal>
 
             <ScrollReveal delay={100}>
               <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed mb-10 max-w-2xl mx-auto">
-                Start building a professional record around the work you&apos;ve already done. It takes less than 3 minutes to create your permanent passport.
+                Join skilled electricians, plumbers, carpenters, and technicians taking ownership of their work history. It takes just 3 minutes to build your permanent passport.
               </p>
             </ScrollReveal>
 
             <ScrollReveal delay={160}>
               <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
                 <Link
-                  to="/build-passport"
+                  to={buildPassportHref}
                   className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-9 py-4 rounded-xl bg-[#1E3B2B] text-white font-bold text-base hover:bg-[#14281D] active:scale-[0.98] transition-all shadow-md group vouch-btn"
                 >
                   <span>BUILD YOUR PASSPORT</span>

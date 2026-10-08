@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, History, Camera, CheckCheck, Share2 } from 'lucide-react';
 import { ScrollReveal } from '../../components/ScrollReveal';
+import { useApp } from '../../context/AppContext';
 
 export const WorkerSection: React.FC = () => {
+  const { isAuthenticated, activeRole } = useApp();
+  const buildPassportHref = isAuthenticated && activeRole === 'worker' ? '/build-passport' : '/login?redirect=/build-passport';
   return (
     <section id="workers" className="py-20 sm:py-28 lg:py-32 bg-[#F4EFEB] border-t border-b border-[#E5E1D8] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -106,7 +109,7 @@ export const WorkerSection: React.FC = () => {
               {/* CTAs */}
               <div className="flex flex-wrap items-center gap-4">
                 <Link
-                  to="/build-passport"
+                  to={buildPassportHref}
                   className="vouch-btn inline-flex items-center space-x-2 px-8 py-4 rounded-xl bg-[#1E3B2B] text-white font-semibold text-base hover:bg-[#14281D] active:scale-[0.98] transition-all shadow-sm"
                 >
                   <span>Build My Passport</span>

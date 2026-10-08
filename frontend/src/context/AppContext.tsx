@@ -39,6 +39,10 @@ interface AppContextType {
   isDeviceFramed: boolean;
   setIsDeviceFramed: (framed: boolean) => void;
   
+  // Authentication & Access Flow
+  isAuthenticated: boolean;
+  setIsAuthenticated: (auth: boolean) => void;
+
   // Role & Contractor Mode
   activeRole: ViewRole;
   setActiveRole: (role: ViewRole) => void;
@@ -79,6 +83,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
   const [isDeviceFramed, setIsDeviceFramed] = useState(true);
   const [activeRole, setActiveRole] = useState<ViewRole>('worker');
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [savedWorkerIds, setSavedWorkerIds] = useState<string[]>(['worker_001']);
 
   /**
@@ -268,6 +273,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setIsQrModalOpen,
         isDeviceFramed,
         setIsDeviceFramed,
+        isAuthenticated,
+        setIsAuthenticated,
         activeRole,
         setActiveRole,
         savedWorkerIds,
