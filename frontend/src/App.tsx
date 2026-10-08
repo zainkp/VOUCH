@@ -1,56 +1,48 @@
 import React from 'react';
-import { AppProvider, useApp } from './context/AppContext';
-import { DeviceFrame } from './components/DeviceFrame';
-import { TopBar } from './components/TopBar';
-import { BottomNav } from './components/BottomNav';
-import { HomeTab } from './pages/HomeTab';
-import { WorkTab } from './pages/WorkTab';
-import { PassportTab } from './pages/PassportTab';
-import { ProfileTab } from './pages/ProfileTab';
-import { ContractorTab } from './pages/ContractorTab';
-import { AddWorkModal } from './modals/AddWorkModal';
-import { WorkDetailModal } from './modals/WorkDetailModal';
-import { VerifierModal } from './modals/VerifierModal';
-import { QrModal } from './modals/QrModal';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AppProvider } from './context/AppContext';
+import { ScrollToTop } from './components/ScrollToTop';
 
-const MainContent: React.FC = () => {
-  const { currentTab, activeRole } = useApp();
+// Dedicated Public Website Pages
+import { LandingPage } from './pages/PublicWebsite/LandingPage';
+import { WorkersPage } from './pages/PublicWebsite/WorkersPage';
+import { EmployersPage } from './pages/PublicWebsite/EmployersPage';
+import { HowItWorksPage } from './pages/PublicWebsite/HowItWorksPage';
+import { PassportPage } from './pages/PublicWebsite/PassportPage';
+import { AboutPage } from './pages/PublicWebsite/AboutPage';
+import { LoginPage } from './pages/PublicWebsite/LoginPage';
+import { BuildPassportPage } from './pages/PublicWebsite/BuildPassportPage';
+import { PublicPassportPage } from './pages/PublicWebsite/PublicPassportPage';
 
-  return (
-    <DeviceFrame>
-      {/* Top Header with Role Switcher */}
-      <TopBar />
-
-      {/* Main Tab Routing */}
-      <main className="flex-1 flex flex-col">
-        {activeRole === 'contractor' ? (
-          <ContractorTab />
-        ) : (
-          <>
-            {currentTab === 'home' && <HomeTab />}
-            {currentTab === 'work' && <WorkTab />}
-            {currentTab === 'passport' && <PassportTab />}
-            {currentTab === 'profile' && <ProfileTab />}
-          </>
-        )}
-      </main>
-
-      {/* Persistent Bottom Navigation */}
-      <BottomNav />
-
-      {/* Modals & Overlays */}
-      <AddWorkModal />
-      <WorkDetailModal />
-      <VerifierModal />
-      <QrModal />
-    </DeviceFrame>
-  );
-};
+// Verified Vouch Application Experiences
+import { WorkerAppPage } from './pages/WorkerAppPage';
+import { ContractorAppPage } from './pages/ContractorAppPage';
 
 export function App() {
   return (
     <AppProvider>
-      <MainContent />
+      <BrowserRouter>
+        <ScrollToTop />
+        <Routes>
+          {/* Public Marketing & Explainer Pages */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/workers" element={<WorkersPage />} />
+          <Route path="/employers" element={<EmployersPage />} />
+          <Route path="/how-it-works" element={<HowItWorksPage />} />
+          <Route path="/passport" element={<PassportPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/build-passport" element={<BuildPassportPage />} />
+
+          {/* Vouch Application Portals */}
+          <Route path="/worker" element={<WorkerAppPage />} />
+          <Route path="/contractor" element={<ContractorAppPage />} />
+          <Route path="/passport/:id" element={<PublicPassportPage />} />
+
+          {/* Catch-all Fallback */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
     </AppProvider>
   );
 }
