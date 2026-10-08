@@ -164,21 +164,21 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
     switch (level) {
       case 'HIGH':
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#EBF6EE] text-[#059669] border border-[#059669]/20 inline-flex items-center space-x-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#059669]"></span>
+          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#EDF4F0] text-[#3E6B52] border border-[#3E6B52]/20 inline-flex items-center space-x-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#3E6B52]"></span>
             <span>HIGH EVIDENCE CONFIDENCE</span>
           </span>
         );
       case 'MEDIUM':
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#FEF6EE] text-[#C27A38] border border-[#C27A38]/25 inline-flex items-center space-x-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#C27A38]"></span>
+          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#F8ECE7] text-[#C45B3C] border border-[#C45B3C]/25 inline-flex items-center space-x-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C45B3C]"></span>
             <span>MEDIUM EVIDENCE CONFIDENCE</span>
           </span>
         );
       default:
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#F4F1EA] text-[#737A75] border border-[#E5E1D8] inline-flex items-center space-x-1">
+          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#F4F0E6] text-[#737A75] border border-[#E2DDD2] inline-flex items-center space-x-1">
             <span className="w-1.5 h-1.5 rounded-full bg-[#737A75]"></span>
             <span>BUILDING EVIDENCE</span>
           </span>
@@ -192,7 +192,7 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
       {/* 1. Contractor Home Greeting & Search (Section 6) */}
       <div className="space-y-6">
         <div>
-          <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-[#121614] tracking-tight">
+          <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-[#202322] tracking-tight">
             Good morning, Arjun.
           </h1>
           <p className="text-sm sm:text-base text-[#4A524D] mt-1">
@@ -202,7 +202,7 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
 
         {/* Search Field */}
         <div className="relative w-full max-w-3xl">
-          <div className="flex items-center bg-white rounded-2xl border border-[#E5E1D8] shadow-xs focus-within:border-[#1E3B2B] focus-within:ring-1 focus-within:ring-[#1E3B2B] transition-all p-1.5">
+          <div className="flex items-center bg-white rounded-2xl border border-[#E2DDD2] shadow-xs focus-within:border-[#173F4F] focus-within:ring-1 focus-within:ring-[#173F4F] transition-all p-1.5">
             <div className="pl-3.5 pr-2 text-[#737A75]">
               <Search className="w-5 h-5" />
             </div>
@@ -211,12 +211,12 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder="Search by trade, skill or location (e.g. Electrician in Mangaluru)..."
-              className="flex-1 py-2.5 text-sm sm:text-base text-[#121614] placeholder:text-[#A1A7A2] focus:outline-none bg-transparent"
+              className="flex-1 py-2.5 text-sm sm:text-base text-[#202322] placeholder:text-[#A1A7A2] focus:outline-none bg-transparent"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="p-1.5 text-[#737A75] hover:text-[#121614] transition-colors mr-1 cursor-pointer"
+                className="p-1.5 text-[#737A75] hover:text-[#202322] transition-colors mr-1 cursor-pointer"
                 title="Clear Search"
               >
                 <X className="w-4 h-4" />
@@ -224,7 +224,7 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
             )}
             <button
               type="button"
-              className="px-6 py-2.5 rounded-xl bg-[#1E3B2B] hover:bg-[#14281D] text-white text-xs sm:text-sm font-semibold transition-all cursor-pointer shadow-xs shrink-0"
+              className="px-6 py-2.5 rounded-xl bg-[#173F4F] hover:bg-[#0E2934] text-white text-xs sm:text-sm font-semibold transition-all cursor-pointer shadow-xs shrink-0"
             >
               Search
             </button>
@@ -243,8 +243,8 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
                 onClick={() => setSelectedTrade(trade)}
                 className={`px-3.5 py-1.5 rounded-xl font-medium shrink-0 transition-all cursor-pointer ${
                   selectedTrade === trade
-                    ? 'bg-[#1E3B2B] text-white shadow-xs font-semibold'
-                    : 'bg-white text-[#4A524D] hover:bg-[#FAF8F5] border border-[#E5E1D8]'
+                    ? 'bg-[#173F4F] text-white shadow-xs font-semibold'
+                    : 'bg-white text-[#4A524D] hover:bg-[#F4F0E6] border border-[#E2DDD2]'
                 }`}
               >
                 {trade}
@@ -258,9 +258,9 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
       <section className="space-y-5">
         
         {/* Section Header & Subtext */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-[#E5E1D8] gap-2">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-[#E2DDD2] gap-2">
           <div>
-            <h2 className="font-display font-extrabold text-xl text-[#121614] tracking-tight">
+            <h2 className="font-display font-extrabold text-xl text-[#202322] tracking-tight">
               {activeTab === 'DIRECTORY' ? 'WORKERS WITH EVIDENCE' : 'SAVED WORKERS'}
             </h2>
             <p className="text-xs sm:text-sm text-[#737A75] mt-0.5">
@@ -275,8 +275,8 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
               onClick={() => setActiveTab('DIRECTORY')}
               className={`px-3 py-1 rounded-lg transition-colors cursor-pointer ${
                 activeTab === 'DIRECTORY'
-                  ? 'bg-[#FAF8F5] text-[#1E3B2B] font-bold border border-[#E5E1D8]'
-                  : 'text-[#737A75] hover:text-[#121614]'
+                  ? 'bg-[#F4F0E6] text-[#173F4F] font-bold border border-[#E2DDD2]'
+                  : 'text-[#737A75] hover:text-[#202322]'
               }`}
             >
               All Workers ({directoryWorkers.length})
@@ -286,8 +286,8 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
               onClick={() => setActiveTab('SAVED')}
               className={`px-3 py-1 rounded-lg transition-colors cursor-pointer ${
                 activeTab === 'SAVED'
-                  ? 'bg-[#FAF8F5] text-[#1E3B2B] font-bold border border-[#E5E1D8]'
-                  : 'text-[#737A75] hover:text-[#121614]'
+                  ? 'bg-[#F4F0E6] text-[#173F4F] font-bold border border-[#E2DDD2]'
+                  : 'text-[#737A75] hover:text-[#202322]'
               }`}
             >
               Saved ({savedWorkerIds.length})
@@ -303,14 +303,14 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
             return (
               <div
                 key={w.id}
-                className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E5E1D8] shadow-xs hover:border-[#1E3B2B]/40 transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-6"
+                className="bg-[#FFDFF7] rounded-3xl p-6 sm:p-7 border border-[#E2DDD2] shadow-xs hover:border-[#173F4F]/40 transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-6"
               >
                 
                 {/* Left & Center: Worker Photo, Identity, Trade & Skills */}
                 <div className="flex items-start space-x-5 min-w-0 flex-1">
                   
                   {/* Photo container */}
-                  <div className="w-16 h-20 sm:w-20 sm:h-24 rounded-2xl overflow-hidden bg-[#EFECE6] border border-[#E5E1D8] shrink-0 shadow-xs">
+                  <div className="w-16 h-20 sm:w-20 sm:h-24 rounded-2xl overflow-hidden bg-[#EBE7DC] border border-[#E2DDD2] shrink-0 shadow-xs">
                     <img
                       src={w.avatarUrl}
                       alt={w.name}
@@ -321,12 +321,12 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
                   {/* Identity details */}
                   <div className="space-y-1.5 min-w-0 flex-1">
                     <div className="flex items-center space-x-2">
-                      <h3 className="font-display font-extrabold text-lg sm:text-xl text-[#121614] tracking-tight uppercase truncate">
+                      <h3 className="font-display font-extrabold text-lg sm:text-xl text-[#202322] tracking-tight uppercase truncate">
                         {w.name}
                       </h3>
                     </div>
 
-                    <p className="text-sm font-semibold text-[#1E3B2B]">
+                    <p className="text-sm font-semibold text-[#173F4F]">
                       {w.trade}
                     </p>
 
@@ -342,14 +342,14 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
                     {/* Demonstrated Skills summary */}
                     <div className="pt-2 text-xs text-[#4A524D]">
                       <span className="text-[#737A75] font-medium">Demonstrated Skills: </span>
-                      <span className="font-semibold text-[#121614]">{w.skillsSummary}</span>
+                      <span className="font-semibold text-[#202322]">{w.skillsSummary}</span>
                     </div>
                   </div>
 
                 </div>
 
                 {/* Right: Evidence Confidence, Counts & Action Buttons */}
-                <div className="lg:border-l lg:border-[#ECE8E0] lg:pl-6 flex flex-col sm:flex-row lg:flex-col items-start sm:items-center lg:items-end justify-between gap-4 shrink-0">
+                <div className="lg:border-l lg:border-[#EBE7DC] lg:pl-6 flex flex-col sm:flex-row lg:flex-col items-start sm:items-center lg:items-end justify-between gap-4 shrink-0">
                   
                   {/* Evidence Confidence tier (Strictly evidence-backed, NO stars, NO percentages) */}
                   <div className="space-y-1 sm:text-right lg:text-right">
@@ -367,8 +367,8 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
                       onClick={() => toggleSaveWorker(w.id)}
                       className={`px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center space-x-1.5 border transition-all cursor-pointer ${
                         isSaved
-                          ? 'bg-[#EBF6EE] text-[#059669] border-[#059669]/30'
-                          : 'bg-[#FAF8F5] hover:bg-white text-[#4A524D] border-[#E5E1D8]'
+                          ? 'bg-[#EDF4F0] text-[#3E6B52] border-[#3E6B52]/30'
+                          : 'bg-[#F4F0E6] hover:bg-white text-[#4A524D] border-[#E2DDD2]'
                       }`}
                     >
                       <Bookmark className="w-3.5 h-3.5" />
@@ -377,7 +377,7 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
 
                     <button
                       onClick={() => onViewPassport(w)}
-                      className="px-5 py-2.5 rounded-xl bg-[#1E3B2B] hover:bg-[#14281D] text-white text-xs font-semibold flex items-center space-x-1.5 transition-colors cursor-pointer shadow-xs"
+                      className="px-5 py-2.5 rounded-xl bg-[#173F4F] hover:bg-[#0E2934] text-white text-xs font-semibold flex items-center space-x-1.5 transition-colors cursor-pointer shadow-xs"
                     >
                       <span>View Passport</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -391,8 +391,8 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
           })}
 
           {filteredWorkers.length === 0 && (
-            <div className="p-12 text-center bg-white rounded-3xl border border-[#E5E1D8] text-xs text-[#737A75] space-y-2">
-              <p className="font-bold text-base text-[#121614]">
+            <div className="p-12 text-center bg-white rounded-3xl border border-[#E2DDD2] text-xs text-[#737A75] space-y-2">
+              <p className="font-bold text-base text-[#202322]">
                 {activeTab === 'SAVED' ? 'No saved workers yet' : 'No workers found'}
               </p>
               <p className="max-w-md mx-auto">

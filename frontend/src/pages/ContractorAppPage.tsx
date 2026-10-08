@@ -64,26 +64,26 @@ export const ContractorAppPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#121614] flex flex-col font-sans selection:bg-[#1E3B2B] selection:text-white">
+    <div className="min-h-screen bg-[#F4F0E6] text-[#202322] flex flex-col font-sans selection:bg-[#173F4F] selection:text-white">
       
       {/* 1. Professional Web Application Header (Full Width) */}
-      <header className="w-full bg-white border-b border-[#E5E1D8] sticky top-0 z-40 shadow-2xs">
+      <header className="w-full bg-white border-b border-[#E2DDD2] sticky top-0 z-40 shadow-2xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           
           {/* Left: Vouch Brand & Employer Workspace Context */}
           <div className="flex items-center space-x-6">
             <Link to="/contractor" className="flex items-center space-x-2.5 group">
-              <div className="w-8 h-8 rounded-lg bg-[#1E3B2B] flex items-center justify-center text-white shadow-xs group-hover:bg-[#14281D] transition-colors">
-                <ShieldCheck className="w-5 h-5 text-[#FAF8F5]" strokeWidth={2.2} />
+              <div className="w-8 h-8 rounded-lg bg-[#173F4F] flex items-center justify-center text-white shadow-xs group-hover:bg-[#0E2934] transition-colors">
+                <ShieldCheck className="w-5 h-5 text-[#F4F0E6]" strokeWidth={2.2} />
               </div>
-              <span className="font-display font-extrabold text-xl tracking-tight text-[#121614]">
+              <span className="font-display font-extrabold text-xl tracking-tight text-[#202322]">
                 VOUCH
               </span>
             </Link>
 
-            <div className="hidden sm:flex items-center space-x-2 text-xs font-mono text-[#737A75] border-l border-[#E5E1D8] pl-5">
-              <span className="w-2 h-2 rounded-full bg-[#1E3B2B]"></span>
-              <span className="font-semibold text-[#1E3B2B] bg-[#EBF6EE] px-2.5 py-0.5 rounded-md border border-[#059669]/20">
+            <div className="hidden sm:flex items-center space-x-2 text-xs font-mono text-[#737A75] border-l border-[#E2DDD2] pl-5">
+              <span className="w-2 h-2 rounded-full bg-[#173F4F]"></span>
+              <span className="font-semibold text-[#173F4F] bg-[#EDF4F0] px-2.5 py-0.5 rounded-md border border-[#3E6B52]/20">
                 Employer Workspace
               </span>
             </div>
@@ -100,8 +100,8 @@ export const ContractorAppPage: React.FC = () => {
                   onClick={() => setCurrentTab(item.id)}
                   className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-[#1E3B2B] text-white shadow-xs'
-                      : 'text-[#4A524D] hover:text-[#121614] hover:bg-[#F4F1EA]'
+                      ? 'bg-[#173F4F] text-white shadow-xs'
+                      : 'text-[#4A524D] hover:text-[#202322] hover:bg-[#F4F0E6]'
                   }`}
                 >
                   <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-[#737A75]'}`} />
@@ -117,13 +117,13 @@ export const ContractorAppPage: React.FC = () => {
             <div className="relative">
               <button
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="flex items-center space-x-3 p-1.5 pr-2.5 rounded-xl hover:bg-[#FAF8F5] border border-transparent hover:border-[#E5E1D8] transition-all cursor-pointer"
+                className="flex items-center space-x-3 p-1.5 pr-2.5 rounded-xl hover:bg-[#F4F0E6] border border-transparent hover:border-[#E2DDD2] transition-all cursor-pointer"
               >
-                <div className="w-8 h-8 rounded-full overflow-hidden border border-[#E5E1D8] bg-[#1E3B2B] text-white flex items-center justify-center font-bold text-xs shrink-0">
+                <div className="w-8 h-8 rounded-full overflow-hidden border border-[#E2DDD2] bg-[#173F4F] text-white flex items-center justify-center font-bold text-xs shrink-0">
                   AV
                 </div>
                 <div className="text-left hidden sm:block">
-                  <p className="text-xs font-bold text-[#121614] leading-tight">
+                  <p className="text-xs font-bold text-[#202322] leading-tight">
                     Arjun Verma
                   </p>
                   <p className="text-[11px] text-[#737A75]">
@@ -140,12 +140,12 @@ export const ContractorAppPage: React.FC = () => {
                     className="fixed inset-0 z-40"
                     onClick={() => setIsUserMenuOpen(false)}
                   />
-                  <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl border border-[#E5E1D8] shadow-lg py-2 z-50 animate-fade-in-up">
-                    <div className="px-4 py-3 border-b border-[#ECE8E0]">
+                  <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl border border-[#E2DDD2] shadow-lg py-2 z-50 animate-fade-in-up">
+                    <div className="px-4 py-3 border-b border-[#EBE7DC]">
                       <p className="text-xs font-mono uppercase text-[#737A75] font-semibold">
                         Employer Account
                       </p>
-                      <p className="text-sm font-bold text-[#121614] mt-0.5">
+                      <p className="text-sm font-bold text-[#202322] mt-0.5">
                         Arjun Verma
                       </p>
                       <p className="text-xs text-[#4A524D]">
@@ -159,7 +159,7 @@ export const ContractorAppPage: React.FC = () => {
                           setCurrentTab('profile');
                           setIsUserMenuOpen(false);
                         }}
-                        className="w-full px-4 py-2.5 text-left text-xs font-medium text-[#121614] hover:bg-[#FAF8F5] flex items-center space-x-2.5 cursor-pointer"
+                        className="w-full px-4 py-2.5 text-left text-xs font-medium text-[#202322] hover:bg-[#F4F0E6] flex items-center space-x-2.5 cursor-pointer"
                       >
                         <User className="w-4 h-4 text-[#737A75]" />
                         <span>Employer Profile</span>
@@ -169,14 +169,14 @@ export const ContractorAppPage: React.FC = () => {
                           setCurrentTab('saved');
                           setIsUserMenuOpen(false);
                         }}
-                        className="w-full px-4 py-2.5 text-left text-xs font-medium text-[#121614] hover:bg-[#FAF8F5] flex items-center space-x-2.5 cursor-pointer"
+                        className="w-full px-4 py-2.5 text-left text-xs font-medium text-[#202322] hover:bg-[#F4F0E6] flex items-center space-x-2.5 cursor-pointer"
                       >
                         <Bookmark className="w-4 h-4 text-[#737A75]" />
                         <span>Saved Workers ({savedWorkerIds.length})</span>
                       </button>
                     </div>
 
-                    <div className="pt-1 border-t border-[#ECE8E0]">
+                    <div className="pt-1 border-t border-[#EBE7DC]">
                       <button
                         onClick={handleLogout}
                         className="w-full px-4 py-2.5 text-left text-xs font-medium text-[#B91C1C] hover:bg-red-50 flex items-center space-x-2.5 cursor-pointer"
@@ -193,7 +193,7 @@ export const ContractorAppPage: React.FC = () => {
             {/* Mobile Nav Drawer Toggle */}
             <button
               onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
-              className="md:hidden p-2 rounded-xl text-[#4A524D] hover:bg-[#FAF8F5] border border-[#E5E1D8] cursor-pointer"
+              className="md:hidden p-2 rounded-xl text-[#4A524D] hover:bg-[#F4F0E6] border border-[#E2DDD2] cursor-pointer"
               aria-label="Toggle Navigation"
             >
               {isMobileNavOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -205,7 +205,7 @@ export const ContractorAppPage: React.FC = () => {
 
         {/* Mobile Navigation Drawer */}
         {isMobileNavOpen && (
-          <div className="md:hidden border-t border-[#E5E1D8] bg-white px-4 pt-3 pb-4 space-y-2">
+          <div className="md:hidden border-t border-[#E2DDD2] bg-white px-4 pt-3 pb-4 space-y-2">
             <div className="grid grid-cols-2 gap-2 mb-3">
               {navItems.map((item) => {
                 const isActive = currentTab === item.id;
@@ -219,8 +219,8 @@ export const ContractorAppPage: React.FC = () => {
                     }}
                     className={`flex items-center space-x-2 px-3 py-2.5 rounded-xl text-xs font-semibold cursor-pointer ${
                       isActive
-                        ? 'bg-[#1E3B2B] text-white shadow-xs'
-                        : 'bg-[#FAF8F5] text-[#4A524D] hover:bg-[#F4F1EA]'
+                        ? 'bg-[#173F4F] text-white shadow-xs'
+                        : 'bg-[#F4F0E6] text-[#4A524D] hover:bg-[#F4F0E6]'
                     }`}
                   >
                     <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-[#737A75]'}`} />
@@ -230,9 +230,9 @@ export const ContractorAppPage: React.FC = () => {
               })}
             </div>
 
-            <div className="pt-2 border-t border-[#ECE8E0] flex items-center justify-between">
+            <div className="pt-2 border-t border-[#EBE7DC] flex items-center justify-between">
               <span className="text-xs text-[#737A75]">
-                Signed in as <strong className="text-[#121614]">Arjun Verma</strong>
+                Signed in as <strong className="text-[#202322]">Arjun Verma</strong>
               </span>
 
               <button
@@ -271,26 +271,26 @@ export const ContractorAppPage: React.FC = () => {
           <div className="w-full max-w-4xl mx-auto space-y-8 animate-fade-in">
             
             {/* Employer Profile Header */}
-            <div className="bg-white rounded-3xl border border-[#E5E1D8] p-6 sm:p-8 shadow-xs">
+            <div className="bg-[#FFDFF7] rounded-3xl border border-[#E2DDD2] p-6 sm:p-8 shadow-xs">
               <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6 text-center sm:text-left">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-[#1E3B2B] text-white flex items-center justify-center font-display font-extrabold text-2xl sm:text-3xl shrink-0 shadow-xs border border-[#14281D]">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-[#173F4F] text-white flex items-center justify-center font-display font-extrabold text-2xl sm:text-3xl shrink-0 shadow-xs border border-[#0E2934]">
                   AV
                 </div>
 
                 <div className="flex-1 space-y-1.5">
                   <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-                    <span className="px-2.5 py-0.5 rounded-md text-xs font-mono font-bold bg-[#EBF6EE] text-[#059669] border border-[#059669]/20">
+                    <span className="px-2.5 py-0.5 rounded-md text-xs font-mono font-bold bg-[#EDF4F0] text-[#3E6B52] border border-[#3E6B52]/20">
                       AUTHENTICATED EMPLOYER
                     </span>
-                    <span className="px-2.5 py-0.5 rounded-md text-xs font-mono font-bold bg-[#FAF8F5] text-[#737A75] border border-[#E5E1D8]">
+                    <span className="px-2.5 py-0.5 rounded-md text-xs font-mono font-bold bg-[#F4F0E6] text-[#737A75] border border-[#E2DDD2]">
                       COMMERCIAL CONTRACTOR
                     </span>
                   </div>
 
-                  <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-[#121614] tracking-tight">
+                  <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-[#202322] tracking-tight">
                     Arjun Verma
                   </h1>
-                  <p className="text-base font-semibold text-[#1E3B2B]">
+                  <p className="text-base font-semibold text-[#173F4F]">
                     Lead Project Director · Apex Infrastructure & Engineering
                   </p>
 
@@ -303,23 +303,23 @@ export const ContractorAppPage: React.FC = () => {
             </div>
 
             {/* Account Information */}
-            <div className="bg-white rounded-3xl border border-[#E5E1D8] p-6 sm:p-8 shadow-xs space-y-5">
-              <div className="flex items-center space-x-3 pb-3 border-b border-[#ECE8E0]">
-                <Building2 className="w-5 h-5 text-[#1E3B2B]" />
+            <div className="bg-[#FFDFF7] rounded-3xl border border-[#E2DDD2] p-6 sm:p-8 shadow-xs space-y-5">
+              <div className="flex items-center space-x-3 pb-3 border-b border-[#EBE7DC]">
+                <Building2 className="w-5 h-5 text-[#173F4F]" />
                 <div>
-                  <h2 className="font-bold text-base text-[#121614]">Account Information</h2>
+                  <h2 className="font-bold text-base text-[#202322]">Account Information</h2>
                   <p className="text-xs text-[#737A75]">Company profile and workspace classification</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5E1D8]">
+                <div className="p-4 rounded-2xl bg-[#F4F0E6] border border-[#E2DDD2]">
                   <span className="text-[11px] font-mono uppercase text-[#737A75] font-semibold block mb-1">
                     ACCOUNT TYPE
                   </span>
                   <div className="flex items-center space-x-2">
-                    <span className="font-bold text-sm text-[#121614]">Employer / Contractor</span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-[#EBF6EE] text-[#059669] font-bold">
+                    <span className="font-bold text-sm text-[#202322]">Employer / Contractor</span>
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-[#EDF4F0] text-[#3E6B52] font-bold">
                       VERIFICATION SUITE
                     </span>
                   </div>
@@ -328,21 +328,21 @@ export const ContractorAppPage: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5E1D8] space-y-2.5">
+                <div className="p-4 rounded-2xl bg-[#F4F0E6] border border-[#E2DDD2] space-y-2.5">
                   <div>
                     <span className="text-[11px] font-mono uppercase text-[#737A75] font-semibold block mb-0.5">
                       REGISTERED WORK EMAIL
                     </span>
-                    <div className="flex items-center space-x-2 text-xs text-[#121614] font-medium">
+                    <div className="flex items-center space-x-2 text-xs text-[#202322] font-medium">
                       <Mail className="w-3.5 h-3.5 text-[#737A75]" />
                       <span>arjun.verma@apexinfra.co.in</span>
                     </div>
                   </div>
-                  <div className="pt-2 border-t border-[#E5E1D8]">
+                  <div className="pt-2 border-t border-[#E2DDD2]">
                     <span className="text-[11px] font-mono uppercase text-[#737A75] font-semibold block mb-0.5">
                       DIRECT PHONE
                     </span>
-                    <div className="flex items-center space-x-2 text-xs text-[#121614] font-medium">
+                    <div className="flex items-center space-x-2 text-xs text-[#202322] font-medium">
                       <Phone className="w-3.5 h-3.5 text-[#737A75]" />
                       <span>+91 98452 88123</span>
                     </div>
@@ -352,32 +352,32 @@ export const ContractorAppPage: React.FC = () => {
             </div>
 
             {/* Security */}
-            <div className="bg-white rounded-3xl border border-[#E5E1D8] p-6 sm:p-8 shadow-xs space-y-5">
-              <div className="flex items-center space-x-3 pb-3 border-b border-[#ECE8E0]">
-                <Lock className="w-5 h-5 text-[#1E3B2B]" />
+            <div className="bg-[#FFDFF7] rounded-3xl border border-[#E2DDD2] p-6 sm:p-8 shadow-xs space-y-5">
+              <div className="flex items-center space-x-3 pb-3 border-b border-[#EBE7DC]">
+                <Lock className="w-5 h-5 text-[#173F4F]" />
                 <div>
-                  <h2 className="font-bold text-base text-[#121614]">Security & Access</h2>
+                  <h2 className="font-bold text-base text-[#202322]">Security & Access</h2>
                   <p className="text-xs text-[#737A75]">Credential protection and corporate access controls</p>
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5E1D8] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+              <div className="p-4 rounded-2xl bg-[#F4F0E6] border border-[#E2DDD2] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                 <div>
-                  <p className="font-bold text-[#121614]">Employer Password & Authentication</p>
+                  <p className="font-bold text-[#202322]">Employer Password & Authentication</p>
                   <p className="text-[#737A75] mt-0.5">
                     Secured with modern cryptographic hashing.
                   </p>
                 </div>
-                <span className="px-3 py-1 rounded-xl bg-white border border-[#E5E1D8] text-xs font-medium text-[#059669] self-start sm:self-auto">
+                <span className="px-3 py-1 rounded-xl bg-white border border-[#E2DDD2] text-xs font-medium text-[#3E6B52] self-start sm:self-auto">
                   Protected
                 </span>
               </div>
             </div>
 
             {/* Session Management & Log Out */}
-            <div className="bg-white rounded-3xl border border-[#E5E1D8] p-6 sm:p-8 shadow-xs space-y-4">
+            <div className="bg-[#FFDFF7] rounded-3xl border border-[#E2DDD2] p-6 sm:p-8 shadow-xs space-y-4">
               <div>
-                <h2 className="font-bold text-base text-[#121614]">Session Management</h2>
+                <h2 className="font-bold text-base text-[#202322]">Session Management</h2>
                 <p className="text-xs text-[#737A75] mt-1">
                   To access a Worker account or another workspace, sign out of this Employer session and sign in with the corresponding credentials.
                 </p>
@@ -402,13 +402,13 @@ export const ContractorAppPage: React.FC = () => {
       {/* 3. Interactive Vouch Passport Inspection Modal */}
       {inspectedWorker && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs overflow-y-auto">
-          <div className="relative w-full max-w-4xl bg-[#FAF8F5] rounded-3xl border border-[#E5E1D8] shadow-2xl overflow-hidden my-8 max-h-[90vh] flex flex-col animate-fade-in-up">
+          <div className="relative w-full max-w-4xl bg-[#F4F0E6] rounded-3xl border border-[#E2DDD2] shadow-2xl overflow-hidden my-8 max-h-[90vh] flex flex-col animate-fade-in-up">
             
             {/* Modal Header */}
-            <div className="bg-[#121614] text-white px-6 py-4 flex items-center justify-between shrink-0">
+            <div className="bg-[#202322] text-white px-6 py-4 flex items-center justify-between shrink-0">
               <div className="flex items-center space-x-2.5">
-                <ShieldCheck className="w-5 h-5 text-[#C27A38]" />
-                <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#FAF8F5]">
+                <ShieldCheck className="w-5 h-5 text-[#C45B3C]" />
+                <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#F4F0E6]">
                   VOUCH PROFESSIONAL PASSPORT · EVIDENCE INSPECTION
                 </span>
               </div>
@@ -425,9 +425,9 @@ export const ContractorAppPage: React.FC = () => {
             <div className="p-6 sm:p-8 overflow-y-auto space-y-6">
               
               {/* Identity Banner */}
-              <div className="bg-white rounded-2xl border border-[#E5E1D8] p-6 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+              <div className="bg-[#FFDFF7] rounded-2xl border border-[#E2DDD2] p-6 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                 <div className="flex items-start sm:items-center space-x-4">
-                  <div className="w-20 h-24 rounded-xl overflow-hidden border border-[#E5E1D8] bg-[#EFECE6] shrink-0">
+                  <div className="w-20 h-24 rounded-xl overflow-hidden border border-[#E2DDD2] bg-[#EBE7DC] shrink-0">
                     <img
                       src={inspectedWorker.avatarUrl}
                       alt={inspectedWorker.name}
@@ -435,14 +435,14 @@ export const ContractorAppPage: React.FC = () => {
                     />
                   </div>
                   <div className="space-y-1">
-                    <div className="inline-flex items-center space-x-1.5 text-xs font-mono uppercase text-[#059669] font-semibold bg-[#EBF6EE] px-2 py-0.5 rounded border border-[#059669]/20">
+                    <div className="inline-flex items-center space-x-1.5 text-xs font-mono uppercase text-[#3E6B52] font-semibold bg-[#EDF4F0] px-2 py-0.5 rounded border border-[#3E6B52]/20">
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>Verified Sovereign Identity</span>
                     </div>
-                    <h2 className="font-display font-extrabold text-2xl text-[#121614]">
+                    <h2 className="font-display font-extrabold text-2xl text-[#202322]">
                       {inspectedWorker.name}
                     </h2>
-                    <p className="text-sm font-semibold text-[#1E3B2B]">
+                    <p className="text-sm font-semibold text-[#173F4F]">
                       {inspectedWorker.trade} · {inspectedWorker.experienceYears} Years Documented Exp
                     </p>
                     <p className="text-xs text-[#737A75] flex items-center space-x-1">
@@ -457,8 +457,8 @@ export const ContractorAppPage: React.FC = () => {
                     onClick={() => toggleSaveWorker(inspectedWorker.id)}
                     className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center space-x-1.5 border transition-all cursor-pointer ${
                       isSavedWorker(inspectedWorker.id)
-                        ? 'bg-[#EBF6EE] text-[#059669] border-[#059669]/30'
-                        : 'bg-white text-[#121614] border-[#E5E1D8] hover:bg-gray-50'
+                        ? 'bg-[#EDF4F0] text-[#3E6B52] border-[#3E6B52]/30'
+                        : 'bg-white text-[#202322] border-[#E2DDD2] hover:bg-gray-50'
                     }`}
                   >
                     <Bookmark className="w-3.5 h-3.5" />
@@ -467,7 +467,7 @@ export const ContractorAppPage: React.FC = () => {
                   <Link
                     to={`/passport/${inspectedWorker.id}`}
                     target="_blank"
-                    className="px-4 py-2 rounded-xl bg-[#1E3B2B] hover:bg-[#14281D] text-white text-xs font-semibold flex items-center space-x-1.5 transition-colors"
+                    className="px-4 py-2 rounded-xl bg-[#173F4F] hover:bg-[#0E2934] text-white text-xs font-semibold flex items-center space-x-1.5 transition-colors"
                   >
                     <span>Full Ledger</span>
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -476,36 +476,36 @@ export const ContractorAppPage: React.FC = () => {
               </div>
 
               {/* Evidence Confidence Card */}
-              <div className="bg-white rounded-2xl border border-[#E5E1D8] p-6 shadow-xs space-y-3">
+              <div className="bg-[#FFDFF7] rounded-2xl border border-[#E2DDD2] p-6 shadow-xs space-y-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="font-bold text-sm text-[#121614]">
+                    <h3 className="font-bold text-sm text-[#202322]">
                       Evidence Confidence Level
                     </h3>
                     <p className="text-xs text-[#737A75]">
                       Evaluated on supervisor confirmations & on-site photo records
                     </p>
                   </div>
-                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-[#EBF6EE] text-[#059669] border border-[#059669]/20">
+                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-[#EDF4F0] text-[#3E6B52] border border-[#3E6B52]/20">
                     {inspectedWorker.confidenceLevel} EVIDENCE CONFIDENCE
                   </span>
                 </div>
 
                 <div className="grid grid-cols-3 gap-3 pt-2 text-center text-xs">
-                  <div className="p-3 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8]">
-                    <span className="font-display font-extrabold text-xl text-[#121614] block">
+                  <div className="p-3 rounded-xl bg-[#F4F0E6] border border-[#E2DDD2]">
+                    <span className="font-display font-extrabold text-xl text-[#202322] block">
                       {inspectedWorker.workRecordsCount}
                     </span>
                     <span className="text-[#737A75]">Work Records</span>
                   </div>
-                  <div className="p-3 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8]">
-                    <span className="font-display font-extrabold text-xl text-[#121614] block">
+                  <div className="p-3 rounded-xl bg-[#F4F0E6] border border-[#E2DDD2]">
+                    <span className="font-display font-extrabold text-xl text-[#202322] block">
                       {inspectedWorker.evidenceItemsCount || (inspectedWorker.workRecordsCount + 4)}
                     </span>
                     <span className="text-[#737A75]">Evidence Items</span>
                   </div>
-                  <div className="p-3 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8]">
-                    <span className="font-display font-extrabold text-xl text-[#059669] block">
+                  <div className="p-3 rounded-xl bg-[#F4F0E6] border border-[#E2DDD2]">
+                    <span className="font-display font-extrabold text-xl text-[#3E6B52] block">
                       {inspectedWorker.confirmationsCount}
                     </span>
                     <span className="text-[#737A75]">Confirmations</span>
@@ -514,8 +514,8 @@ export const ContractorAppPage: React.FC = () => {
               </div>
 
               {/* Demonstrated Skills Breakdown */}
-              <div className="bg-white rounded-2xl border border-[#E5E1D8] p-6 shadow-xs space-y-3">
-                <h3 className="font-bold text-sm text-[#121614]">
+              <div className="bg-[#FFDFF7] rounded-2xl border border-[#E2DDD2] p-6 shadow-xs space-y-3">
+                <h3 className="font-bold text-sm text-[#202322]">
                   Demonstrated Competencies
                 </h3>
                 <div className="space-y-2">
@@ -524,12 +524,12 @@ export const ContractorAppPage: React.FC = () => {
                     .map((skillName: string, idx: number) => (
                       <div
                         key={idx}
-                        className="p-3 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8] flex items-center justify-between text-xs"
+                        className="p-3 rounded-xl bg-[#F4F0E6] border border-[#E2DDD2] flex items-center justify-between text-xs"
                       >
-                        <span className="font-semibold text-[#121614]">
+                        <span className="font-semibold text-[#202322]">
                           {skillName.trim()}
                         </span>
-                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#EBF6EE] text-[#059669]">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#EDF4F0] text-[#3E6B52]">
                           VERIFIED EVIDENCE
                         </span>
                       </div>
@@ -538,23 +538,23 @@ export const ContractorAppPage: React.FC = () => {
               </div>
 
               {/* Verified Records Sample */}
-              <div className="bg-white rounded-2xl border border-[#E5E1D8] p-6 shadow-xs space-y-3">
-                <h3 className="font-bold text-sm text-[#121614]">
+              <div className="bg-[#FFDFF7] rounded-2xl border border-[#E2DDD2] p-6 shadow-xs space-y-3">
+                <h3 className="font-bold text-sm text-[#202322]">
                   Recent Verified Work Records
                 </h3>
                 <div className="space-y-2.5">
                   {workRecords.slice(0, 2).map((r) => (
                     <div
                       key={r.id}
-                      className="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8] flex items-start space-x-3.5 text-xs"
+                      className="p-3.5 rounded-xl bg-[#F4F0E6] border border-[#E2DDD2] flex items-start space-x-3.5 text-xs"
                     >
-                      <div className="w-12 h-12 rounded-lg overflow-hidden bg-[#EFECE6] shrink-0 border border-[#E5E1D8]">
+                      <div className="w-12 h-12 rounded-lg overflow-hidden bg-[#EBE7DC] shrink-0 border border-[#E2DDD2]">
                         <img src={r.imageUrl} alt={r.title} className="w-full h-full object-cover" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between">
-                          <p className="font-bold text-[#121614] truncate">{r.title}</p>
-                          <span className="text-[10px] font-mono text-[#059669] font-bold">
+                          <p className="font-bold text-[#202322] truncate">{r.title}</p>
+                          <span className="text-[10px] font-mono text-[#3E6B52] font-bold">
                             ✓ CONFIRMED
                           </span>
                         </div>
@@ -573,13 +573,13 @@ export const ContractorAppPage: React.FC = () => {
             </div>
 
             {/* Modal Footer */}
-            <div className="p-4 bg-white border-t border-[#E5E1D8] flex items-center justify-between">
+            <div className="p-4 bg-white border-t border-[#E2DDD2] flex items-center justify-between">
               <span className="text-xs text-[#737A75]">
                 Independent Vouch Credential · Worker Sovereign Record
               </span>
               <button
                 onClick={() => setInspectedWorker(null)}
-                className="px-4 py-2 rounded-xl bg-[#1E3B2B] text-white text-xs font-semibold hover:bg-[#14281D] transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-[#173F4F] text-white text-xs font-semibold hover:bg-[#0E2934] transition-colors cursor-pointer"
               >
                 Close Passport
               </button>

@@ -9,10 +9,10 @@ export const HeroSection: React.FC = () => {
   const buildPassportHref = isAuthenticated && activeRole === 'worker' ? '/build-passport' : '/login?redirect=/build-passport';
 
   return (
-    <section className="relative pt-32 pb-20 sm:pt-36 sm:pb-28 lg:pt-40 lg:pb-32 overflow-hidden bg-[#FAF8F5]">
+    <section className="relative pt-32 pb-20 sm:pt-36 sm:pb-28 lg:pt-40 lg:pb-32 overflow-hidden bg-[#F4F0E6]">
       {/* Subtle architectural baseline grid lines (not artificial blobs) */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.035]">
-        <div className="w-full h-full bg-[linear-gradient(to_right,#121614_1px,transparent_1px),linear-gradient(to_bottom,#121614_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+        <div className="w-full h-full bg-[linear-gradient(to_right,#202322_1px,transparent_1px),linear-gradient(to_bottom,#202322_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -22,17 +22,17 @@ export const HeroSection: React.FC = () => {
           <div className="lg:col-span-7 flex flex-col justify-center">
             {/* Status Pill / Credibility Tag */}
             <ScrollReveal delay={0} duration={550}>
-              <div className="inline-flex items-center space-x-2.5 px-3 py-1.5 rounded-full bg-[#EFECE6] border border-[#E5E1D8] w-fit mb-6 sm:mb-8">
-                <span className="w-2 h-2 rounded-full bg-[#059669]"></span>
-                <span className="text-[12px] font-semibold tracking-wide uppercase text-[#2D523E]">
+              <div className="inline-flex items-center space-x-2.5 px-3 py-1.5 rounded-full bg-[#EBE7DC] border border-[#E2DDD2] w-fit mb-6 sm:mb-8">
+                <span className="w-2 h-2 rounded-full bg-[#3E6B52]"></span>
+                <span className="text-[12px] font-semibold tracking-wide uppercase text-[#173F4F]">
                   Portable Worker Identity Platform
                 </span>
               </div>
 
               {/* Giant Editorial Headline */}
-              <h1 className="font-display font-extrabold text-[44px] sm:text-[62px] lg:text-[72px] leading-[1.02] tracking-[-0.035em] text-[#121614] mb-6">
+              <h1 className="font-display font-extrabold text-[44px] sm:text-[62px] lg:text-[72px] leading-[1.02] tracking-[-0.035em] text-[#202322] mb-6">
                 YOUR WORK<br />
-                <span className="text-[#1E3B2B]">SPEAKS FOR YOU.</span>
+                <span className="text-[#173F4F]">SPEAKS FOR YOU.</span>
               </h1>
             </ScrollReveal>
 
@@ -48,15 +48,15 @@ export const HeroSection: React.FC = () => {
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3.5 sm:space-y-0 sm:space-x-4 mb-10 sm:mb-12">
                 <Link
                   to={buildPassportHref}
-                  className="vouch-btn inline-flex items-center justify-center space-x-2 px-7 py-4 rounded-xl bg-[#1E3B2B] text-[#FAF8F5] text-base font-semibold tracking-wide hover:bg-[#14281D] active:scale-[0.98] transition-all shadow-[0_4px_16px_rgba(30,59,43,0.18)]"
+                  className="vouch-btn inline-flex items-center justify-center space-x-2 px-7 py-4 rounded-xl bg-[#173F4F] text-[#F4F0E6] text-base font-semibold tracking-wide hover:bg-[#0E2934] active:scale-[0.98] transition-all shadow-[0_4px_16px_rgba(23, 63, 79,0.18)]"
                 >
                   <span>Build Your Passport</span>
-                  <ArrowRight className="w-4 h-4 text-[#C27A38]" />
+                  <ArrowRight className="w-4 h-4 text-[#C45B3C]" />
                 </Link>
 
                 <Link
                   to="/how-it-works"
-                  className="vouch-btn inline-flex items-center justify-center space-x-2 px-6 py-4 rounded-xl bg-transparent hover:bg-[#EFECE6] text-[#121614] text-base font-medium border border-[#E5E1D8] transition-colors"
+                  className="vouch-btn inline-flex items-center justify-center space-x-2 px-6 py-4 rounded-xl bg-transparent hover:bg-[#EBE7DC] text-[#202322] text-base font-medium border border-[#E2DDD2] transition-colors"
                 >
                   <span>See How Vouch Works</span>
                   <span className="text-[#737A75]">→</span>
@@ -66,18 +66,18 @@ export const HeroSection: React.FC = () => {
 
             {/* Restrained Value Anchor Badges */}
             <ScrollReveal delay={240} duration={600}>
-              <div className="pt-6 border-t border-[#E5E1D8] grid grid-cols-3 gap-4 max-w-lg">
+              <div className="pt-6 border-t border-[#E2DDD2] grid grid-cols-3 gap-4 max-w-lg">
                 <div>
                   <p className="text-xs uppercase font-mono text-[#737A75] tracking-wider mb-1">Ownership</p>
-                  <p className="text-sm font-semibold text-[#121614]">Worker-Owned</p>
+                  <p className="text-sm font-semibold text-[#202322]">Worker-Owned</p>
                 </div>
                 <div>
                   <p className="text-xs uppercase font-mono text-[#737A75] tracking-wider mb-1">Validation</p>
-                  <p className="text-sm font-semibold text-[#121614]">Evidence-Backed</p>
+                  <p className="text-sm font-semibold text-[#202322]">Evidence-Backed</p>
                 </div>
                 <div>
                   <p className="text-xs uppercase font-mono text-[#737A75] tracking-wider mb-1">Mobility</p>
-                  <p className="text-sm font-semibold text-[#121614]">Cross-Employer</p>
+                  <p className="text-sm font-semibold text-[#202322]">Cross-Employer</p>
                 </div>
               </div>
             </ScrollReveal>
@@ -89,7 +89,7 @@ export const HeroSection: React.FC = () => {
               
               {/* Asymmetric Worker Photography Container */}
               <ScrollReveal delay={160} duration={700}>
-                <div className="relative rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(18,22,20,0.12)] border border-[#E5E1D8] bg-[#EFECE6] aspect-[4/5] sm:aspect-[3/4] reveal-image-container">
+                <div className="relative rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(18,22,20,0.12)] border border-[#E2DDD2] bg-[#EBE7DC] aspect-[4/5] sm:aspect-[3/4] reveal-image-container">
                   <img
                     src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=1200&auto=format&fit=crop&q=80"
                     alt="Real electrician working on commercial distribution panel"
@@ -98,10 +98,10 @@ export const HeroSection: React.FC = () => {
                   />
                   
                   {/* Subtle gradient vignette at bottom for card readability */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#121614]/80 via-transparent to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#202322]/80 via-transparent to-transparent"></div>
                   
                   {/* Documentary Caption */}
-                  <div className="absolute top-4 left-4 bg-[#FAF8F5]/90 backdrop-blur-xs px-2.5 py-1 rounded text-[11px] font-mono text-[#1E3B2B] border border-[#E5E1D8]">
+                  <div className="absolute top-4 left-4 bg-[#F4F0E6]/90 backdrop-blur-xs px-2.5 py-1 rounded text-[11px] font-mono text-[#173F4F] border border-[#E2DDD2]">
                     ON-SITE VERIFICATION · MANGALURU
                   </div>
                 </div>

@@ -86,15 +86,15 @@ export const PublicVerifierPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#121614] flex flex-col font-sans selection:bg-[#1E3B2B] selection:text-white">
+    <div className="min-h-screen bg-[#F4F0E6] text-[#202322] flex flex-col font-sans selection:bg-[#173F4F] selection:text-white">
       {/* Header */}
-      <header className="w-full bg-white border-b border-[#E5E1D8] sticky top-0 z-40">
+      <header className="w-full bg-white border-b border-[#E2DDD2] sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-[#1E3B2B] flex items-center justify-center text-white shadow-xs">
-              <ShieldCheck className="w-5 h-5 text-[#FAF8F5]" strokeWidth={2.2} />
+            <div className="w-8 h-8 rounded-lg bg-[#173F4F] flex items-center justify-center text-white shadow-xs">
+              <ShieldCheck className="w-5 h-5 text-[#F4F0E6]" strokeWidth={2.2} />
             </div>
-            <span className="font-display font-extrabold text-xl tracking-tight text-[#121614]">
+            <span className="font-display font-extrabold text-xl tracking-tight text-[#202322]">
               VOUCH
             </span>
           </Link>
@@ -108,10 +108,10 @@ export const PublicVerifierPage: React.FC = () => {
       <main className="flex-1 max-w-xl w-full mx-auto p-4 sm:p-6 my-4 sm:my-8 flex flex-col justify-center">
         {/* 1. Loading State */}
         {isLoading && (
-          <div className="bg-white rounded-3xl border border-[#E5E1D8] p-8 text-center space-y-4 shadow-xs">
-            <Loader2 className="w-8 h-8 text-[#1E3B2B] animate-spin mx-auto" />
+          <div className="bg-white rounded-3xl border border-[#E2DDD2] p-8 text-center space-y-4 shadow-xs">
+            <Loader2 className="w-8 h-8 text-[#173F4F] animate-spin mx-auto" />
             <div className="space-y-1">
-              <h2 className="font-display font-bold text-lg text-[#121614]">
+              <h2 className="font-display font-bold text-lg text-[#202322]">
                 Loading Verification Details...
               </h2>
               <p className="text-xs text-[#737A75]">
@@ -123,12 +123,12 @@ export const PublicVerifierPage: React.FC = () => {
 
         {/* 2. Error State */}
         {!isLoading && error && !details && (
-          <div className="bg-white rounded-3xl border border-[#E5E1D8] p-8 text-center space-y-5 shadow-xs">
+          <div className="bg-white rounded-3xl border border-[#E2DDD2] p-8 text-center space-y-5 shadow-xs">
             <div className="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center mx-auto border border-red-200">
               <ShieldAlert className="w-6 h-6" />
             </div>
             <div className="space-y-1.5 max-w-sm mx-auto">
-              <h2 className="font-display font-bold text-xl text-[#121614]">
+              <h2 className="font-display font-bold text-xl text-[#202322]">
                 Invalid Verification Link
               </h2>
               <p className="text-xs text-[#737A75]">
@@ -137,7 +137,7 @@ export const PublicVerifierPage: React.FC = () => {
             </div>
             <Link
               to="/"
-              className="inline-flex items-center space-x-1.5 px-5 py-2.5 bg-[#1E3B2B] text-white rounded-xl text-xs font-semibold hover:bg-[#14281D]"
+              className="inline-flex items-center space-x-1.5 px-5 py-2.5 bg-[#173F4F] text-white rounded-xl text-xs font-semibold hover:bg-[#0E2934]"
             >
               <span>Return to Vouch Home</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -147,10 +147,10 @@ export const PublicVerifierPage: React.FC = () => {
 
         {/* 3. Decision Success Banner */}
         {!isLoading && decisionResult && (
-          <div className="bg-white rounded-3xl border border-[#E5E1D8] p-8 text-center space-y-5 shadow-sm animate-in fade-in">
+          <div className="bg-[#FFDFF7] rounded-3xl border border-[#E2DDD2] p-8 text-center space-y-5 shadow-sm animate-in fade-in">
             <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mx-auto ${
               decisionResult.decision === 'CONFIRMED'
-                ? 'bg-[#EBF6EE] text-[#059669] border border-[#059669]/30'
+                ? 'bg-[#EDF4F0] text-[#3E6B52] border border-[#3E6B52]/30'
                 : 'bg-red-50 text-red-600 border border-red-200'
             }`}>
               {decisionResult.decision === 'CONFIRMED' ? (
@@ -161,7 +161,7 @@ export const PublicVerifierPage: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <h2 className="font-display font-bold text-2xl text-[#121614]">
+              <h2 className="font-display font-bold text-2xl text-[#202322]">
                 {decisionResult.decision === 'CONFIRMED'
                   ? 'Work Successfully Confirmed!'
                   : 'Work Record Flagged'}
@@ -174,7 +174,7 @@ export const PublicVerifierPage: React.FC = () => {
             <div className="pt-2">
               <Link
                 to="/"
-                className="inline-flex items-center space-x-2 px-6 py-2.5 bg-[#1E3B2B] text-white rounded-xl text-xs font-bold hover:bg-[#14281D] shadow-xs cursor-pointer"
+                className="inline-flex items-center space-x-2 px-6 py-2.5 bg-[#173F4F] text-white rounded-xl text-xs font-bold hover:bg-[#0E2934] shadow-xs cursor-pointer"
               >
                 <span>Learn More About VOUCH</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -185,11 +185,11 @@ export const PublicVerifierPage: React.FC = () => {
 
         {/* 4. Active Review & Decision Screen */}
         {!isLoading && details && !decisionResult && (
-          <div className="bg-white rounded-3xl border border-[#E5E1D8] shadow-sm overflow-hidden flex flex-col">
+          <div className="bg-[#FFDFF7] rounded-3xl border border-[#E2DDD2] shadow-sm overflow-hidden flex flex-col">
             {/* Top Bar */}
-            <div className="bg-[#121614] text-white p-5 flex items-center justify-between">
+            <div className="bg-[#202322] text-white p-5 flex items-center justify-between">
               <div className="flex items-center space-x-2.5">
-                <ShieldCheck className="w-5 h-5 text-[#C27A38]" />
+                <ShieldCheck className="w-5 h-5 text-[#C45B3C]" />
                 <div>
                   <span className="text-[10px] uppercase font-mono tracking-wider text-emerald-300 block">
                     CONFIRMATION REQUEST
@@ -205,11 +205,11 @@ export const PublicVerifierPage: React.FC = () => {
             {/* Body */}
             <div className="p-6 space-y-5 text-xs">
               {/* Question Banner */}
-              <div className="p-4 bg-[#EBF6EE] rounded-2xl border border-[#059669]/30">
-                <p className="text-[10px] font-bold text-[#1E3B2B] uppercase tracking-wider mb-1">
+              <div className="p-4 bg-[#EDF4F0] rounded-2xl border border-[#3E6B52]/30">
+                <p className="text-[10px] font-bold text-[#173F4F] uppercase tracking-wider mb-1">
                   Recipient: {details.verifier_name}
                 </p>
-                <h4 className="text-base font-bold text-[#111827]">
+                <h4 className="text-base font-bold text-[#202322]">
                   Did the worker perform this project as specified?
                 </h4>
                 <p className="text-[11px] text-gray-600 mt-1">
@@ -218,12 +218,12 @@ export const PublicVerifierPage: React.FC = () => {
               </div>
 
               {/* Work Details Summary Card */}
-              <div className="bg-[#FAF8F5] p-4 rounded-2xl border border-[#E5E1D8] space-y-3">
+              <div className="bg-[#F4F0E6] p-4 rounded-2xl border border-[#E2DDD2] space-y-3">
                 <div className="space-y-1">
                   <span className="text-[10px] uppercase font-mono text-[#737A75] block">
                     Documented Project
                   </span>
-                  <h3 className="text-base font-extrabold text-[#121614]">
+                  <h3 className="text-base font-extrabold text-[#202322]">
                     {details.work.title}
                   </h3>
                   {details.work.description && (
@@ -233,7 +233,7 @@ export const PublicVerifierPage: React.FC = () => {
                   )}
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[#E5E1D8] text-[11px]">
+                <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[#E2DDD2] text-[11px]">
                   <div className="flex items-center space-x-1.5 text-gray-600">
                     <Calendar className="w-3.5 h-3.5 text-gray-400" />
                     <span>{details.work.date}</span>
@@ -258,7 +258,7 @@ export const PublicVerifierPage: React.FC = () => {
 
                 {/* Skills Claimed */}
                 {details.work.skills && details.work.skills.length > 0 && (
-                  <div className="pt-2 border-t border-[#E5E1D8]">
+                  <div className="pt-2 border-t border-[#E2DDD2]">
                     <span className="text-[10px] font-bold text-[#737A75] block mb-1 uppercase tracking-wider">
                       Skills Supported:
                     </span>
@@ -266,7 +266,7 @@ export const PublicVerifierPage: React.FC = () => {
                       {details.work.skills.map((s, idx) => (
                         <span
                           key={idx}
-                          className="px-2.5 py-0.5 rounded-md bg-white border border-[#E5E1D8] text-[#1E3B2B] font-bold text-[11px]"
+                          className="px-2.5 py-0.5 rounded-md bg-white border border-[#E2DDD2] text-[#173F4F] font-bold text-[11px]"
                         >
                           ✓ {s}
                         </span>
@@ -302,7 +302,7 @@ export const PublicVerifierPage: React.FC = () => {
                       value={notes}
                       onChange={e => setNotes(e.target.value)}
                       placeholder="e.g. Inspected panel wiring and confirmed test certificate."
-                      className="w-full text-xs p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1E3B2B]"
+                      className="w-full text-xs p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#173F4F]"
                     />
                   </div>
 
@@ -310,7 +310,7 @@ export const PublicVerifierPage: React.FC = () => {
                     <button
                       onClick={() => handleDecision('CONFIRMED')}
                       disabled={isSubmitting}
-                      className="w-full py-3 bg-[#1E3B2B] hover:bg-[#14281D] text-white rounded-xl font-bold text-xs flex items-center justify-center space-x-2 shadow-xs transition-all active:translate-y-[1px] cursor-pointer disabled:opacity-50"
+                      className="w-full py-3 bg-[#173F4F] hover:bg-[#0E2934] text-white rounded-xl font-bold text-xs flex items-center justify-center space-x-2 shadow-xs transition-all active:translate-y-[1px] cursor-pointer disabled:opacity-50"
                     >
                       {isSubmitting ? (
                         <>

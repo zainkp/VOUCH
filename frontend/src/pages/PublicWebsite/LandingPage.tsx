@@ -15,7 +15,7 @@ import { PublicFooter } from './PublicFooter';
 
 export const LandingPage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#121614] flex flex-col w-full selection:bg-[#1E3B2B] selection:text-white">
+    <div className="min-h-screen bg-[#F4F0E6] text-[#202322] flex flex-col w-full selection:bg-[#173F4F] selection:text-white">
       {/* 1. Header & Navigation */}
       <PublicNavbar />
 

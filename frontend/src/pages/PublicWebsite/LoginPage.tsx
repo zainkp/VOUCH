@@ -44,23 +44,23 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#121614] flex flex-col justify-between selection:bg-[#1E3B2B] selection:text-white">
+    <div className="min-h-screen bg-[#F4F0E6] text-[#202322] flex flex-col justify-between selection:bg-[#173F4F] selection:text-white">
       
       {/* Top Navigation */}
       <header className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 flex items-center justify-between">
         <Link
           to="/"
-          className="inline-flex items-center space-x-2 text-sm font-medium text-[#4A524D] hover:text-[#121614] transition-colors"
+          className="inline-flex items-center space-x-2 text-sm font-medium text-[#4A524D] hover:text-[#202322] transition-colors"
         >
           <ArrowLeft className="w-4 h-4 text-[#737A75]" />
           <span>Back to Vouch</span>
         </Link>
 
         <Link to="/" className="flex items-center space-x-2.5 group">
-          <div className="w-8 h-8 rounded-lg bg-[#1E3B2B] flex items-center justify-center text-white shadow-xs group-hover:bg-[#14281D] transition-colors">
-            <ShieldCheck className="w-5 h-5 text-[#FAF8F5]" strokeWidth={2.2} />
+          <div className="w-8 h-8 rounded-lg bg-[#173F4F] flex items-center justify-center text-white shadow-xs group-hover:bg-[#0E2934] transition-colors">
+            <ShieldCheck className="w-5 h-5 text-[#F4F0E6]" strokeWidth={2.2} />
           </div>
-          <span className="font-display font-extrabold text-xl tracking-tight text-[#121614]">
+          <span className="font-display font-extrabold text-xl tracking-tight text-[#202322]">
             VOUCH
           </span>
         </Link>
@@ -73,14 +73,14 @@ export const LoginPage: React.FC = () => {
           {/* LEFT SIDE: Vouch branding, statement, headline, and authentic documentary worker image */}
           <div className="lg:col-span-6 flex flex-col justify-center">
             
-            <div className="flex items-center space-x-2 text-xs font-mono font-semibold tracking-wider uppercase text-[#1E3B2B] mb-4">
-              <ShieldCheck className="w-4 h-4 text-[#C27A38]" />
+            <div className="flex items-center space-x-2 text-xs font-mono font-semibold tracking-wider uppercase text-[#173F4F] mb-4">
+              <ShieldCheck className="w-4 h-4 text-[#C45B3C]" />
               <span>VOUCH · PROFESSIONAL PASSPORT</span>
             </div>
 
-            <h1 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-[54px] text-[#121614] tracking-tight leading-[1.06] mb-5">
+            <h1 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-[54px] text-[#202322] tracking-tight leading-[1.06] mb-5">
               YOUR WORK<br />
-              <span className="text-[#1E3B2B]">SPEAKS FOR YOU.</span>
+              <span className="text-[#173F4F]">SPEAKS FOR YOU.</span>
             </h1>
 
             <p className="text-base sm:text-lg text-[#4A524D] leading-relaxed mb-8 max-w-xl">
@@ -88,7 +88,7 @@ export const LoginPage: React.FC = () => {
             </p>
 
             {/* Documentary Worker Photography */}
-            <div className="rounded-2xl overflow-hidden border border-[#E5E1D8] bg-[#EFECE6] shadow-xs max-w-xl">
+            <div className="rounded-2xl overflow-hidden border border-[#E2DDD2] bg-[#EBE7DC] shadow-xs max-w-xl">
               <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full">
                 <img
                   src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=1000&auto=format&fit=crop&q=80"
@@ -96,9 +96,9 @@ export const LoginPage: React.FC = () => {
                   className="w-full h-full object-cover filter saturate-[0.95]"
                   loading="eager"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#121614]/75 via-transparent to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#202322]/75 via-transparent to-transparent"></div>
                 <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <p className="text-xs font-mono text-[#FAF8F5]/90">
+                  <p className="text-xs font-mono text-[#F4F0E6]/90">
                     FIELD VERIFICATION · INDEPENDENT TRADE CREDENTIALS
                   </p>
                 </div>
@@ -116,7 +116,7 @@ export const LoginPage: React.FC = () => {
                 <div className="w-full">
                   
                   <div className="mb-8">
-                    <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#121614] tracking-tight mb-2">
+                    <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#202322] tracking-tight mb-2">
                       Welcome back.
                     </h2>
                     <p className="text-sm text-[#4A524D]">
@@ -135,7 +135,7 @@ export const LoginPage: React.FC = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="name@example.com"
-                        className="w-full px-4 py-3 rounded-xl border border-[#E5E1D8] bg-white text-sm text-[#121614] focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none transition-all placeholder:text-[#A1A7A2]"
+                        className="w-full px-4 py-3 rounded-xl border border-[#E2DDD2] bg-white text-sm text-[#202322] focus:border-[#173F4F] focus:ring-1 focus:ring-[#173F4F] focus:outline-none transition-all placeholder:text-[#A1A7A2]"
                       />
                     </div>
 
@@ -151,7 +151,7 @@ export const LoginPage: React.FC = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••••••"
-                        className="w-full px-4 py-3 rounded-xl border border-[#E5E1D8] bg-white text-sm text-[#121614] focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none transition-all placeholder:text-[#A1A7A2]"
+                        className="w-full px-4 py-3 rounded-xl border border-[#E2DDD2] bg-white text-sm text-[#202322] focus:border-[#173F4F] focus:ring-1 focus:ring-[#173F4F] focus:outline-none transition-all placeholder:text-[#A1A7A2]"
                       />
                     </div>
 
@@ -159,21 +159,21 @@ export const LoginPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => setForgotPasswordNotice(!forgotPasswordNotice)}
-                        className="text-xs text-[#737A75] hover:text-[#121614] transition-colors cursor-pointer"
+                        className="text-xs text-[#737A75] hover:text-[#202322] transition-colors cursor-pointer"
                       >
                         Forgot password?
                       </button>
                     </div>
 
                     {forgotPasswordNotice && (
-                      <div className="p-3 rounded-xl bg-[#EBF6EE] border border-[#059669]/20 text-xs text-[#059669] leading-relaxed">
+                      <div className="p-3 rounded-xl bg-[#EDF4F0] border border-[#3E6B52]/20 text-xs text-[#3E6B52] leading-relaxed">
                         If an account exists for this email, password reset instructions have been sent.
                       </div>
                     )}
 
                     <button
                       type="submit"
-                      className="w-full py-3.5 rounded-xl bg-[#1E3B2B] text-white font-semibold text-sm hover:bg-[#14281D] active:scale-[0.99] transition-all shadow-xs cursor-pointer mt-2"
+                      className="w-full py-3.5 rounded-xl bg-[#173F4F] text-white font-semibold text-sm hover:bg-[#0E2934] active:scale-[0.99] transition-all shadow-xs cursor-pointer mt-2"
                     >
                       Sign In
                     </button>
@@ -181,8 +181,8 @@ export const LoginPage: React.FC = () => {
 
                   {/* Subtle Divider */}
                   <div className="relative my-7 flex items-center justify-center">
-                    <div className="w-full border-t border-[#E5E1D8]"></div>
-                    <span className="absolute bg-[#FAF8F5] px-3 text-xs font-mono text-[#737A75] uppercase">
+                    <div className="w-full border-t border-[#E2DDD2]"></div>
+                    <span className="absolute bg-[#F4F0E6] px-3 text-xs font-mono text-[#737A75] uppercase">
                       OR
                     </span>
                   </div>
@@ -191,7 +191,7 @@ export const LoginPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleGoogleSignIn}
-                    className="w-full py-3 rounded-xl border border-[#E5E1D8] bg-white text-sm font-medium text-[#121614] hover:bg-gray-50 active:scale-[0.99] transition-all flex items-center justify-center space-x-2.5 shadow-2xs cursor-pointer"
+                    className="w-full py-3 rounded-xl border border-[#E2DDD2] bg-white text-sm font-medium text-[#202322] hover:bg-gray-50 active:scale-[0.99] transition-all flex items-center justify-center space-x-2.5 shadow-2xs cursor-pointer"
                   >
                     <svg className="w-4 h-4" viewBox="0 0 24 24">
                       <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -203,15 +203,15 @@ export const LoginPage: React.FC = () => {
                   </button>
 
                   {/* Destination to /build-passport */}
-                  <div className="pt-8 mt-8 border-t border-[#ECE8E0] text-sm text-[#4A524D] text-center">
+                  <div className="pt-8 mt-8 border-t border-[#EBE7DC] text-sm text-[#4A524D] text-center">
                     Don&apos;t have a Vouch account?{' '}
                     <button
                       type="button"
                       onClick={() => setShowRoleSelection(true)}
-                      className="font-semibold text-[#1E3B2B] hover:underline inline-flex items-center space-x-1 cursor-pointer"
+                      className="font-semibold text-[#173F4F] hover:underline inline-flex items-center space-x-1 cursor-pointer"
                     >
                       <span>Build your Professional Passport</span>
-                      <span className="text-[#C27A38]">→</span>
+                      <span className="text-[#C45B3C]">→</span>
                     </button>
                   </div>
 
@@ -221,7 +221,7 @@ export const LoginPage: React.FC = () => {
                 <div className="w-full animate-fade-in-up">
                   
                   <div className="mb-6">
-                    <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#121614] tracking-tight mb-2">
+                    <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#202322] tracking-tight mb-2">
                       How will you use Vouch?
                     </h2>
                     <p className="text-sm text-[#4A524D]">
@@ -235,15 +235,15 @@ export const LoginPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => handleSelectRole('worker')}
-                      className="w-full p-5 rounded-2xl border border-[#E5E1D8] bg-white hover:border-[#1E3B2B] hover:shadow-xs transition-all text-left flex items-start space-x-4 cursor-pointer group"
+                      className="w-full p-5 rounded-2xl border border-[#E2DDD2] bg-[#FFDFF7] hover:border-[#173F4F] hover:shadow-xs transition-all text-left flex items-start space-x-4 cursor-pointer group"
                     >
-                      <div className="w-10 h-10 rounded-xl bg-[#EBF6EE] flex items-center justify-center text-[#1E3B2B] shrink-0 mt-0.5 group-hover:bg-[#1E3B2B] group-hover:text-white transition-colors">
+                      <div className="w-10 h-10 rounded-xl bg-[#EDF4F0] flex items-center justify-center text-[#173F4F] shrink-0 mt-0.5 group-hover:bg-[#173F4F] group-hover:text-white transition-colors">
                         <User className="w-5 h-5" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
-                          <h3 className="font-bold text-base text-[#121614]">Worker</h3>
-                          <ArrowRight className="w-4 h-4 text-[#737A75] group-hover:text-[#1E3B2B] group-hover:translate-x-0.5 transition-all" />
+                          <h3 className="font-bold text-base text-[#202322]">Worker</h3>
+                          <ArrowRight className="w-4 h-4 text-[#737A75] group-hover:text-[#173F4F] group-hover:translate-x-0.5 transition-all" />
                         </div>
                         <p className="text-xs text-[#737A75] leading-relaxed">
                           Build and manage your professional identity.
@@ -255,15 +255,15 @@ export const LoginPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => handleSelectRole('contractor')}
-                      className="w-full p-5 rounded-2xl border border-[#E5E1D8] bg-white hover:border-[#1E3B2B] hover:shadow-xs transition-all text-left flex items-start space-x-4 cursor-pointer group"
+                      className="w-full p-5 rounded-2xl border border-[#E2DDD2] bg-[#FFDFF7] hover:border-[#173F4F] hover:shadow-xs transition-all text-left flex items-start space-x-4 cursor-pointer group"
                     >
-                      <div className="w-10 h-10 rounded-xl bg-[#EBF6EE] flex items-center justify-center text-[#1E3B2B] shrink-0 mt-0.5 group-hover:bg-[#1E3B2B] group-hover:text-white transition-colors">
+                      <div className="w-10 h-10 rounded-xl bg-[#EDF4F0] flex items-center justify-center text-[#173F4F] shrink-0 mt-0.5 group-hover:bg-[#173F4F] group-hover:text-white transition-colors">
                         <Building2 className="w-5 h-5" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
-                          <h3 className="font-bold text-base text-[#121614]">Employer</h3>
-                          <ArrowRight className="w-4 h-4 text-[#737A75] group-hover:text-[#1E3B2B] group-hover:translate-x-0.5 transition-all" />
+                          <h3 className="font-bold text-base text-[#202322]">Employer</h3>
+                          <ArrowRight className="w-4 h-4 text-[#737A75] group-hover:text-[#173F4F] group-hover:translate-x-0.5 transition-all" />
                         </div>
                         <p className="text-xs text-[#737A75] leading-relaxed">
                           Evaluate evidence-backed workers.
@@ -277,7 +277,7 @@ export const LoginPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setShowRoleSelection(false)}
-                      className="text-xs text-[#737A75] hover:text-[#121614] transition-colors cursor-pointer"
+                      className="text-xs text-[#737A75] hover:text-[#202322] transition-colors cursor-pointer"
                     >
                       ← Back to sign in
                     </button>
@@ -293,14 +293,14 @@ export const LoginPage: React.FC = () => {
       </main>
 
       {/* Subtle Bottom Footer */}
-      <footer className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 border-t border-[#E5E1D8] flex flex-col sm:flex-row items-center justify-between text-xs text-[#737A75] gap-3">
+      <footer className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 border-t border-[#E2DDD2] flex flex-col sm:flex-row items-center justify-between text-xs text-[#737A75] gap-3">
         <p>© {new Date().getFullYear()} VOUCH Professional Identity Platform.</p>
         <div className="flex items-center space-x-5">
-          <Link to="/" className="hover:text-[#121614] transition-colors">Home</Link>
+          <Link to="/" className="hover:text-[#202322] transition-colors">Home</Link>
           <span>·</span>
-          <Link to="/about" className="hover:text-[#121614] transition-colors">About</Link>
+          <Link to="/about" className="hover:text-[#202322] transition-colors">About</Link>
           <span>·</span>
-          <Link to="/build-passport" className="hover:text-[#121614] transition-colors">Build Passport</Link>
+          <Link to="/build-passport" className="hover:text-[#202322] transition-colors">Build Passport</Link>
         </div>
       </footer>
 

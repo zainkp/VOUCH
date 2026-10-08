@@ -205,11 +205,11 @@ export const AddWorkModal: React.FC = () => {
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 animate-in fade-in">
-      <div className="bg-[#FAF8F5] w-full max-w-lg rounded-t-[28px] sm:rounded-[28px] border border-[#ECEBE8] shadow-2xl max-h-[92vh] flex flex-col overflow-hidden">
+      <div className="bg-[#F4F0E6] w-full max-w-lg rounded-t-[28px] sm:rounded-[28px] border border-[#E2DDD2] shadow-2xl max-h-[92vh] flex flex-col overflow-hidden">
         {/* Modal Header */}
-        <div className="px-5 py-4 bg-white border-b border-[#ECEBE8] flex items-center justify-between">
+        <div className="px-5 py-4 bg-white border-b border-[#E2DDD2] flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-[#111827]">Add Work Record</h3>
+            <h3 className="text-base font-bold text-[#202322]">Add Work Record</h3>
             <p className="text-xs text-gray-500">
               AI Natural Language Extraction → Structured Ledger → Independent Vouch
             </p>
@@ -238,7 +238,7 @@ export const AddWorkModal: React.FC = () => {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <label className="text-xs font-bold text-gray-900 flex items-center space-x-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-[#C27A38]" />
+                <Sparkles className="w-3.5 h-3.5 text-[#C45B3C]" />
                 <span>1. Describe what you worked on</span>
               </label>
               <button
@@ -260,7 +260,7 @@ export const AddWorkModal: React.FC = () => {
               value={promptText}
               onChange={e => setPromptText(e.target.value)}
               placeholder="e.g. I installed six electrical panels at a commercial building last week..."
-              className="w-full text-xs p-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#1E3B2B] text-gray-900"
+              className="w-full text-xs p-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#173F4F] text-gray-900"
             />
 
             {/* Quick Demo Prompts */}
@@ -293,7 +293,7 @@ export const AddWorkModal: React.FC = () => {
               <button
                 onClick={handleFormat}
                 disabled={isProcessing || !promptText.trim()}
-                className="w-full mt-2 py-2.5 bg-[#1E3B2B] text-white rounded-xl text-xs font-bold hover:bg-[#14281D] disabled:opacity-50 transition-all flex items-center justify-center space-x-2 shadow-xs cursor-pointer"
+                className="w-full mt-2 py-2.5 bg-[#173F4F] text-white rounded-xl text-xs font-bold hover:bg-[#0E2934] disabled:opacity-50 transition-all flex items-center justify-center space-x-2 shadow-xs cursor-pointer"
               >
                 {isProcessing ? (
                   <>
@@ -302,7 +302,7 @@ export const AddWorkModal: React.FC = () => {
                   </>
                 ) : (
                   <>
-                    <Sparkles className="w-3.5 h-3.5 text-[#C27A38]" />
+                    <Sparkles className="w-3.5 h-3.5 text-[#C45B3C]" />
                     <span>Structure Work Record</span>
                   </>
                 )}
@@ -402,7 +402,7 @@ export const AddWorkModal: React.FC = () => {
                   {formattedData.skills.map((s, idx) => (
                     <span
                       key={idx}
-                      className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-md bg-[#EBF6EE] text-[#1E3B2B] text-[11px] font-bold border border-[#059669]/20"
+                      className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-md bg-[#EDF4F0] text-[#173F4F] text-[11px] font-bold border border-[#3E6B52]/20"
                     >
                       <span>✓ {s}</span>
                       <button
@@ -487,7 +487,7 @@ export const AddWorkModal: React.FC = () => {
                 <button
                   onClick={handleSave}
                   disabled={isSaving}
-                  className="flex-1 py-2.5 bg-[#1E3B2B] text-white rounded-xl text-xs font-bold hover:bg-[#14281D] disabled:opacity-50 shadow-xs active:translate-y-[1px] transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
+                  className="flex-1 py-2.5 bg-[#173F4F] text-white rounded-xl text-xs font-bold hover:bg-[#0E2934] disabled:opacity-50 shadow-xs active:translate-y-[1px] transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
                 >
                   {isSaving ? (
                     <>

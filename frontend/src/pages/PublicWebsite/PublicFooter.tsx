@@ -17,25 +17,25 @@ export const PublicFooter: React.FC = () => {
   ];
 
   return (
-    <footer className="bg-[#FAF8F5] text-[#121614] border-t border-[#E5E1D8] pt-16 pb-12 sm:pt-20 sm:pb-16">
+    <footer className="bg-[#F4F0E6] text-[#202322] border-t border-[#E2DDD2] pt-16 pb-12 sm:pt-20 sm:pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 sm:gap-12 pb-16 border-b border-[#E5E1D8]">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 sm:gap-12 pb-16 border-b border-[#E2DDD2]">
           
           {/* Brand Col (5 cols) */}
           <div className="md:col-span-5 flex flex-col justify-between">
             <div>
               <Link to="/" className="flex items-center space-x-3 mb-4 w-fit">
-                <div className="w-8 h-8 rounded-lg bg-[#1E3B2B] flex items-center justify-center text-white">
-                  <ShieldCheck className="w-5 h-5 text-[#FAF8F5]" strokeWidth={2.2} />
+                <div className="w-8 h-8 rounded-lg bg-[#173F4F] flex items-center justify-center text-white">
+                  <ShieldCheck className="w-5 h-5 text-[#F4F0E6]" strokeWidth={2.2} />
                 </div>
-                <span className="font-display font-extrabold text-2xl tracking-tight text-[#121614]">
+                <span className="font-display font-extrabold text-2xl tracking-tight text-[#202322]">
                   VOUCH
                 </span>
               </Link>
               
-              <p className="font-display text-xl sm:text-2xl font-bold text-[#1E3B2B] tracking-tight mb-3">
+              <p className="font-display text-xl sm:text-2xl font-bold text-[#173F4F] tracking-tight mb-3">
                 &quot;Your work speaks for you.&quot;
               </p>
               
@@ -47,14 +47,14 @@ export const PublicFooter: React.FC = () => {
             <div className="pt-2 flex items-center space-x-3">
               <Link
                 to={buildPassportHref}
-                className="inline-flex items-center space-x-2 text-xs font-mono font-bold text-[#FAF8F5] bg-[#1E3B2B] hover:bg-[#14281D] px-3.5 py-2 rounded-lg transition-colors shadow-2xs"
+                className="inline-flex items-center space-x-2 text-xs font-mono font-bold text-[#F4F0E6] bg-[#173F4F] hover:bg-[#0E2934] px-3.5 py-2 rounded-lg transition-colors shadow-2xs"
               >
                 <span>BUILD PASSPORT</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-[#C27A38]" />
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#C45B3C]" />
               </Link>
               <Link
                 to="/login"
-                className="inline-flex items-center space-x-1.5 text-xs font-mono font-semibold text-[#4A524D] hover:text-[#121614] bg-[#EFECE6] px-3 py-2 rounded-lg border border-[#E5E1D8] transition-colors"
+                className="inline-flex items-center space-x-1.5 text-xs font-mono font-semibold text-[#4A524D] hover:text-[#202322] bg-[#EBE7DC] px-3 py-2 rounded-lg border border-[#E2DDD2] transition-colors"
               >
                 <span>Log In</span>
               </Link>
@@ -68,32 +68,32 @@ export const PublicFooter: React.FC = () => {
             </h4>
             <ul className="space-y-2.5 text-sm text-[#4A524D]">
               <li>
-                <Link to="/workers" className="hover:text-[#1E3B2B] transition-colors">
+                <Link to="/workers" className="hover:text-[#173F4F] transition-colors">
                   For Workers
                 </Link>
               </li>
               <li>
-                <Link to="/employers" className="hover:text-[#1E3B2B] transition-colors">
+                <Link to="/employers" className="hover:text-[#173F4F] transition-colors">
                   For Employers & Contractors
                 </Link>
               </li>
               <li>
-                <Link to="/how-it-works" className="hover:text-[#1E3B2B] transition-colors">
+                <Link to="/how-it-works" className="hover:text-[#173F4F] transition-colors">
                   How It Works
                 </Link>
               </li>
               <li>
-                <Link to="/passport" className="hover:text-[#1E3B2B] transition-colors">
+                <Link to="/passport" className="hover:text-[#173F4F] transition-colors">
                   The Professional Passport
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="hover:text-[#1E3B2B] transition-colors">
+                <Link to="/about" className="hover:text-[#173F4F] transition-colors">
                   About Vouch
                 </Link>
               </li>
               <li>
-                <Link to={buildPassportHref} className="hover:text-[#1E3B2B] transition-colors font-medium text-[#1E3B2B]">
+                <Link to={buildPassportHref} className="hover:text-[#173F4F] transition-colors font-medium text-[#173F4F]">
                   Start Your Passport →
                 </Link>
               </li>
@@ -112,7 +112,7 @@ export const PublicFooter: React.FC = () => {
             {/* Language Selector */}
             <div>
               <div className="flex items-center space-x-1.5 text-xs font-mono text-[#737A75] mb-2.5">
-                <Globe className="w-3.5 h-3.5 text-[#1E3B2B]" />
+                <Globe className="w-3.5 h-3.5 text-[#173F4F]" />
                 <span className="uppercase tracking-wider">LANGUAGE / भाषा:</span>
               </div>
               <div className="flex flex-wrap gap-1.5">
@@ -122,8 +122,8 @@ export const PublicFooter: React.FC = () => {
                     onClick={() => setSelectedLang(lang.name)}
                     className={`px-2.5 py-1 rounded text-xs transition-all ${
                       selectedLang === lang.name
-                        ? 'bg-[#1E3B2B] text-white font-semibold'
-                        : 'bg-[#EFECE6] text-[#4A524D] hover:bg-[#E5E1D8]'
+                        ? 'bg-[#173F4F] text-white font-semibold'
+                        : 'bg-[#EBE7DC] text-[#4A524D] hover:bg-[#E2DDD2]'
                     }`}
                   >
                     {lang.label}
@@ -139,11 +139,11 @@ export const PublicFooter: React.FC = () => {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#737A75] gap-4">
           <p>© {new Date().getFullYear()} VOUCH Professional Identity Platform. All rights reserved.</p>
           <div className="flex items-center space-x-6">
-            <Link to="/about" className="hover:text-[#121614]">Field Methodology</Link>
+            <Link to="/about" className="hover:text-[#202322]">Field Methodology</Link>
             <span>·</span>
-            <Link to="/passport" className="hover:text-[#121614]">Passport Architecture</Link>
+            <Link to="/passport" className="hover:text-[#202322]">Passport Architecture</Link>
             <span>·</span>
-            <Link to="/login" className="hover:text-[#121614]">Portal Sign In</Link>
+            <Link to="/login" className="hover:text-[#202322]">Portal Sign In</Link>
           </div>
         </div>
 

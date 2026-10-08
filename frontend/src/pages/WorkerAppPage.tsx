@@ -49,27 +49,27 @@ export const WorkerAppPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#121614] flex flex-col font-sans selection:bg-[#1E3B2B] selection:text-white">
+    <div className="min-h-screen bg-[#F4F0E6] text-[#202322] flex flex-col font-sans selection:bg-[#173F4F] selection:text-white">
       
       {/* 1. Professional Web Application Header (Full Width) */}
-      <header className="w-full bg-white border-b border-[#E5E1D8] sticky top-0 z-40 shadow-2xs">
+      <header className="w-full bg-white border-b border-[#E2DDD2] sticky top-0 z-40 shadow-2xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           
           {/* Left: Vouch Brand & Workspace Indicator */}
           <div className="flex items-center space-x-6">
             <Link to="/worker" className="flex items-center space-x-2.5 group">
-              <div className="w-8 h-8 rounded-lg bg-[#1E3B2B] flex items-center justify-center text-white shadow-xs group-hover:bg-[#14281D] transition-colors">
-                <ShieldCheck className="w-5 h-5 text-[#FAF8F5]" strokeWidth={2.2} />
+              <div className="w-8 h-8 rounded-lg bg-[#173F4F] flex items-center justify-center text-white shadow-xs group-hover:bg-[#0E2934] transition-colors">
+                <ShieldCheck className="w-5 h-5 text-[#F4F0E6]" strokeWidth={2.2} />
               </div>
-              <span className="font-display font-extrabold text-xl tracking-tight text-[#121614]">
+              <span className="font-display font-extrabold text-xl tracking-tight text-[#202322]">
                 VOUCH
               </span>
             </Link>
 
-            <div className="hidden sm:flex items-center space-x-2 text-xs font-mono text-[#737A75] border-l border-[#E5E1D8] pl-5">
-              <span className="w-2 h-2 rounded-full bg-[#059669]"></span>
+            <div className="hidden sm:flex items-center space-x-2 text-xs font-mono text-[#737A75] border-l border-[#E2DDD2] pl-5">
+              <span className="w-2 h-2 rounded-full bg-[#3E6B52]"></span>
               <span className="font-medium text-[#4A524D]">Worker Workspace</span>
-              <span className="text-[#C27A38] bg-[#FDF5ED] px-2 py-0.5 rounded font-semibold border border-[#C27A38]/20">
+              <span className="text-[#C45B3C] bg-[#F8ECE7] px-2 py-0.5 rounded font-semibold border border-[#C45B3C]/20">
                 {worker.passportId}
               </span>
             </div>
@@ -86,8 +86,8 @@ export const WorkerAppPage: React.FC = () => {
                   onClick={() => setCurrentTab(item.id)}
                   className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-[#1E3B2B] text-white shadow-xs'
-                      : 'text-[#4A524D] hover:text-[#121614] hover:bg-[#F4F1EA]'
+                      ? 'bg-[#173F4F] text-white shadow-xs'
+                      : 'text-[#4A524D] hover:text-[#202322] hover:bg-[#F4F0E6]'
                   }`}
                 >
                   <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-[#737A75]'}`} />
@@ -103,9 +103,9 @@ export const WorkerAppPage: React.FC = () => {
             {/* Quick Add Work Button (Desktop) */}
             <button
               onClick={() => setIsAddWorkOpen(true)}
-              className="hidden lg:flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8] text-xs font-semibold text-[#1E3B2B] hover:bg-[#EFECE6] transition-colors cursor-pointer"
+              className="hidden lg:flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-[#F4F0E6] border border-[#E2DDD2] text-xs font-semibold text-[#173F4F] hover:bg-[#EBE7DC] transition-colors cursor-pointer"
             >
-              <Plus className="w-3.5 h-3.5 text-[#1E3B2B]" />
+              <Plus className="w-3.5 h-3.5 text-[#173F4F]" />
               <span>+ Add Work</span>
             </button>
 
@@ -113,9 +113,9 @@ export const WorkerAppPage: React.FC = () => {
             <div className="relative">
               <button
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="flex items-center space-x-3 p-1.5 pr-2.5 rounded-xl hover:bg-[#FAF8F5] border border-transparent hover:border-[#E5E1D8] transition-all cursor-pointer"
+                className="flex items-center space-x-3 p-1.5 pr-2.5 rounded-xl hover:bg-[#F4F0E6] border border-transparent hover:border-[#E2DDD2] transition-all cursor-pointer"
               >
-                <div className="w-8 h-8 rounded-full overflow-hidden border border-[#E5E1D8] bg-[#EFECE6] shrink-0">
+                <div className="w-8 h-8 rounded-full overflow-hidden border border-[#E2DDD2] bg-[#EBE7DC] shrink-0">
                   <img
                     src={worker.avatarUrl}
                     alt={worker.name}
@@ -123,7 +123,7 @@ export const WorkerAppPage: React.FC = () => {
                   />
                 </div>
                 <div className="text-left hidden sm:block">
-                  <p className="text-xs font-bold text-[#121614] leading-tight">
+                  <p className="text-xs font-bold text-[#202322] leading-tight">
                     {worker.name}
                   </p>
                   <p className="text-[11px] text-[#737A75]">
@@ -140,12 +140,12 @@ export const WorkerAppPage: React.FC = () => {
                     className="fixed inset-0 z-40"
                     onClick={() => setIsUserMenuOpen(false)}
                   />
-                  <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl border border-[#E5E1D8] shadow-lg py-2 z-50 animate-fade-in-up">
-                    <div className="px-4 py-3 border-b border-[#ECE8E0]">
+                  <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl border border-[#E2DDD2] shadow-lg py-2 z-50 animate-fade-in-up">
+                    <div className="px-4 py-3 border-b border-[#EBE7DC]">
                       <p className="text-xs font-mono uppercase text-[#737A75] font-semibold">
                         Authenticated Account
                       </p>
-                      <p className="text-sm font-bold text-[#121614] mt-0.5">
+                      <p className="text-sm font-bold text-[#202322] mt-0.5">
                         {worker.name}
                       </p>
                       <p className="text-xs text-[#4A524D]">
@@ -159,7 +159,7 @@ export const WorkerAppPage: React.FC = () => {
                           setCurrentTab('profile');
                           setIsUserMenuOpen(false);
                         }}
-                        className="w-full px-4 py-2.5 text-left text-xs font-medium text-[#121614] hover:bg-[#FAF8F5] flex items-center space-x-2.5 cursor-pointer"
+                        className="w-full px-4 py-2.5 text-left text-xs font-medium text-[#202322] hover:bg-[#F4F0E6] flex items-center space-x-2.5 cursor-pointer"
                       >
                         <User className="w-4 h-4 text-[#737A75]" />
                         <span>View Full Profile</span>
@@ -169,14 +169,14 @@ export const WorkerAppPage: React.FC = () => {
                           setCurrentTab('passport');
                           setIsUserMenuOpen(false);
                         }}
-                        className="w-full px-4 py-2.5 text-left text-xs font-medium text-[#121614] hover:bg-[#FAF8F5] flex items-center space-x-2.5 cursor-pointer"
+                        className="w-full px-4 py-2.5 text-left text-xs font-medium text-[#202322] hover:bg-[#F4F0E6] flex items-center space-x-2.5 cursor-pointer"
                       >
                         <Award className="w-4 h-4 text-[#737A75]" />
                         <span>View Vouch Passport</span>
                       </button>
                     </div>
 
-                    <div className="pt-1 border-t border-[#ECE8E0]">
+                    <div className="pt-1 border-t border-[#EBE7DC]">
                       <button
                         onClick={handleLogout}
                         className="w-full px-4 py-2.5 text-left text-xs font-medium text-[#B91C1C] hover:bg-red-50 flex items-center space-x-2.5 cursor-pointer"
@@ -193,7 +193,7 @@ export const WorkerAppPage: React.FC = () => {
             {/* Mobile Navigation Drawer Toggle */}
             <button
               onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
-              className="md:hidden p-2 rounded-xl text-[#4A524D] hover:bg-[#FAF8F5] border border-[#E5E1D8] cursor-pointer"
+              className="md:hidden p-2 rounded-xl text-[#4A524D] hover:bg-[#F4F0E6] border border-[#E2DDD2] cursor-pointer"
               aria-label="Toggle Navigation"
             >
               {isMobileNavOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -205,7 +205,7 @@ export const WorkerAppPage: React.FC = () => {
 
         {/* Mobile Navigation Drawer */}
         {isMobileNavOpen && (
-          <div className="md:hidden border-t border-[#E5E1D8] bg-white px-4 pt-3 pb-4 space-y-2">
+          <div className="md:hidden border-t border-[#E2DDD2] bg-white px-4 pt-3 pb-4 space-y-2">
             <div className="grid grid-cols-2 gap-2 mb-3">
               {navItems.map((item) => {
                 const isActive = currentTab === item.id;
@@ -219,8 +219,8 @@ export const WorkerAppPage: React.FC = () => {
                     }}
                     className={`flex items-center space-x-2 px-3 py-2.5 rounded-xl text-xs font-semibold cursor-pointer ${
                       isActive
-                        ? 'bg-[#1E3B2B] text-white shadow-xs'
-                        : 'bg-[#FAF8F5] text-[#4A524D] hover:bg-[#F4F1EA]'
+                        ? 'bg-[#173F4F] text-white shadow-xs'
+                        : 'bg-[#F4F0E6] text-[#4A524D] hover:bg-[#F4F0E6]'
                     }`}
                   >
                     <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-[#737A75]'}`} />
@@ -230,13 +230,13 @@ export const WorkerAppPage: React.FC = () => {
               })}
             </div>
 
-            <div className="pt-2 border-t border-[#ECE8E0] flex items-center justify-between">
+            <div className="pt-2 border-t border-[#EBE7DC] flex items-center justify-between">
               <button
                 onClick={() => {
                   setIsAddWorkOpen(true);
                   setIsMobileNavOpen(false);
                 }}
-                className="py-2 px-3 rounded-xl bg-[#1E3B2B] text-white text-xs font-semibold flex items-center space-x-1.5 cursor-pointer"
+                className="py-2 px-3 rounded-xl bg-[#173F4F] text-white text-xs font-semibold flex items-center space-x-1.5 cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>+ Add Work</span>

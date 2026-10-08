@@ -10,7 +10,7 @@ export const TopBar: React.FC = () => {
       <div className="flex items-center space-x-2">
         <h1 
           onClick={() => setCurrentTab('home')}
-          className="text-2xl font-extrabold tracking-tight text-[#111827] cursor-pointer hover:opacity-80 transition-opacity"
+          className="text-2xl font-extrabold tracking-tight text-[#202322] cursor-pointer hover:opacity-80 transition-opacity"
         >
           Vouch
         </h1>
@@ -45,7 +45,7 @@ export const TopBar: React.FC = () => {
             }
             setCurrentTab('profile');
           }}
-          className="w-8 h-8 rounded-full overflow-hidden border border-black/10 shrink-0 shadow-xs focus:outline-none focus:ring-2 focus:ring-[#233B31]"
+          className="w-8 h-8 rounded-full overflow-hidden border border-black/10 shrink-0 shadow-xs focus:outline-none focus:ring-2 focus:ring-[#173F4F]"
           title="Worker Profile & Settings"
         >
           <img alt={worker.name} className="w-full h-full object-cover" src={worker.avatarUrl} />
