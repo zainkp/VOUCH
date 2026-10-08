@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import QRCode from 'qrcode';
 import { useApp } from '../context/AppContext';
 import { X, Copy, Check, ExternalLink, Shield } from 'lucide-react';
 
 export const QrModal: React.FC = () => {
-  const { isQrModalOpen, setIsQrModalOpen, worker, stats, setActiveRole, setCurrentTab } = useApp();
+  const {
+    isQrModalOpen,
+    setIsQrModalOpen,
+    worker,
+    setActiveRole,
+    setCurrentTab,
+  } = useApp();
+
+  const navigate = useNavigate();
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
   const [copied, setCopied] = useState(false);
 
-  const publicUrl = `https://vouch.work/p/ravi-kumar-8842`;
+  const slug = 'ravi-kumar-82a7';
+  const publicUrl = `${window.location.origin}/passport/p/${slug}`;
 
   useEffect(() => {
     if (isQrModalOpen) {
@@ -16,7 +26,7 @@ export const QrModal: React.FC = () => {
         width: 220,
         margin: 2,
         color: {
-          dark: '#111827',
+          dark: '#121614',
           light: '#ffffff',
         },
       })
@@ -28,15 +38,18 @@ export const QrModal: React.FC = () => {
   if (!isQrModalOpen) return null;
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(publicUrl);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(publicUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   const handleOpenContractorView = () => {
     setIsQrModalOpen(false);
     setActiveRole('contractor');
     setCurrentTab('home');
+    navigate('/contractor');
   };
 
   return (
@@ -45,12 +58,15 @@ export const QrModal: React.FC = () => {
         {/* Header */}
         <div className="w-full flex justify-between items-center pb-2 border-b border-gray-100">
           <div className="flex items-center space-x-1.5 text-left">
-            <Shield className="w-4 h-4 text-emerald-700" />
-            <span className="text-xs font-bold text-gray-900">Share My Vouch Passport</span>
+            <Shield className="w-4 h-4 text-[#1E3B2B]" />
+            <span className="text-xs font-bold text-gray-900">
+              Share My Vouch Passport
+            </span>
           </div>
+
           <button
             onClick={() => setIsQrModalOpen(false)}
-            className="p-1 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100"
+            className="p-1 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -58,17 +74,28 @@ export const QrModal: React.FC = () => {
 
         {/* Worker Summary */}
         <div>
-          <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full inline-block mb-1 border border-emerald-200">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-800 bg-[#EBF6EE] px-2 py-0.5 rounded-full inline-block mb-1 border border-[#059669]/20">
             Worker-Owned Professional Record
           </span>
-          <h3 className="text-base font-bold text-[#111827]">{worker.name}</h3>
-          <p className="text-xs text-gray-600">{worker.trade} · {worker.experienceYears} Years Exp · {worker.location.split(',')[0]}</p>
+
+          <h3 className="text-base font-bold text-[#121614]">
+            {worker.name}
+          </h3>
+
+          <p className="text-xs text-gray-600">
+            {worker.trade} · {worker.experienceYears} Years Exp ·{' '}
+            {worker.location.split(',')[0]}
+          </p>
         </div>
 
         {/* QR Code */}
         <div className="p-3 bg-stone-50 rounded-2xl border border-stone-200 relative flex items-center justify-center">
           {qrDataUrl ? (
-            <img alt="Passport QR" src={qrDataUrl} className="w-44 h-44 rounded-lg" />
+            <img
+              alt="Passport QR"
+              src={qrDataUrl}
+              className="w-44 h-44 rounded-lg shadow-2xs"
+            />
           ) : (
             <div className="w-44 h-44 flex items-center justify-center text-xs text-gray-400">
               Generating QR...
@@ -77,25 +104,31 @@ export const QrModal: React.FC = () => {
         </div>
 
         <p className="text-[11px] text-gray-500 max-w-[240px] leading-relaxed">
-          Contractors can scan this to review your work history, verified evidence, and supervisor vouches.
+          Contractors and employers can scan this to review your work history,
+          verified evidence, and supervisor vouches.
         </p>
 
         {/* Link & Actions */}
         <div className="w-full space-y-2">
           <div className="flex items-center justify-between p-2 rounded-xl bg-stone-100 border border-stone-200 text-xs font-mono text-gray-700">
             <span className="truncate pr-2">{publicUrl}</span>
+
             <button
               onClick={handleCopy}
-              className="text-emerald-800 hover:text-emerald-950 p-1 font-sans font-semibold shrink-0"
+              className="text-[#1E3B2B] hover:text-[#14281D] p-1 font-sans font-semibold shrink-0 cursor-pointer"
               title="Copy URL"
             >
-              {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+              {copied ? (
+                <Check className="w-4 h-4 text-[#059669]" />
+              ) : (
+                <Copy className="w-4 h-4" />
+              )}
             </button>
           </div>
 
           <button
             onClick={handleCopy}
-            className="w-full py-2.5 bg-[#233B31] text-white rounded-xl text-xs font-bold hover:bg-[#1E3B2B] active:translate-y-[1px] transition-all flex items-center justify-center space-x-1.5 shadow-xs"
+            className="w-full py-2.5 bg-[#1E3B2B] text-white rounded-xl text-xs font-bold hover:bg-[#14281D] active:translate-y-[1px] transition-all flex items-center justify-center space-x-1.5 shadow-xs cursor-pointer"
           >
             {copied ? (
               <>
@@ -112,7 +145,7 @@ export const QrModal: React.FC = () => {
 
           <button
             onClick={handleOpenContractorView}
-            className="w-full py-2 bg-stone-100 hover:bg-stone-200 text-gray-800 rounded-xl text-xs font-semibold flex items-center justify-center space-x-1.5 transition-colors"
+            className="w-full py-2 bg-stone-100 hover:bg-stone-200 text-gray-800 rounded-xl text-xs font-semibold flex items-center justify-center space-x-1.5 transition-colors cursor-pointer"
           >
             <ExternalLink className="w-3.5 h-3.5 text-gray-600" />
             <span>Simulate Contractor Scanning This Link</span>
@@ -122,3 +155,5 @@ export const QrModal: React.FC = () => {
     </div>
   );
 };
+
+export default QrModal;

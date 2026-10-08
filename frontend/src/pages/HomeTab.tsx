@@ -7,21 +7,25 @@ import {
   ArrowRight, 
   CheckCircle2, 
   MapPin, 
-  ExternalLink,
-  QrCode,
-  FileCheck2,
-  Clock
+  QrCode, 
+  FileCheck2, 
+  RefreshCw,
+  AlertCircle,
+  Sparkles
 } from 'lucide-react';
 
 export const HomeTab: React.FC = () => {
   const { 
     worker, 
     workRecords, 
-    skills,
+    skills, 
     stats, 
+    isLoading, 
+    error, 
+    refreshData,
     setCurrentTab, 
     setIsAddWorkOpen, 
-    setIsQrModalOpen,
+    setIsQrModalOpen, 
     setSelectedWorkRecord 
   } = useApp();
 
@@ -50,6 +54,72 @@ export const HomeTab: React.FC = () => {
         );
     }
   };
+
+  // ---------------------------------------------------------------------------
+  // 1. Loading Skeleton State
+  // ---------------------------------------------------------------------------
+  if (isLoading) {
+    return (
+      <div className="w-full space-y-10 animate-pulse">
+        {/* Header Skeleton */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-[#E5E1D8]">
+          <div className="space-y-2">
+            <div className="h-8 w-64 bg-[#E5E1D8] rounded-xl"></div>
+            <div className="h-4 w-48 bg-[#EFECE6] rounded-md"></div>
+          </div>
+          <div className="h-10 w-32 bg-[#E5E1D8] rounded-xl"></div>
+        </div>
+
+        {/* Passport Card Skeleton */}
+        <div className="bg-white rounded-3xl border border-[#E5E1D8] p-8 space-y-6">
+          <div className="h-6 w-40 bg-[#E5E1D8] rounded-md"></div>
+          <div className="flex flex-col sm:flex-row gap-6 items-center">
+            <div className="w-24 h-28 bg-[#EFECE6] rounded-2xl shrink-0"></div>
+            <div className="flex-1 space-y-3 w-full">
+              <div className="h-7 w-56 bg-[#E5E1D8] rounded-lg"></div>
+              <div className="h-4 w-36 bg-[#EFECE6] rounded-md"></div>
+              <div className="h-4 w-44 bg-[#EFECE6] rounded-md"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Record Counter Skeleton */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="h-24 bg-white rounded-2xl border border-[#E5E1D8]"></div>
+          <div className="h-24 bg-white rounded-2xl border border-[#E5E1D8]"></div>
+          <div className="h-24 bg-white rounded-2xl border border-[#E5E1D8]"></div>
+        </div>
+      </div>
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // 2. Error State (with Retry Action)
+  // ---------------------------------------------------------------------------
+  if (error && workRecords.length === 0) {
+    return (
+      <div className="w-full py-12 px-6 bg-white rounded-3xl border border-[#E5E1D8] text-center space-y-5">
+        <div className="w-12 h-12 rounded-2xl bg-[#FAF0F0] text-[#9E4545] flex items-center justify-center mx-auto">
+          <AlertCircle className="w-6 h-6" />
+        </div>
+        <div className="max-w-md mx-auto space-y-1.5">
+          <h2 className="font-display font-bold text-xl text-[#121614]">
+            Backend Connection Unavailable
+          </h2>
+          <p className="text-sm text-[#737A75]">
+            {error || "Vouch couldn't connect to the backend server. Please verify the FastAPI service is running."}
+          </p>
+        </div>
+        <button
+          onClick={() => refreshData()}
+          className="inline-flex items-center space-x-2 px-6 py-2.5 bg-[#1E3B2B] text-white text-xs font-semibold rounded-xl hover:bg-[#14281D] transition-colors cursor-pointer shadow-xs"
+        >
+          <RefreshCw className="w-3.5 h-3.5" />
+          <span>Retry Connection</span>
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full space-y-10 sm:space-y-12">
@@ -264,48 +334,60 @@ export const HomeTab: React.FC = () => {
             </button>
           </div>
 
-          <div className="space-y-3">
-            {recentRecords.map((item: WorkRecord) => {
-              const isConfirmed = item.status === 'CONFIRMED';
-              return (
-                <div
-                  key={item.id}
-                  className="bg-white rounded-2xl border border-[#E5E1D8] p-5 shadow-xs hover:border-[#1E3B2B]/40 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-                >
-                  <div className="flex items-start space-x-4 min-w-0">
-                    <div className="w-14 h-14 rounded-xl overflow-hidden bg-[#EFECE6] shrink-0 border border-[#E5E1D8]">
-                      <img
-                        src={item.imageUrl}
-                        alt={item.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="min-w-0">
-                      <h4 className="font-bold text-sm text-[#121614] truncate">
-                        {item.title}
-                      </h4>
-                      <p className="text-xs text-[#737A75] mt-0.5">
-                        {item.location} · {item.date}
-                      </p>
-                      <p className="text-xs text-[#4A524D] mt-1 flex items-center space-x-1.5">
-                        <FileCheck2 className="w-3.5 h-3.5 text-[#059669]" />
-                        <span>
-                          {item.evidenceItems.length} evidence items · {isConfirmed ? 'Confirmed by supervisor' : 'Awaiting confirmation'}
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={() => setSelectedWorkRecord(item)}
-                    className="self-end sm:self-center px-4 py-2 rounded-xl border border-[#E5E1D8] hover:border-[#1E3B2B] bg-[#FAF8F5] hover:bg-white text-xs font-semibold text-[#121614] transition-all cursor-pointer shrink-0"
+          {recentRecords.length > 0 ? (
+            <div className="space-y-3">
+              {recentRecords.map((item: WorkRecord) => {
+                const isConfirmed = item.status === 'CONFIRMED';
+                return (
+                  <div
+                    key={item.id}
+                    className="bg-white rounded-2xl border border-[#E5E1D8] p-5 shadow-xs hover:border-[#1E3B2B]/40 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                   >
-                    View Record
-                  </button>
-                </div>
-              );
-            })}
-          </div>
+                    <div className="flex items-start space-x-4 min-w-0">
+                      <div className="w-14 h-14 rounded-xl overflow-hidden bg-[#EFECE6] shrink-0 border border-[#E5E1D8]">
+                        <img
+                          src={item.imageUrl}
+                          alt={item.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="min-w-0">
+                        <h4 className="font-bold text-sm text-[#121614] truncate">
+                          {item.title}
+                        </h4>
+                        <p className="text-xs text-[#737A75] mt-0.5">
+                          {item.location} · {item.date}
+                        </p>
+                        <p className="text-xs text-[#4A524D] mt-1 flex items-center space-x-1.5">
+                          <FileCheck2 className="w-3.5 h-3.5 text-[#059669]" />
+                          <span>
+                            {item.evidenceItems.length} evidence items · {isConfirmed ? 'Confirmed by supervisor' : 'Awaiting confirmation'}
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => setSelectedWorkRecord(item)}
+                      className="self-end sm:self-center px-4 py-2 rounded-xl border border-[#E5E1D8] hover:border-[#1E3B2B] bg-[#FAF8F5] hover:bg-white text-xs font-semibold text-[#121614] transition-all cursor-pointer shrink-0"
+                    >
+                      View Record
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="p-8 bg-white rounded-2xl border border-[#E5E1D8] text-center space-y-3">
+              <p className="text-sm text-[#737A75]">No work records logged yet.</p>
+              <button
+                onClick={() => setIsAddWorkOpen(true)}
+                className="px-4 py-2 bg-[#1E3B2B] text-white text-xs font-semibold rounded-xl hover:bg-[#14281D] transition-colors"
+              >
+                + Log your first job
+              </button>
+            </div>
+          )}
         </section>
 
         {/* Right Column: Demonstrated Skills (Evidence-backed, no stars/percentages) */}
