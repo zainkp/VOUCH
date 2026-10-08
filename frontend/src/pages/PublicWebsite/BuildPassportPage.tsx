@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { PublicNavbar } from './PublicNavbar';
 import { PublicFooter } from './PublicFooter';
 import { ScrollReveal } from '../../components/ScrollReveal';
 import { useApp } from '../../context/AppContext';
+import { api, WorkerOnboardingPayload, WorkerProfileResponse } from '../../services/api';
 import { 
   ShieldCheck, 
   ArrowRight, 
@@ -16,11 +17,16 @@ import {
   Camera, 
   CheckCheck, 
   FileCheck,
-  Sparkles
+  Sparkles,
+  Mic,
+  MicOff,
+  Loader2,
+  ExternalLink,
+  AlertCircle
 } from 'lucide-react';
 
 export const BuildPassportPage: React.FC = () => {
-  const { worker, addWorkRecord, setActiveRole } = useApp();
+  const { worker, addWorkRecord, setActiveRole, refreshData } = useApp();
   const navigate = useNavigate();
 
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
@@ -31,6 +37,22 @@ export const BuildPassportPage: React.FC = () => {
   const [experienceYears, setExperienceYears] = useState('7');
   const [location, setLocation] = useState('Mangaluru, Karnataka');
   const [languages, setLanguages] = useState('Hindi, Kannada, English');
+
+  // AI Extraction State
+  const [aiTextPrompt, setAiTextPrompt] = useState('');
+  const [isExtracting, setIsExtracting] = useState(false);
+  const [aiFeedback, setAiFeedback] = useState<string | null>(null);
+
+  // Voice Recording State
+  const [isRecording, setIsRecording] = useState(false);
+  const [isTranscribing, setIsTranscribing] = useState(false);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+
+  // Submission State
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [createdProfile, setCreatedProfile] = useState<WorkerProfileResponse | null>(null);
 
   // Selected Skills
   const [selectedSkills, setSelectedSkills] = useState<string[]>([
@@ -91,20 +113,153 @@ export const BuildPassportPage: React.FC = () => {
     );
   };
 
-  const handleFinishOnboarding = () => {
-    // Add the first work record using AppContext engine
-    addWorkRecord({
-      title: workTitle,
-      employer,
-      role,
-      description: workDescription,
-      location,
-      imageUrl: photoUrl,
-      skills: selectedSkills,
-    });
+  // AI Extraction Handler
+  const handleAIExtract = async (textToExtract?: string) => {
+    const text = (textToExtract || aiTextPrompt).trim();
+    if (!text) return;
 
-    setActiveRole('worker');
-    setStep(4);
+    setIsExtracting(true);
+    setAiFeedback(null);
+
+    try {
+      const extracted = await api.extractProfile(text);
+      let updatedCount = 0;
+
+      if (extracted.occupation) {
+        // Find best match in available trades
+        const matched = availableTrades.find(
+          t => t.toLowerCase() === extracted.occupation!.toLowerCase()
+        ) || (extracted.occupation.charAt(0).toUpperCase() + extracted.occupation.slice(1));
+        setTrade(matched);
+        updatedCount++;
+      }
+
+      if (extracted.experience_years_claimed !== null && extracted.experience_years_claimed !== undefined) {
+        setExperienceYears(String(extracted.experience_years_claimed));
+        updatedCount++;
+      }
+
+      if (extracted.location) {
+        setLocation(extracted.location);
+        updatedCount++;
+      }
+
+      if (extracted.skills && extracted.skills.length > 0) {
+        // Capitalize and add skills
+        const formattedSkills = extracted.skills.map(
+          s => s.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+        );
+        setSelectedSkills(prev => Array.from(new Set([...prev, ...formattedSkills])));
+        updatedCount += extracted.skills.length;
+      }
+
+      setAiFeedback(`Extracted claims successfully: updated occupation, experience, and ${extracted.skills.length} skills for your review.`);
+    } catch (err: any) {
+      console.warn('AI Profile extraction error:', err);
+      setAiFeedback('AI extraction service temporarily unavailable. You can fill the details manually below.');
+    } finally {
+      setIsExtracting(false);
+    }
+  };
+
+  // Voice Recording & Transcription Handler
+  const handleToggleVoice = async () => {
+    if (isRecording) {
+      // Stop recording
+      if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+        mediaRecorderRef.current.stop();
+      }
+      setIsRecording(false);
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      audioChunksRef.current = [];
+      const recorder = new MediaRecorder(stream);
+      mediaRecorderRef.current = recorder;
+
+      recorder.ondataavailable = (e) => {
+        if (e.data.size > 0) audioChunksRef.current.push(e.data);
+      };
+
+      recorder.onstop = async () => {
+        stream.getTracks().forEach(t => t.stop());
+        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+        
+        setIsTranscribing(true);
+        setAiFeedback('Transcribing speech with Gemini...');
+        try {
+          const res = await api.transcribeAudio(audioBlob, 'voice_profile.webm');
+          if (res.transcript && res.transcript.trim()) {
+            setAiTextPrompt(res.transcript);
+            setAiFeedback(`Heard: "${res.transcript}". Extracting profile details...`);
+            await handleAIExtract(res.transcript);
+          } else {
+            setAiFeedback('No clear speech detected. Please speak clearly or type your experience.');
+          }
+        } catch (err: any) {
+          console.warn('Voice transcription error:', err);
+          setAiFeedback('Voice transcription unavailable. Please type your experience in the box.');
+        } finally {
+          setIsTranscribing(false);
+        }
+      };
+
+      recorder.start();
+      setIsRecording(true);
+      setAiFeedback('Listening... Speak your experience in English, Hindi, or Hinglish.');
+    } catch (err) {
+      console.warn('Microphone error:', err);
+      setAiFeedback('Microphone permission required for speech recording.');
+    }
+  };
+
+  const handleFinishOnboarding = async () => {
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const payload: WorkerOnboardingPayload = {
+        name,
+        trade,
+        experience_years: parseInt(experienceYears, 10) || 0,
+        location,
+        skills: selectedSkills,
+        languages,
+        initial_work: {
+          title: workTitle,
+          employer,
+          role,
+          description: workDescription,
+          location,
+          imageUrl: photoUrl,
+          skills: selectedSkills,
+          verifierName: verifierName || undefined,
+          verifierRole: verifierRole || undefined,
+        }
+      };
+
+      // Persist to Firestore: POST /api/workers
+      const created = await api.createWorker(payload);
+      setCreatedProfile(created);
+
+      // Save active worker ID to localStorage so profile survives page reload
+      if (created.id) {
+        localStorage.setItem('vouch_active_worker_id', created.id);
+      }
+
+      // Refresh global context from backend
+      await refreshData();
+
+      setActiveRole('worker');
+      setStep(4);
+    } catch (err: any) {
+      console.error('Failed to create worker profile:', err);
+      setSubmitError(err?.message || 'Could not save profile to the server. Please check your connection.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -145,6 +300,69 @@ export const BuildPassportPage: React.FC = () => {
                   <p className="text-sm text-[#4A524D] mt-2">
                     Enter your real trade identity. Your passport belongs to you and will accompany you across every future employer.
                   </p>
+                </div>
+
+                {/* AI / Voice Assist Box */}
+                <div className="mb-6 p-4 sm:p-5 rounded-2xl bg-[#F5F2EB] border border-[#E5E1D8]">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-mono font-bold text-[#1E3B2B] flex items-center space-x-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-[#C27A38]" />
+                      <span>SPEAK OR TYPE YOUR TRADE (OPTIONAL AUTO-FILL)</span>
+                    </span>
+                    <span className="text-[10px] font-mono text-[#737A75]">HINDI / ENGLISH / HINGLISH</span>
+                  </div>
+                  <p className="text-xs text-[#525B54] mb-3">
+                    Describe your trade experience naturally, or speak into the microphone. AI will extract your trade, experience years, location, and skills into the form fields below for your review.
+                  </p>
+                  <div className="relative mb-3">
+                    <textarea
+                      rows={2}
+                      value={aiTextPrompt}
+                      onChange={(e) => setAiTextPrompt(e.target.value)}
+                      placeholder='e.g., "I have been working as an electrician for 10 years in Pune. I know 3-phase wiring and motor repair."'
+                      className="w-full p-3 pr-12 rounded-xl border border-[#D8D2C5] bg-white text-xs text-[#121614] placeholder-[#8C938E] focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none resize-none"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleToggleVoice}
+                      title={isRecording ? "Stop recording" : "Record voice with microphone"}
+                      className={`absolute right-2.5 top-2.5 p-2 rounded-lg transition-colors cursor-pointer ${
+                        isRecording 
+                          ? 'bg-red-600 text-white animate-pulse' 
+                          : isTranscribing 
+                            ? 'bg-[#E5E1D8] text-[#737A75]' 
+                            : 'bg-[#1E3B2B] text-white hover:bg-[#14281D]'
+                      }`}
+                      disabled={isTranscribing}
+                    >
+                      {isRecording ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                    </button>
+                  </div>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <button
+                      type="button"
+                      onClick={() => handleAIExtract()}
+                      disabled={isExtracting || isTranscribing || !aiTextPrompt.trim()}
+                      className="px-4 py-2 rounded-lg bg-[#1E3B2B] text-white text-xs font-bold hover:bg-[#14281D] disabled:opacity-50 transition-colors flex items-center space-x-1.5 cursor-pointer"
+                    >
+                      {isExtracting ? (
+                        <>
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                          <span>Extracting Profile Claims...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="w-3.5 h-3.5 text-[#C27A38]" />
+                          <span>Extract with AI</span>
+                        </>
+                      )}
+                    </button>
+                    {aiFeedback && (
+                      <p className="text-xs text-[#1E3B2B] font-medium flex-1 sm:text-right">
+                        {aiFeedback}
+                      </p>
+                    )}
+                  </div>
                 </div>
 
                 <div className="space-y-5">
@@ -394,20 +612,38 @@ export const BuildPassportPage: React.FC = () => {
                   </div>
                 </div>
 
+                {submitError && (
+                  <div className="mt-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center space-x-2">
+                    <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+                    <span>{submitError}</span>
+                  </div>
+                )}
+
                 <div className="mt-8 pt-6 border-t border-[#ECE8E0] flex items-center justify-between">
                   <button
                     onClick={() => setStep(2)}
-                    className="px-5 py-3 rounded-xl border border-[#E5E1D8] text-xs font-bold text-[#4A524D] hover:bg-gray-50 flex items-center space-x-1 cursor-pointer vouch-btn"
+                    disabled={isSubmitting}
+                    className="px-5 py-3 rounded-xl border border-[#E5E1D8] text-xs font-bold text-[#4A524D] hover:bg-gray-50 flex items-center space-x-1 cursor-pointer vouch-btn disabled:opacity-50"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back</span>
                   </button>
                   <button
                     onClick={handleFinishOnboarding}
-                    className="px-8 py-3.5 rounded-xl bg-[#1E3B2B] text-white font-bold text-sm hover:bg-[#14281D] transition-colors flex items-center space-x-2 cursor-pointer shadow-md vouch-btn"
+                    disabled={isSubmitting}
+                    className="px-8 py-3.5 rounded-xl bg-[#1E3B2B] text-white font-bold text-sm hover:bg-[#14281D] transition-colors flex items-center space-x-2 cursor-pointer shadow-md vouch-btn disabled:opacity-50"
                   >
-                    <span>Generate My Passport</span>
-                    <Sparkles className="w-4 h-4 text-[#C27A38]" />
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>Creating Passport Ledger...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Generate My Passport</span>
+                        <Sparkles className="w-4 h-4 text-[#C27A38]" />
+                      </>
+                    )}
                   </button>
                 </div>
               </div>
@@ -425,37 +661,52 @@ export const BuildPassportPage: React.FC = () => {
                 </span>
 
                 <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#121614] mb-3">
-                  WELCOME TO VOUCH, {name.toUpperCase()}!
+                  WELCOME TO VOUCH, {(createdProfile?.name || name).toUpperCase()}!
                 </h2>
 
-                <p className="text-sm text-[#4A524D] max-w-md mx-auto leading-relaxed mb-8">
-                  Your first work record has been recorded in your permanent ledger. You can now manage records, send confirmation links, and share your passport QR code.
+                <p className="text-sm text-[#4A524D] max-w-md mx-auto leading-relaxed mb-6">
+                  Your professional identity and first work record have been persisted to Firestore. Your profile survives reloads and can be verified across all employers.
                 </p>
 
                 {/* Passport Card Mini-Preview */}
-                <div className="bg-[#FAF8F5] p-5 rounded-2xl border border-[#E5E1D8] max-w-md mx-auto mb-8 text-left">
+                <div className="bg-[#FAF8F5] p-5 rounded-2xl border border-[#E5E1D8] max-w-md mx-auto mb-8 text-left shadow-sm">
                   <div className="flex items-center justify-between pb-3 border-b border-[#ECE8E0] mb-3">
                     <span className="text-xs font-mono font-bold text-[#1E3B2B]">
-                      VOUCH-IN-2026-8842
+                      {createdProfile?.public_slug ? createdProfile.public_slug.toUpperCase() : 'VOUCH-IN-2026-8842'}
                     </span>
                     <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#EBF6EE] text-[#059669]">
                       VERIFIED HOLDER
                     </span>
                   </div>
-                  <h3 className="font-bold text-base text-[#121614]">{name}</h3>
-                  <p className="text-xs text-[#737A75]">{trade} · {experienceYears} Years Documented · {location}</p>
-                  <div className="mt-3 text-xs font-mono text-[#1E3B2B] bg-white p-2 rounded border border-[#E5E1D8]">
-                    1 Work Record Logged · {selectedSkills.join(', ')}
+                  <h3 className="font-bold text-base text-[#121614]">{createdProfile?.name || name}</h3>
+                  <p className="text-xs text-[#737A75]">
+                    {createdProfile?.trade || trade} · {createdProfile?.experience_years ?? experienceYears} Years Documented · {createdProfile?.location || location}
+                  </p>
+                  <div className="mt-3 text-xs font-mono text-[#1E3B2B] bg-white p-2.5 rounded border border-[#E5E1D8] flex items-center justify-between">
+                    <span>1 Initial Work Record Logged</span>
+                    <span className="text-[10px] text-[#737A75]">Active ID: {(createdProfile?.id || 'saved').slice(0, 16)}</span>
                   </div>
                 </div>
 
-                <button
-                  onClick={() => navigate('/worker')}
-                  className="w-full sm:w-auto px-9 py-4 rounded-xl bg-[#1E3B2B] text-white font-bold text-sm hover:bg-[#14281D] shadow-md inline-flex items-center justify-center space-x-2 cursor-pointer vouch-btn"
-                >
-                  <span>Enter Worker Application</span>
-                  <ArrowRight className="w-4 h-4 text-[#C27A38]" />
-                </button>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                  {createdProfile?.public_slug && (
+                    <Link
+                      to={`/passport/${createdProfile.public_slug}`}
+                      target="_blank"
+                      className="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-[#1E3B2B] text-[#1E3B2B] font-bold text-sm hover:bg-[#1E3B2B]/5 transition-colors inline-flex items-center justify-center space-x-2 cursor-pointer"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      <span>View Public Passport</span>
+                    </Link>
+                  )}
+                  <button
+                    onClick={() => navigate('/worker')}
+                    className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#1E3B2B] text-white font-bold text-sm hover:bg-[#14281D] shadow-md inline-flex items-center justify-center space-x-2 cursor-pointer vouch-btn"
+                  >
+                    <span>Enter Worker Dashboard</span>
+                    <ArrowRight className="w-4 h-4 text-[#C27A38]" />
+                  </button>
+                </div>
               </div>
             )}
 

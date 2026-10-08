@@ -1,14 +1,16 @@
 from fastapi import APIRouter, HTTPException, Request
 from app.schemas.passport import PassportData
-from app.services.data_service import get_current_worker, get_work_records
+from app.services.data_service import get_current_worker, get_work_records, get_worker_by_slug
 
 router = APIRouter(prefix="/passport", tags=["Passport"])
 
 @router.get("/{public_slug}", response_model=PassportData)
 def get_public_passport(public_slug: str, request: Request):
-    worker = get_current_worker()
-    if worker.get("public_slug") != public_slug and public_slug != "ravi-kumar-82a7":
-        raise HTTPException(status_code=404, detail="Public passport profile not found")
+    worker = get_worker_by_slug(public_slug)
+    if not worker:
+        worker = get_current_worker()
+        if worker.get("public_slug") != public_slug and public_slug != "ravi-kumar-82a7":
+            raise HTTPException(status_code=404, detail="Public passport profile not found")
         
     works = get_work_records(worker["id"])
     
