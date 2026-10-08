@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { PublicNavbar } from './PublicNavbar';
 import { PublicFooter } from './PublicFooter';
@@ -16,36 +16,45 @@ import {
   Camera, 
   CheckCheck, 
   FileCheck,
-  Sparkles
+  Sparkles,
+  AlertCircle
 } from 'lucide-react';
 
 export const BuildPassportPage: React.FC = () => {
-  const { worker, addWorkRecord, setActiveRole } = useApp();
+  const { isAuthenticated, activeRole, addWorkRecord, setActiveRole } = useApp();
   const navigate = useNavigate();
+
+  // Redirect unauthenticated visitors to /login
+  useEffect(() => {
+    if (!isAuthenticated || activeRole !== 'worker') {
+      navigate('/login?redirect=/build-passport', { replace: true });
+    }
+  }, [isAuthenticated, activeRole, navigate]);
 
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
 
-  // Form State
-  const [name, setName] = useState('Ravi Kumar');
-  const [trade, setTrade] = useState('Electrician');
-  const [experienceYears, setExperienceYears] = useState('7');
-  const [location, setLocation] = useState('Mangaluru, Karnataka');
-  const [languages, setLanguages] = useState('Hindi, Kannada, English');
+  // Form State - Starts Completely Empty
+  const [name, setName] = useState('');
+  const [trade, setTrade] = useState('');
+  const [experienceYears, setExperienceYears] = useState('');
+  const [location, setLocation] = useState('');
+  const [languages, setLanguages] = useState('');
 
-  // Selected Skills
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([
-    'Electrical Wiring',
-    'Panel Installation',
-  ]);
+  // Validation States
+  const [experienceError, setExperienceError] = useState<string | null>(null);
+  const [formError, setFormError] = useState<string | null>(null);
 
-  // First Work Record
-  const [workTitle, setWorkTitle] = useState('3BHK Residential Conduit & Distribution Board');
-  const [employer, setEmployer] = useState('ABC Electricals (Contractor)');
-  const [role, setRole] = useState('Lead Electrician');
-  const [workDescription, setWorkDescription] = useState('Completed conduit wiring, earthing pits, RCCB breakers, and load distribution testing.');
-  const [photoUrl, setPhotoUrl] = useState('https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?w=600&auto=format&fit=crop&q=80');
-  const [verifierName, setVerifierName] = useState('Mahesh Shetty');
-  const [verifierRole, setVerifierRole] = useState('Site Supervisor');
+  // Selected Skills - Starts Empty
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+
+  // First Work Record - Starts Empty
+  const [workTitle, setWorkTitle] = useState('');
+  const [employer, setEmployer] = useState('');
+  const [role, setRole] = useState('');
+  const [workDescription, setWorkDescription] = useState('');
+  const [photoUrl, setPhotoUrl] = useState('');
+  const [verifierName, setVerifierName] = useState('');
+  const [verifierRole, setVerifierRole] = useState('');
 
   const availableTrades = [
     'Electrician',
@@ -85,6 +94,56 @@ export const BuildPassportPage: React.FC = () => {
 
   const currentTradeSkills = skillOptionsByTrade[trade] || skillOptionsByTrade['default'];
 
+  // Experience Validation handler (0 to 80 numeric only)
+  const handleExperienceChange = (val: string) => {
+    if (val === '') {
+      setExperienceYears('');
+      setExperienceError(null);
+      return;
+    }
+
+    // Reject non-numeric characters (no negatives, no letters, no symbols)
+    if (!/^\d+$/.test(val)) {
+      setExperienceError('Experience must be between 0 and 80 years.');
+      return;
+    }
+
+    const num = parseInt(val, 10);
+    setExperienceYears(val);
+
+    if (num < 0 || num > 80) {
+      setExperienceError('Experience must be between 0 and 80 years.');
+    } else {
+      setExperienceError(null);
+    }
+  };
+
+  // Step 1 Validation & Proceed
+  const handleNextStep1 = () => {
+    if (!name.trim()) {
+      setFormError('Please enter your full legal name.');
+      return;
+    }
+    if (!trade) {
+      setFormError('Please select your primary profession / trade.');
+      return;
+    }
+    if (experienceYears.trim() === '') {
+      setExperienceError('Experience must be between 0 and 80 years.');
+      return;
+    }
+
+    const num = parseInt(experienceYears, 10);
+    if (isNaN(num) || num < 0 || num > 80 || !/^\d+$/.test(experienceYears.trim())) {
+      setExperienceError('Experience must be between 0 and 80 years.');
+      return;
+    }
+
+    setFormError(null);
+    setExperienceError(null);
+    setStep(2);
+  };
+
   const toggleSkill = (skill: string) => {
     setSelectedSkills(prev =>
       prev.includes(skill) ? prev.filter(s => s !== skill) : [...prev, skill]
@@ -94,18 +153,23 @@ export const BuildPassportPage: React.FC = () => {
   const handleFinishOnboarding = () => {
     // Add the first work record using AppContext engine
     addWorkRecord({
-      title: workTitle,
-      employer,
-      role,
-      description: workDescription,
-      location,
-      imageUrl: photoUrl,
-      skills: selectedSkills,
+      title: workTitle || `${trade || 'Trade'} Project`,
+      employer: employer || 'Self-employed / Independent',
+      role: role || trade || 'Technician',
+      description: workDescription || 'Completed work as specified.',
+      location: location || 'Field Site',
+      imageUrl: photoUrl || 'https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?w=600&auto=format&fit=crop&q=80',
+      skills: selectedSkills.length > 0 ? selectedSkills : [trade || 'Trade Skills'],
     });
 
     setActiveRole('worker');
     setStep(4);
   };
+
+  // Do not render if unauthenticated (redirecting in useEffect)
+  if (!isAuthenticated || activeRole !== 'worker') {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-[#121614] flex flex-col">
@@ -148,6 +212,13 @@ export const BuildPassportPage: React.FC = () => {
                 </div>
 
                 <div className="space-y-5">
+                  {formError && (
+                    <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700 flex items-center space-x-2">
+                      <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+                      <span>{formError}</span>
+                    </div>
+                  )}
+
                   <div>
                     <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
                       Full Legal Name
@@ -155,8 +226,11 @@ export const BuildPassportPage: React.FC = () => {
                     <input
                       type="text"
                       value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="e.g. Ravi Kumar"
+                      onChange={(e) => {
+                        setName(e.target.value);
+                        setFormError(null);
+                      }}
+                      placeholder="e.g. Full Legal Name"
                       className="w-full p-3.5 rounded-xl border border-[#E5E1D8] text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
                     />
                   </div>
@@ -168,9 +242,13 @@ export const BuildPassportPage: React.FC = () => {
                       </label>
                       <select
                         value={trade}
-                        onChange={(e) => setTrade(e.target.value)}
-                        className="w-full p-3.5 rounded-xl border border-[#E5E1D8] text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none bg-white"
+                        onChange={(e) => {
+                          setTrade(e.target.value);
+                          setFormError(null);
+                        }}
+                        className="w-full p-3.5 rounded-xl border border-[#E5E1D8] text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none bg-white text-[#121614]"
                       >
+                        <option value="" disabled>Select a trade ▼</option>
                         {availableTrades.map(t => (
                           <option key={t} value={t}>{t}</option>
                         ))}
@@ -182,13 +260,22 @@ export const BuildPassportPage: React.FC = () => {
                         Years of Trade Experience
                       </label>
                       <input
-                        type="number"
+                        type="text"
+                        inputMode="numeric"
                         value={experienceYears}
-                        onChange={(e) => setExperienceYears(e.target.value)}
-                        min="1"
-                        max="50"
-                        className="w-full p-3.5 rounded-xl border border-[#E5E1D8] text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
+                        onChange={(e) => handleExperienceChange(e.target.value)}
+                        placeholder="0 to 80"
+                        className={`w-full p-3.5 rounded-xl border text-sm font-semibold focus:outline-none transition-colors ${
+                          experienceError
+                            ? 'border-red-500 bg-red-50/20 focus:border-red-500 focus:ring-1 focus:ring-red-500'
+                            : 'border-[#E5E1D8] focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B]'
+                        }`}
                       />
+                      {experienceError && (
+                        <p className="text-xs text-red-600 mt-1 font-medium">
+                          {experienceError}
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -201,7 +288,7 @@ export const BuildPassportPage: React.FC = () => {
                         type="text"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
-                        placeholder="e.g. Mangaluru, Karnataka"
+                        placeholder="e.g. City, State"
                         className="w-full p-3.5 rounded-xl border border-[#E5E1D8] text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
                       />
                     </div>
@@ -226,7 +313,7 @@ export const BuildPassportPage: React.FC = () => {
                     Already registered? <Link to="/login" className="text-[#1E3B2B] font-bold underline">Log In</Link>
                   </span>
                   <button
-                    onClick={() => setStep(2)}
+                    onClick={handleNextStep1}
                     className="px-7 py-3.5 rounded-xl bg-[#1E3B2B] text-white font-bold text-sm hover:bg-[#14281D] transition-colors flex items-center space-x-2 cursor-pointer shadow-sm vouch-btn"
                   >
                     <span>Next: Select Skills</span>
@@ -425,7 +512,7 @@ export const BuildPassportPage: React.FC = () => {
                 </span>
 
                 <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#121614] mb-3">
-                  WELCOME TO VOUCH, {name.toUpperCase()}!
+                  WELCOME TO VOUCH, {(name || 'WORKER').toUpperCase()}!
                 </h2>
 
                 <p className="text-sm text-[#4A524D] max-w-md mx-auto leading-relaxed mb-8">
@@ -442,10 +529,10 @@ export const BuildPassportPage: React.FC = () => {
                       VERIFIED HOLDER
                     </span>
                   </div>
-                  <h3 className="font-bold text-base text-[#121614]">{name}</h3>
-                  <p className="text-xs text-[#737A75]">{trade} · {experienceYears} Years Documented · {location}</p>
+                  <h3 className="font-bold text-base text-[#121614]">{name || 'Verified Worker'}</h3>
+                  <p className="text-xs text-[#737A75]">{trade || 'Trade'} · {experienceYears || '0'} Years Documented {location ? `· ${location}` : ''}</p>
                   <div className="mt-3 text-xs font-mono text-[#1E3B2B] bg-white p-2 rounded border border-[#E5E1D8]">
-                    1 Work Record Logged · {selectedSkills.join(', ')}
+                    1 Work Record Logged · {selectedSkills.length > 0 ? selectedSkills.join(', ') : trade || 'Trade Skills'}
                   </div>
                 </div>
 

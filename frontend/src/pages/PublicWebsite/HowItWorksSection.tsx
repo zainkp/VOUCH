@@ -1,79 +1,89 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { 
-  PlusCircle, 
+  ShieldCheck, 
+  MapPin, 
+  Check, 
+  Smartphone, 
   Paperclip, 
   CheckCheck, 
   QrCode, 
-  ArrowRight, 
-  ShieldCheck, 
-  Check, 
-  MapPin, 
-  FileCheck2, 
-  Smartphone,
-  ExternalLink
+  PlusCircle, 
+  FileCheck2,
+  Calendar,
+  Wifi,
+  Battery,
+  Signal
 } from 'lucide-react';
 
-interface StepData {
+interface StepStory {
   num: string;
   stage: string;
   title: string;
   tagline: string;
   description: string;
-  icon: React.ReactNode;
-  badge: string;
-  accentColor: string;
+  bullets: string[];
 }
 
 export const HowItWorksSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [isReducedMotion, setIsReducedMotion] = useState(false);
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== 'undefined' ? window.innerWidth : 1200
   );
 
-  const steps: StepData[] = [
+  const steps: StepStory[] = [
     {
       num: '01',
       stage: 'WORK',
       title: '01 — WORK',
       tagline: "Record the work you've actually done.",
-      description: "Log every completed project in minutes. Record your trade role, quantitative deliverables, jobsite location, and technical specifications.",
-      icon: <PlusCircle className="w-5 h-5 text-[#1E3B2B]" />,
-      badge: "LIVE FIELD LOG",
-      accentColor: "#1E3B2B",
+      description: "Log your completed physical projects in minutes right from your phone. Capture the exact site location, your trade role, quantitative delivery units, and technical specifications.",
+      bullets: [
+        'Site location & project client attribution',
+        'Specific trade role (Lead Welder, Wireman, Fitter)',
+        'Quantitative deliverables (400m SS-316L conduit, 6 panels)',
+        'Direct timestamped entry from the jobsite'
+      ],
     },
     {
       num: '02',
       stage: 'EVIDENCE',
       title: '02 — EVIDENCE',
       tagline: 'Attach proof that supports your experience and skills.',
-      description: 'Attach jobsite photos, Megger insulation test readouts, pressure test logs, or delivery challans. Empirical evidence replaces unverifiable claims.',
-      icon: <Paperclip className="w-5 h-5 text-[#1E3B2B]" />,
-      badge: "TECHNICAL AUDIT TRAIL",
-      accentColor: "#1E3B2B",
+      description: 'Attach empirical evidence directly from the field. High-resolution installation photos, calibrated Megger insulation test readings, hydrostatic pressure logs, and signed delivery challans replace empty claims.',
+      bullets: [
+        'Jobsite installation photos showing weld root pass & clean cable dressing',
+        'Calibrated meter readings (Megger insulation 1.84 Ω, Hydrostatic 42.0 Bar)',
+        'GPS geotag coordinates & tamper-proof timestamps',
+        'Direct physical inspection vouchers & client sign-off sheets'
+      ],
     },
     {
       num: '03',
       stage: 'CONFIRMATION',
       title: '03 — CONFIRMATION',
       tagline: 'Let supervisors, employers, or customers confirm the work.',
-      description: 'Send a lightweight verification link via SMS or WhatsApp. The site engineer or supervisor independently confirms your work with one tap — zero app install required.',
-      icon: <CheckCheck className="w-5 h-5 text-[#1E3B2B]" />,
-      badge: "INDEPENDENT SIGN-OFF",
-      accentColor: "#1E3B2B",
+      description: 'Send a lightweight verification link via SMS or WhatsApp to your site engineer, contractor, or customer. They inspect your photos and description and confirm with a single tap — zero app install required.',
+      bullets: [
+        'Works via simple WhatsApp/SMS browser link — no verifier login needed',
+        'Legal attribution of verifier role, full name, and organization',
+        'Written supervisor notes confirming compliance with safety codes',
+        'Cryptographic hash & verifiable phone record recorded permanently'
+      ],
     },
     {
       num: '04',
       stage: 'PASSPORT',
       title: '04 — PASSPORT',
       tagline: 'Build a portable professional identity backed by your work and evidence.',
-      description: 'Your verified skills compile into a tamper-evident Professional Passport. Carry your permanent credential with instant QR verification to every jobsite.',
-      icon: <QrCode className="w-5 h-5 text-[#1E3B2B]" />,
-      badge: "PORTABLE CREDENTIAL",
-      accentColor: "#1E3B2B",
+      description: 'Your logged work and independent confirmations mathematically calculate skill-specific confidence tiers. You receive a verified Professional Passport with an instant QR code that you carry across every employer and jobsite.',
+      bullets: [
+        'Evidence-calculated skill confidence ratings (94% HIGH CONFIDENCE)',
+        'Instant QR code scan for contractors on day one of a project',
+        'Lifelong ownership: independent of any past employer or broker',
+        'Tamper-evident, portable credential that belongs to you forever'
+      ],
     },
   ];
 
@@ -90,9 +100,9 @@ export const HowItWorksSection: React.FC = () => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
 
-    // Track scroll
+    // Track vertical scroll
     const handleScroll = () => {
-      if (!containerRef.current || isReducedMotion || window.innerWidth < 768) return;
+      if (!containerRef.current || isReducedMotion || window.innerWidth < 1024) return;
 
       const rect = containerRef.current.getBoundingClientRect();
       const totalScroll = containerRef.current.offsetHeight - window.innerHeight;
@@ -100,14 +110,13 @@ export const HowItWorksSection: React.FC = () => {
 
       const currentScroll = -rect.top;
       const progress = Math.max(0, Math.min(1, currentScroll / totalScroll));
-      setScrollProgress(progress);
 
-      // Determine active step based on progress thresholds
-      if (progress < 0.22) {
+      // 4-step vertical progression threshold
+      if (progress < 0.25) {
         setActiveStep(0);
-      } else if (progress < 0.48) {
+      } else if (progress < 0.50) {
         setActiveStep(1);
-      } else if (progress < 0.74) {
+      } else if (progress < 0.75) {
         setActiveStep(2);
       } else {
         setActiveStep(3);
@@ -124,18 +133,18 @@ export const HowItWorksSection: React.FC = () => {
     };
   }, [isReducedMotion]);
 
-  // Click-to-scroll to a specific step
-  const scrollToStep = (index: number) => {
+  // Click to scroll to a specific stage vertically
+  const scrollToStage = (index: number) => {
     setActiveStep(index);
-    if (!containerRef.current || isReducedMotion || window.innerWidth < 768) return;
+    if (!containerRef.current || isReducedMotion || window.innerWidth < 1024) return;
 
     const rect = containerRef.current.getBoundingClientRect();
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const containerTop = scrollTop + rect.top;
     const totalScroll = containerRef.current.offsetHeight - window.innerHeight;
 
-    const stepFractions = [0.05, 0.35, 0.60, 0.88];
-    const targetScrollY = containerTop + stepFractions[index] * totalScroll;
+    const fractions = [0.06, 0.35, 0.62, 0.90];
+    const targetScrollY = containerTop + fractions[index] * totalScroll;
 
     window.scrollTo({
       top: targetScrollY,
@@ -143,279 +152,251 @@ export const HowItWorksSection: React.FC = () => {
     });
   };
 
-  // Horizontal track translation for desktop
-  const isDesktop = windowWidth >= 768;
-  const cardWidth = Math.min(360, Math.max(300, windowWidth * 0.24));
-  const gap = 32;
-  const stepDistance = cardWidth + gap;
-
-  // Calculate centered translateX so activeStep is prominently centered
-  const centerOffset = (windowWidth / 2) - (cardWidth / 2) - (activeStep * stepDistance);
+  const isDesktop = windowWidth >= 1024;
 
   return (
     <section 
-      id="how-it-works"
+      id="how-it-works-experience"
       ref={containerRef}
-      className={`relative bg-[#FAF8F5] text-[#121614] overflow-hidden ${
-        isDesktop && !isReducedMotion ? 'min-h-[300vh]' : 'py-20 sm:py-28'
+      className={`relative bg-[#FAF8F5] text-[#121614] ${
+        isDesktop && !isReducedMotion ? 'min-h-[400vh]' : 'py-16 sm:py-24'
       }`}
-      aria-label="How Vouch Works: Verification Pipeline"
+      aria-label="How Vouch Works: Vertical Storytelling"
     >
-      {/* DESKTOP: STICKY STORYBOARD VIEW */}
+      {/* DESKTOP VIEW: STICKY TWO-COLUMN VERTICAL SCROLL STORY */}
       {isDesktop && !isReducedMotion ? (
-        <div className="sticky top-0 h-screen w-full flex flex-col justify-between py-6 lg:py-8 overflow-hidden select-none">
-          
-          {/* 1. Header with reference-inspired accent line & stage selector */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full shrink-0">
-            <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 pb-4 border-b border-[#E5E1D8]">
-              <div>
-                <p className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold mb-1.5 flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-[#059669]" />
-                  <span>02 / THE VERIFICATION PIPELINE</span>
-                </p>
-                <div className="relative inline-block">
-                  <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[#121614] tracking-tight leading-tight">
-                    HOW IT WORKS
-                  </h2>
-                  {/* Subtle accent line below heading inspired by reference screenshot */}
-                  <div className="w-16 h-1 bg-[#1E3B2B] rounded-full mt-2" />
-                </div>
+        <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden py-8">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full h-full flex flex-col justify-between">
+            
+            {/* Top Stage Indicator Bar with Vertical Connecting Concept */}
+            <div className="shrink-0 flex items-center justify-between pb-4 border-b border-[#E5E1D8]">
+              <div className="flex items-center space-x-2.5">
+                <ShieldCheck className="w-5 h-5 text-[#059669]" />
+                <span className="font-mono text-xs uppercase tracking-widest text-[#1E3B2B] font-bold">
+                  VERIFICATION PIPELINE
+                </span>
               </div>
 
-              {/* Interactive Stage Selector Bar */}
+              {/* Step indicator buttons */}
               <div 
                 role="tablist"
-                aria-label="How it works pipeline stages"
-                className="flex items-center space-x-2 bg-[#F4EFEB] p-1.5 rounded-full border border-[#E5E1D8]"
+                aria-label="Pipeline stages"
+                className="flex items-center space-x-2 bg-[#F4EFEB] p-1 rounded-full border border-[#E5E1D8]"
               >
                 {steps.map((st, idx) => (
                   <button
                     key={st.num}
                     role="tab"
                     aria-selected={activeStep === idx}
-                    aria-label={`Step ${st.num}: ${st.stage}`}
-                    onClick={() => scrollToStep(idx)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all flex items-center space-x-1.5 ${
+                    onClick={() => scrollToStage(idx)}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-mono font-bold transition-all flex items-center space-x-1.5 cursor-pointer ${
                       activeStep === idx
                         ? 'bg-[#1E3B2B] text-white shadow-xs'
                         : 'text-[#737A75] hover:text-[#121614] hover:bg-white/60'
                     }`}
                   >
-                    <span className={activeStep === idx ? 'text-[#FAF8F5]' : 'text-[#737A75]'}>
-                      {st.num}
-                    </span>
+                    <span>{st.num}</span>
                     <span>{st.stage}</span>
                   </button>
                 ))}
               </div>
             </div>
-          </div>
 
-          {/* 2. Horizontal Storyboard Track (Landscape 4-step sequence) */}
-          <div className="w-full overflow-hidden flex-1 flex items-center my-2">
-            <div 
-              className="flex items-stretch transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
-              style={{
-                transform: `translateX(${centerOffset}px)`,
-                width: `${4 * stepDistance}px`,
-              }}
-            >
-              {steps.map((step, idx) => {
-                const isActive = activeStep === idx;
-                const isPast = activeStep > idx;
-
-                return (
-                  <div
-                    key={step.num}
-                    onClick={() => scrollToStep(idx)}
-                    style={{ width: `${cardWidth}px`, marginRight: `${gap}px` }}
-                    className={`shrink-0 flex flex-col justify-between rounded-3xl p-5 sm:p-6 border transition-all duration-700 cursor-pointer ${
-                      isActive
-                        ? 'bg-white border-[#1E3B2B] shadow-[0_16px_40px_rgba(30,59,43,0.12)] ring-2 ring-[#1E3B2B]/20 scale-100 opacity-100 z-20'
-                        : 'bg-[#FAF8F5] border-[#E5E1D8] shadow-xs scale-[0.93] opacity-55 hover:opacity-85 z-10'
-                    }`}
-                  >
-                    {/* Top: High-Fidelity Visual Card */}
-                    <div className="w-full mb-4">
-                      {idx === 0 && <WorkVisual active={isActive} />}
-                      {idx === 1 && <EvidenceVisual active={isActive} />}
-                      {idx === 2 && <ConfirmationVisual active={isActive} />}
-                      {idx === 3 && <PassportVisual active={isActive} />}
-                    </div>
-
-                    {/* Middle: Sequence Number with Connecting Dashed Lines */}
-                    <div className="relative flex items-center justify-center my-3 w-full">
-                      {/* Connecting Line Left */}
-                      <div 
-                        className={`flex-1 h-0.5 border-t-2 border-dashed transition-colors duration-500 ${
-                          idx === 0 
-                            ? 'border-transparent' 
-                            : isPast || isActive
-                              ? 'border-[#1E3B2B]' 
-                              : 'border-[#D5D1C8]'
-                        }`} 
-                      />
-
-                      {/* Prominent Number Circle */}
-                      <div
-                        className={`w-11 h-11 rounded-full flex items-center justify-center font-display font-black text-sm tracking-tight transition-all duration-500 shrink-0 mx-2 shadow-xs ${
-                          isActive
-                            ? 'bg-[#1E3B2B] text-white scale-110 ring-4 ring-[#1E3B2B]/15'
-                            : isPast
-                              ? 'bg-[#EBF6EE] text-[#059669] border border-[#059669]/30'
-                              : 'bg-[#EFECE6] text-[#737A75] border border-[#E5E1D8]'
-                        }`}
-                      >
-                        {isPast ? <Check className="w-5 h-5 stroke-[2.5]" /> : step.num}
-                      </div>
-
-                      {/* Connecting Line Right */}
-                      <div 
-                        className={`flex-1 h-0.5 border-t-2 border-dashed transition-colors duration-500 ${
-                          idx === 3 
-                            ? 'border-transparent' 
-                            : isPast 
-                              ? 'border-[#1E3B2B]' 
-                              : 'border-[#D5D1C8]'
-                        }`} 
-                      />
-                    </div>
-
-                    {/* Bottom: Typography & Short Description */}
-                    <div className="text-center pt-2">
-                      <h3 className={`font-display font-black text-lg transition-colors ${
-                        isActive ? 'text-[#121614]' : 'text-[#4A524D]'
-                      }`}>
-                        {step.title}
-                      </h3>
-                      <p className={`text-xs font-semibold mt-1 transition-colors leading-snug line-clamp-2 ${
-                        isActive ? 'text-[#1E3B2B]' : 'text-[#737A75]'
-                      }`}>
-                        {step.tagline}
-                      </p>
-                      <p className={`text-[11px] mt-1.5 leading-relaxed line-clamp-2 transition-colors ${
-                        isActive ? 'text-[#4A524D]' : 'text-[#8E9590]'
-                      }`}>
-                        {step.description}
-                      </p>
-                    </div>
-
+            {/* Main Stage: Two-Column Composition */}
+            <div className="flex-1 grid grid-cols-12 gap-12 items-center my-auto py-4">
+              
+              {/* LEFT COLUMN: Prominent Smartphone Mockup with Vertical Story Transitions */}
+              <div className="col-span-6 flex justify-center items-center">
+                <div className="relative w-[340px] xl:w-[370px] h-[640px] xl:h-[680px] bg-[#121417] rounded-[52px] p-3 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.35)] border-[4px] border-[#2A3038] ring-1 ring-black/40 flex flex-col select-none">
+                  
+                  {/* Dynamic Island / Notch */}
+                  <div className="w-28 h-5 bg-[#121417] rounded-full mx-auto mb-1 flex items-center justify-center space-x-2 shrink-0 z-30">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#1C2024]" />
+                    <div className="w-2 h-2 rounded-full bg-[#1A3828]/50" />
                   </div>
-                );
-              })}
-            </div>
-          </div>
 
-          {/* 3. Bottom Progress Bar & Deep Dive Link */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full shrink-0">
-            <div className="flex items-center justify-between pt-3 border-t border-[#E5E1D8] text-xs">
-              <div className="flex items-center space-x-3">
-                <span className="font-mono font-bold text-[#1E3B2B]">
+                  {/* Phone Screen Display */}
+                  <div className="flex-1 bg-[#FAF8F5] rounded-[42px] overflow-hidden flex flex-col border border-black/5 relative">
+                    
+                    {/* iOS Status Bar */}
+                    <div className="flex justify-between items-center px-6 pt-2.5 pb-1 text-[11px] font-semibold text-[#111827] shrink-0 z-20">
+                      <span>9:41</span>
+                      <div className="flex items-center space-x-1.5 text-[#111827]">
+                        <Signal className="w-3.5 h-3.5 fill-current" />
+                        <Wifi className="w-3.5 h-3.5" />
+                        <Battery className="w-4 h-4 fill-current" />
+                      </div>
+                    </div>
+
+                    {/* Dynamic Step Content: Smooth Vertical Transition */}
+                    <div className="flex-1 relative overflow-hidden">
+                      {steps.map((st, idx) => {
+                        const isActive = activeStep === idx;
+                        const isPrev = activeStep > idx;
+                        
+                        return (
+                          <div
+                            key={st.num}
+                            className={`absolute inset-0 p-4 flex flex-col justify-between transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                              isActive
+                                ? 'opacity-100 translate-y-0 scale-100 z-10 pointer-events-auto'
+                                : isPrev
+                                  ? 'opacity-0 -translate-y-8 scale-95 z-0 pointer-events-none'
+                                  : 'opacity-0 translate-y-8 scale-95 z-0 pointer-events-none'
+                            }`}
+                          >
+                            {idx === 0 && <PhoneStepWork />}
+                            {idx === 1 && <PhoneStepEvidence />}
+                            {idx === 2 && <PhoneStepConfirmation />}
+                            {idx === 3 && <PhoneStepPassport />}
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Home Indicator Bar */}
+                    <div className="w-32 h-1 bg-[#121417]/25 rounded-full mx-auto my-1.5 shrink-0" />
+                  </div>
+                </div>
+              </div>
+
+              {/* RIGHT COLUMN: Step Number, Title, Short Explanation & Supporting Details */}
+              <div className="col-span-6 pl-4 flex flex-col justify-center">
+                <div className="relative">
+                  
+                  {/* Step Numeral & Stage Badge */}
+                  <div className="flex items-center space-x-3 mb-3">
+                    <span className="text-4xl xl:text-5xl font-display font-black text-[#1E3B2B]">
+                      {steps[activeStep].num}
+                    </span>
+                    <span className="font-mono text-xs uppercase tracking-wider px-3 py-1 rounded-full bg-[#EBF6EE] text-[#059669] font-bold border border-[#059669]/20">
+                      STAGE {activeStep + 1} OF 04
+                    </span>
+                  </div>
+
+                  {/* Stage Title */}
+                  <h3 className="font-display font-extrabold text-3xl xl:text-4xl text-[#121614] tracking-tight mb-3">
+                    {steps[activeStep].stage}
+                  </h3>
+
+                  {/* Primary Tagline */}
+                  <p className="text-lg xl:text-xl font-bold text-[#1E3B2B] leading-snug mb-4">
+                    {steps[activeStep].tagline}
+                  </p>
+
+                  {/* Narrative Paragraph */}
+                  <p className="text-sm xl:text-base text-[#4A524D] leading-relaxed mb-6">
+                    {steps[activeStep].description}
+                  </p>
+
+                  {/* Supporting Specification Points */}
+                  <div className="space-y-2.5 pt-4 border-t border-[#E5E1D8]">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#737A75] block">
+                      VERIFICATION CRITERIA:
+                    </span>
+                    {steps[activeStep].bullets.map((b, bIdx) => (
+                      <div key={bIdx} className="flex items-start space-x-2.5 text-xs xl:text-sm text-[#121614]">
+                        <span className="w-5 h-5 rounded-full bg-[#EBF6EE] text-[#059669] flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">
+                          ✓
+                        </span>
+                        <span className="leading-snug">{b}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            {/* Bottom Progress Bar & Step Tracker */}
+            <div className="shrink-0 flex items-center justify-between pt-4 border-t border-[#E5E1D8]">
+              <div className="flex items-center space-x-3 font-mono text-xs">
+                <span className="font-bold text-[#1E3B2B]">
                   STEP {steps[activeStep].num} OF 04
                 </span>
-                <span className="text-stone-300">|</span>
-                <span className="font-mono text-[#737A75] uppercase tracking-wider hidden sm:inline">
+                <span className="text-stone-300">/</span>
+                <span className="text-[#737A75] font-semibold">
                   {steps[activeStep].stage}
                 </span>
               </div>
 
-              {/* Progress bar line */}
-              <div className="w-36 sm:w-56 h-1.5 bg-[#E5E1D8] rounded-full overflow-hidden mx-4">
+              {/* Smooth Progress Bar */}
+              <div className="w-48 xl:w-64 h-1.5 bg-[#E5E1D8] rounded-full overflow-hidden mx-4">
                 <div 
                   className="h-full bg-[#1E3B2B] transition-all duration-500 rounded-full"
                   style={{ width: `${((activeStep + 1) / 4) * 100}%` }}
                 />
               </div>
 
-              <Link
-                to="/how-it-works"
-                className="inline-flex items-center space-x-1.5 font-mono font-bold text-[#1E3B2B] hover:text-[#14281D] hover:underline"
-              >
-                <span>SPECIFICATION</span>
-                <ArrowRight className="w-3.5 h-3.5 text-[#C27A38]" />
-              </Link>
+              <span className="font-mono text-xs text-[#737A75]">
+                SCROLL DOWN TO ADVANCE
+              </span>
             </div>
-          </div>
 
+          </div>
         </div>
       ) : (
         /* MOBILE & REDUCED MOTION VIEW: CLEAN VERTICAL STORYBOARD STACK */
-        <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          
-          {/* Header */}
-          <div className="text-center mb-12">
-            <p className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold mb-2 flex items-center justify-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-[#059669]" />
-              <span>02 / THE VERIFICATION PIPELINE</span>
-            </p>
-            <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#121614] tracking-tight mb-2">
-              HOW IT WORKS
-            </h2>
-            <div className="w-12 h-1 bg-[#1E3B2B] rounded-full mx-auto mb-4" />
-            <p className="text-sm text-[#4A524D] max-w-md mx-auto leading-relaxed">
-              Four steps that turn physical labor into a tamper-evident, portable professional identity.
-            </p>
-          </div>
-
-          {/* Vertical Stack */}
-          <ol className="space-y-8 relative">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6">
+          <ol className="space-y-16">
             {steps.map((st, i) => (
               <li 
                 key={st.num}
-                className="bg-white rounded-3xl p-5 sm:p-7 border border-[#E5E1D8] shadow-sm relative flex flex-col space-y-4"
+                className="bg-white rounded-[36px] p-6 sm:p-8 border border-[#E5E1D8] shadow-sm flex flex-col space-y-6"
               >
-                {/* Step Header with Circle & Tag */}
-                <div className="flex items-center justify-between">
+                {/* Header with Step Circle & Stage Name */}
+                <div className="flex items-center justify-between border-b border-[#ECE8E0] pb-4">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-full bg-[#1E3B2B] text-white font-display font-black text-sm flex items-center justify-center shadow-xs">
+                    <div className="w-11 h-11 rounded-full bg-[#1E3B2B] text-white font-display font-black text-sm flex items-center justify-center shadow-xs">
                       {st.num}
                     </div>
                     <div>
-                      <h3 className="font-display font-extrabold text-base text-[#121614]">
-                        {st.title}
+                      <h3 className="font-display font-extrabold text-xl text-[#121614]">
+                        {st.stage}
                       </h3>
                       <p className="text-xs font-semibold text-[#1E3B2B]">
                         {st.tagline}
                       </p>
                     </div>
                   </div>
-                  <span className="text-[10px] font-mono font-bold bg-[#EBF6EE] text-[#059669] px-2.5 py-1 rounded-full border border-[#059669]/20">
-                    {st.badge}
+                  <span className="font-mono text-xs font-bold bg-[#EBF6EE] text-[#059669] px-2.5 py-1 rounded-full border border-[#059669]/20">
+                    STAGE {i + 1}
                   </span>
                 </div>
 
-                {/* Visual Area */}
-                <div className="w-full">
-                  {i === 0 && <WorkVisual active={true} />}
-                  {i === 1 && <EvidenceVisual active={true} />}
-                  {i === 2 && <ConfirmationVisual active={true} />}
-                  {i === 3 && <PassportVisual active={true} />}
+                {/* Smartphone Mockup */}
+                <div className="flex justify-center my-2">
+                  <div className="w-[300px] sm:w-[330px] h-[580px] bg-[#121417] rounded-[44px] p-2.5 shadow-xl border-[3px] border-[#2A3038] flex flex-col">
+                    <div className="w-24 h-4 bg-[#121417] rounded-full mx-auto mb-1 flex items-center justify-center space-x-1 shrink-0" />
+                    <div className="flex-1 bg-[#FAF8F5] rounded-[34px] overflow-hidden p-3.5 flex flex-col justify-between border border-black/5">
+                      {i === 0 && <PhoneStepWork />}
+                      {i === 1 && <PhoneStepEvidence />}
+                      {i === 2 && <PhoneStepConfirmation />}
+                      {i === 3 && <PhoneStepPassport />}
+                    </div>
+                    <div className="w-28 h-1 bg-[#121417]/25 rounded-full mx-auto my-1 shrink-0" />
+                  </div>
                 </div>
 
-                {/* Description */}
-                <p className="text-xs sm:text-sm text-[#4A524D] leading-relaxed pt-1 border-t border-[#ECE8E0]">
-                  {st.description}
-                </p>
+                {/* Narrative Description & Specifications */}
+                <div className="space-y-4 pt-2 border-t border-[#ECE8E0]">
+                  <p className="text-sm text-[#4A524D] leading-relaxed">
+                    {st.description}
+                  </p>
+                  <div className="space-y-2">
+                    {st.bullets.map((b, bIdx) => (
+                      <div key={bIdx} className="flex items-start space-x-2 text-xs text-[#121614]">
+                        <Check className="w-4 h-4 text-[#059669] shrink-0 mt-0.5" />
+                        <span>{b}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
 
-                {/* Connecting Line to next step if not last */}
-                {i < steps.length - 1 && (
-                  <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-0.5 h-4 border-l-2 border-dashed border-[#1E3B2B]" />
-                )}
               </li>
             ))}
           </ol>
-
-          {/* Deep Dive Link */}
-          <div className="mt-12 text-center">
-            <Link
-              to="/how-it-works"
-              className="inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-white border border-[#E5E1D8] text-xs font-mono font-bold text-[#1E3B2B] hover:bg-[#FAF8F5] transition-colors shadow-2xs"
-            >
-              <span>DEEP DIVE: READ FULL SPECIFICATION</span>
-              <ArrowRight className="w-3.5 h-3.5 text-[#C27A38]" />
-            </Link>
-          </div>
-
         </div>
       )}
     </section>
@@ -423,148 +404,278 @@ export const HowItWorksSection: React.FC = () => {
 };
 
 /* =========================================================================
-   SUB-VISUALS: HIGH-FIDELITY STEP MOCKUPS
-   Clean, authentic editorial UI cards matching the Vouch aesthetic
+   PHONE STEP 01 — WORK
+   VOUCH FIELD LOG: Worker, Trade, Project, Location, Scope, Status
 ========================================================================= */
-
-const WorkVisual: React.FC<{ active: boolean }> = ({ active }) => (
-  <div className="w-full h-48 sm:h-52 bg-[#F8F6F1] rounded-2xl p-3 sm:p-3.5 border border-[#E5E1D8] flex flex-col justify-between text-left overflow-hidden shadow-2xs">
-    {/* Mock Mobile App Top Bar */}
+const PhoneStepWork: React.FC = () => (
+  <div className="h-full flex flex-col justify-between text-left space-y-3">
+    {/* Header */}
     <div className="flex items-center justify-between pb-2 border-b border-[#E5E1D8]">
       <div className="flex items-center space-x-1.5">
-        <Smartphone className="w-3.5 h-3.5 text-[#1E3B2B]" />
-        <span className="text-[10px] font-mono font-bold text-[#1E3B2B] uppercase">VOUCH · FIELD LOG</span>
+        <Smartphone className="w-4 h-4 text-[#1E3B2B]" />
+        <span className="text-[11px] font-mono font-bold text-[#1E3B2B] uppercase">VOUCH FIELD LOG</span>
       </div>
-      <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">
-        ● LIVE LOG
+      <span className="text-[9px] font-mono font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
+        ● LOGGED
       </span>
     </div>
 
-    {/* Log Entry Body */}
-    <div className="bg-white p-2.5 rounded-xl border border-[#E5E1D8] space-y-1.5 shadow-xs">
+    {/* Worker Card */}
+    <div className="bg-white p-3 rounded-2xl border border-[#E5E1D8] shadow-xs space-y-1">
       <div className="flex items-center justify-between">
-        <span className="text-[11px] font-bold text-[#121614]">Ravi Kumar</span>
-        <span className="text-[9px] font-mono text-[#059669] font-bold bg-[#EBF6EE] px-1 rounded">Lead Wireman</span>
+        <span className="text-xs font-bold text-[#121614]">Ravi Kumar</span>
+        <span className="text-[10px] font-mono font-bold bg-[#EBF6EE] text-[#059669] px-1.5 py-0.5 rounded">
+          Welder
+        </span>
       </div>
-      <p className="text-[10px] text-[#4A524D] font-medium leading-tight line-clamp-1">
-        High-Pressure Steam Conduit Installation
-      </p>
-      <div className="text-[9px] font-mono text-[#737A75] flex items-center gap-1">
-        <MapPin className="w-2.5 h-2.5 text-[#C27A38]" />
-        <span>Dahej Berth 4 · 400m SS-316L Conduit</span>
+      <p className="text-[11px] text-[#737A75]">Industrial TIG & High-Pressure Conduit</p>
+    </div>
+
+    {/* Project Record Details */}
+    <div className="bg-white p-3.5 rounded-2xl border border-[#E5E1D8] space-y-2.5 shadow-xs flex-1">
+      <div>
+        <span className="text-[10px] font-mono text-[#737A75] uppercase block">PROJECT</span>
+        <span className="text-xs font-bold text-[#121614] leading-tight block">
+          High-Pressure Steam Conduit Installation
+        </span>
+      </div>
+
+      <div className="flex items-center justify-between text-[11px] pt-1 border-t border-stone-100">
+        <div>
+          <span className="text-[9px] font-mono text-[#737A75] block">LOCATION</span>
+          <span className="font-semibold text-[#121614] flex items-center gap-1">
+            <MapPin className="w-3 h-3 text-[#C27A38]" />
+            Dahej, Gujarat
+          </span>
+        </div>
+        <div className="text-right">
+          <span className="text-[9px] font-mono text-[#737A75] block">TIMESTAMP</span>
+          <span className="font-mono text-[#737A75] text-[10px]">Today · 08:42</span>
+        </div>
+      </div>
+
+      <div className="pt-1 border-t border-stone-100">
+        <span className="text-[9px] font-mono text-[#737A75] block">WORK COMPLETED</span>
+        <div className="bg-stone-50 p-2 rounded-lg mt-1 border border-stone-200 text-[11px] font-mono text-[#1E3B2B] font-semibold">
+          400m SS-316L conduit (Grade 316)
+        </div>
       </div>
     </div>
 
-    {/* CTA Indicator */}
-    <div className="flex items-center justify-between text-[9px] font-mono text-[#1E3B2B] pt-1">
-      <span className="text-[#059669] font-bold">✓ Scope Saved</span>
-      <span className="underline font-bold">+ Attach Evidence →</span>
+    {/* Status Footer */}
+    <div className="bg-[#EBF6EE] p-2.5 rounded-xl border border-[#059669]/20 flex items-center justify-between">
+      <span className="text-[10px] font-mono text-[#059669] font-bold">
+        ✓ Work record created
+      </span>
+      <span className="text-[10px] font-bold text-[#1E3B2B]">
+        Ready for proof →
+      </span>
     </div>
   </div>
 );
 
-const EvidenceVisual: React.FC<{ active: boolean }> = ({ active }) => (
-  <div className="w-full h-48 sm:h-52 bg-[#F8F6F1] rounded-2xl p-3 sm:p-3.5 border border-[#E5E1D8] flex flex-col justify-between text-left overflow-hidden shadow-2xs">
-    {/* Technical Proof Header */}
+/* =========================================================================
+   PHONE STEP 02 — EVIDENCE
+   EVIDENCE ATTACHED: Site photo, Inspection record, Test reading, GPS
+========================================================================= */
+const PhoneStepEvidence: React.FC = () => (
+  <div className="h-full flex flex-col justify-between text-left space-y-3">
+    {/* Header */}
     <div className="flex items-center justify-between pb-2 border-b border-[#E5E1D8]">
       <div className="flex items-center space-x-1.5">
-        <FileCheck2 className="w-3.5 h-3.5 text-[#1E3B2B]" />
-        <span className="text-[10px] font-mono font-bold text-[#1E3B2B] uppercase">EMPIRICAL PROOF</span>
+        <Paperclip className="w-4 h-4 text-[#1E3B2B]" />
+        <span className="text-[11px] font-mono font-bold text-[#1E3B2B] uppercase">EVIDENCE ATTACHED</span>
       </div>
-      <span className="text-[9px] font-mono bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded font-bold border border-blue-200">
+      <span className="text-[9px] font-mono font-bold bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full border border-blue-200">
         3 ARTIFACTS
       </span>
     </div>
 
-    {/* Evidence Readings Box */}
-    <div className="grid grid-cols-2 gap-1.5">
-      <div className="bg-white p-2 rounded-xl border border-[#E5E1D8]">
-        <span className="text-[9px] font-mono text-[#737A75] block">MEGGER TEST</span>
-        <span className="text-xs font-mono font-bold text-[#1E3B2B]">1.84 Ω</span>
-        <span className="text-[8px] text-emerald-700 font-bold block">✓ Code &lt; 2.0Ω</span>
+    {/* Photograph Artifact Preview */}
+    <div className="bg-white p-2.5 rounded-2xl border border-[#E5E1D8] shadow-xs space-y-1.5">
+      <div className="flex items-center justify-between text-[10px] font-mono text-[#059669] font-bold">
+        <span>✓ Site photograph attached</span>
+        <span className="text-[#737A75]">Weld Root Pass</span>
       </div>
-      <div className="bg-white p-2 rounded-xl border border-[#E5E1D8]">
-        <span className="text-[9px] font-mono text-[#737A75] block">PRESSURE</span>
-        <span className="text-xs font-mono font-bold text-[#1E3B2B]">42.0 Bar</span>
-        <span className="text-[8px] text-emerald-700 font-bold block">✓ Hydrostatic OK</span>
+      <div className="h-24 bg-stone-900 rounded-xl overflow-hidden relative flex items-center justify-center border border-stone-800">
+        <div className="absolute inset-0 bg-linear-to-tr from-stone-950 via-stone-800 to-stone-700 opacity-90" />
+        <div className="relative text-center px-2">
+          <span className="text-[10px] font-mono text-emerald-400 font-bold block">
+            [ PHOTO: WELD ROOT BEAD ]
+          </span>
+          <span className="text-[9px] font-mono text-stone-300 block">
+            SS-316L Joint #42 · Zero Porosity
+          </span>
+        </div>
+      </div>
+    </div>
+
+    {/* Empirical Test Readings */}
+    <div className="grid grid-cols-2 gap-2">
+      <div className="bg-white p-2.5 rounded-2xl border border-[#E5E1D8] shadow-xs">
+        <span className="text-[9px] font-mono text-[#737A75] block">✓ TEST READING</span>
+        <span className="text-sm font-mono font-black text-[#1E3B2B] block">1.84 Ω</span>
+        <span className="text-[9px] text-[#059669] font-bold block">Megger Insulation Pass</span>
+      </div>
+      <div className="bg-white p-2.5 rounded-2xl border border-[#E5E1D8] shadow-xs">
+        <span className="text-[9px] font-mono text-[#737A75] block">✓ PRESSURE TEST</span>
+        <span className="text-sm font-mono font-black text-[#1E3B2B] block">42.0 Bar</span>
+        <span className="text-[9px] text-[#059669] font-bold block">Hydrostatic 4hr Hold</span>
       </div>
     </div>
 
     {/* Geotag & Metadata */}
-    <div className="bg-white p-1.5 rounded-lg border border-[#E5E1D8] text-[9px] font-mono text-[#737A75] flex items-center justify-between">
-      <span>📍 21.7051° N, 72.5932° E</span>
-      <span className="text-[#1E3B2B] font-bold">CALIBRATED</span>
+    <div className="bg-white p-2 rounded-xl border border-[#E5E1D8] space-y-0.5 text-[9px] font-mono text-[#737A75]">
+      <div className="flex justify-between">
+        <span>✓ Location:</span>
+        <span className="text-[#121614] font-semibold">21.7051° N, 72.5932° E</span>
+      </div>
+      <div className="flex justify-between">
+        <span>✓ Date & Time:</span>
+        <span className="text-[#121614] font-semibold">14-Oct-2026 · 14:22 IST</span>
+      </div>
+    </div>
+
+    {/* Status Footer */}
+    <div className="bg-[#EBF6EE] p-2 rounded-xl border border-[#059669]/20 text-center text-[10px] font-mono text-[#059669] font-bold">
+      ✓ Technical proof attached
     </div>
   </div>
 );
 
-const ConfirmationVisual: React.FC<{ active: boolean }> = ({ active }) => (
-  <div className="w-full h-48 sm:h-52 bg-[#F8F6F1] rounded-2xl p-3 sm:p-3.5 border border-[#E5E1D8] flex flex-col justify-between text-left overflow-hidden shadow-2xs">
-    {/* Verifier Header */}
+/* =========================================================================
+   PHONE STEP 03 — CONFIRMATION
+   CONFIRM WORK: Verifier, Quote, Organization, Sign-off Button
+========================================================================= */
+const PhoneStepConfirmation: React.FC = () => (
+  <div className="h-full flex flex-col justify-between text-left space-y-3">
+    {/* Header */}
     <div className="flex items-center justify-between pb-2 border-b border-[#E5E1D8]">
       <div className="flex items-center space-x-1.5">
-        <CheckCheck className="w-3.5 h-3.5 text-[#059669]" />
-        <span className="text-[10px] font-mono font-bold text-[#1E3B2B] uppercase">SUPERVISOR SIGN-OFF</span>
+        <CheckCheck className="w-4 h-4 text-[#059669]" />
+        <span className="text-[11px] font-mono font-bold text-[#1E3B2B] uppercase">CONFIRM WORK</span>
       </div>
-      <span className="text-[9px] font-mono bg-emerald-50 text-emerald-800 px-1.5 py-0.5 rounded font-bold border border-emerald-200">
-        WHATSAPP/SMS
+      <span className="text-[9px] font-mono font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full border border-amber-200">
+        ONE-TAP LINK
       </span>
     </div>
 
-    {/* Verifier Quote & Role */}
-    <div className="bg-white p-2.5 rounded-xl border border-[#E5E1D8] space-y-1">
+    {/* Verifier Attribution Card */}
+    <div className="bg-white p-3 rounded-2xl border border-[#E5E1D8] shadow-xs space-y-1">
       <div className="flex items-center justify-between">
-        <span className="text-[10px] font-bold text-[#121614]">Arjun Verma</span>
-        <span className="text-[9px] font-mono text-[#737A75]">Chief Quality Eng.</span>
+        <span className="text-xs font-bold text-[#121614]">Arjun Verma</span>
+        <span className="text-[9px] font-mono font-bold bg-[#EBF6EE] text-[#059669] px-1.5 py-0.5 rounded">
+          VERIFIED
+        </span>
       </div>
-      <p className="text-[9px] text-[#4A524D] italic leading-tight line-clamp-2">
-        &quot;Live load testing witnessed and certified adhering strictly to safety standards.&quot;
-      </p>
+      <p className="text-[10px] font-medium text-[#1E3B2B]">Chief Quality Engineer</p>
+      <p className="text-[10px] text-[#737A75]">Apex Infrastructure Ltd. / L&T</p>
     </div>
 
-    {/* Provenance Hash */}
-    <div className="flex items-center justify-between text-[9px] font-mono pt-1 text-[#059669] font-bold">
-      <span>✓ VERIFIED ON-SITE</span>
-      <span className="text-[#737A75] font-normal">SHA-256 HASHED</span>
+    {/* Review Project Card */}
+    <div className="bg-white p-3.5 rounded-2xl border border-[#E5E1D8] space-y-2 shadow-xs flex-1">
+      <span className="text-[10px] font-mono text-[#737A75] uppercase block">REVIEWED PROJECT</span>
+      <p className="text-xs font-bold text-[#121614] leading-tight">
+        High-Pressure Steam Conduit Installation
+      </p>
+
+      {/* Verifier Statement */}
+      <div className="bg-[#FAF8F5] p-2.5 rounded-xl border border-[#E5E1D8] mt-1.5">
+        <span className="text-[9px] font-mono uppercase text-[#737A75] block mb-1">SUPERVISOR STATEMENT:</span>
+        <p className="text-[11px] text-[#121614] italic leading-snug">
+          &quot;Conduit routing and live circuit test witnessed and approved adhering strictly to safety code.&quot;
+        </p>
+      </div>
+
+      <div className="flex items-center justify-between text-[9px] font-mono text-[#737A75] pt-1">
+        <span>✓ Verified on site</span>
+        <span>Date: 14-Oct-2026</span>
+      </div>
+    </div>
+
+    {/* Prominent Confirm Button */}
+    <div className="bg-[#1E3B2B] text-white p-2.5 rounded-xl flex items-center justify-center space-x-2 shadow-sm">
+      <Check className="w-4 h-4 text-emerald-400 stroke-[3]" />
+      <span className="text-xs font-bold font-mono tracking-wider">
+        [ CONFIRM WORK ]
+      </span>
     </div>
   </div>
 );
 
-const PassportVisual: React.FC<{ active: boolean }> = ({ active }) => (
-  <div className="w-full h-48 sm:h-52 bg-[#F8F6F1] rounded-2xl p-3 sm:p-3.5 border border-[#E5E1D8] flex flex-col justify-between text-left overflow-hidden shadow-2xs">
-    {/* Passport Header */}
+/* =========================================================================
+   PHONE STEP 04 — PASSPORT
+   VOUCH PROFESSIONAL PASSPORT: Ravi Kumar, Skills, Confidence, QR
+========================================================================= */
+const PhoneStepPassport: React.FC = () => (
+  <div className="h-full flex flex-col justify-between text-left space-y-3">
+    {/* Header */}
     <div className="flex items-center justify-between pb-2 border-b border-[#E5E1D8]">
       <div className="flex items-center space-x-1.5">
-        <ShieldCheck className="w-3.5 h-3.5 text-[#1E3B2B]" />
-        <span className="text-[10px] font-mono font-bold text-[#1E3B2B] uppercase">VOUCH PASSPORT</span>
+        <ShieldCheck className="w-4 h-4 text-[#1E3B2B]" />
+        <span className="text-[11px] font-mono font-bold text-[#1E3B2B] uppercase">VOUCH PASSPORT</span>
       </div>
       <span className="text-[9px] font-mono font-bold text-[#C27A38]">
         VOUCH-IN-2026-8842
       </span>
     </div>
 
-    {/* Worker Credential Body */}
-    <div className="bg-white p-2.5 rounded-xl border border-[#E5E1D8] space-y-1.5 shadow-xs">
+    {/* Worker Identity */}
+    <div className="bg-white p-3 rounded-2xl border border-[#E5E1D8] shadow-xs space-y-1">
       <div className="flex items-center justify-between">
-        <span className="text-[11px] font-bold text-[#121614]">Ravi Kumar</span>
+        <span className="text-xs font-bold text-[#121614]">Ravi Kumar</span>
         <span className="text-[9px] font-mono font-bold bg-[#EBF6EE] text-[#059669] px-1.5 py-0.5 rounded">
-          94% CONFIDENCE
+          ACTIVE
         </span>
       </div>
-      <div className="w-full bg-stone-100 h-1.5 rounded-full overflow-hidden">
-        <div className="bg-[#059669] h-full w-[94%] rounded-full" />
+      <p className="text-[10px] text-[#4A524D] font-medium">Welder · 7 Years Experience</p>
+    </div>
+
+    {/* Demonstrated Skills Confidence */}
+    <div className="bg-white p-3.5 rounded-2xl border border-[#E5E1D8] space-y-2 shadow-xs flex-1">
+      <div className="flex items-center justify-between">
+        <span className="text-[10px] font-mono text-[#737A75] uppercase">DEMONSTRATED SKILLS</span>
+        <span className="text-[10px] font-mono font-bold text-[#059669]">
+          HIGH CONFIDENCE
+        </span>
       </div>
-      <div className="flex items-center justify-between text-[8px] font-mono text-[#737A75]">
-        <span>Pipefitting · TIG Welding</span>
-        <span>12 Records · 5 Vouches</span>
+
+      <div className="space-y-1.5 pt-1">
+        <div>
+          <div className="flex justify-between text-[10px] font-semibold text-[#121614] mb-0.5">
+            <span>TIG Welding (SS-316L)</span>
+            <span className="font-mono text-[#059669]">94%</span>
+          </div>
+          <div className="w-full bg-stone-100 h-1.5 rounded-full overflow-hidden">
+            <div className="bg-[#059669] h-full w-[94%] rounded-full" />
+          </div>
+        </div>
+
+        <div>
+          <div className="flex justify-between text-[10px] font-semibold text-[#121614] mb-0.5">
+            <span>High-Pressure Conduit</span>
+            <span className="font-mono text-[#059669]">91%</span>
+          </div>
+          <div className="w-full bg-stone-100 h-1.5 rounded-full overflow-hidden">
+            <div className="bg-[#059669] h-full w-[91%] rounded-full" />
+          </div>
+        </div>
+      </div>
+
+      <div className="pt-2 border-t border-stone-100 text-[9px] font-mono text-[#737A75] flex justify-between">
+        <span>12 Work records</span>
+        <span>18 Evidence</span>
+        <span>5 Confirmations</span>
       </div>
     </div>
 
-    {/* Portable & QR scan */}
-    <div className="flex items-center justify-between text-[9px] font-mono text-[#1E3B2B] pt-1">
-      <span className="font-bold text-[#059669]">● PORTABLE CREDENTIAL</span>
-      <span className="font-bold underline flex items-center gap-1">
-        <QrCode className="w-3 h-3 text-[#1E3B2B]" />
+    {/* Share Passport / QR Card */}
+    <div className="bg-[#1E3B2B] text-white p-2.5 rounded-xl flex items-center justify-between shadow-xs">
+      <div className="flex items-center space-x-2">
+        <QrCode className="w-4 h-4 text-emerald-300" />
+        <span className="text-[10px] font-mono font-bold">SHARE PASSPORT / QR</span>
+      </div>
+      <span className="text-[9px] font-mono bg-white/15 px-2 py-0.5 rounded text-white">
         SCAN READY
       </span>
     </div>

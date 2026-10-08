@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { 
   ShieldCheck, 
@@ -10,8 +10,10 @@ import {
 } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
-  const { setActiveRole } = useApp();
+  const { setActiveRole, setIsAuthenticated } = useApp();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirectParam = searchParams.get('redirect');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,9 +30,14 @@ export const LoginPage: React.FC = () => {
   };
 
   const handleSelectRole = (role: 'worker' | 'contractor') => {
+    setIsAuthenticated(true);
     setActiveRole(role);
     if (role === 'worker') {
-      navigate('/worker');
+      if (redirectParam === '/build-passport' || redirectParam?.startsWith('/build-passport')) {
+        navigate('/build-passport');
+      } else {
+        navigate('/worker');
+      }
     } else {
       navigate('/contractor');
     }
@@ -198,13 +205,14 @@ export const LoginPage: React.FC = () => {
                   {/* Destination to /build-passport */}
                   <div className="pt-8 mt-8 border-t border-[#ECE8E0] text-sm text-[#4A524D] text-center">
                     Don&apos;t have a Vouch account?{' '}
-                    <Link
-                      to="/build-passport"
-                      className="font-semibold text-[#1E3B2B] hover:underline inline-flex items-center space-x-1"
+                    <button
+                      type="button"
+                      onClick={() => setShowRoleSelection(true)}
+                      className="font-semibold text-[#1E3B2B] hover:underline inline-flex items-center space-x-1 cursor-pointer"
                     >
                       <span>Build your Professional Passport</span>
                       <span className="text-[#C27A38]">→</span>
-                    </Link>
+                    </button>
                   </div>
 
                 </div>
