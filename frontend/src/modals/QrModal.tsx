@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import QRCode from 'qrcode';
 import { useApp } from '../context/AppContext';
 import { X, Copy, Check, ExternalLink, Shield } from 'lucide-react';
 
 export const QrModal: React.FC = () => {
+  const navigate = useNavigate();
   const { isQrModalOpen, setIsQrModalOpen, worker, stats, setActiveRole, setCurrentTab } = useApp();
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
   const [copied, setCopied] = useState(false);
@@ -37,6 +39,7 @@ export const QrModal: React.FC = () => {
     setIsQrModalOpen(false);
     setActiveRole('contractor');
     setCurrentTab('home');
+    navigate('/contractor');
   };
 
   return (
