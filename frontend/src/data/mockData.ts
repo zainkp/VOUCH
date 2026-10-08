@@ -136,7 +136,7 @@ export const initialWorkRecords: WorkRecord[] = [
         id: 'ev_2',
         type: 'PHOTO',
         title: 'Earth Resistance Test Readout',
-        url: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=600&auto=format&fit=crop&q=80',
+        url: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop&q=80',
         timestamp: '12 Sep 2026',
         skillsSupported: ['Electrical Wiring'],
         description: 'Megger reading under 2.0 ohms.',

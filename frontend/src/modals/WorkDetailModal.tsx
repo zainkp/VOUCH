@@ -120,16 +120,16 @@ export const WorkDetailModal: React.FC = () => {
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 animate-in fade-in">
-      <div className="bg-[#FAF8F5] w-full max-w-lg rounded-t-[28px] sm:rounded-[28px] border border-[#ECEBE8] shadow-2xl max-h-[92vh] flex flex-col overflow-hidden">
+      <div className="bg-[#F5F2EB] w-full max-w-lg rounded-t-[28px] sm:rounded-[28px] border border-[#DFD9CE] shadow-2xl max-h-[92vh] flex flex-col overflow-hidden">
         {/* Header */}
-        <div className="px-5 py-4 bg-white border-b border-[#ECEBE8] flex items-center justify-between">
+        <div className="px-5 py-4 bg-white border-b border-[#DFD9CE] flex items-center justify-between">
           <div className="flex items-center space-x-2 min-w-0 pr-2">
-            <h3 className="text-base font-bold text-[#111827] truncate">
+            <h3 className="text-base font-bold text-[#141715] truncate">
               {currentRecord.title}
             </h3>
             {isConfirmed ? (
-              <span className="px-2 py-0.5 rounded-full bg-[#EBF6EE] text-[#059669] text-[10px] font-bold flex items-center space-x-1 shrink-0 border border-[#059669]/20">
-                <CheckCircle2 className="w-3 h-3 text-[#059669]" />
+              <span className="px-2 py-0.5 rounded-full bg-[#E5EFE8] text-[#245E3F] text-[10px] font-bold flex items-center space-x-1 shrink-0 border border-[#245E3F]/20">
+                <CheckCircle2 className="w-3 h-3 text-[#245E3F]" />
                 <span>Confirmed</span>
               </span>
             ) : isRejected ? (
@@ -154,7 +154,7 @@ export const WorkDetailModal: React.FC = () => {
         {/* Content */}
         <div className="p-5 overflow-y-auto custom-scrollbar space-y-4">
           {/* Main Hero Photo */}
-          <div className="w-full h-44 rounded-2xl overflow-hidden bg-stone-200 border border-[#E5E1D8] shadow-xs">
+          <div className="w-full h-44 rounded-2xl overflow-hidden bg-stone-200 border border-[#DFD9CE] shadow-xs">
             <img
               alt={currentRecord.title}
               src={currentRecord.imageUrl}
@@ -163,7 +163,7 @@ export const WorkDetailModal: React.FC = () => {
           </div>
 
           {/* Details */}
-          <div className="bg-white p-4 rounded-2xl border border-[#E5E1D8] space-y-2.5 text-xs">
+          <div className="bg-white p-4 rounded-2xl border border-[#DFD9CE] space-y-2.5 text-xs">
             <div className="flex items-center justify-between text-gray-600">
               <span className="flex items-center space-x-1.5 font-semibold text-gray-900">
                 <Briefcase className="w-3.5 h-3.5 text-gray-400" />
@@ -179,7 +179,7 @@ export const WorkDetailModal: React.FC = () => {
               <MapPin className="w-3.5 h-3.5 text-gray-400" />
               <span>{currentRecord.location}</span>
               {currentRecord.quantity ? (
-                <span className="text-[#737A75]">· {currentRecord.quantity} {currentRecord.quantityUnit || 'units'}</span>
+                <span className="text-[#727A75]">· {currentRecord.quantity} {currentRecord.quantityUnit || 'units'}</span>
               ) : null}
             </div>
 
@@ -196,7 +196,7 @@ export const WorkDetailModal: React.FC = () => {
                 {currentRecord.skills.map(s => (
                   <span
                     key={s}
-                    className="px-2.5 py-0.5 rounded-md bg-[#EBF6EE] text-[#1E3B2B] text-[11px] font-bold border border-[#059669]/20"
+                    className="px-2.5 py-0.5 rounded-md bg-[#E5EFE8] text-[#162B22] text-[11px] font-bold border border-[#245E3F]/20"
                   >
                     ✓ {s}
                   </span>
@@ -206,7 +206,7 @@ export const WorkDetailModal: React.FC = () => {
           </div>
 
           {/* Attached Evidence Items with Supported Skills (Section 3) */}
-          <div className="bg-white p-4 rounded-2xl border border-[#E5E1D8] space-y-3">
+          <div className="bg-white p-4 rounded-2xl border border-[#DFD9CE] space-y-3">
             <div className="flex items-center justify-between">
               <h4 className="text-xs font-bold text-gray-900">
                 Attached Evidence Items ({(currentRecord.evidenceItems || []).length})
@@ -214,7 +214,7 @@ export const WorkDetailModal: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsAddingEvidence(!isAddingEvidence)}
-                className="text-[11px] text-[#1E3B2B] hover:text-[#14281D] font-bold flex items-center space-x-1 cursor-pointer"
+                className="text-[11px] text-[#162B22] hover:text-[#102019] font-bold flex items-center space-x-1 cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>{isAddingEvidence ? 'Cancel' : 'Add Evidence'}</span>
@@ -223,7 +223,7 @@ export const WorkDetailModal: React.FC = () => {
 
             {/* Add Evidence Sub-form */}
             {isAddingEvidence && (
-              <form onSubmit={handleAddEvidence} className="p-3 bg-[#FAF8F5] rounded-xl border border-[#E5E1D8] space-y-2 text-xs animate-in fade-in">
+              <form onSubmit={handleAddEvidence} className="p-3 bg-[#F5F2EB] rounded-xl border border-[#DFD9CE] space-y-2 text-xs animate-in fade-in">
                 {evidenceError && (
                   <p className="text-[11px] text-red-600">{evidenceError}</p>
                 )}
@@ -267,7 +267,7 @@ export const WorkDetailModal: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSubmittingEvidence || !evidenceUrl.trim()}
-                  className="w-full py-2 bg-[#1E3B2B] text-white rounded-lg text-xs font-bold hover:bg-[#14281D] disabled:opacity-50 flex items-center justify-center space-x-1.5 cursor-pointer shadow-2xs"
+                  className="w-full py-2 bg-[#162B22] text-white rounded-lg text-xs font-bold hover:bg-[#102019] disabled:opacity-50 flex items-center justify-center space-x-1.5 cursor-pointer shadow-2xs"
                 >
                   {isSubmittingEvidence ? (
                     <>
@@ -295,7 +295,7 @@ export const WorkDetailModal: React.FC = () => {
                           <img alt={ev.title} src={ev.url} className="w-full h-full object-cover" />
                         </div>
                       ) : (
-                        <div className="w-9 h-9 rounded-lg bg-[#EBF6EE] flex items-center justify-center text-[#1E3B2B] shrink-0">
+                        <div className="w-9 h-9 rounded-lg bg-[#E5EFE8] flex items-center justify-center text-[#162B22] shrink-0">
                           <FileText className="w-4 h-4" />
                         </div>
                       )}
@@ -312,7 +312,7 @@ export const WorkDetailModal: React.FC = () => {
 
                   <div className="text-[10px] text-stone-600 flex items-center space-x-1 pt-1 border-t border-stone-200/60">
                     <span className="text-gray-400 font-semibold">Supports:</span>
-                    <span className="font-bold text-[#1E3B2B]">
+                    <span className="font-bold text-[#162B22]">
                       {ev.skillsSupported && ev.skillsSupported.length > 0 ? ev.skillsSupported.join(', ') : currentRecord.skills.join(', ')}
                     </span>
                   </div>
@@ -322,7 +322,7 @@ export const WorkDetailModal: React.FC = () => {
           </div>
 
           {/* Confirmations with Provenance (Section 4) */}
-          <div className="bg-white p-4 rounded-2xl border border-[#E5E1D8] space-y-3">
+          <div className="bg-white p-4 rounded-2xl border border-[#DFD9CE] space-y-3">
             <div className="flex items-center justify-between">
               <h4 className="text-xs font-bold text-gray-900">
                 Independent Supervisor Vouches ({(currentRecord.confirmations || []).length})
@@ -331,7 +331,7 @@ export const WorkDetailModal: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setIsRequestingVouch(!isRequestingVouch)}
-                  className="text-[11px] text-[#1E3B2B] hover:text-[#14281D] font-bold flex items-center space-x-1 cursor-pointer"
+                  className="text-[11px] text-[#162B22] hover:text-[#102019] font-bold flex items-center space-x-1 cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>{isRequestingVouch ? 'Cancel' : 'Request Vouch'}</span>
@@ -341,7 +341,7 @@ export const WorkDetailModal: React.FC = () => {
 
             {/* Request Vouch Form */}
             {isRequestingVouch && (
-              <form onSubmit={handleRequestVouch} className="p-3 bg-[#FAF8F5] rounded-xl border border-[#E5E1D8] space-y-2 text-xs animate-in fade-in">
+              <form onSubmit={handleRequestVouch} className="p-3 bg-[#F5F2EB] rounded-xl border border-[#DFD9CE] space-y-2 text-xs animate-in fade-in">
                 {vouchError && (
                   <p className="text-[11px] text-red-600">{vouchError}</p>
                 )}
@@ -359,7 +359,7 @@ export const WorkDetailModal: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSubmittingVouch || !supervisorName.trim()}
-                  className="w-full py-2 bg-[#1E3B2B] text-white rounded-lg text-xs font-bold hover:bg-[#14281D] disabled:opacity-50 flex items-center justify-center space-x-1.5 cursor-pointer shadow-2xs"
+                  className="w-full py-2 bg-[#162B22] text-white rounded-lg text-xs font-bold hover:bg-[#102019] disabled:opacity-50 flex items-center justify-center space-x-1.5 cursor-pointer shadow-2xs"
                 >
                   {isSubmittingVouch ? (
                     <>
@@ -375,10 +375,10 @@ export const WorkDetailModal: React.FC = () => {
 
             {/* Generated Vouch Link Banner */}
             {vouchToken && (
-              <div className="p-3 bg-[#EBF6EE] border border-[#059669]/30 rounded-xl space-y-2 text-xs">
+              <div className="p-3 bg-[#E5EFE8] border border-[#245E3F]/30 rounded-xl space-y-2 text-xs">
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-[#1E3B2B] flex items-center space-x-1">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#059669]" />
+                  <span className="font-bold text-[#162B22] flex items-center space-x-1">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#245E3F]" />
                     <span>Vouch Request Generated!</span>
                   </span>
                 </div>
@@ -390,12 +390,12 @@ export const WorkDetailModal: React.FC = () => {
                     type="text"
                     readOnly
                     value={`${window.location.origin}/verify/${vouchToken}`}
-                    className="flex-1 text-[11px] font-mono p-1.5 rounded border border-[#059669]/30 bg-white truncate"
+                    className="flex-1 text-[11px] font-mono p-1.5 rounded border border-[#245E3F]/30 bg-white truncate"
                   />
                   <button
                     type="button"
                     onClick={() => copyVerifyLink(vouchToken)}
-                    className="px-2.5 py-1.5 bg-[#1E3B2B] text-white rounded text-[11px] font-bold hover:bg-[#14281D] flex items-center space-x-1 cursor-pointer shrink-0"
+                    className="px-2.5 py-1.5 bg-[#162B22] text-white rounded text-[11px] font-bold hover:bg-[#102019] flex items-center space-x-1 cursor-pointer shrink-0"
                   >
                     {copiedLink ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
                     <span>{copiedLink ? 'Copied' : 'Copy'}</span>
@@ -443,7 +443,7 @@ export const WorkDetailModal: React.FC = () => {
                     setActiveVerifierRecord(currentRecord);
                     setIsVerifierModalOpen(true);
                   }}
-                  className="px-3 py-1.5 bg-[#1E3B2B] text-white rounded-xl text-xs font-semibold hover:bg-[#14281D] flex items-center space-x-1.5 mx-auto cursor-pointer shadow-2xs"
+                  className="px-3 py-1.5 bg-[#162B22] text-white rounded-xl text-xs font-semibold hover:bg-[#102019] flex items-center space-x-1.5 mx-auto cursor-pointer shadow-2xs"
                 >
                   <ShieldCheck className="w-3.5 h-3.5" />
                   <span>Simulate Supervisor Vouch</span>

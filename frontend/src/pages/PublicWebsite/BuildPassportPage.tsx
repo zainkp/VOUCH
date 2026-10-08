@@ -689,7 +689,7 @@ export const BuildPassportPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#121614] flex flex-col">
+    <div className="min-h-screen bg-[#F5F2EB] text-[#141715] flex flex-col">
       <PublicNavbar />
 
       <main className="flex-1 pt-28 sm:pt-36 pb-20 animate-page-enter">
@@ -698,44 +698,44 @@ export const BuildPassportPage: React.FC = () => {
           <ScrollReveal delay={0}>
             {/* Progress Indicator */}
             <div className="mb-10">
-              <div className="flex items-center justify-between text-xs font-mono text-[#737A75] mb-2">
-                <span className="font-bold text-[#1E3B2B]">PASSPORT ONBOARDING</span>
+              <div className="flex items-center justify-between text-xs font-mono text-[#727A75] mb-2">
+                <span className="font-bold text-[#162B22]">PASSPORT ONBOARDING</span>
                 <span>STEP {step} OF 4</span>
               </div>
-              <div className="w-full h-1.5 bg-[#E5E1D8] rounded-full overflow-hidden">
+              <div className="w-full h-1.5 bg-[#DFD9CE] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#1E3B2B] transition-all duration-300"
+                  className="h-full bg-[#162B22] transition-all duration-300"
                   style={{ width: `${(step / 4) * 100}%` }}
                 ></div>
               </div>
             </div>
 
             {/* Form Card */}
-            <div className="bg-white rounded-3xl p-6 sm:p-10 border border-[#E5E1D8] shadow-[0_20px_50px_rgba(18,22,20,0.06)]">
+            <div className="bg-[#E6EDE8] rounded-3xl p-6 sm:p-10 border border-[#DFD9CE] shadow-[0_20px_50px_rgba(18,22,20,0.06)]">
             
             {/* STEP 1: Basic Information */}
             {step === 1 && (
               <div>
                 <div className="mb-8">
-                  <span className="text-xs font-mono text-[#059669] font-bold uppercase tracking-wider block mb-1">
+                  <span className="text-xs font-mono text-[#245E3F] font-bold uppercase tracking-wider block mb-1">
                     STEP 01 · PROFESSIONAL IDENTITY
                   </span>
-                  <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-[#121614]">
+                  <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-[#141715]">
                     START BUILDING YOUR PROFESSIONAL PASSPORT.
                   </h1>
-                  <p className="text-sm text-[#4A524D] mt-2">
+                  <p className="text-sm text-[#484F4A] mt-2">
                     Enter your real trade identity. Your passport belongs to you and will accompany you across every future employer.
                   </p>
                 </div>
 
                 {/* AI / Voice Assist Box */}
-                <div className="mb-6 p-4 sm:p-5 rounded-2xl bg-[#F5F2EB] border border-[#E5E1D8]">
+                <div className="mb-6 p-4 sm:p-5 rounded-2xl bg-[#F5F2EB] border border-[#DFD9CE]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-mono font-bold text-[#1E3B2B] flex items-center space-x-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-[#C27A38]" />
+                    <span className="text-xs font-mono font-bold text-[#162B22] flex items-center space-x-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-[#C2672B]" />
                       <span>SPEAK OR TYPE YOUR TRADE (OPTIONAL AUTO-FILL)</span>
                     </span>
-                    <span className="text-[10px] font-mono text-[#737A75]">HINDI / ENGLISH / HINGLISH</span>
+                    <span className="text-[10px] font-mono text-[#727A75]">HINDI / ENGLISH / HINGLISH</span>
                   </div>
                   <p className="text-xs text-[#525B54] mb-3">
                     Describe your trade experience naturally, or speak into the microphone. AI will extract your trade, experience years, location, languages, and skills into the form fields below for your review.
@@ -775,13 +775,13 @@ export const BuildPassportPage: React.FC = () => {
                         </>
                       ) : (
                         <>
-                          <Sparkles className="w-3.5 h-3.5 text-[#C27A38]" />
+                          <Sparkles className="w-3.5 h-3.5 text-[#C2672B]" />
                           <span>Extract with AI</span>
                         </>
                       )}
                     </button>
                     {aiFeedback && (
-                      <p className="text-xs text-[#1E3B2B] font-medium flex-1 sm:text-right">
+                      <p className="text-xs text-[#162B22] font-medium flex-1 sm:text-right">
                         {aiFeedback}
                       </p>
                     )}
@@ -797,7 +797,7 @@ export const BuildPassportPage: React.FC = () => {
                   )}
 
                   <div>
-                    <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                    <label className="text-xs font-mono uppercase text-[#727A75] block mb-1 font-semibold">
                       Full Legal Name
                     </label>
                     <input
@@ -808,7 +808,7 @@ export const BuildPassportPage: React.FC = () => {
                         setFormError(null);
                       }}
                       placeholder="e.g. Full Legal Name"
-                      className="w-full p-3.5 rounded-xl border border-[#E5E1D8] text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
+                      className="w-full p-3.5 rounded-xl border border-[#DFD9CE] text-sm font-semibold focus:border-[#162B22] focus:ring-1 focus:ring-[#162B22] focus:outline-none"
                     />
                   </div>
 
@@ -859,7 +859,7 @@ export const BuildPassportPage: React.FC = () => {
                           setTrade(e.target.value);
                           setFormError(null);
                         }}
-                        className="w-full p-3.5 rounded-xl border border-[#E5E1D8] text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none bg-white text-[#121614]"
+                        className="w-full p-3.5 rounded-xl border border-[#DFD9CE] text-sm font-semibold focus:border-[#162B22] focus:ring-1 focus:ring-[#162B22] focus:outline-none bg-white text-[#141715]"
                       >
                         {availableTrades.map(t => (
                           <option key={t} value={t}>{t}</option>
@@ -868,7 +868,7 @@ export const BuildPassportPage: React.FC = () => {
                     </div>
 
                     <div>
-                      <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                      <label className="text-xs font-mono uppercase text-[#727A75] block mb-1 font-semibold">
                         Years of Trade Experience
                       </label>
                       <input
@@ -880,7 +880,7 @@ export const BuildPassportPage: React.FC = () => {
                         className={`w-full p-3.5 rounded-xl border text-sm font-semibold focus:outline-none transition-colors ${
                           experienceError
                             ? 'border-red-500 bg-red-50/20 focus:border-red-500 focus:ring-1 focus:ring-red-500'
-                            : 'border-[#E5E1D8] focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B]'
+                            : 'border-[#DFD9CE] focus:border-[#162B22] focus:ring-1 focus:ring-[#162B22]'
                         }`}
                       />
                       {experienceError && (
@@ -966,16 +966,16 @@ export const BuildPassportPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-[#ECE8E0] flex items-center justify-between">
-                  <span className="text-xs text-[#737A75]">
-                    Already registered? <Link to="/login" className="text-[#1E3B2B] font-bold underline">Log In</Link>
+                <div className="mt-8 pt-6 border-t border-[#ECE7DE] flex items-center justify-between">
+                  <span className="text-xs text-[#727A75]">
+                    Already registered? <Link to="/login" className="text-[#162B22] font-bold underline">Log In</Link>
                   </span>
                   <button
                     onClick={handleNextStep1}
-                    className="px-7 py-3.5 rounded-xl bg-[#1E3B2B] text-white font-bold text-sm hover:bg-[#14281D] transition-colors flex items-center space-x-2 cursor-pointer shadow-sm vouch-btn"
+                    className="px-7 py-3.5 rounded-xl bg-[#162B22] text-white font-bold text-sm hover:bg-[#102019] transition-colors flex items-center space-x-2 cursor-pointer shadow-sm vouch-btn"
                   >
                     <span>Next: Select Skills</span>
-                    <ArrowRight className="w-4 h-4 text-[#C27A38]" />
+                    <ArrowRight className="w-4 h-4 text-[#C2672B]" />
                   </button>
                 </div>
               </div>
@@ -991,7 +991,7 @@ export const BuildPassportPage: React.FC = () => {
                   <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#121614]">
                     WHAT ARE YOUR CORE {trade.toUpperCase()} CAPABILITIES?
                   </h2>
-                  <p className="text-sm text-[#4A524D] mt-2">
+                  <p className="text-sm text-[#484F4A] mt-2">
                     Select the specific skills you demonstrate on-site. You will anchor these skills with evidence in the next step.
                   </p>
                 </div>
@@ -1077,7 +1077,7 @@ export const BuildPassportPage: React.FC = () => {
                 <div className="mt-8 pt-6 border-t border-[#ECE8E0] flex items-center justify-between">
                   <button
                     onClick={() => setStep(1)}
-                    className="px-5 py-3 rounded-xl border border-[#E5E1D8] text-xs font-bold text-[#4A524D] hover:bg-gray-50 flex items-center space-x-1 cursor-pointer vouch-btn"
+                    className="px-5 py-3 rounded-xl border border-[#DFD9CE] text-xs font-bold text-[#484F4A] hover:bg-gray-50 flex items-center space-x-1 cursor-pointer vouch-btn"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back</span>
@@ -1085,7 +1085,7 @@ export const BuildPassportPage: React.FC = () => {
                   <button
                     onClick={() => setStep(3)}
                     disabled={selectedSkills.length === 0}
-                    className="px-7 py-3.5 rounded-xl bg-[#1E3B2B] text-white font-bold text-sm hover:bg-[#14281D] disabled:opacity-50 transition-colors flex items-center space-x-2 cursor-pointer shadow-sm vouch-btn"
+                    className="px-7 py-3.5 rounded-xl bg-[#162B22] text-white font-bold text-sm hover:bg-[#102019] disabled:opacity-50 transition-colors flex items-center space-x-2 cursor-pointer shadow-sm vouch-btn"
                   >
                     <span>Next: Add Work Experiences</span>
                     <ArrowRight className="w-4 h-4 text-[#C27A38]" />
@@ -1314,11 +1314,11 @@ export const BuildPassportPage: React.FC = () => {
                   </div>
                 )}
 
-                <div className="mt-8 pt-6 border-t border-[#ECE8E0] flex items-center justify-between">
+                <div className="mt-8 pt-6 border-t border-[#ECE7DE] flex items-center justify-between">
                   <button
                     onClick={() => setStep(2)}
                     disabled={isSubmitting}
-                    className="px-5 py-3 rounded-xl border border-[#E5E1D8] text-xs font-bold text-[#4A524D] hover:bg-gray-50 flex items-center space-x-1 cursor-pointer vouch-btn disabled:opacity-50"
+                    className="px-5 py-3 rounded-xl border border-[#DFD9CE] text-xs font-bold text-[#484F4A] hover:bg-gray-50 flex items-center space-x-1 cursor-pointer vouch-btn disabled:opacity-50"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back</span>
@@ -1326,7 +1326,7 @@ export const BuildPassportPage: React.FC = () => {
                   <button
                     onClick={handleFinishOnboarding}
                     disabled={isSubmitting}
-                    className="px-8 py-3.5 rounded-xl bg-[#1E3B2B] text-white font-bold text-sm hover:bg-[#14281D] transition-colors flex items-center space-x-2 cursor-pointer shadow-md vouch-btn disabled:opacity-50"
+                    className="px-8 py-3.5 rounded-xl bg-[#162B22] text-white font-bold text-sm hover:bg-[#102019] transition-colors flex items-center space-x-2 cursor-pointer shadow-md vouch-btn disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <>
@@ -1336,7 +1336,7 @@ export const BuildPassportPage: React.FC = () => {
                     ) : (
                       <>
                         <span>Generate My Passport</span>
-                        <Sparkles className="w-4 h-4 text-[#C27A38]" />
+                        <Sparkles className="w-4 h-4 text-[#C2672B]" />
                       </>
                     )}
                   </button>
@@ -1347,15 +1347,15 @@ export const BuildPassportPage: React.FC = () => {
             {/* STEP 4: Success Passport Generated */}
             {step === 4 && (
               <div className="text-center py-4">
-                <div className="w-16 h-16 rounded-2xl bg-[#EBF6EE] flex items-center justify-center text-[#059669] mx-auto mb-4 border border-[#059669]/20">
+                <div className="w-16 h-16 rounded-2xl bg-[#E5EFE8] flex items-center justify-center text-[#245E3F] mx-auto mb-4 border border-[#245E3F]/20">
                   <ShieldCheck className="w-9 h-9" />
                 </div>
 
-                <span className="text-xs font-mono text-[#059669] font-bold uppercase tracking-wider block mb-1">
+                <span className="text-xs font-mono text-[#245E3F] font-bold uppercase tracking-wider block mb-1">
                   PASSPORT SUCCESSFULLY MINTED
                 </span>
 
-                <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#121614] mb-3">
+                <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#141715] mb-3">
                   WELCOME TO VOUCH, {(createdProfile?.name || name || 'WORKER').toUpperCase()}!
                 </h2>
 
@@ -1364,17 +1364,17 @@ export const BuildPassportPage: React.FC = () => {
                 </p>
 
                 {/* Passport Card Mini-Preview */}
-                <div className="bg-[#FAF8F5] p-5 rounded-2xl border border-[#E5E1D8] max-w-md mx-auto mb-8 text-left shadow-sm">
-                  <div className="flex items-center justify-between pb-3 border-b border-[#ECE8E0] mb-3">
-                    <span className="text-xs font-mono font-bold text-[#1E3B2B]">
+                <div className="bg-[#F5F2EB] p-5 rounded-2xl border border-[#DFD9CE] max-w-md mx-auto mb-8 text-left shadow-sm">
+                  <div className="flex items-center justify-between pb-3 border-b border-[#ECE7DE] mb-3">
+                    <span className="text-xs font-mono font-bold text-[#162B22]">
                       {createdProfile?.public_slug ? createdProfile.public_slug.toUpperCase() : 'VOUCH-IN-2026-8842'}
                     </span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#EBF6EE] text-[#059669]">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#E5EFE8] text-[#245E3F]">
                       VERIFIED HOLDER
                     </span>
                   </div>
-                  <h3 className="font-bold text-base text-[#121614]">{createdProfile?.name || name || 'Verified Worker'}</h3>
-                  <p className="text-xs text-[#737A75]">
+                  <h3 className="font-bold text-base text-[#141715]">{createdProfile?.name || name || 'Verified Worker'}</h3>
+                  <p className="text-xs text-[#727A75]">
                     {createdProfile?.trade || trade || 'Trade'} · {(createdProfile?.experience_years ?? experienceYears ?? '0')} Years Documented {(createdProfile?.location || location) ? `· ${createdProfile?.location || location}` : ''}
                   </p>
                   <div className="mt-3 text-xs font-mono text-[#1E3B2B] bg-white p-2.5 rounded border border-[#E5E1D8] flex items-center justify-between">
@@ -1388,7 +1388,7 @@ export const BuildPassportPage: React.FC = () => {
                     <Link
                       to={`/passport/${createdProfile.public_slug}`}
                       target="_blank"
-                      className="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-[#1E3B2B] text-[#1E3B2B] font-bold text-sm hover:bg-[#1E3B2B]/5 transition-colors inline-flex items-center justify-center space-x-2 cursor-pointer"
+                      className="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-[#162B22] text-[#162B22] font-bold text-sm hover:bg-[#162B22]/5 transition-colors inline-flex items-center justify-center space-x-2 cursor-pointer"
                     >
                       <ExternalLink className="w-4 h-4" />
                       <span>View Public Passport</span>
@@ -1396,10 +1396,10 @@ export const BuildPassportPage: React.FC = () => {
                   )}
                   <button
                     onClick={() => navigate('/worker')}
-                    className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#1E3B2B] text-white font-bold text-sm hover:bg-[#14281D] shadow-md inline-flex items-center justify-center space-x-2 cursor-pointer vouch-btn"
+                    className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#162B22] text-white font-bold text-sm hover:bg-[#102019] shadow-md inline-flex items-center justify-center space-x-2 cursor-pointer vouch-btn"
                   >
                     <span>Enter Worker Dashboard</span>
-                    <ArrowRight className="w-4 h-4 text-[#C27A38]" />
+                    <ArrowRight className="w-4 h-4 text-[#C2672B]" />
                   </button>
                 </div>
               </div>

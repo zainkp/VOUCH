@@ -25,19 +25,19 @@ export const PassportTab: React.FC = () => {
     switch (level) {
       case 'HIGH':
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono tracking-wide bg-emerald-100 text-emerald-900 border border-emerald-300">
+          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono tracking-wide bg-[#E5EFE8] text-[#245E3F] border border-[#245E3F]/20">
             HIGH CONFIDENCE
           </span>
         );
       case 'MEDIUM':
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono tracking-wide bg-amber-100 text-amber-900 border border-amber-300">
+          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono tracking-wide bg-[#FAF0E6] text-[#C2672B] border border-[#C2672B]/25">
             BUILDING EVIDENCE
           </span>
         );
       case 'LOW':
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono tracking-wide bg-stone-100 text-stone-700 border border-stone-300">
+          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono tracking-wide bg-[#F5F2EB] text-[#727A75] border border-[#DFD9CE]">
             NEEDS EVIDENCE
           </span>
         );
@@ -72,31 +72,31 @@ export const PassportTab: React.FC = () => {
   return (
     <div className="w-full max-w-4xl mx-auto space-y-6 sm:space-y-8">
       {/* Top Header & Minimal Share Action */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-4 border-b border-[#E5E1D8]">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-4 border-b border-[#DFD9CE]">
         <div>
-          <span className="text-[10px] font-mono tracking-wider uppercase text-emerald-900 font-bold bg-emerald-100/70 px-2.5 py-0.5 rounded-full border border-emerald-300/60 inline-block">
+          <span className="text-[10px] font-mono tracking-wider uppercase text-[#245E3F] font-bold bg-[#E5EFE8] px-2.5 py-0.5 rounded-full border border-[#245E3F]/20 inline-block">
             Worker-Owned Professional Record
           </span>
-          <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-[#121614] tracking-tight mt-1">
+          <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-[#141715] tracking-tight mt-1">
             Vouch Professional Passport
           </h1>
         </div>
         <button
           onClick={() => setIsQrModalOpen(true)}
-          className="self-start sm:self-auto flex items-center space-x-1.5 px-4 py-2 bg-[#1E3B2B] text-white rounded-xl text-xs font-semibold hover:bg-[#14281D] active:translate-y-[1px] transition-all shadow-xs cursor-pointer"
+          className="self-start sm:self-auto flex items-center space-x-1.5 px-4 py-2 bg-[#162B22] text-white rounded-xl text-xs font-semibold hover:bg-[#102019] active:translate-y-[1px] transition-all shadow-xs cursor-pointer"
         >
-          <QrCode className="w-3.5 h-3.5 text-[#FAF8F5]" />
+          <QrCode className="w-3.5 h-3.5 text-[#F5F2EB]" />
           <span>Share Passport</span>
         </button>
       </div>
 
       {/* 1. PERSON: Worker Portable Identity Card */}
-      <div className="bg-white rounded-3xl border border-[#CBD5E1] shadow-xs overflow-hidden">
+      <div className="bg-[#E6EDE8] rounded-3xl border border-[#CBD5E1] shadow-xs overflow-hidden">
         {/* Clean Neutral Header */}
-        <div className="bg-[#121614] text-white px-6 py-3.5 flex justify-between items-center">
+        <div className="bg-[#141715] text-white px-6 py-3.5 flex justify-between items-center">
           <div className="flex items-center space-x-2">
-            <Shield className="w-4 h-4 text-[#C27A38]" />
-            <span className="font-mono text-xs font-bold tracking-wider text-[#FAF8F5]">
+            <Shield className="w-4 h-4 text-[#C2672B]" />
+            <span className="font-mono text-xs font-bold tracking-wider text-[#F5F2EB]">
               VOUCH PASSPORT
             </span>
           </div>
@@ -115,10 +115,10 @@ export const PassportTab: React.FC = () => {
               />
             </div>
             <div className="flex-1 min-w-0 space-y-1">
-              <h3 className="text-xl sm:text-2xl font-extrabold text-[#111827] uppercase tracking-wide truncate">
+              <h3 className="text-xl sm:text-2xl font-extrabold text-[#141715] uppercase tracking-wide truncate">
                 {worker.name}
               </h3>
-              <p className="text-sm font-bold text-emerald-800">
+              <p className="text-sm font-bold text-[#245E3F]">
                 {worker.trade} · {worker.experienceYears} Years Documented Exp
               </p>
               
@@ -138,7 +138,7 @@ export const PassportTab: React.FC = () => {
           {/* Evidence-Backed Portability Notice (No arbitrary percentage scores) */}
           <div className="pt-4 border-t border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between text-xs text-gray-600 gap-2">
             <span>
-              Documented Evidence: <strong className="text-emerald-900 font-mono font-bold">{stats.workCount} Work Records · {stats.confirmationCount} Supervisor Vouches</strong>
+              Documented Evidence: <strong className="text-[#245E3F] font-mono font-bold">{stats.workCount} Work Records · {stats.confirmationCount} Supervisor Vouches</strong>
             </span>
             <span className="text-gray-500 font-medium italic">
               Worker-Owned Sovereign Record
@@ -148,9 +148,9 @@ export const PassportTab: React.FC = () => {
       </div>
 
       {/* 2. SKILLS: Skill-Specific Evidence Confidence */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E5E1D8] shadow-xs space-y-4">
+      <div className="bg-[#E6EDE8] rounded-3xl p-6 sm:p-8 border border-[#DFD9CE] shadow-xs space-y-4">
         <div>
-          <h3 className="text-base font-bold text-[#111827]">Demonstrated Skills</h3>
+          <h3 className="text-base font-bold text-[#141715]">Demonstrated Skills</h3>
           <p className="text-xs text-gray-500 mt-0.5">
             Evidence confidence is measured from verified jobsite records, not generic star ratings.
           </p>
@@ -246,10 +246,10 @@ export const PassportTab: React.FC = () => {
       </div>
 
       {/* 3. WORK HISTORY: Portable Experience across Multiple Employers/Clients */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E5E1D8] shadow-xs space-y-4">
+      <div className="bg-[#E6EDE8] rounded-3xl p-6 sm:p-8 border border-[#DFD9CE] shadow-xs space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-[#111827]">Work History</h3>
+            <h3 className="text-base font-bold text-[#141715]">Work History</h3>
             <p className="text-xs text-gray-500 mt-0.5">
               Portable project record across contractors and companies
             </p>
@@ -278,7 +278,7 @@ export const PassportTab: React.FC = () => {
               </div>
 
               {item.status === 'CONFIRMED' ? (
-                <span className="px-2.5 py-1 rounded-full bg-[#E9F6ED] text-[#22633C] text-[11px] font-bold shrink-0 border border-emerald-200 flex items-center space-x-1">
+                <span className="px-2.5 py-1 rounded-full bg-[#E5EFE8] text-[#245E3F] text-[11px] font-bold shrink-0 border border-emerald-200 flex items-center space-x-1">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                   <span>Vouched</span>
                 </span>
@@ -293,9 +293,9 @@ export const PassportTab: React.FC = () => {
       </div>
 
       {/* 4. CONFIRMATIONS: Provenance Model */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E5E1D8] shadow-xs space-y-4">
+      <div className="bg-[#E6EDE8] rounded-3xl p-6 sm:p-8 border border-[#DFD9CE] shadow-xs space-y-4">
         <div>
-          <h3 className="text-base font-bold text-[#111827]">Independent Confirmations</h3>
+          <h3 className="text-base font-bold text-[#141715]">Independent Confirmations</h3>
           <p className="text-xs text-gray-500 mt-0.5">
             Confirmations from supervisors carry higher evidentiary weight than self-reporting.
           </p>
@@ -331,7 +331,7 @@ export const PassportTab: React.FC = () => {
       {/* Primary Share Action */}
       <button
         onClick={() => setIsQrModalOpen(true)}
-        className="w-full py-4 bg-[#1E3B2B] text-white rounded-2xl font-bold text-sm flex items-center justify-center space-x-2 shadow-xs hover:bg-[#14281D] active:translate-y-[1px] transition-all cursor-pointer"
+        className="w-full py-4 bg-[#162B22] text-white rounded-2xl font-bold text-sm flex items-center justify-center space-x-2 shadow-xs hover:bg-[#102019] active:translate-y-[1px] transition-all cursor-pointer"
       >
         <Share2 className="w-4 h-4" />
         <span>Share My Vouch Passport (QR & Link)</span>

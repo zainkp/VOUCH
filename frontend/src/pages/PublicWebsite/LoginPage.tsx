@@ -10,16 +10,39 @@ import {
 } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
-  const { setActiveRole, setIsAuthenticated, setCurrentUser, refreshData } = useApp();
+  const { setActiveRole, setIsAuthenticated, setCurrentUser, refreshData, isAuthenticated, activeRole } = useApp();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const redirectParam = searchParams.get('redirect');
+  const roleParam = searchParams.get('role');
 
+  // Pre-select role if URL explicitly indicates worker or employer context
+  const initialRole: 'worker' | 'contractor' | null = 
+    roleParam === 'employer' || roleParam === 'contractor' 
+      ? 'contractor' 
+      : roleParam === 'worker' || redirectParam?.startsWith('/build-passport')
+        ? 'worker'
+        : null;
+
+  const [selectedRole, setSelectedRole] = useState<'worker' | 'contractor' | null>(initialRole);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [forgotPasswordNotice, setForgotPasswordNotice] = useState(false);
+
+  // Existing authenticated users enter their respective portal directly
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      if (activeRole === 'contractor') {
+        navigate('/contractor', { replace: true });
+      } else if (redirectParam === '/build-passport' || redirectParam?.startsWith('/build-passport')) {
+        navigate('/build-passport', { replace: true });
+      } else {
+        navigate('/worker', { replace: true });
+      }
+    }
+  }, [isAuthenticated, activeRole, redirectParam, navigate]);
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,23 +114,23 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#121614] flex flex-col justify-between selection:bg-[#1E3B2B] selection:text-white">
+    <div className="min-h-screen bg-[#F5F2EB] text-[#141715] flex flex-col justify-between selection:bg-[#162B22] selection:text-white">
       
       {/* Top Navigation */}
       <header className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 flex items-center justify-between">
         <Link
           to="/"
-          className="inline-flex items-center space-x-2 text-sm font-medium text-[#4A524D] hover:text-[#121614] transition-colors"
+          className="inline-flex items-center space-x-2 text-sm font-medium text-[#484F4A] hover:text-[#141715] transition-colors"
         >
-          <ArrowLeft className="w-4 h-4 text-[#737A75]" />
-          <span>← Back to Vouch</span>
+          <ArrowLeft className="w-4 h-4 text-[#727A75]" />
+          <span>Back to Vouch</span>
         </Link>
 
         <Link to="/" className="flex items-center space-x-2.5 group">
-          <div className="w-8 h-8 rounded-lg bg-[#1E3B2B] flex items-center justify-center text-white shadow-xs group-hover:bg-[#14281D] transition-colors">
-            <ShieldCheck className="w-5 h-5 text-[#FAF8F5]" strokeWidth={2.2} />
+          <div className="w-8 h-8 rounded-lg bg-[#162B22] flex items-center justify-center text-white shadow-xs group-hover:bg-[#102019] transition-colors">
+            <ShieldCheck className="w-5 h-5 text-[#F5F2EB]" strokeWidth={2.2} />
           </div>
-          <span className="font-display font-extrabold text-xl tracking-tight text-[#121614]">
+          <span className="font-display font-extrabold text-xl tracking-tight text-[#141715]">
             VOUCH
           </span>
         </Link>
@@ -120,22 +143,22 @@ export const LoginPage: React.FC = () => {
           {/* LEFT SIDE: Vouch branding, statement, headline, and authentic documentary worker image */}
           <div className="lg:col-span-6 flex flex-col justify-center">
             
-            <div className="flex items-center space-x-2 text-xs font-mono font-semibold tracking-wider uppercase text-[#1E3B2B] mb-4">
-              <ShieldCheck className="w-4 h-4 text-[#C27A38]" />
+            <div className="flex items-center space-x-2 text-xs font-mono font-semibold tracking-wider uppercase text-[#162B22] mb-4">
+              <ShieldCheck className="w-4 h-4 text-[#C2672B]" />
               <span>VOUCH · PROFESSIONAL PASSPORT</span>
             </div>
 
-            <h1 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-[54px] text-[#121614] tracking-tight leading-[1.06] mb-5">
+            <h1 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-[54px] text-[#141715] tracking-tight leading-[1.06] mb-5">
               YOUR WORK<br />
-              <span className="text-[#1E3B2B]">SPEAKS FOR YOU.</span>
+              <span className="text-[#162B22]">SPEAKS FOR YOU.</span>
             </h1>
 
-            <p className="text-base sm:text-lg text-[#4A524D] leading-relaxed mb-8 max-w-xl">
+            <p className="text-base sm:text-lg text-[#484F4A] leading-relaxed mb-8 max-w-xl">
               Your experience shouldn&apos;t disappear when a job ends. Vouch gives your work a professional identity you can carry with you.
             </p>
 
             {/* Documentary Worker Photography */}
-            <div className="rounded-2xl overflow-hidden border border-[#E5E1D8] bg-[#EFECE6] shadow-xs max-w-xl">
+            <div className="rounded-2xl overflow-hidden border border-[#DFD9CE] bg-[#ECE7DE] shadow-xs max-w-xl">
               <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full">
                 <img
                   src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=1000&auto=format&fit=crop&q=80"
@@ -143,9 +166,9 @@ export const LoginPage: React.FC = () => {
                   className="w-full h-full object-cover filter saturate-[0.95]"
                   loading="eager"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#121614]/75 via-transparent to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#141715]/75 via-transparent to-transparent"></div>
                 <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <p className="text-xs font-mono text-[#FAF8F5]/90">
+                  <p className="text-xs font-mono text-[#F5F2EB]/90">
                     FIELD VERIFICATION · INDEPENDENT TRADE CREDENTIALS
                   </p>
                 </div>
@@ -257,14 +280,14 @@ export const LoginPage: React.FC = () => {
       </main>
 
       {/* Subtle Bottom Footer */}
-      <footer className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 border-t border-[#E5E1D8] flex flex-col sm:flex-row items-center justify-between text-xs text-[#737A75] gap-3">
+      <footer className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 border-t border-[#DFD9CE] flex flex-col sm:flex-row items-center justify-between text-xs text-[#727A75] gap-3">
         <p>© {new Date().getFullYear()} VOUCH Professional Identity Platform.</p>
         <div className="flex items-center space-x-5">
-          <Link to="/" className="hover:text-[#121614] transition-colors">Home</Link>
+          <Link to="/" className="hover:text-[#141715] transition-colors">Home</Link>
           <span>·</span>
-          <Link to="/about" className="hover:text-[#121614] transition-colors">About</Link>
+          <Link to="/about" className="hover:text-[#141715] transition-colors">About</Link>
           <span>·</span>
-          <Link to="/build-passport" className="hover:text-[#121614] transition-colors">Build Passport</Link>
+          <Link to="/build-passport" className="hover:text-[#141715] transition-colors">Build Passport</Link>
         </div>
       </footer>
 

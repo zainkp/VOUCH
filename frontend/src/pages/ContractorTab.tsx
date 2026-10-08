@@ -164,22 +164,22 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
     switch (level) {
       case 'HIGH':
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#EBF6EE] text-[#059669] border border-[#059669]/20 inline-flex items-center space-x-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#059669]"></span>
+          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#E5EFE8] text-[#245E3F] border border-[#245E3F]/20 inline-flex items-center space-x-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#245E3F]"></span>
             <span>HIGH EVIDENCE CONFIDENCE</span>
           </span>
         );
       case 'MEDIUM':
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#FEF6EE] text-[#C27A38] border border-[#C27A38]/25 inline-flex items-center space-x-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#C27A38]"></span>
+          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#FAF0E6] text-[#C2672B] border border-[#C2672B]/25 inline-flex items-center space-x-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C2672B]"></span>
             <span>MEDIUM EVIDENCE CONFIDENCE</span>
           </span>
         );
       default:
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#F4F1EA] text-[#737A75] border border-[#E5E1D8] inline-flex items-center space-x-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#737A75]"></span>
+          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#F5F2EB] text-[#727A75] border border-[#DFD9CE] inline-flex items-center space-x-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#727A75]"></span>
             <span>BUILDING EVIDENCE</span>
           </span>
         );
@@ -192,18 +192,18 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
       {/* 1. Contractor Home Greeting & Search (Section 6) */}
       <div className="space-y-6">
         <div>
-          <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-[#121614] tracking-tight">
+          <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-[#141715] tracking-tight">
             Good morning, Arjun.
           </h1>
-          <p className="text-sm sm:text-base text-[#4A524D] mt-1">
+          <p className="text-sm sm:text-base text-[#484F4A] mt-1">
             Find skilled workers with experience you can verify.
           </p>
         </div>
 
         {/* Search Field */}
         <div className="relative w-full max-w-3xl">
-          <div className="flex items-center bg-white rounded-2xl border border-[#E5E1D8] shadow-xs focus-within:border-[#1E3B2B] focus-within:ring-1 focus-within:ring-[#1E3B2B] transition-all p-1.5">
-            <div className="pl-3.5 pr-2 text-[#737A75]">
+          <div className="flex items-center bg-white rounded-2xl border border-[#DFD9CE] shadow-xs focus-within:border-[#162B22] focus-within:ring-1 focus-within:ring-[#162B22] transition-all p-1.5">
+            <div className="pl-3.5 pr-2 text-[#727A75]">
               <Search className="w-5 h-5" />
             </div>
             <input
@@ -211,12 +211,12 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder="Search by trade, skill or location (e.g. Electrician in Mangaluru)..."
-              className="flex-1 py-2.5 text-sm sm:text-base text-[#121614] placeholder:text-[#A1A7A2] focus:outline-none bg-transparent"
+              className="flex-1 py-2.5 text-sm sm:text-base text-[#141715] placeholder:text-[#A1A7A2] focus:outline-none bg-transparent"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="p-1.5 text-[#737A75] hover:text-[#121614] transition-colors mr-1 cursor-pointer"
+                className="p-1.5 text-[#727A75] hover:text-[#141715] transition-colors mr-1 cursor-pointer"
                 title="Clear Search"
               >
                 <X className="w-4 h-4" />
@@ -224,7 +224,7 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
             )}
             <button
               type="button"
-              className="px-6 py-2.5 rounded-xl bg-[#1E3B2B] hover:bg-[#14281D] text-white text-xs sm:text-sm font-semibold transition-all cursor-pointer shadow-xs shrink-0"
+              className="px-6 py-2.5 rounded-xl bg-[#162B22] hover:bg-[#102019] text-white text-xs sm:text-sm font-semibold transition-all cursor-pointer shadow-xs shrink-0"
             >
               Search
             </button>
@@ -233,7 +233,7 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
 
         {/* 2. Quick Trade Filters (Section 7) */}
         <div className="space-y-2.5 pt-1">
-          <p className="text-xs font-mono uppercase tracking-wider text-[#737A75] font-semibold">
+          <p className="text-xs font-mono uppercase tracking-wider text-[#727A75] font-semibold">
             Browse by trade
           </p>
           <div className="flex items-center space-x-2 overflow-x-auto pb-1 text-xs">
@@ -243,8 +243,8 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
                 onClick={() => setSelectedTrade(trade)}
                 className={`px-3.5 py-1.5 rounded-xl font-medium shrink-0 transition-all cursor-pointer ${
                   selectedTrade === trade
-                    ? 'bg-[#1E3B2B] text-white shadow-xs font-semibold'
-                    : 'bg-white text-[#4A524D] hover:bg-[#FAF8F5] border border-[#E5E1D8]'
+                    ? 'bg-[#162B22] text-white shadow-xs font-semibold'
+                    : 'bg-white text-[#484F4A] hover:bg-[#F5F2EB] border border-[#DFD9CE]'
                 }`}
               >
                 {trade}
@@ -258,12 +258,12 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
       <section className="space-y-5">
         
         {/* Section Header & Subtext */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-[#E5E1D8] gap-2">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-[#DFD9CE] gap-2">
           <div>
-            <h2 className="font-display font-extrabold text-xl text-[#121614] tracking-tight">
+            <h2 className="font-display font-extrabold text-xl text-[#141715] tracking-tight">
               {activeTab === 'DIRECTORY' ? 'WORKERS WITH EVIDENCE' : 'SAVED WORKERS'}
             </h2>
-            <p className="text-xs sm:text-sm text-[#737A75] mt-0.5">
+            <p className="text-xs sm:text-sm text-[#727A75] mt-0.5">
               {activeTab === 'DIRECTORY'
                 ? 'Explore workers whose experience is supported by real work records, evidence and confirmations.'
                 : 'Workers you have shortlisted for upcoming project sites.'}
@@ -275,8 +275,8 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
               onClick={() => setActiveTab('DIRECTORY')}
               className={`px-3 py-1 rounded-lg transition-colors cursor-pointer ${
                 activeTab === 'DIRECTORY'
-                  ? 'bg-[#FAF8F5] text-[#1E3B2B] font-bold border border-[#E5E1D8]'
-                  : 'text-[#737A75] hover:text-[#121614]'
+                  ? 'bg-[#F5F2EB] text-[#162B22] font-bold border border-[#DFD9CE]'
+                  : 'text-[#727A75] hover:text-[#141715]'
               }`}
             >
               All Workers ({directoryWorkers.length})
@@ -286,8 +286,8 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
               onClick={() => setActiveTab('SAVED')}
               className={`px-3 py-1 rounded-lg transition-colors cursor-pointer ${
                 activeTab === 'SAVED'
-                  ? 'bg-[#FAF8F5] text-[#1E3B2B] font-bold border border-[#E5E1D8]'
-                  : 'text-[#737A75] hover:text-[#121614]'
+                  ? 'bg-[#F5F2EB] text-[#162B22] font-bold border border-[#DFD9CE]'
+                  : 'text-[#727A75] hover:text-[#141715]'
               }`}
             >
               Saved ({savedWorkerIds.length})
@@ -303,14 +303,14 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
             return (
               <div
                 key={w.id}
-                className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E5E1D8] shadow-xs hover:border-[#1E3B2B]/40 transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-6"
+                className="bg-[#E6EDE8] rounded-3xl p-6 sm:p-7 border border-[#DFD9CE] shadow-xs hover:border-[#162B22]/40 transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-6"
               >
                 
                 {/* Left & Center: Worker Photo, Identity, Trade & Skills */}
                 <div className="flex items-start space-x-5 min-w-0 flex-1">
                   
                   {/* Photo container */}
-                  <div className="w-16 h-20 sm:w-20 sm:h-24 rounded-2xl overflow-hidden bg-[#EFECE6] border border-[#E5E1D8] shrink-0 shadow-xs">
+                  <div className="w-16 h-20 sm:w-20 sm:h-24 rounded-2xl overflow-hidden bg-[#ECE7DE] border border-[#DFD9CE] shrink-0 shadow-xs">
                     <img
                       src={w.avatarUrl}
                       alt={w.name}
@@ -321,42 +321,42 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
                   {/* Identity details */}
                   <div className="space-y-1.5 min-w-0 flex-1">
                     <div className="flex items-center space-x-2">
-                      <h3 className="font-display font-extrabold text-lg sm:text-xl text-[#121614] tracking-tight uppercase truncate">
+                      <h3 className="font-display font-extrabold text-lg sm:text-xl text-[#141715] tracking-tight uppercase truncate">
                         {w.name}
                       </h3>
                     </div>
 
-                    <p className="text-sm font-semibold text-[#1E3B2B]">
+                    <p className="text-sm font-semibold text-[#162B22]">
                       {w.trade}
                     </p>
 
-                    <p className="text-xs text-[#737A75] flex items-center space-x-2">
+                    <p className="text-xs text-[#727A75] flex items-center space-x-2">
                       <span>{w.experienceYears} years experience</span>
                       <span>·</span>
                       <span className="flex items-center space-x-1">
-                        <MapPin className="w-3.5 h-3.5 text-[#737A75]" />
+                        <MapPin className="w-3.5 h-3.5 text-[#727A75]" />
                         <span>{w.location}</span>
                       </span>
                     </p>
 
                     {/* Demonstrated Skills summary */}
-                    <div className="pt-2 text-xs text-[#4A524D]">
-                      <span className="text-[#737A75] font-medium">Demonstrated Skills: </span>
-                      <span className="font-semibold text-[#121614]">{w.skillsSummary}</span>
+                    <div className="pt-2 text-xs text-[#484F4A]">
+                      <span className="text-[#727A75] font-medium">Demonstrated Skills: </span>
+                      <span className="font-semibold text-[#141715]">{w.skillsSummary}</span>
                     </div>
                   </div>
 
                 </div>
 
                 {/* Right: Evidence Confidence, Counts & Action Buttons */}
-                <div className="lg:border-l lg:border-[#ECE8E0] lg:pl-6 flex flex-col sm:flex-row lg:flex-col items-start sm:items-center lg:items-end justify-between gap-4 shrink-0">
+                <div className="lg:border-l lg:border-[#ECE7DE] lg:pl-6 flex flex-col sm:flex-row lg:flex-col items-start sm:items-center lg:items-end justify-between gap-4 shrink-0">
                   
                   {/* Evidence Confidence tier (Strictly evidence-backed, NO stars, NO percentages) */}
                   <div className="space-y-1 sm:text-right lg:text-right">
                     <div>
                       {renderConfidenceBadge(w.confidenceLevel)}
                     </div>
-                    <p className="text-xs text-[#737A75] mt-1 font-medium">
+                    <p className="text-xs text-[#727A75] mt-1 font-medium">
                       {w.workRecordsCount} work records · {w.evidenceItemsCount} evidence items · {w.confirmationsCount} supervisor confirmations
                     </p>
                   </div>
@@ -367,8 +367,8 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
                       onClick={() => toggleSaveWorker(w.id)}
                       className={`px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center space-x-1.5 border transition-all cursor-pointer ${
                         isSaved
-                          ? 'bg-[#EBF6EE] text-[#059669] border-[#059669]/30'
-                          : 'bg-[#FAF8F5] hover:bg-white text-[#4A524D] border-[#E5E1D8]'
+                          ? 'bg-[#E5EFE8] text-[#245E3F] border-[#245E3F]/30'
+                          : 'bg-[#F5F2EB] hover:bg-white text-[#484F4A] border-[#DFD9CE]'
                       }`}
                     >
                       <Bookmark className="w-3.5 h-3.5" />
@@ -377,7 +377,7 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
 
                     <button
                       onClick={() => onViewPassport(w)}
-                      className="px-5 py-2.5 rounded-xl bg-[#1E3B2B] hover:bg-[#14281D] text-white text-xs font-semibold flex items-center space-x-1.5 transition-colors cursor-pointer shadow-xs"
+                      className="px-5 py-2.5 rounded-xl bg-[#162B22] hover:bg-[#102019] text-white text-xs font-semibold flex items-center space-x-1.5 transition-colors cursor-pointer shadow-xs"
                     >
                       <span>View Passport</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -391,8 +391,8 @@ export const ContractorTab: React.FC<ContractorTabProps> = ({
           })}
 
           {filteredWorkers.length === 0 && (
-            <div className="p-12 text-center bg-white rounded-3xl border border-[#E5E1D8] text-xs text-[#737A75] space-y-2">
-              <p className="font-bold text-base text-[#121614]">
+            <div className="p-12 text-center bg-white rounded-3xl border border-[#DFD9CE] text-xs text-[#727A75] space-y-2">
+              <p className="font-bold text-base text-[#141715]">
                 {activeTab === 'SAVED' ? 'No saved workers yet' : 'No workers found'}
               </p>
               <p className="max-w-md mx-auto">
