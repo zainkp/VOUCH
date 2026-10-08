@@ -8,6 +8,7 @@ import {
   FileCheck, 
   ArrowRight
 } from 'lucide-react';
+import { ScrollReveal } from '../../components/ScrollReveal';
 
 export const PassportShowcaseSection: React.FC = () => {
   const [selectedSkill, setSelectedSkill] = useState<'wiring' | 'panel' | 'ac'>('wiring');
@@ -28,22 +29,25 @@ export const PassportShowcaseSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-14 sm:mb-16">
-          <p className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold mb-3">
-            03 / THE PRODUCT ARTIFACT
-          </p>
-          <h2 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-6xl text-[#121614] tracking-tight leading-[1.08] mb-6">
-            A PROFESSIONAL<br />
-            PASSPORT BUILT<br />
-            FROM PROOF.
-          </h2>
-          <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed">
-            Your Vouch Passport belongs to you. Keep building it as your career moves from one employer to the next.
-          </p>
-        </div>
+        <ScrollReveal delay={0} duration={600}>
+          <div className="max-w-3xl mb-14 sm:mb-16">
+            <p className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold mb-3">
+              03 / THE PRODUCT ARTIFACT
+            </p>
+            <h2 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-6xl text-[#121614] tracking-tight leading-[1.08] mb-6">
+              A PROFESSIONAL<br />
+              PASSPORT BUILT<br />
+              FROM PROOF.
+            </h2>
+            <p className="text-lg sm:text-xl text-[#4A524D] leading-relaxed">
+              Your Vouch Passport belongs to you. Keep building it as your career moves from one employer to the next.
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Hero Product Artifact: Full Passport UI Box */}
-        <div className="max-w-5xl mx-auto bg-white rounded-3xl border-2 border-[#1E3B2B] shadow-[0_24px_60px_rgba(18,22,20,0.12)] overflow-hidden relative">
+        <ScrollReveal variant="passport" delay={150} duration={750} className="max-w-5xl mx-auto">
+          <div className="bg-white rounded-3xl border-2 border-[#1E3B2B] shadow-[0_24px_60px_rgba(18,22,20,0.12)] overflow-hidden relative">
           
           {/* Top Passport Security Ribbon */}
           <div className="bg-[#1E3B2B] text-[#FAF8F5] px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
@@ -285,14 +289,14 @@ export const PassportShowcaseSection: React.FC = () => {
                 <div className="flex items-center space-x-2.5 w-full sm:w-auto">
                   <Link
                     to="/passport"
-                    className="flex-1 sm:flex-none px-5 py-2.5 rounded-lg bg-[#FAF8F5] text-[#1E3B2B] hover:bg-white text-xs font-bold flex items-center justify-center space-x-1.5 shrink-0 transition-colors"
+                    className="vouch-btn flex-1 sm:flex-none px-5 py-2.5 rounded-lg bg-[#FAF8F5] text-[#1E3B2B] hover:bg-white text-xs font-bold flex items-center justify-center space-x-1.5 shrink-0 transition-colors"
                   >
                     <span>Passport Architecture</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                   <Link
                     to="/build-passport"
-                    className="flex-1 sm:flex-none px-4 py-2.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-semibold flex items-center justify-center border border-white/20 transition-colors"
+                    className="vouch-btn flex-1 sm:flex-none px-4 py-2.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-semibold flex items-center justify-center border border-white/20 transition-colors"
                   >
                     <span>Build Yours</span>
                   </Link>
@@ -304,6 +308,7 @@ export const PassportShowcaseSection: React.FC = () => {
           </div>
 
         </div>
+        </ScrollReveal>
 
       </div>
     </section>

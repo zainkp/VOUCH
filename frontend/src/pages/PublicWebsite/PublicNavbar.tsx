@@ -90,7 +90,7 @@ export const PublicNavbar: React.FC = () => {
             </Link>
             <Link
               to="/build-passport"
-              className="group inline-flex items-center space-x-2 px-4 py-2.5 rounded-lg bg-[#1E3B2B] text-[#FAF8F5] text-[13px] font-semibold tracking-wide hover:bg-[#14281D] active:scale-[0.98] transition-all shadow-xs"
+              className="group inline-flex items-center space-x-2 px-4 py-2.5 rounded-lg bg-[#1E3B2B] text-[#FAF8F5] text-[13px] font-semibold tracking-wide hover:bg-[#14281D] active:scale-[0.98] transition-all shadow-xs vouch-btn"
             >
               <span>Build Your Passport</span>
               <ArrowUpRight className="w-4 h-4 text-[#C27A38] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

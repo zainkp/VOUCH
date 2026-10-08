@@ -53,6 +53,9 @@ export interface EvidenceCreatePayload {
   type: EvidenceType;
   url: string;
   description?: string;
+  supports_skills?: string[];
+  added_by_name?: string;
+  is_private?: boolean;
 }
 
 export interface EvidenceResponse {
@@ -64,17 +67,20 @@ export interface EvidenceResponse {
   created_at: string;
 }
 
-export type VerifierType = 'CUSTOMER' | 'SUPERVISOR' | 'EMPLOYER';
-export type ConfirmationStatus = 'PENDING' | 'CONFIRMED' | 'REJECTED' | 'NOT_SURE';
+export type VerifierType = 'CUSTOMER' | 'SUPERVISOR' | 'EMPLOYER' | 'COLLEAGUE';
+export type ConfirmationStatus = 'PENDING' | 'CONFIRMED' | 'REJECTED' | 'NOT_SURE' | 'REVOKED';
 
 export interface ConfirmationRequestPayload {
   work_record_id: string;
   verifier_name: string;
   verifier_type: VerifierType;
+  relationship?: string;
+  note?: string;
 }
 
 export interface ConfirmationDecisionPayload {
   decision: ConfirmationStatus;
+  note?: string;
 }
 
 export interface ConfirmationResponse {
@@ -123,6 +129,8 @@ export interface WorkRecordCreatePayload {
   quantity_unit?: string | null;
   trade?: string | null;
   skills?: string[];
+  employer_name?: string | null;
+  project_name?: string | null;
 }
 
 export interface WorkRecordResponse extends WorkRecordCreatePayload {
@@ -379,10 +387,12 @@ export const api = {
    * Submit Confirmation Decision: Verifier confirms, rejects, or flags a work record
    * POST /api/confirmations/{token}/confirm
    */
-  submitConfirmation(token: string, decision: ConfirmationStatus): Promise<ConfirmationDecisionResponse> {
+  submitConfirmation(token: string, decision: ConfirmationStatus, note?: string): Promise<ConfirmationDecisionResponse> {
+    const payload: ConfirmationDecisionPayload = { decision };
+    if (note) payload.note = note;
     return request<ConfirmationDecisionResponse>(`/confirmations/${encodeURIComponent(token)}/confirm`, {
       method: 'POST',
-      body: JSON.stringify({ decision }),
+      body: JSON.stringify(payload),
     });
   },
 
