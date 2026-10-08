@@ -36,19 +36,19 @@ export const HomeTab: React.FC = () => {
     switch (level) {
       case 'HIGH':
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#EDF4F0] text-[#3E6B52] border border-[#3E6B52]/20">
+          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#E5EFE8] text-[#245E3F] border border-[#245E3F]/20">
             HIGH CONFIDENCE
           </span>
         );
       case 'MEDIUM':
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#F8ECE7] text-[#C45B3C] border border-[#C45B3C]/25">
+          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#FAF0E6] text-[#C2672B] border border-[#C2672B]/25">
             BUILDING EVIDENCE
           </span>
         );
       default:
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#F4F0E6] text-[#737A75] border border-[#E2DDD2]">
+          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#F5F2EB] text-[#727A75] border border-[#DFD9CE]">
             NEEDS EVIDENCE
           </span>
         );
@@ -62,32 +62,32 @@ export const HomeTab: React.FC = () => {
     return (
       <div className="w-full space-y-10 animate-pulse">
         {/* Header Skeleton */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-[#E2DDD2]">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-[#DFD9CE]">
           <div className="space-y-2">
-            <div className="h-8 w-64 bg-[#E2DDD2] rounded-xl"></div>
-            <div className="h-4 w-48 bg-[#EBE7DC] rounded-md"></div>
+            <div className="h-8 w-64 bg-[#DFD9CE] rounded-xl"></div>
+            <div className="h-4 w-48 bg-[#ECE7DE] rounded-md"></div>
           </div>
-          <div className="h-10 w-32 bg-[#E2DDD2] rounded-xl"></div>
+          <div className="h-10 w-32 bg-[#DFD9CE] rounded-xl"></div>
         </div>
 
         {/* Passport Card Skeleton */}
-        <div className="bg-white rounded-3xl border border-[#E2DDD2] p-8 space-y-6">
-          <div className="h-6 w-40 bg-[#E2DDD2] rounded-md"></div>
+        <div className="bg-white rounded-3xl border border-[#DFD9CE] p-8 space-y-6">
+          <div className="h-6 w-40 bg-[#DFD9CE] rounded-md"></div>
           <div className="flex flex-col sm:flex-row gap-6 items-center">
-            <div className="w-24 h-28 bg-[#EBE7DC] rounded-2xl shrink-0"></div>
+            <div className="w-24 h-28 bg-[#ECE7DE] rounded-2xl shrink-0"></div>
             <div className="flex-1 space-y-3 w-full">
-              <div className="h-7 w-56 bg-[#E2DDD2] rounded-lg"></div>
-              <div className="h-4 w-36 bg-[#EBE7DC] rounded-md"></div>
-              <div className="h-4 w-44 bg-[#EBE7DC] rounded-md"></div>
+              <div className="h-7 w-56 bg-[#DFD9CE] rounded-lg"></div>
+              <div className="h-4 w-36 bg-[#ECE7DE] rounded-md"></div>
+              <div className="h-4 w-44 bg-[#ECE7DE] rounded-md"></div>
             </div>
           </div>
         </div>
 
         {/* Record Counter Skeleton */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="h-24 bg-white rounded-2xl border border-[#E2DDD2]"></div>
-          <div className="h-24 bg-white rounded-2xl border border-[#E2DDD2]"></div>
-          <div className="h-24 bg-white rounded-2xl border border-[#E2DDD2]"></div>
+          <div className="h-24 bg-white rounded-2xl border border-[#DFD9CE]"></div>
+          <div className="h-24 bg-white rounded-2xl border border-[#DFD9CE]"></div>
+          <div className="h-24 bg-white rounded-2xl border border-[#DFD9CE]"></div>
         </div>
       </div>
     );
@@ -98,21 +98,21 @@ export const HomeTab: React.FC = () => {
   // ---------------------------------------------------------------------------
   if (error && workRecords.length === 0) {
     return (
-      <div className="w-full py-12 px-6 bg-white rounded-3xl border border-[#E2DDD2] text-center space-y-5">
+      <div className="w-full py-12 px-6 bg-white rounded-3xl border border-[#DFD9CE] text-center space-y-5">
         <div className="w-12 h-12 rounded-2xl bg-[#FAF0F0] text-[#9E4545] flex items-center justify-center mx-auto">
           <AlertCircle className="w-6 h-6" />
         </div>
         <div className="max-w-md mx-auto space-y-1.5">
-          <h2 className="font-display font-bold text-xl text-[#202322]">
+          <h2 className="font-display font-bold text-xl text-[#141715]">
             Backend Connection Unavailable
           </h2>
-          <p className="text-sm text-[#737A75]">
+          <p className="text-sm text-[#727A75]">
             {error || "Vouch couldn't connect to the backend server. Please verify the FastAPI service is running."}
           </p>
         </div>
         <button
           onClick={() => refreshData()}
-          className="inline-flex items-center space-x-2 px-6 py-2.5 bg-[#173F4F] text-white text-xs font-semibold rounded-xl hover:bg-[#0E2934] transition-colors cursor-pointer shadow-xs"
+          className="inline-flex items-center space-x-2 px-6 py-2.5 bg-[#162B22] text-white text-xs font-semibold rounded-xl hover:bg-[#102019] transition-colors cursor-pointer shadow-xs"
         >
           <RefreshCw className="w-3.5 h-3.5" />
           <span>Retry Connection</span>
@@ -125,24 +125,17 @@ export const HomeTab: React.FC = () => {
     <div className="w-full space-y-10 sm:space-y-12">
       
       {/* 1. Header Greeting & Primary Action Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-[#E2DDD2]">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-[#DFD9CE]">
         <div>
-          <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-[#202322] tracking-tight">
+          <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-[#141715] tracking-tight">
             Good morning, {worker.name.split(' ')[0]}.
           </h1>
-          <p className="text-sm sm:text-base text-[#4A524D] mt-1 flex items-center space-x-2">
-            <span>{worker.trade}</span>
-            <span>·</span>
-            <span>{worker.experienceYears} years experience</span>
-            <span>·</span>
-            <span>{worker.location.split(',')[0]}</span>
-          </p>
         </div>
 
         <div className="flex items-center space-x-3">
           <button
             onClick={() => setIsAddWorkOpen(true)}
-            className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-[#173F4F] hover:bg-[#0E2934] text-white text-sm font-semibold transition-all shadow-xs cursor-pointer active:scale-[0.99]"
+            className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-[#162B22] hover:bg-[#102019] text-white text-sm font-semibold transition-all shadow-xs cursor-pointer active:scale-[0.99]"
           >
             <Plus className="w-4 h-4 text-white" />
             <span>+ Add Work</span>
@@ -151,12 +144,12 @@ export const HomeTab: React.FC = () => {
       </div>
 
       {/* 2. Primary Professional Passport Section (Editorial / Identity Object) */}
-      <section className="bg-[#FFDFF7] rounded-3xl border border-[#E2DDD2] shadow-xs overflow-hidden">
+      <section className="bg-[#E6EDE8] rounded-3xl border border-[#DFD9CE] shadow-xs overflow-hidden">
         {/* Passport Category Header */}
-        <div className="px-6 sm:px-8 py-3.5 bg-[#202322] text-white flex items-center justify-between">
+        <div className="px-6 sm:px-8 py-3.5 bg-[#141715] text-white flex items-center justify-between">
           <div className="flex items-center space-x-2.5">
-            <ShieldCheck className="w-4 h-4 text-[#C45B3C]" />
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#F4F0E6]">
+            <ShieldCheck className="w-4 h-4 text-[#C2672B]" />
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#F5F2EB]">
               YOUR VOUCH PASSPORT
             </span>
           </div>
@@ -171,7 +164,7 @@ export const HomeTab: React.FC = () => {
             
             {/* Identity Info */}
             <div className="lg:col-span-7 flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
-              <div className="w-24 h-28 sm:w-28 sm:h-32 rounded-2xl overflow-hidden border border-[#E2DDD2] bg-[#EBE7DC] shrink-0 shadow-xs">
+              <div className="w-24 h-28 sm:w-28 sm:h-32 rounded-2xl overflow-hidden border border-[#DFD9CE] bg-[#ECE7DE] shrink-0 shadow-xs">
                 <img
                   src={worker.portraitUrl}
                   alt={worker.name}
@@ -180,21 +173,21 @@ export const HomeTab: React.FC = () => {
               </div>
 
               <div className="space-y-1.5">
-                <div className="inline-flex items-center space-x-1.5 text-xs font-mono uppercase text-[#3E6B52] font-semibold bg-[#EDF4F0] px-2.5 py-0.5 rounded-md border border-[#3E6B52]/20">
+                <div className="inline-flex items-center space-x-1.5 text-xs font-mono uppercase text-[#245E3F] font-semibold bg-[#E5EFE8] px-2.5 py-0.5 rounded-md border border-[#245E3F]/20">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   <span>Worker-Owned Professional Identity</span>
                 </div>
-                <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#202322] tracking-tight">
+                <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#141715] tracking-tight">
                   {worker.name}
                 </h2>
-                <p className="text-base font-semibold text-[#173F4F]">
+                <p className="text-base font-semibold text-[#162B22]">
                   {worker.trade}
                 </p>
-                <p className="text-sm text-[#737A75] flex items-center space-x-2">
+                <p className="text-sm text-[#727A75] flex items-center space-x-2">
                   <span>{worker.experienceYears} years experience</span>
                   <span>·</span>
                   <span className="flex items-center space-x-1">
-                    <MapPin className="w-3.5 h-3.5 text-[#737A75]" />
+                    <MapPin className="w-3.5 h-3.5 text-[#727A75]" />
                     <span>{worker.location}</span>
                   </span>
                 </p>
@@ -202,33 +195,33 @@ export const HomeTab: React.FC = () => {
             </div>
 
             {/* Credential Breakdown & View Passport Action */}
-            <div className="lg:col-span-5 bg-[#F4F0E6] p-6 rounded-2xl border border-[#E2DDD2] flex flex-col justify-between space-y-5">
+            <div className="lg:col-span-5 bg-[#F5F2EB] p-6 rounded-2xl border border-[#DFD9CE] flex flex-col justify-between space-y-5">
               <div>
-                <p className="text-xs font-mono uppercase tracking-wider text-[#737A75] font-semibold mb-3">
+                <p className="text-xs font-mono uppercase tracking-wider text-[#727A75] font-semibold mb-3">
                   Documented Identity Summary
                 </p>
                 <div className="grid grid-cols-3 gap-2 text-left">
                   <div>
-                    <span className="font-display font-extrabold text-2xl text-[#202322] block">
+                    <span className="font-display font-extrabold text-2xl text-[#141715] block">
                       {stats.skillCount}
                     </span>
-                    <span className="text-xs text-[#737A75]">
+                    <span className="text-xs text-[#727A75]">
                       Skills
                     </span>
                   </div>
                   <div>
-                    <span className="font-display font-extrabold text-2xl text-[#202322] block">
+                    <span className="font-display font-extrabold text-2xl text-[#141715] block">
                       {stats.workCount}
                     </span>
-                    <span className="text-xs text-[#737A75]">
+                    <span className="text-xs text-[#727A75]">
                       Work Records
                     </span>
                   </div>
                   <div>
-                    <span className="font-display font-extrabold text-2xl text-[#3E6B52] block">
+                    <span className="font-display font-extrabold text-2xl text-[#245E3F] block">
                       {stats.confirmationCount}
                     </span>
-                    <span className="text-xs text-[#737A75]">
+                    <span className="text-xs text-[#727A75]">
                       Confirmations
                     </span>
                   </div>
@@ -238,17 +231,17 @@ export const HomeTab: React.FC = () => {
               <div className="flex items-center space-x-3 pt-2">
                 <button
                   onClick={() => setCurrentTab('passport')}
-                  className="flex-1 py-2.5 px-4 rounded-xl bg-[#173F4F] hover:bg-[#0E2934] text-white text-xs font-semibold flex items-center justify-center space-x-1.5 transition-colors cursor-pointer shadow-xs"
+                  className="flex-1 py-2.5 px-4 rounded-xl bg-[#162B22] hover:bg-[#102019] text-white text-xs font-semibold flex items-center justify-center space-x-1.5 transition-colors cursor-pointer shadow-xs"
                 >
                   <span>View Passport</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
                 <button
                   onClick={() => setIsQrModalOpen(true)}
-                  className="py-2.5 px-3 rounded-xl border border-[#E2DDD2] bg-white hover:bg-gray-50 text-[#202322] text-xs font-medium flex items-center space-x-1 transition-colors cursor-pointer"
+                  className="py-2.5 px-3 rounded-xl border border-[#DFD9CE] bg-white hover:bg-gray-50 text-[#141715] text-xs font-medium flex items-center space-x-1 transition-colors cursor-pointer"
                   title="Share Passport QR"
                 >
-                  <QrCode className="w-3.5 h-3.5 text-[#173F4F]" />
+                  <QrCode className="w-3.5 h-3.5 text-[#162B22]" />
                   <span className="hidden sm:inline">Share</span>
                 </button>
               </div>
@@ -260,25 +253,22 @@ export const HomeTab: React.FC = () => {
 
       {/* 3. Understated Professional Record Section */}
       <section className="space-y-4">
-        <h3 className="text-xs font-mono uppercase tracking-wider text-[#737A75] font-semibold">
+        <h3 className="text-xs font-mono uppercase tracking-wider text-[#727A75] font-semibold">
           YOUR PROFESSIONAL RECORD
         </h3>
 
-        <div className="bg-[#FFDFF7] rounded-2xl border border-[#E2DDD2] p-6 shadow-xs">
-          <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-[#E2DDD2]">
+        <div className="bg-[#E6EDE8] rounded-2xl border border-[#DFD9CE] p-6 shadow-xs">
+          <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-[#DFD9CE]">
             
             <button
               onClick={() => setCurrentTab('work')}
               className="py-3 sm:py-0 sm:px-6 text-left hover:opacity-80 transition-opacity cursor-pointer group first:sm:pl-0"
             >
-              <span className="text-xs font-medium text-[#737A75] block group-hover:text-[#173F4F]">
+              <span className="text-xs font-medium text-[#727A75] block group-hover:text-[#162B22]">
                 Work Records
               </span>
-              <span className="font-display font-extrabold text-3xl sm:text-4xl text-[#202322] mt-1 block">
+              <span className="font-display font-extrabold text-3xl sm:text-4xl text-[#141715] mt-1 block">
                 {stats.workCount}
-              </span>
-              <span className="text-[11px] text-[#A1A7A2] mt-0.5 block">
-                Independent jobsite logs on file →
               </span>
             </button>
 
@@ -286,14 +276,11 @@ export const HomeTab: React.FC = () => {
               onClick={() => setCurrentTab('passport')}
               className="py-3 sm:py-0 sm:px-6 text-left hover:opacity-80 transition-opacity cursor-pointer group"
             >
-              <span className="text-xs font-medium text-[#737A75] block group-hover:text-[#173F4F]">
+              <span className="text-xs font-medium text-[#727A75] block group-hover:text-[#162B22]">
                 Skills
               </span>
-              <span className="font-display font-extrabold text-3xl sm:text-4xl text-[#202322] mt-1 block">
+              <span className="font-display font-extrabold text-3xl sm:text-4xl text-[#141715] mt-1 block">
                 {stats.skillCount}
-              </span>
-              <span className="text-[11px] text-[#A1A7A2] mt-0.5 block">
-                Demonstrated trade competencies →
               </span>
             </button>
 
@@ -301,14 +288,11 @@ export const HomeTab: React.FC = () => {
               onClick={() => setCurrentTab('work')}
               className="py-3 sm:py-0 sm:px-6 text-left hover:opacity-80 transition-opacity cursor-pointer group last:sm:pr-0"
             >
-              <span className="text-xs font-medium text-[#737A75] block group-hover:text-[#173F4F]">
+              <span className="text-xs font-medium text-[#727A75] block group-hover:text-[#162B22]">
                 Confirmations
               </span>
-              <span className="font-display font-extrabold text-3xl sm:text-4xl text-[#3E6B52] mt-1 block">
+              <span className="font-display font-extrabold text-3xl sm:text-4xl text-[#245E3F] mt-1 block">
                 {stats.confirmationCount}
-              </span>
-              <span className="text-[11px] text-[#A1A7A2] mt-0.5 block">
-                Independent supervisor vouches →
               </span>
             </button>
 
@@ -322,12 +306,12 @@ export const HomeTab: React.FC = () => {
         {/* Left Column: Recent Work Records */}
         <section className="lg:col-span-7 space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-xs font-mono uppercase tracking-wider text-[#737A75] font-semibold">
+            <h3 className="text-xs font-mono uppercase tracking-wider text-[#727A75] font-semibold">
               RECENT WORK
             </h3>
             <button
               onClick={() => setCurrentTab('work')}
-              className="text-xs font-semibold text-[#173F4F] hover:underline flex items-center space-x-1 cursor-pointer"
+              className="text-xs font-semibold text-[#162B22] hover:underline flex items-center space-x-1 cursor-pointer"
             >
               <span>View all records</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -341,10 +325,10 @@ export const HomeTab: React.FC = () => {
                 return (
                   <div
                     key={item.id}
-                    className="bg-white rounded-2xl border border-[#E2DDD2] p-5 shadow-xs hover:border-[#173F4F]/40 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                    className="bg-white rounded-2xl border border-[#DFD9CE] p-5 shadow-xs hover:border-[#162B22]/40 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                   >
                     <div className="flex items-start space-x-4 min-w-0">
-                      <div className="w-14 h-14 rounded-xl overflow-hidden bg-[#EBE7DC] shrink-0 border border-[#E2DDD2]">
+                      <div className="w-14 h-14 rounded-xl overflow-hidden bg-[#ECE7DE] shrink-0 border border-[#DFD9CE]">
                         <img
                           src={item.imageUrl}
                           alt={item.title}
@@ -352,14 +336,14 @@ export const HomeTab: React.FC = () => {
                         />
                       </div>
                       <div className="min-w-0">
-                        <h4 className="font-bold text-sm text-[#202322] truncate">
+                        <h4 className="font-bold text-sm text-[#141715] truncate">
                           {item.title}
                         </h4>
-                        <p className="text-xs text-[#737A75] mt-0.5">
+                        <p className="text-xs text-[#727A75] mt-0.5">
                           {item.location} · {item.date}
                         </p>
-                        <p className="text-xs text-[#4A524D] mt-1 flex items-center space-x-1.5">
-                          <FileCheck2 className="w-3.5 h-3.5 text-[#3E6B52]" />
+                        <p className="text-xs text-[#484F4A] mt-1 flex items-center space-x-1.5">
+                          <FileCheck2 className="w-3.5 h-3.5 text-[#245E3F]" />
                           <span>
                             {item.evidenceItems.length} evidence items · {isConfirmed ? 'Confirmed by supervisor' : 'Awaiting confirmation'}
                           </span>
@@ -369,7 +353,7 @@ export const HomeTab: React.FC = () => {
 
                     <button
                       onClick={() => setSelectedWorkRecord(item)}
-                      className="self-end sm:self-center px-4 py-2 rounded-xl border border-[#E2DDD2] hover:border-[#173F4F] bg-[#F4F0E6] hover:bg-white text-xs font-semibold text-[#202322] transition-all cursor-pointer shrink-0"
+                      className="self-end sm:self-center px-4 py-2 rounded-xl border border-[#DFD9CE] hover:border-[#162B22] bg-[#F5F2EB] hover:bg-white text-xs font-semibold text-[#141715] transition-all cursor-pointer shrink-0"
                     >
                       View Record
                     </button>
@@ -378,11 +362,11 @@ export const HomeTab: React.FC = () => {
               })}
             </div>
           ) : (
-            <div className="p-8 bg-white rounded-2xl border border-[#E2DDD2] text-center space-y-3">
-              <p className="text-sm text-[#737A75]">No work records logged yet.</p>
+            <div className="p-8 bg-white rounded-2xl border border-[#DFD9CE] text-center space-y-3">
+              <p className="text-sm text-[#727A75]">No work records logged yet.</p>
               <button
                 onClick={() => setIsAddWorkOpen(true)}
-                className="px-4 py-2 bg-[#173F4F] text-white text-xs font-semibold rounded-xl hover:bg-[#0E2934] transition-colors"
+                className="px-4 py-2 bg-[#162B22] text-white text-xs font-semibold rounded-xl hover:bg-[#102019] transition-colors"
               >
                 + Log your first job
               </button>
@@ -393,12 +377,12 @@ export const HomeTab: React.FC = () => {
         {/* Right Column: Demonstrated Skills (Evidence-backed, no stars/percentages) */}
         <section className="lg:col-span-5 space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-xs font-mono uppercase tracking-wider text-[#737A75] font-semibold">
+            <h3 className="text-xs font-mono uppercase tracking-wider text-[#727A75] font-semibold">
               DEMONSTRATED SKILLS
             </h3>
             <button
               onClick={() => setCurrentTab('passport')}
-              className="text-xs font-semibold text-[#173F4F] hover:underline flex items-center space-x-1 cursor-pointer"
+              className="text-xs font-semibold text-[#162B22] hover:underline flex items-center space-x-1 cursor-pointer"
             >
               <span>View in passport</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -406,24 +390,24 @@ export const HomeTab: React.FC = () => {
           </div>
 
           <div className="space-y-3">
-            {skills.slice(0, 4).map((skill: SkillEvidenceBreakdown) => (
+            {skills.slice(0, 3).map((skill: SkillEvidenceBreakdown) => (
               <div
                 key={skill.id}
-                className="bg-white rounded-2xl border border-[#E2DDD2] p-5 shadow-xs hover:border-[#173F4F]/40 transition-all space-y-2.5"
+                className="bg-white rounded-2xl border border-[#DFD9CE] p-5 shadow-xs hover:border-[#162B22]/40 transition-all space-y-2.5"
               >
                 <div className="flex items-center justify-between">
-                  <h4 className="font-bold text-sm text-[#202322]">
+                  <h4 className="font-bold text-sm text-[#141715]">
                     {skill.name}
                   </h4>
                   {renderConfidenceBadge(skill.confidenceLevel)}
                 </div>
 
-                <div className="pt-2 border-t border-[#EBE7DC] text-xs text-[#737A75] flex items-center justify-between flex-wrap gap-2">
+                <div className="pt-2 border-t border-[#ECE7DE] text-xs text-[#727A75] flex items-center justify-between flex-wrap gap-2">
                   <span>{skill.workRecordsCount} work records</span>
                   <span>·</span>
                   <span>{skill.evidenceCount} evidence items</span>
                   <span>·</span>
-                  <span className="font-medium text-[#3E6B52]">
+                  <span className="font-medium text-[#245E3F]">
                     {skill.confirmationsCount} confirmations
                   </span>
                 </div>

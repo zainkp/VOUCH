@@ -3,31 +3,20 @@ import { useApp } from '../context/AppContext';
 import { Home, FileText, Award, User, Search, BookmarkCheck } from 'lucide-react';
 
 export const BottomNav: React.FC = () => {
-  const { currentTab, setCurrentTab, activeRole, setActiveRole, savedWorkerIds } = useApp();
+  const { currentTab, setCurrentTab, activeRole, savedWorkerIds } = useApp();
 
   if (activeRole === 'contractor') {
     return (
-      <nav className="sticky bottom-0 inset-x-0 bg-[#F4F0E6]/95 backdrop-blur-md border-t border-[#E2DDD2] px-6 pt-2 pb-3.5 z-30 shrink-0">
+      <nav className="sticky bottom-0 inset-x-0 bg-[#F5F2EB]/95 backdrop-blur-md border-t border-[#DFD9CE] px-6 pt-2 pb-3.5 z-30 shrink-0">
         <div className="flex justify-around items-center">
           <button
             onClick={() => setCurrentTab('home')}
             className={`flex flex-col items-center space-y-1 transition-colors ${
-              currentTab === 'home' ? 'text-[#173F4F]' : 'text-gray-400 hover:text-gray-700'
+              currentTab === 'home' ? 'text-[#162B22]' : 'text-gray-400 hover:text-gray-700'
             }`}
           >
             <Search className="w-5 h-5" />
             <span className="text-[10px] font-semibold">Directory</span>
-          </button>
-
-          <button
-            onClick={() => {
-              setActiveRole('worker');
-              setCurrentTab('passport');
-            }}
-            className="flex flex-col items-center space-y-1 text-gray-400 hover:text-gray-700 transition-colors"
-          >
-            <Award className="w-5 h-5" />
-            <span className="text-[10px] font-medium">Worker Passport</span>
           </button>
         </div>
       </nav>
@@ -35,13 +24,13 @@ export const BottomNav: React.FC = () => {
   }
 
   return (
-    <nav className="sticky bottom-0 inset-x-0 bg-[#F4F0E6]/95 backdrop-blur-md border-t border-[#E2DDD2] px-6 pt-2 pb-3.5 z-30 shrink-0">
+    <nav className="sticky bottom-0 inset-x-0 bg-[#F5F2EB]/95 backdrop-blur-md border-t border-[#DFD9CE] px-6 pt-2 pb-3.5 z-30 shrink-0">
       <div className="flex justify-around items-center">
         {/* Nav Item: Home */}
         <button
           onClick={() => setCurrentTab('home')}
           className={`flex flex-col items-center space-y-1 transition-colors ${
-            currentTab === 'home' ? 'text-[#173F4F]' : 'text-[#737C8A] hover:text-[#173F4F]'
+            currentTab === 'home' ? 'text-[#162B22]' : 'text-[#737C8A] hover:text-[#162B22]'
           }`}
         >
           <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
@@ -57,7 +46,7 @@ export const BottomNav: React.FC = () => {
         <button
           onClick={() => setCurrentTab('work')}
           className={`flex flex-col items-center space-y-1 transition-colors ${
-            currentTab === 'work' ? 'text-[#173F4F]' : 'text-[#737C8A] hover:text-[#173F4F]'
+            currentTab === 'work' ? 'text-[#162B22]' : 'text-[#737C8A] hover:text-[#162B22]'
           }`}
         >
           <svg className="w-5 h-5 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -73,7 +62,7 @@ export const BottomNav: React.FC = () => {
         <button
           onClick={() => setCurrentTab('passport')}
           className={`flex flex-col items-center space-y-1 transition-colors ${
-            currentTab === 'passport' ? 'text-[#173F4F]' : 'text-[#737C8A] hover:text-[#173F4F]'
+            currentTab === 'passport' ? 'text-[#162B22]' : 'text-[#737C8A] hover:text-[#162B22]'
           }`}
         >
           <div className="w-5 h-5 border-[1.8px] border-current rounded-[5px] flex flex-col items-center justify-center p-[1px]">
@@ -89,7 +78,7 @@ export const BottomNav: React.FC = () => {
         <button
           onClick={() => setCurrentTab('profile')}
           className={`flex flex-col items-center space-y-1 transition-colors ${
-            currentTab === 'profile' ? 'text-[#173F4F]' : 'text-[#737C8A] hover:text-[#173F4F]'
+            currentTab === 'profile' ? 'text-[#162B22]' : 'text-[#737C8A] hover:text-[#162B22]'
           }`}
         >
           <svg className="w-5 h-5 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">

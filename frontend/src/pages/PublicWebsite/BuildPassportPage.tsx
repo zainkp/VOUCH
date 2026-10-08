@@ -326,7 +326,7 @@ export const BuildPassportPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#F4F0E6] text-[#202322] flex flex-col">
+    <div className="min-h-screen bg-[#F5F2EB] text-[#141715] flex flex-col">
       <PublicNavbar />
 
       <main className="flex-1 pt-28 sm:pt-36 pb-20 animate-page-enter">
@@ -335,44 +335,44 @@ export const BuildPassportPage: React.FC = () => {
           <ScrollReveal delay={0}>
             {/* Progress Indicator */}
             <div className="mb-10">
-              <div className="flex items-center justify-between text-xs font-mono text-[#737A75] mb-2">
-                <span className="font-bold text-[#173F4F]">PASSPORT ONBOARDING</span>
+              <div className="flex items-center justify-between text-xs font-mono text-[#727A75] mb-2">
+                <span className="font-bold text-[#162B22]">PASSPORT ONBOARDING</span>
                 <span>STEP {step} OF 4</span>
               </div>
-              <div className="w-full h-1.5 bg-[#E2DDD2] rounded-full overflow-hidden">
+              <div className="w-full h-1.5 bg-[#DFD9CE] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#173F4F] transition-all duration-300"
+                  className="h-full bg-[#162B22] transition-all duration-300"
                   style={{ width: `${(step / 4) * 100}%` }}
                 ></div>
               </div>
             </div>
 
             {/* Form Card */}
-            <div className="bg-[#FFDFF7] rounded-3xl p-6 sm:p-10 border border-[#E2DDD2] shadow-[0_20px_50px_rgba(18,22,20,0.06)]">
+            <div className="bg-[#E6EDE8] rounded-3xl p-6 sm:p-10 border border-[#DFD9CE] shadow-[0_20px_50px_rgba(18,22,20,0.06)]">
             
             {/* STEP 1: Basic Information */}
             {step === 1 && (
               <div>
                 <div className="mb-8">
-                  <span className="text-xs font-mono text-[#3E6B52] font-bold uppercase tracking-wider block mb-1">
+                  <span className="text-xs font-mono text-[#245E3F] font-bold uppercase tracking-wider block mb-1">
                     STEP 01 · PROFESSIONAL IDENTITY
                   </span>
-                  <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-[#202322]">
+                  <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-[#141715]">
                     START BUILDING YOUR PROFESSIONAL PASSPORT.
                   </h1>
-                  <p className="text-sm text-[#4A524D] mt-2">
+                  <p className="text-sm text-[#484F4A] mt-2">
                     Enter your real trade identity. Your passport belongs to you and will accompany you across every future employer.
                   </p>
                 </div>
 
                 {/* AI / Voice Assist Box */}
-                <div className="mb-6 p-4 sm:p-5 rounded-2xl bg-[#F5F2EB] border border-[#E2DDD2]">
+                <div className="mb-6 p-4 sm:p-5 rounded-2xl bg-[#F5F2EB] border border-[#DFD9CE]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-mono font-bold text-[#173F4F] flex items-center space-x-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-[#C45B3C]" />
+                    <span className="text-xs font-mono font-bold text-[#162B22] flex items-center space-x-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-[#C2672B]" />
                       <span>SPEAK OR TYPE YOUR TRADE (OPTIONAL AUTO-FILL)</span>
                     </span>
-                    <span className="text-[10px] font-mono text-[#737A75]">HINDI / ENGLISH / HINGLISH</span>
+                    <span className="text-[10px] font-mono text-[#727A75]">HINDI / ENGLISH / HINGLISH</span>
                   </div>
                   <p className="text-xs text-[#525B54] mb-3">
                     Describe your trade experience naturally, or speak into the microphone. AI will extract your trade, experience years, location, and skills into the form fields below for your review.
@@ -383,7 +383,7 @@ export const BuildPassportPage: React.FC = () => {
                       value={aiTextPrompt}
                       onChange={(e) => setAiTextPrompt(e.target.value)}
                       placeholder='e.g., "I have been working as an electrician for 10 years in Pune. I know 3-phase wiring and motor repair."'
-                      className="w-full p-3 pr-12 rounded-xl border border-[#D8D2C5] bg-white text-xs text-[#202322] placeholder-[#8C938E] focus:border-[#173F4F] focus:ring-1 focus:ring-[#173F4F] focus:outline-none resize-none"
+                      className="w-full p-3 pr-12 rounded-xl border border-[#DFD9CE] bg-white text-xs text-[#141715] placeholder-[#8C938E] focus:border-[#162B22] focus:ring-1 focus:ring-[#162B22] focus:outline-none resize-none"
                     />
                     <button
                       type="button"
@@ -393,8 +393,8 @@ export const BuildPassportPage: React.FC = () => {
                         isRecording 
                           ? 'bg-red-600 text-white animate-pulse' 
                           : isTranscribing 
-                            ? 'bg-[#E2DDD2] text-[#737A75]' 
-                            : 'bg-[#173F4F] text-white hover:bg-[#0E2934]'
+                            ? 'bg-[#DFD9CE] text-[#727A75]' 
+                            : 'bg-[#162B22] text-white hover:bg-[#102019]'
                       }`}
                       disabled={isTranscribing}
                     >
@@ -406,7 +406,7 @@ export const BuildPassportPage: React.FC = () => {
                       type="button"
                       onClick={() => handleAIExtract()}
                       disabled={isExtracting || isTranscribing || !aiTextPrompt.trim()}
-                      className="px-4 py-2 rounded-lg bg-[#173F4F] text-white text-xs font-bold hover:bg-[#0E2934] disabled:opacity-50 transition-colors flex items-center space-x-1.5 cursor-pointer"
+                      className="px-4 py-2 rounded-lg bg-[#162B22] text-white text-xs font-bold hover:bg-[#102019] disabled:opacity-50 transition-colors flex items-center space-x-1.5 cursor-pointer"
                     >
                       {isExtracting ? (
                         <>
@@ -415,13 +415,13 @@ export const BuildPassportPage: React.FC = () => {
                         </>
                       ) : (
                         <>
-                          <Sparkles className="w-3.5 h-3.5 text-[#C45B3C]" />
+                          <Sparkles className="w-3.5 h-3.5 text-[#C2672B]" />
                           <span>Extract with AI</span>
                         </>
                       )}
                     </button>
                     {aiFeedback && (
-                      <p className="text-xs text-[#173F4F] font-medium flex-1 sm:text-right">
+                      <p className="text-xs text-[#162B22] font-medium flex-1 sm:text-right">
                         {aiFeedback}
                       </p>
                     )}
@@ -437,7 +437,7 @@ export const BuildPassportPage: React.FC = () => {
                   )}
 
                   <div>
-                    <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                    <label className="text-xs font-mono uppercase text-[#727A75] block mb-1 font-semibold">
                       Full Legal Name
                     </label>
                     <input
@@ -448,13 +448,13 @@ export const BuildPassportPage: React.FC = () => {
                         setFormError(null);
                       }}
                       placeholder="e.g. Full Legal Name"
-                      className="w-full p-3.5 rounded-xl border border-[#E2DDD2] text-sm font-semibold focus:border-[#173F4F] focus:ring-1 focus:ring-[#173F4F] focus:outline-none"
+                      className="w-full p-3.5 rounded-xl border border-[#DFD9CE] text-sm font-semibold focus:border-[#162B22] focus:ring-1 focus:ring-[#162B22] focus:outline-none"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                      <label className="text-xs font-mono uppercase text-[#727A75] block mb-1 font-semibold">
                         Primary Profession / Trade
                       </label>
                       <select
@@ -463,7 +463,7 @@ export const BuildPassportPage: React.FC = () => {
                           setTrade(e.target.value);
                           setFormError(null);
                         }}
-                        className="w-full p-3.5 rounded-xl border border-[#E2DDD2] text-sm font-semibold focus:border-[#173F4F] focus:ring-1 focus:ring-[#173F4F] focus:outline-none bg-white text-[#202322]"
+                        className="w-full p-3.5 rounded-xl border border-[#DFD9CE] text-sm font-semibold focus:border-[#162B22] focus:ring-1 focus:ring-[#162B22] focus:outline-none bg-white text-[#141715]"
                       >
                         <option value="" disabled>Select a trade ▼</option>
                         {availableTrades.map(t => (
@@ -473,7 +473,7 @@ export const BuildPassportPage: React.FC = () => {
                     </div>
 
                     <div>
-                      <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                      <label className="text-xs font-mono uppercase text-[#727A75] block mb-1 font-semibold">
                         Years of Trade Experience
                       </label>
                       <input
@@ -485,7 +485,7 @@ export const BuildPassportPage: React.FC = () => {
                         className={`w-full p-3.5 rounded-xl border text-sm font-semibold focus:outline-none transition-colors ${
                           experienceError
                             ? 'border-red-500 bg-red-50/20 focus:border-red-500 focus:ring-1 focus:ring-red-500'
-                            : 'border-[#E2DDD2] focus:border-[#173F4F] focus:ring-1 focus:ring-[#173F4F]'
+                            : 'border-[#DFD9CE] focus:border-[#162B22] focus:ring-1 focus:ring-[#162B22]'
                         }`}
                       />
                       {experienceError && (
@@ -498,7 +498,7 @@ export const BuildPassportPage: React.FC = () => {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                      <label className="text-xs font-mono uppercase text-[#727A75] block mb-1 font-semibold">
                         Primary Work Location
                       </label>
                       <input
@@ -506,12 +506,12 @@ export const BuildPassportPage: React.FC = () => {
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
                         placeholder="e.g. City, State"
-                        className="w-full p-3.5 rounded-xl border border-[#E2DDD2] text-sm font-semibold focus:border-[#173F4F] focus:ring-1 focus:ring-[#173F4F] focus:outline-none"
+                        className="w-full p-3.5 rounded-xl border border-[#DFD9CE] text-sm font-semibold focus:border-[#162B22] focus:ring-1 focus:ring-[#162B22] focus:outline-none"
                       />
                     </div>
 
                     <div>
-                      <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                      <label className="text-xs font-mono uppercase text-[#727A75] block mb-1 font-semibold">
                         Languages Spoken On-Site
                       </label>
                       <input
@@ -519,22 +519,22 @@ export const BuildPassportPage: React.FC = () => {
                         value={languages}
                         onChange={(e) => setLanguages(e.target.value)}
                         placeholder="e.g. Hindi, Kannada, English"
-                        className="w-full p-3.5 rounded-xl border border-[#E2DDD2] text-sm font-semibold focus:border-[#173F4F] focus:ring-1 focus:ring-[#173F4F] focus:outline-none"
+                        className="w-full p-3.5 rounded-xl border border-[#DFD9CE] text-sm font-semibold focus:border-[#162B22] focus:ring-1 focus:ring-[#162B22] focus:outline-none"
                       />
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-[#EBE7DC] flex items-center justify-between">
-                  <span className="text-xs text-[#737A75]">
-                    Already registered? <Link to="/login" className="text-[#173F4F] font-bold underline">Log In</Link>
+                <div className="mt-8 pt-6 border-t border-[#ECE7DE] flex items-center justify-between">
+                  <span className="text-xs text-[#727A75]">
+                    Already registered? <Link to="/login" className="text-[#162B22] font-bold underline">Log In</Link>
                   </span>
                   <button
                     onClick={handleNextStep1}
-                    className="px-7 py-3.5 rounded-xl bg-[#173F4F] text-white font-bold text-sm hover:bg-[#0E2934] transition-colors flex items-center space-x-2 cursor-pointer shadow-sm vouch-btn"
+                    className="px-7 py-3.5 rounded-xl bg-[#162B22] text-white font-bold text-sm hover:bg-[#102019] transition-colors flex items-center space-x-2 cursor-pointer shadow-sm vouch-btn"
                   >
                     <span>Next: Select Skills</span>
-                    <ArrowRight className="w-4 h-4 text-[#C45B3C]" />
+                    <ArrowRight className="w-4 h-4 text-[#C2672B]" />
                   </button>
                 </div>
               </div>
@@ -544,13 +544,13 @@ export const BuildPassportPage: React.FC = () => {
             {step === 2 && (
               <div>
                 <div className="mb-8">
-                  <span className="text-xs font-mono text-[#3E6B52] font-bold uppercase tracking-wider block mb-1">
+                  <span className="text-xs font-mono text-[#245E3F] font-bold uppercase tracking-wider block mb-1">
                     STEP 02 · TRADE COMPETENCIES
                   </span>
-                  <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#202322]">
+                  <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#141715]">
                     WHAT ARE YOUR CORE TRADE CAPABILITIES?
                   </h2>
-                  <p className="text-sm text-[#4A524D] mt-2">
+                  <p className="text-sm text-[#484F4A] mt-2">
                     Select the specific skills you demonstrate on-site. You will anchor these skills with evidence in the next step.
                   </p>
                 </div>
@@ -564,13 +564,13 @@ export const BuildPassportPage: React.FC = () => {
                         onClick={() => toggleSkill(sk)}
                         className={`p-4 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${
                           isSelected
-                            ? 'border-[#173F4F] bg-[#EDF4F0] ring-1 ring-[#173F4F]'
-                            : 'border-[#E2DDD2] hover:bg-gray-50'
+                            ? 'border-[#162B22] bg-[#E5EFE8] ring-1 ring-[#162B22]'
+                            : 'border-[#DFD9CE] hover:bg-gray-50'
                         }`}
                       >
-                        <span className="text-sm font-bold text-[#202322]">{sk}</span>
+                        <span className="text-sm font-bold text-[#141715]">{sk}</span>
                         <div className={`w-5 h-5 rounded-md flex items-center justify-center border ${
-                          isSelected ? 'bg-[#173F4F] border-[#173F4F] text-white' : 'border-gray-300'
+                          isSelected ? 'bg-[#162B22] border-[#162B22] text-white' : 'border-gray-300'
                         }`}>
                           {isSelected && <CheckCircle2 className="w-4 h-4 text-white" />}
                         </div>
@@ -579,10 +579,10 @@ export const BuildPassportPage: React.FC = () => {
                   })}
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-[#EBE7DC] flex items-center justify-between">
+                <div className="mt-8 pt-6 border-t border-[#ECE7DE] flex items-center justify-between">
                   <button
                     onClick={() => setStep(1)}
-                    className="px-5 py-3 rounded-xl border border-[#E2DDD2] text-xs font-bold text-[#4A524D] hover:bg-gray-50 flex items-center space-x-1 cursor-pointer vouch-btn"
+                    className="px-5 py-3 rounded-xl border border-[#DFD9CE] text-xs font-bold text-[#484F4A] hover:bg-gray-50 flex items-center space-x-1 cursor-pointer vouch-btn"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back</span>
@@ -590,10 +590,10 @@ export const BuildPassportPage: React.FC = () => {
                   <button
                     onClick={() => setStep(3)}
                     disabled={selectedSkills.length === 0}
-                    className="px-7 py-3.5 rounded-xl bg-[#173F4F] text-white font-bold text-sm hover:bg-[#0E2934] disabled:opacity-50 transition-colors flex items-center space-x-2 cursor-pointer shadow-sm vouch-btn"
+                    className="px-7 py-3.5 rounded-xl bg-[#162B22] text-white font-bold text-sm hover:bg-[#102019] disabled:opacity-50 transition-colors flex items-center space-x-2 cursor-pointer shadow-sm vouch-btn"
                   >
                     <span>Next: Add First Work Record</span>
-                    <ArrowRight className="w-4 h-4 text-[#C45B3C]" />
+                    <ArrowRight className="w-4 h-4 text-[#C2672B]" />
                   </button>
                 </div>
               </div>
@@ -603,20 +603,20 @@ export const BuildPassportPage: React.FC = () => {
             {step === 3 && (
               <div>
                 <div className="mb-8">
-                  <span className="text-xs font-mono text-[#3E6B52] font-bold uppercase tracking-wider block mb-1">
+                  <span className="text-xs font-mono text-[#245E3F] font-bold uppercase tracking-wider block mb-1">
                     STEP 03 · YOUR FIRST VERIFIED WORK RECORD
                   </span>
-                  <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#202322]">
+                  <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#141715]">
                     ATTACH REAL WORK EVIDENCE
                   </h2>
-                  <p className="text-sm text-[#4A524D] mt-2">
+                  <p className="text-sm text-[#484F4A] mt-2">
                     Enter a real project you completed. This anchors your passport with verified empirical proof.
                   </p>
                 </div>
 
                 <div className="space-y-4">
                   <div>
-                    <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                    <label className="text-xs font-mono uppercase text-[#727A75] block mb-1 font-semibold">
                       Work Record Title
                     </label>
                     <input
@@ -624,13 +624,13 @@ export const BuildPassportPage: React.FC = () => {
                       value={workTitle}
                       onChange={(e) => setWorkTitle(e.target.value)}
                       placeholder="e.g. 3BHK Conduit Wiring & Main Distribution Board"
-                      className="w-full p-3.5 rounded-xl border border-[#E2DDD2] text-sm font-semibold focus:border-[#173F4F] focus:ring-1 focus:ring-[#173F4F] focus:outline-none"
+                      className="w-full p-3.5 rounded-xl border border-[#DFD9CE] text-sm font-semibold focus:border-[#162B22] focus:ring-1 focus:ring-[#162B22] focus:outline-none"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                      <label className="text-xs font-mono uppercase text-[#727A75] block mb-1 font-semibold">
                         Employer / Subcontractor Name
                       </label>
                       <input
@@ -638,12 +638,12 @@ export const BuildPassportPage: React.FC = () => {
                         value={employer}
                         onChange={(e) => setEmployer(e.target.value)}
                         placeholder="e.g. ABC Electricals"
-                        className="w-full p-3.5 rounded-xl border border-[#E2DDD2] text-sm font-semibold focus:border-[#173F4F] focus:ring-1 focus:ring-[#173F4F] focus:outline-none"
+                        className="w-full p-3.5 rounded-xl border border-[#DFD9CE] text-sm font-semibold focus:border-[#162B22] focus:ring-1 focus:ring-[#162B22] focus:outline-none"
                       />
                     </div>
 
                     <div>
-                      <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                      <label className="text-xs font-mono uppercase text-[#727A75] block mb-1 font-semibold">
                         Your Role on the Jobsite
                       </label>
                       <input
@@ -651,13 +651,13 @@ export const BuildPassportPage: React.FC = () => {
                         value={role}
                         onChange={(e) => setRole(e.target.value)}
                         placeholder="e.g. Lead Electrician"
-                        className="w-full p-3.5 rounded-xl border border-[#E2DDD2] text-sm font-semibold focus:border-[#173F4F] focus:ring-1 focus:ring-[#173F4F] focus:outline-none"
+                        className="w-full p-3.5 rounded-xl border border-[#DFD9CE] text-sm font-semibold focus:border-[#162B22] focus:ring-1 focus:ring-[#162B22] focus:outline-none"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                    <label className="text-xs font-mono uppercase text-[#727A75] block mb-1 font-semibold">
                       Technical Description of Completed Tasks
                     </label>
                     <textarea
@@ -665,13 +665,13 @@ export const BuildPassportPage: React.FC = () => {
                       value={workDescription}
                       onChange={(e) => setWorkDescription(e.target.value)}
                       placeholder="Describe cable sizing, conduit routing, breaker amperage, or test procedures..."
-                      className="w-full p-3.5 rounded-xl border border-[#E2DDD2] text-sm font-medium focus:border-[#173F4F] focus:ring-1 focus:ring-[#173F4F] focus:outline-none"
+                      className="w-full p-3.5 rounded-xl border border-[#DFD9CE] text-sm font-medium focus:border-[#162B22] focus:ring-1 focus:ring-[#162B22] focus:outline-none"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                      <label className="text-xs font-mono uppercase text-[#727A75] block mb-1 font-semibold">
                         Site Supervisor / Verifier Name
                       </label>
                       <input
@@ -679,12 +679,12 @@ export const BuildPassportPage: React.FC = () => {
                         value={verifierName}
                         onChange={(e) => setVerifierName(e.target.value)}
                         placeholder="e.g. Mahesh Shetty"
-                        className="w-full p-3.5 rounded-xl border border-[#E2DDD2] text-sm font-semibold focus:border-[#173F4F] focus:ring-1 focus:ring-[#173F4F] focus:outline-none"
+                        className="w-full p-3.5 rounded-xl border border-[#DFD9CE] text-sm font-semibold focus:border-[#162B22] focus:ring-1 focus:ring-[#162B22] focus:outline-none"
                       />
                     </div>
 
                     <div>
-                      <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                      <label className="text-xs font-mono uppercase text-[#727A75] block mb-1 font-semibold">
                         Verifier Role
                       </label>
                       <input
@@ -692,7 +692,7 @@ export const BuildPassportPage: React.FC = () => {
                         value={verifierRole}
                         onChange={(e) => setVerifierRole(e.target.value)}
                         placeholder="e.g. Site Supervisor / Engineer"
-                        className="w-full p-3.5 rounded-xl border border-[#E2DDD2] text-sm font-semibold focus:border-[#173F4F] focus:ring-1 focus:ring-[#173F4F] focus:outline-none"
+                        className="w-full p-3.5 rounded-xl border border-[#DFD9CE] text-sm font-semibold focus:border-[#162B22] focus:ring-1 focus:ring-[#162B22] focus:outline-none"
                       />
                     </div>
                   </div>
@@ -705,11 +705,11 @@ export const BuildPassportPage: React.FC = () => {
                   </div>
                 )}
 
-                <div className="mt-8 pt-6 border-t border-[#EBE7DC] flex items-center justify-between">
+                <div className="mt-8 pt-6 border-t border-[#ECE7DE] flex items-center justify-between">
                   <button
                     onClick={() => setStep(2)}
                     disabled={isSubmitting}
-                    className="px-5 py-3 rounded-xl border border-[#E2DDD2] text-xs font-bold text-[#4A524D] hover:bg-gray-50 flex items-center space-x-1 cursor-pointer vouch-btn disabled:opacity-50"
+                    className="px-5 py-3 rounded-xl border border-[#DFD9CE] text-xs font-bold text-[#484F4A] hover:bg-gray-50 flex items-center space-x-1 cursor-pointer vouch-btn disabled:opacity-50"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back</span>
@@ -717,7 +717,7 @@ export const BuildPassportPage: React.FC = () => {
                   <button
                     onClick={handleFinishOnboarding}
                     disabled={isSubmitting}
-                    className="px-8 py-3.5 rounded-xl bg-[#173F4F] text-white font-bold text-sm hover:bg-[#0E2934] transition-colors flex items-center space-x-2 cursor-pointer shadow-md vouch-btn disabled:opacity-50"
+                    className="px-8 py-3.5 rounded-xl bg-[#162B22] text-white font-bold text-sm hover:bg-[#102019] transition-colors flex items-center space-x-2 cursor-pointer shadow-md vouch-btn disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <>
@@ -727,7 +727,7 @@ export const BuildPassportPage: React.FC = () => {
                     ) : (
                       <>
                         <span>Generate My Passport</span>
-                        <Sparkles className="w-4 h-4 text-[#C45B3C]" />
+                        <Sparkles className="w-4 h-4 text-[#C2672B]" />
                       </>
                     )}
                   </button>
@@ -738,39 +738,39 @@ export const BuildPassportPage: React.FC = () => {
             {/* STEP 4: Success Passport Generated */}
             {step === 4 && (
               <div className="text-center py-4">
-                <div className="w-16 h-16 rounded-2xl bg-[#EDF4F0] flex items-center justify-center text-[#3E6B52] mx-auto mb-4 border border-[#3E6B52]/20">
+                <div className="w-16 h-16 rounded-2xl bg-[#E5EFE8] flex items-center justify-center text-[#245E3F] mx-auto mb-4 border border-[#245E3F]/20">
                   <ShieldCheck className="w-9 h-9" />
                 </div>
 
-                <span className="text-xs font-mono text-[#3E6B52] font-bold uppercase tracking-wider block mb-1">
+                <span className="text-xs font-mono text-[#245E3F] font-bold uppercase tracking-wider block mb-1">
                   PASSPORT SUCCESSFULLY MINTED
                 </span>
 
-                <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#202322] mb-3">
+                <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#141715] mb-3">
                   WELCOME TO VOUCH, {(createdProfile?.name || name || 'WORKER').toUpperCase()}!
                 </h2>
 
-                <p className="text-sm text-[#4A524D] max-w-md mx-auto leading-relaxed mb-6">
+                <p className="text-sm text-[#484F4A] max-w-md mx-auto leading-relaxed mb-6">
                   Your professional identity and first work record have been persisted to Firestore. Your profile survives reloads and can be verified across all employers.
                 </p>
 
                 {/* Passport Card Mini-Preview */}
-                <div className="bg-[#F4F0E6] p-5 rounded-2xl border border-[#E2DDD2] max-w-md mx-auto mb-8 text-left shadow-sm">
-                  <div className="flex items-center justify-between pb-3 border-b border-[#EBE7DC] mb-3">
-                    <span className="text-xs font-mono font-bold text-[#173F4F]">
+                <div className="bg-[#F5F2EB] p-5 rounded-2xl border border-[#DFD9CE] max-w-md mx-auto mb-8 text-left shadow-sm">
+                  <div className="flex items-center justify-between pb-3 border-b border-[#ECE7DE] mb-3">
+                    <span className="text-xs font-mono font-bold text-[#162B22]">
                       {createdProfile?.public_slug ? createdProfile.public_slug.toUpperCase() : 'VOUCH-IN-2026-8842'}
                     </span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#EDF4F0] text-[#3E6B52]">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#E5EFE8] text-[#245E3F]">
                       VERIFIED HOLDER
                     </span>
                   </div>
-                  <h3 className="font-bold text-base text-[#202322]">{createdProfile?.name || name || 'Verified Worker'}</h3>
-                  <p className="text-xs text-[#737A75]">
+                  <h3 className="font-bold text-base text-[#141715]">{createdProfile?.name || name || 'Verified Worker'}</h3>
+                  <p className="text-xs text-[#727A75]">
                     {createdProfile?.trade || trade || 'Trade'} · {(createdProfile?.experience_years ?? experienceYears ?? '0')} Years Documented {(createdProfile?.location || location) ? `· ${createdProfile?.location || location}` : ''}
                   </p>
-                  <div className="mt-3 text-xs font-mono text-[#173F4F] bg-white p-2.5 rounded border border-[#E2DDD2] flex items-center justify-between">
+                  <div className="mt-3 text-xs font-mono text-[#162B22] bg-white p-2.5 rounded border border-[#DFD9CE] flex items-center justify-between">
                     <span>1 Initial Work Record Logged</span>
-                    <span className="text-[10px] text-[#737A75]">Active ID: {(createdProfile?.id || 'saved').slice(0, 16)}</span>
+                    <span className="text-[10px] text-[#727A75]">Active ID: {(createdProfile?.id || 'saved').slice(0, 16)}</span>
                   </div>
                 </div>
 
@@ -779,7 +779,7 @@ export const BuildPassportPage: React.FC = () => {
                     <Link
                       to={`/passport/${createdProfile.public_slug}`}
                       target="_blank"
-                      className="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-[#173F4F] text-[#173F4F] font-bold text-sm hover:bg-[#173F4F]/5 transition-colors inline-flex items-center justify-center space-x-2 cursor-pointer"
+                      className="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-[#162B22] text-[#162B22] font-bold text-sm hover:bg-[#162B22]/5 transition-colors inline-flex items-center justify-center space-x-2 cursor-pointer"
                     >
                       <ExternalLink className="w-4 h-4" />
                       <span>View Public Passport</span>
@@ -787,10 +787,10 @@ export const BuildPassportPage: React.FC = () => {
                   )}
                   <button
                     onClick={() => navigate('/worker')}
-                    className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#173F4F] text-white font-bold text-sm hover:bg-[#0E2934] shadow-md inline-flex items-center justify-center space-x-2 cursor-pointer vouch-btn"
+                    className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#162B22] text-white font-bold text-sm hover:bg-[#102019] shadow-md inline-flex items-center justify-center space-x-2 cursor-pointer vouch-btn"
                   >
                     <span>Enter Worker Dashboard</span>
-                    <ArrowRight className="w-4 h-4 text-[#C45B3C]" />
+                    <ArrowRight className="w-4 h-4 text-[#C2672B]" />
                   </button>
                 </div>
               </div>

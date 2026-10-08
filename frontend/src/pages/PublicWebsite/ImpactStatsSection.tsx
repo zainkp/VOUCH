@@ -41,16 +41,16 @@ export const ImpactStatsSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="py-16 sm:py-24 bg-[#F4F0E6] relative border-b border-[#E2DDD2]">
+    <section className="py-16 sm:py-24 bg-[#F5F2EB] relative border-b border-[#DFD9CE]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Subtle prototype pilot banner */}
         <ScrollReveal delay={0}>
-          <div className="flex items-center justify-between pb-6 mb-8 border-b border-[#E2DDD2] text-xs font-mono text-[#737A75]">
-            <span className="uppercase tracking-widest text-[#173F4F] font-bold">
+          <div className="flex items-center justify-between pb-6 mb-8 border-b border-[#DFD9CE] text-xs font-mono text-[#727A75]">
+            <span className="uppercase tracking-widest text-[#162B22] font-bold">
               09 / PILOT SCALE & RECORD METRICS
             </span>
-            <span className="bg-[#EBE7DC] px-2.5 py-0.5 rounded text-[11px] text-[#4A524D]">
+            <span className="bg-[#ECE7DE] px-2.5 py-0.5 rounded text-[11px] text-[#484F4A]">
               Illustrative Pilot Data
             </span>
           </div>
@@ -61,15 +61,15 @@ export const ImpactStatsSection: React.FC = () => {
           
           {/* Stat 1: Work Records */}
           <ScrollReveal delay={0}>
-            <div className="p-6 rounded-2xl bg-[#F4F0E6] border border-[#E2DDD2] h-full">
-              <div className="flex items-center justify-center md:justify-start space-x-2 text-[#173F4F] text-xs font-mono font-bold uppercase mb-2">
+            <div className="p-6 rounded-2xl bg-[#F5F2EB] border border-[#DFD9CE] h-full">
+              <div className="flex items-center justify-center md:justify-start space-x-2 text-[#162B22] text-xs font-mono font-bold uppercase mb-2">
                 <Layers className="w-4 h-4" />
                 <span>LOGGED WORK RECORDS</span>
               </div>
-              <div className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-[#202322] tracking-tight mb-2">
+              <div className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-[#141715] tracking-tight mb-2">
                 {counts.records.toLocaleString()}+
               </div>
-              <p className="text-sm text-[#4A524D]">
+              <p className="text-sm text-[#484F4A]">
                 Verified on-site trade tasks spanning residential wiring, LT switchgear, plumbing lines, and structural fabrication.
               </p>
             </div>
@@ -77,15 +77,15 @@ export const ImpactStatsSection: React.FC = () => {
 
           {/* Stat 2: Skilled Workers */}
           <ScrollReveal delay={100}>
-            <div className="p-6 rounded-2xl bg-[#F4F0E6] border border-[#E2DDD2] h-full">
-              <div className="flex items-center justify-center md:justify-start space-x-2 text-[#3E6B52] text-xs font-mono font-bold uppercase mb-2">
+            <div className="p-6 rounded-2xl bg-[#F5F2EB] border border-[#DFD9CE] h-full">
+              <div className="flex items-center justify-center md:justify-start space-x-2 text-[#245E3F] text-xs font-mono font-bold uppercase mb-2">
                 <Users className="w-4 h-4" />
                 <span>SKILLED WORKERS</span>
               </div>
-              <div className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-[#202322] tracking-tight mb-2">
+              <div className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-[#141715] tracking-tight mb-2">
                 {counts.workers.toLocaleString()}+
               </div>
-              <p className="text-sm text-[#4A524D]">
+              <p className="text-sm text-[#484F4A]">
                 Tradespeople carrying self-sovereign professional passports across Karnataka, Maharashtra, and Tamil Nadu.
               </p>
             </div>
@@ -93,15 +93,15 @@ export const ImpactStatsSection: React.FC = () => {
 
           {/* Stat 3: Independent Confirmations */}
           <ScrollReveal delay={200}>
-            <div className="p-6 rounded-2xl bg-[#F4F0E6] border border-[#E2DDD2] h-full">
-              <div className="flex items-center justify-center md:justify-start space-x-2 text-[#C45B3C] text-xs font-mono font-bold uppercase mb-2">
+            <div className="p-6 rounded-2xl bg-[#F5F2EB] border border-[#DFD9CE] h-full">
+              <div className="flex items-center justify-center md:justify-start space-x-2 text-[#C2672B] text-xs font-mono font-bold uppercase mb-2">
                 <CheckCheck className="w-4 h-4" />
                 <span>FIELD CONFIRMATIONS</span>
               </div>
-              <div className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-[#202322] tracking-tight mb-2">
+              <div className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-[#141715] tracking-tight mb-2">
                 {counts.confirmations.toLocaleString()}+
               </div>
-              <p className="text-sm text-[#4A524D]">
+              <p className="text-sm text-[#484F4A]">
                 Independent sign-offs completed by site engineers, builders, and direct clients with zero administrative friction.
               </p>
             </div>

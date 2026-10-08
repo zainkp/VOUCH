@@ -158,7 +158,7 @@ export const HowItWorksSection: React.FC = () => {
     <section 
       id="how-it-works-experience"
       ref={containerRef}
-      className={`relative bg-[#F4F0E6] text-[#202322] ${
+      className={`relative bg-[#F5F2EB] text-[#141715] ${
         isDesktop && !isReducedMotion ? 'min-h-[400vh]' : 'py-16 sm:py-24'
       }`}
       aria-label="How Vouch Works: Vertical Storytelling"
@@ -169,10 +169,10 @@ export const HowItWorksSection: React.FC = () => {
           <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full h-full flex flex-col justify-between">
             
             {/* Top Stage Indicator Bar with Vertical Connecting Concept */}
-            <div className="shrink-0 flex items-center justify-between pb-4 border-b border-[#E2DDD2]">
+            <div className="shrink-0 flex items-center justify-between pb-4 border-b border-[#DFD9CE]">
               <div className="flex items-center space-x-2.5">
-                <ShieldCheck className="w-5 h-5 text-[#3E6B52]" />
-                <span className="font-mono text-xs uppercase tracking-widest text-[#173F4F] font-bold">
+                <ShieldCheck className="w-5 h-5 text-[#245E3F]" />
+                <span className="font-mono text-xs uppercase tracking-widest text-[#162B22] font-bold">
                   VERIFICATION PIPELINE
                 </span>
               </div>
@@ -181,7 +181,7 @@ export const HowItWorksSection: React.FC = () => {
               <div 
                 role="tablist"
                 aria-label="Pipeline stages"
-                className="flex items-center space-x-2 bg-[#F4F0E6] p-1 rounded-full border border-[#E2DDD2]"
+                className="flex items-center space-x-2 bg-[#F5F2EB] p-1 rounded-full border border-[#DFD9CE]"
               >
                 {steps.map((st, idx) => (
                   <button
@@ -191,8 +191,8 @@ export const HowItWorksSection: React.FC = () => {
                     onClick={() => scrollToStage(idx)}
                     className={`px-3.5 py-1.5 rounded-full text-xs font-mono font-bold transition-all flex items-center space-x-1.5 cursor-pointer ${
                       activeStep === idx
-                        ? 'bg-[#173F4F] text-white shadow-xs'
-                        : 'text-[#737A75] hover:text-[#202322] hover:bg-white/60'
+                        ? 'bg-[#162B22] text-white shadow-xs'
+                        : 'text-[#727A75] hover:text-[#141715] hover:bg-white/60'
                     }`}
                   >
                     <span>{st.num}</span>
@@ -207,21 +207,21 @@ export const HowItWorksSection: React.FC = () => {
               
               {/* LEFT COLUMN: Prominent Smartphone Mockup with Vertical Story Transitions */}
               <div className="col-span-6 flex justify-center items-center">
-                <div className="relative w-[340px] xl:w-[370px] h-[640px] xl:h-[680px] bg-[#202322] rounded-[52px] p-3 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.35)] border-[4px] border-[#2A3038] ring-1 ring-black/40 flex flex-col select-none">
+                <div className="relative w-[340px] xl:w-[370px] h-[640px] xl:h-[680px] bg-[#141715] rounded-[52px] p-3 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.35)] border-[4px] border-[#2A3038] ring-1 ring-black/40 flex flex-col select-none">
                   
                   {/* Dynamic Island / Notch */}
-                  <div className="w-28 h-5 bg-[#202322] rounded-full mx-auto mb-1 flex items-center justify-center space-x-2 shrink-0 z-30">
+                  <div className="w-28 h-5 bg-[#141715] rounded-full mx-auto mb-1 flex items-center justify-center space-x-2 shrink-0 z-30">
                     <div className="w-2.5 h-2.5 rounded-full bg-[#1C2024]" />
                     <div className="w-2 h-2 rounded-full bg-[#1A3828]/50" />
                   </div>
 
                   {/* Phone Screen Display */}
-                  <div className="flex-1 bg-[#F4F0E6] rounded-[42px] overflow-hidden flex flex-col border border-black/5 relative">
+                  <div className="flex-1 bg-[#F5F2EB] rounded-[42px] overflow-hidden flex flex-col border border-black/5 relative">
                     
                     {/* iOS Status Bar */}
-                    <div className="flex justify-between items-center px-6 pt-2.5 pb-1 text-[11px] font-semibold text-[#202322] shrink-0 z-20">
+                    <div className="flex justify-between items-center px-6 pt-2.5 pb-1 text-[11px] font-semibold text-[#141715] shrink-0 z-20">
                       <span>9:41</span>
-                      <div className="flex items-center space-x-1.5 text-[#202322]">
+                      <div className="flex items-center space-x-1.5 text-[#141715]">
                         <Signal className="w-3.5 h-3.5 fill-current" />
                         <Wifi className="w-3.5 h-3.5" />
                         <Battery className="w-4 h-4 fill-current" />
@@ -255,7 +255,7 @@ export const HowItWorksSection: React.FC = () => {
                     </div>
 
                     {/* Home Indicator Bar */}
-                    <div className="w-32 h-1 bg-[#202322]/25 rounded-full mx-auto my-1.5 shrink-0" />
+                    <div className="w-32 h-1 bg-[#141715]/25 rounded-full mx-auto my-1.5 shrink-0" />
                   </div>
                 </div>
               </div>
@@ -266,37 +266,37 @@ export const HowItWorksSection: React.FC = () => {
                   
                   {/* Step Numeral & Stage Badge */}
                   <div className="flex items-center space-x-3 mb-3">
-                    <span className="text-4xl xl:text-5xl font-display font-black text-[#173F4F]">
+                    <span className="text-4xl xl:text-5xl font-display font-black text-[#162B22]">
                       {steps[activeStep].num}
                     </span>
-                    <span className="font-mono text-xs uppercase tracking-wider px-3 py-1 rounded-full bg-[#EDF4F0] text-[#3E6B52] font-bold border border-[#3E6B52]/20">
+                    <span className="font-mono text-xs uppercase tracking-wider px-3 py-1 rounded-full bg-[#E5EFE8] text-[#245E3F] font-bold border border-[#245E3F]/20">
                       STAGE {activeStep + 1} OF 04
                     </span>
                   </div>
 
                   {/* Stage Title */}
-                  <h3 className="font-display font-extrabold text-3xl xl:text-4xl text-[#202322] tracking-tight mb-3">
+                  <h3 className="font-display font-extrabold text-3xl xl:text-4xl text-[#141715] tracking-tight mb-3">
                     {steps[activeStep].stage}
                   </h3>
 
                   {/* Primary Tagline */}
-                  <p className="text-lg xl:text-xl font-bold text-[#173F4F] leading-snug mb-4">
+                  <p className="text-lg xl:text-xl font-bold text-[#162B22] leading-snug mb-4">
                     {steps[activeStep].tagline}
                   </p>
 
                   {/* Narrative Paragraph */}
-                  <p className="text-sm xl:text-base text-[#4A524D] leading-relaxed mb-6">
+                  <p className="text-sm xl:text-base text-[#484F4A] leading-relaxed mb-6">
                     {steps[activeStep].description}
                   </p>
 
                   {/* Supporting Specification Points */}
-                  <div className="space-y-2.5 pt-4 border-t border-[#E2DDD2]">
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#737A75] block">
+                  <div className="space-y-2.5 pt-4 border-t border-[#DFD9CE]">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#727A75] block">
                       VERIFICATION CRITERIA:
                     </span>
                     {steps[activeStep].bullets.map((b, bIdx) => (
-                      <div key={bIdx} className="flex items-start space-x-2.5 text-xs xl:text-sm text-[#202322]">
-                        <span className="w-5 h-5 rounded-full bg-[#EDF4F0] text-[#3E6B52] flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">
+                      <div key={bIdx} className="flex items-start space-x-2.5 text-xs xl:text-sm text-[#141715]">
+                        <span className="w-5 h-5 rounded-full bg-[#E5EFE8] text-[#245E3F] flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">
                           ✓
                         </span>
                         <span className="leading-snug">{b}</span>
@@ -310,26 +310,26 @@ export const HowItWorksSection: React.FC = () => {
             </div>
 
             {/* Bottom Progress Bar & Step Tracker */}
-            <div className="shrink-0 flex items-center justify-between pt-4 border-t border-[#E2DDD2]">
+            <div className="shrink-0 flex items-center justify-between pt-4 border-t border-[#DFD9CE]">
               <div className="flex items-center space-x-3 font-mono text-xs">
-                <span className="font-bold text-[#173F4F]">
+                <span className="font-bold text-[#162B22]">
                   STEP {steps[activeStep].num} OF 04
                 </span>
                 <span className="text-stone-300">/</span>
-                <span className="text-[#737A75] font-semibold">
+                <span className="text-[#727A75] font-semibold">
                   {steps[activeStep].stage}
                 </span>
               </div>
 
               {/* Smooth Progress Bar */}
-              <div className="w-48 xl:w-64 h-1.5 bg-[#E2DDD2] rounded-full overflow-hidden mx-4">
+              <div className="w-48 xl:w-64 h-1.5 bg-[#DFD9CE] rounded-full overflow-hidden mx-4">
                 <div 
-                  className="h-full bg-[#173F4F] transition-all duration-500 rounded-full"
+                  className="h-full bg-[#162B22] transition-all duration-500 rounded-full"
                   style={{ width: `${((activeStep + 1) / 4) * 100}%` }}
                 />
               </div>
 
-              <span className="font-mono text-xs text-[#737A75]">
+              <span className="font-mono text-xs text-[#727A75]">
                 SCROLL DOWN TO ADVANCE
               </span>
             </div>
@@ -343,51 +343,51 @@ export const HowItWorksSection: React.FC = () => {
             {steps.map((st, i) => (
               <li 
                 key={st.num}
-                className="bg-white rounded-[36px] p-6 sm:p-8 border border-[#E2DDD2] shadow-sm flex flex-col space-y-6"
+                className="bg-white rounded-[36px] p-6 sm:p-8 border border-[#DFD9CE] shadow-sm flex flex-col space-y-6"
               >
                 {/* Header with Step Circle & Stage Name */}
-                <div className="flex items-center justify-between border-b border-[#EBE7DC] pb-4">
+                <div className="flex items-center justify-between border-b border-[#ECE7DE] pb-4">
                   <div className="flex items-center space-x-3">
-                    <div className="w-11 h-11 rounded-full bg-[#173F4F] text-white font-display font-black text-sm flex items-center justify-center shadow-xs">
+                    <div className="w-11 h-11 rounded-full bg-[#162B22] text-white font-display font-black text-sm flex items-center justify-center shadow-xs">
                       {st.num}
                     </div>
                     <div>
-                      <h3 className="font-display font-extrabold text-xl text-[#202322]">
+                      <h3 className="font-display font-extrabold text-xl text-[#141715]">
                         {st.stage}
                       </h3>
-                      <p className="text-xs font-semibold text-[#173F4F]">
+                      <p className="text-xs font-semibold text-[#162B22]">
                         {st.tagline}
                       </p>
                     </div>
                   </div>
-                  <span className="font-mono text-xs font-bold bg-[#EDF4F0] text-[#3E6B52] px-2.5 py-1 rounded-full border border-[#3E6B52]/20">
+                  <span className="font-mono text-xs font-bold bg-[#E5EFE8] text-[#245E3F] px-2.5 py-1 rounded-full border border-[#245E3F]/20">
                     STAGE {i + 1}
                   </span>
                 </div>
 
                 {/* Smartphone Mockup */}
                 <div className="flex justify-center my-2">
-                  <div className="w-[300px] sm:w-[330px] h-[580px] bg-[#202322] rounded-[44px] p-2.5 shadow-xl border-[3px] border-[#2A3038] flex flex-col">
-                    <div className="w-24 h-4 bg-[#202322] rounded-full mx-auto mb-1 flex items-center justify-center space-x-1 shrink-0" />
-                    <div className="flex-1 bg-[#F4F0E6] rounded-[34px] overflow-hidden p-3.5 flex flex-col justify-between border border-black/5">
+                  <div className="w-[300px] sm:w-[330px] h-[580px] bg-[#141715] rounded-[44px] p-2.5 shadow-xl border-[3px] border-[#2A3038] flex flex-col">
+                    <div className="w-24 h-4 bg-[#141715] rounded-full mx-auto mb-1 flex items-center justify-center space-x-1 shrink-0" />
+                    <div className="flex-1 bg-[#F5F2EB] rounded-[34px] overflow-hidden p-3.5 flex flex-col justify-between border border-black/5">
                       {i === 0 && <PhoneStepWork />}
                       {i === 1 && <PhoneStepEvidence />}
                       {i === 2 && <PhoneStepConfirmation />}
                       {i === 3 && <PhoneStepPassport />}
                     </div>
-                    <div className="w-28 h-1 bg-[#202322]/25 rounded-full mx-auto my-1 shrink-0" />
+                    <div className="w-28 h-1 bg-[#141715]/25 rounded-full mx-auto my-1 shrink-0" />
                   </div>
                 </div>
 
                 {/* Narrative Description & Specifications */}
-                <div className="space-y-4 pt-2 border-t border-[#EBE7DC]">
-                  <p className="text-sm text-[#4A524D] leading-relaxed">
+                <div className="space-y-4 pt-2 border-t border-[#ECE7DE]">
+                  <p className="text-sm text-[#484F4A] leading-relaxed">
                     {st.description}
                   </p>
                   <div className="space-y-2">
                     {st.bullets.map((b, bIdx) => (
-                      <div key={bIdx} className="flex items-start space-x-2 text-xs text-[#202322]">
-                        <Check className="w-4 h-4 text-[#3E6B52] shrink-0 mt-0.5" />
+                      <div key={bIdx} className="flex items-start space-x-2 text-xs text-[#141715]">
+                        <Check className="w-4 h-4 text-[#245E3F] shrink-0 mt-0.5" />
                         <span>{b}</span>
                       </div>
                     ))}
@@ -410,10 +410,10 @@ export const HowItWorksSection: React.FC = () => {
 const PhoneStepWork: React.FC = () => (
   <div className="h-full flex flex-col justify-between text-left space-y-3">
     {/* Header */}
-    <div className="flex items-center justify-between pb-2 border-b border-[#E2DDD2]">
+    <div className="flex items-center justify-between pb-2 border-b border-[#DFD9CE]">
       <div className="flex items-center space-x-1.5">
-        <Smartphone className="w-4 h-4 text-[#173F4F]" />
-        <span className="text-[11px] font-mono font-bold text-[#173F4F] uppercase">VOUCH FIELD LOG</span>
+        <Smartphone className="w-4 h-4 text-[#162B22]" />
+        <span className="text-[11px] font-mono font-bold text-[#162B22] uppercase">VOUCH FIELD LOG</span>
       </div>
       <span className="text-[9px] font-mono font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
         ● LOGGED
@@ -421,53 +421,53 @@ const PhoneStepWork: React.FC = () => (
     </div>
 
     {/* Worker Card */}
-    <div className="bg-[#FFDFF7] p-3 rounded-2xl border border-[#E2DDD2] shadow-xs space-y-1">
+    <div className="bg-[#E6EDE8] p-3 rounded-2xl border border-[#DFD9CE] shadow-xs space-y-1">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-bold text-[#202322]">Ravi Kumar</span>
-        <span className="text-[10px] font-mono font-bold bg-[#EDF4F0] text-[#3E6B52] px-1.5 py-0.5 rounded">
+        <span className="text-xs font-bold text-[#141715]">Ravi Kumar</span>
+        <span className="text-[10px] font-mono font-bold bg-[#E5EFE8] text-[#245E3F] px-1.5 py-0.5 rounded">
           Welder
         </span>
       </div>
-      <p className="text-[11px] text-[#737A75]">Industrial TIG & High-Pressure Conduit</p>
+      <p className="text-[11px] text-[#727A75]">Industrial TIG & High-Pressure Conduit</p>
     </div>
 
     {/* Project Record Details */}
-    <div className="bg-[#FFDFF7] p-3.5 rounded-2xl border border-[#E2DDD2] space-y-2.5 shadow-xs flex-1">
+    <div className="bg-[#E6EDE8] p-3.5 rounded-2xl border border-[#DFD9CE] space-y-2.5 shadow-xs flex-1">
       <div>
-        <span className="text-[10px] font-mono text-[#737A75] uppercase block">PROJECT</span>
-        <span className="text-xs font-bold text-[#202322] leading-tight block">
+        <span className="text-[10px] font-mono text-[#727A75] uppercase block">PROJECT</span>
+        <span className="text-xs font-bold text-[#141715] leading-tight block">
           High-Pressure Steam Conduit Installation
         </span>
       </div>
 
       <div className="flex items-center justify-between text-[11px] pt-1 border-t border-stone-100">
         <div>
-          <span className="text-[9px] font-mono text-[#737A75] block">LOCATION</span>
-          <span className="font-semibold text-[#202322] flex items-center gap-1">
-            <MapPin className="w-3 h-3 text-[#C45B3C]" />
+          <span className="text-[9px] font-mono text-[#727A75] block">LOCATION</span>
+          <span className="font-semibold text-[#141715] flex items-center gap-1">
+            <MapPin className="w-3 h-3 text-[#C2672B]" />
             Dahej, Gujarat
           </span>
         </div>
         <div className="text-right">
-          <span className="text-[9px] font-mono text-[#737A75] block">TIMESTAMP</span>
-          <span className="font-mono text-[#737A75] text-[10px]">Today · 08:42</span>
+          <span className="text-[9px] font-mono text-[#727A75] block">TIMESTAMP</span>
+          <span className="font-mono text-[#727A75] text-[10px]">Today · 08:42</span>
         </div>
       </div>
 
       <div className="pt-1 border-t border-stone-100">
-        <span className="text-[9px] font-mono text-[#737A75] block">WORK COMPLETED</span>
-        <div className="bg-stone-50 p-2 rounded-lg mt-1 border border-stone-200 text-[11px] font-mono text-[#173F4F] font-semibold">
+        <span className="text-[9px] font-mono text-[#727A75] block">WORK COMPLETED</span>
+        <div className="bg-stone-50 p-2 rounded-lg mt-1 border border-stone-200 text-[11px] font-mono text-[#162B22] font-semibold">
           400m SS-316L conduit (Grade 316)
         </div>
       </div>
     </div>
 
     {/* Status Footer */}
-    <div className="bg-[#EDF4F0] p-2.5 rounded-xl border border-[#3E6B52]/20 flex items-center justify-between">
-      <span className="text-[10px] font-mono text-[#3E6B52] font-bold">
+    <div className="bg-[#E5EFE8] p-2.5 rounded-xl border border-[#245E3F]/20 flex items-center justify-between">
+      <span className="text-[10px] font-mono text-[#245E3F] font-bold">
         ✓ Work record created
       </span>
-      <span className="text-[10px] font-bold text-[#173F4F]">
+      <span className="text-[10px] font-bold text-[#162B22]">
         Ready for proof →
       </span>
     </div>
@@ -481,10 +481,10 @@ const PhoneStepWork: React.FC = () => (
 const PhoneStepEvidence: React.FC = () => (
   <div className="h-full flex flex-col justify-between text-left space-y-3">
     {/* Header */}
-    <div className="flex items-center justify-between pb-2 border-b border-[#E2DDD2]">
+    <div className="flex items-center justify-between pb-2 border-b border-[#DFD9CE]">
       <div className="flex items-center space-x-1.5">
-        <Paperclip className="w-4 h-4 text-[#173F4F]" />
-        <span className="text-[11px] font-mono font-bold text-[#173F4F] uppercase">EVIDENCE ATTACHED</span>
+        <Paperclip className="w-4 h-4 text-[#162B22]" />
+        <span className="text-[11px] font-mono font-bold text-[#162B22] uppercase">EVIDENCE ATTACHED</span>
       </div>
       <span className="text-[9px] font-mono font-bold bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full border border-blue-200">
         3 ARTIFACTS
@@ -492,10 +492,10 @@ const PhoneStepEvidence: React.FC = () => (
     </div>
 
     {/* Photograph Artifact Preview */}
-    <div className="bg-[#FFDFF7] p-2.5 rounded-2xl border border-[#E2DDD2] shadow-xs space-y-1.5">
-      <div className="flex items-center justify-between text-[10px] font-mono text-[#3E6B52] font-bold">
+    <div className="bg-[#E6EDE8] p-2.5 rounded-2xl border border-[#DFD9CE] shadow-xs space-y-1.5">
+      <div className="flex items-center justify-between text-[10px] font-mono text-[#245E3F] font-bold">
         <span>✓ Site photograph attached</span>
-        <span className="text-[#737A75]">Weld Root Pass</span>
+        <span className="text-[#727A75]">Weld Root Pass</span>
       </div>
       <div className="h-24 bg-stone-900 rounded-xl overflow-hidden relative flex items-center justify-center border border-stone-800">
         <div className="absolute inset-0 bg-linear-to-tr from-stone-950 via-stone-800 to-stone-700 opacity-90" />
@@ -512,32 +512,32 @@ const PhoneStepEvidence: React.FC = () => (
 
     {/* Empirical Test Readings */}
     <div className="grid grid-cols-2 gap-2">
-      <div className="bg-[#FFDFF7] p-2.5 rounded-2xl border border-[#E2DDD2] shadow-xs">
-        <span className="text-[9px] font-mono text-[#737A75] block">✓ TEST READING</span>
-        <span className="text-sm font-mono font-black text-[#173F4F] block">1.84 Ω</span>
-        <span className="text-[9px] text-[#3E6B52] font-bold block">Megger Insulation Pass</span>
+      <div className="bg-[#E6EDE8] p-2.5 rounded-2xl border border-[#DFD9CE] shadow-xs">
+        <span className="text-[9px] font-mono text-[#727A75] block">✓ TEST READING</span>
+        <span className="text-sm font-mono font-black text-[#162B22] block">1.84 Ω</span>
+        <span className="text-[9px] text-[#245E3F] font-bold block">Megger Insulation Pass</span>
       </div>
-      <div className="bg-[#FFDFF7] p-2.5 rounded-2xl border border-[#E2DDD2] shadow-xs">
-        <span className="text-[9px] font-mono text-[#737A75] block">✓ PRESSURE TEST</span>
-        <span className="text-sm font-mono font-black text-[#173F4F] block">42.0 Bar</span>
-        <span className="text-[9px] text-[#3E6B52] font-bold block">Hydrostatic 4hr Hold</span>
+      <div className="bg-[#E6EDE8] p-2.5 rounded-2xl border border-[#DFD9CE] shadow-xs">
+        <span className="text-[9px] font-mono text-[#727A75] block">✓ PRESSURE TEST</span>
+        <span className="text-sm font-mono font-black text-[#162B22] block">42.0 Bar</span>
+        <span className="text-[9px] text-[#245E3F] font-bold block">Hydrostatic 4hr Hold</span>
       </div>
     </div>
 
     {/* Geotag & Metadata */}
-    <div className="bg-white p-2 rounded-xl border border-[#E2DDD2] space-y-0.5 text-[9px] font-mono text-[#737A75]">
+    <div className="bg-white p-2 rounded-xl border border-[#DFD9CE] space-y-0.5 text-[9px] font-mono text-[#727A75]">
       <div className="flex justify-between">
         <span>✓ Location:</span>
-        <span className="text-[#202322] font-semibold">21.7051° N, 72.5932° E</span>
+        <span className="text-[#141715] font-semibold">21.7051° N, 72.5932° E</span>
       </div>
       <div className="flex justify-between">
         <span>✓ Date & Time:</span>
-        <span className="text-[#202322] font-semibold">14-Oct-2026 · 14:22 IST</span>
+        <span className="text-[#141715] font-semibold">14-Oct-2026 · 14:22 IST</span>
       </div>
     </div>
 
     {/* Status Footer */}
-    <div className="bg-[#EDF4F0] p-2 rounded-xl border border-[#3E6B52]/20 text-center text-[10px] font-mono text-[#3E6B52] font-bold">
+    <div className="bg-[#E5EFE8] p-2 rounded-xl border border-[#245E3F]/20 text-center text-[10px] font-mono text-[#245E3F] font-bold">
       ✓ Technical proof attached
     </div>
   </div>
@@ -550,10 +550,10 @@ const PhoneStepEvidence: React.FC = () => (
 const PhoneStepConfirmation: React.FC = () => (
   <div className="h-full flex flex-col justify-between text-left space-y-3">
     {/* Header */}
-    <div className="flex items-center justify-between pb-2 border-b border-[#E2DDD2]">
+    <div className="flex items-center justify-between pb-2 border-b border-[#DFD9CE]">
       <div className="flex items-center space-x-1.5">
-        <CheckCheck className="w-4 h-4 text-[#3E6B52]" />
-        <span className="text-[11px] font-mono font-bold text-[#173F4F] uppercase">CONFIRM WORK</span>
+        <CheckCheck className="w-4 h-4 text-[#245E3F]" />
+        <span className="text-[11px] font-mono font-bold text-[#162B22] uppercase">CONFIRM WORK</span>
       </div>
       <span className="text-[9px] font-mono font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full border border-amber-200">
         ONE-TAP LINK
@@ -561,40 +561,40 @@ const PhoneStepConfirmation: React.FC = () => (
     </div>
 
     {/* Verifier Attribution Card */}
-    <div className="bg-[#FFDFF7] p-3 rounded-2xl border border-[#E2DDD2] shadow-xs space-y-1">
+    <div className="bg-[#E6EDE8] p-3 rounded-2xl border border-[#DFD9CE] shadow-xs space-y-1">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-bold text-[#202322]">Arjun Verma</span>
-        <span className="text-[9px] font-mono font-bold bg-[#EDF4F0] text-[#3E6B52] px-1.5 py-0.5 rounded">
+        <span className="text-xs font-bold text-[#141715]">Arjun Verma</span>
+        <span className="text-[9px] font-mono font-bold bg-[#E5EFE8] text-[#245E3F] px-1.5 py-0.5 rounded">
           VERIFIED
         </span>
       </div>
-      <p className="text-[10px] font-medium text-[#173F4F]">Chief Quality Engineer</p>
-      <p className="text-[10px] text-[#737A75]">Apex Infrastructure Ltd. / L&T</p>
+      <p className="text-[10px] font-medium text-[#162B22]">Chief Quality Engineer</p>
+      <p className="text-[10px] text-[#727A75]">Apex Infrastructure Ltd. / L&T</p>
     </div>
 
     {/* Review Project Card */}
-    <div className="bg-[#FFDFF7] p-3.5 rounded-2xl border border-[#E2DDD2] space-y-2 shadow-xs flex-1">
-      <span className="text-[10px] font-mono text-[#737A75] uppercase block">REVIEWED PROJECT</span>
-      <p className="text-xs font-bold text-[#202322] leading-tight">
+    <div className="bg-[#E6EDE8] p-3.5 rounded-2xl border border-[#DFD9CE] space-y-2 shadow-xs flex-1">
+      <span className="text-[10px] font-mono text-[#727A75] uppercase block">REVIEWED PROJECT</span>
+      <p className="text-xs font-bold text-[#141715] leading-tight">
         High-Pressure Steam Conduit Installation
       </p>
 
       {/* Verifier Statement */}
-      <div className="bg-[#F4F0E6] p-2.5 rounded-xl border border-[#E2DDD2] mt-1.5">
-        <span className="text-[9px] font-mono uppercase text-[#737A75] block mb-1">SUPERVISOR STATEMENT:</span>
-        <p className="text-[11px] text-[#202322] italic leading-snug">
+      <div className="bg-[#F5F2EB] p-2.5 rounded-xl border border-[#DFD9CE] mt-1.5">
+        <span className="text-[9px] font-mono uppercase text-[#727A75] block mb-1">SUPERVISOR STATEMENT:</span>
+        <p className="text-[11px] text-[#141715] italic leading-snug">
           &quot;Conduit routing and live circuit test witnessed and approved adhering strictly to safety code.&quot;
         </p>
       </div>
 
-      <div className="flex items-center justify-between text-[9px] font-mono text-[#737A75] pt-1">
+      <div className="flex items-center justify-between text-[9px] font-mono text-[#727A75] pt-1">
         <span>✓ Verified on site</span>
         <span>Date: 14-Oct-2026</span>
       </div>
     </div>
 
     {/* Prominent Confirm Button */}
-    <div className="bg-[#173F4F] text-white p-2.5 rounded-xl flex items-center justify-center space-x-2 shadow-sm">
+    <div className="bg-[#162B22] text-white p-2.5 rounded-xl flex items-center justify-center space-x-2 shadow-sm">
       <Check className="w-4 h-4 text-emerald-400 stroke-[3]" />
       <span className="text-xs font-bold font-mono tracking-wider">
         [ CONFIRM WORK ]
@@ -610,59 +610,59 @@ const PhoneStepConfirmation: React.FC = () => (
 const PhoneStepPassport: React.FC = () => (
   <div className="h-full flex flex-col justify-between text-left space-y-3">
     {/* Header */}
-    <div className="flex items-center justify-between pb-2 border-b border-[#E2DDD2]">
+    <div className="flex items-center justify-between pb-2 border-b border-[#DFD9CE]">
       <div className="flex items-center space-x-1.5">
-        <ShieldCheck className="w-4 h-4 text-[#173F4F]" />
-        <span className="text-[11px] font-mono font-bold text-[#173F4F] uppercase">VOUCH PASSPORT</span>
+        <ShieldCheck className="w-4 h-4 text-[#162B22]" />
+        <span className="text-[11px] font-mono font-bold text-[#162B22] uppercase">VOUCH PASSPORT</span>
       </div>
-      <span className="text-[9px] font-mono font-bold text-[#C45B3C]">
+      <span className="text-[9px] font-mono font-bold text-[#C2672B]">
         VOUCH-IN-2026-8842
       </span>
     </div>
 
     {/* Worker Identity */}
-    <div className="bg-[#FFDFF7] p-3 rounded-2xl border border-[#E2DDD2] shadow-xs space-y-1">
+    <div className="bg-[#E6EDE8] p-3 rounded-2xl border border-[#DFD9CE] shadow-xs space-y-1">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-bold text-[#202322]">Ravi Kumar</span>
-        <span className="text-[9px] font-mono font-bold bg-[#EDF4F0] text-[#3E6B52] px-1.5 py-0.5 rounded">
+        <span className="text-xs font-bold text-[#141715]">Ravi Kumar</span>
+        <span className="text-[9px] font-mono font-bold bg-[#E5EFE8] text-[#245E3F] px-1.5 py-0.5 rounded">
           ACTIVE
         </span>
       </div>
-      <p className="text-[10px] text-[#4A524D] font-medium">Welder · 7 Years Experience</p>
+      <p className="text-[10px] text-[#484F4A] font-medium">Welder · 7 Years Experience</p>
     </div>
 
     {/* Demonstrated Skills Confidence */}
-    <div className="bg-[#FFDFF7] p-3.5 rounded-2xl border border-[#E2DDD2] space-y-2 shadow-xs flex-1">
+    <div className="bg-[#E6EDE8] p-3.5 rounded-2xl border border-[#DFD9CE] space-y-2 shadow-xs flex-1">
       <div className="flex items-center justify-between">
-        <span className="text-[10px] font-mono text-[#737A75] uppercase">DEMONSTRATED SKILLS</span>
-        <span className="text-[10px] font-mono font-bold text-[#3E6B52]">
+        <span className="text-[10px] font-mono text-[#727A75] uppercase">DEMONSTRATED SKILLS</span>
+        <span className="text-[10px] font-mono font-bold text-[#245E3F]">
           HIGH CONFIDENCE
         </span>
       </div>
 
       <div className="space-y-1.5 pt-1">
         <div>
-          <div className="flex justify-between text-[10px] font-semibold text-[#202322] mb-0.5">
+          <div className="flex justify-between text-[10px] font-semibold text-[#141715] mb-0.5">
             <span>TIG Welding (SS-316L)</span>
-            <span className="font-mono text-[#3E6B52]">94%</span>
+            <span className="font-mono text-[#245E3F]">94%</span>
           </div>
           <div className="w-full bg-stone-100 h-1.5 rounded-full overflow-hidden">
-            <div className="bg-[#3E6B52] h-full w-[94%] rounded-full" />
+            <div className="bg-[#245E3F] h-full w-[94%] rounded-full" />
           </div>
         </div>
 
         <div>
-          <div className="flex justify-between text-[10px] font-semibold text-[#202322] mb-0.5">
+          <div className="flex justify-between text-[10px] font-semibold text-[#141715] mb-0.5">
             <span>High-Pressure Conduit</span>
-            <span className="font-mono text-[#3E6B52]">91%</span>
+            <span className="font-mono text-[#245E3F]">91%</span>
           </div>
           <div className="w-full bg-stone-100 h-1.5 rounded-full overflow-hidden">
-            <div className="bg-[#3E6B52] h-full w-[91%] rounded-full" />
+            <div className="bg-[#245E3F] h-full w-[91%] rounded-full" />
           </div>
         </div>
       </div>
 
-      <div className="pt-2 border-t border-stone-100 text-[9px] font-mono text-[#737A75] flex justify-between">
+      <div className="pt-2 border-t border-stone-100 text-[9px] font-mono text-[#727A75] flex justify-between">
         <span>12 Work records</span>
         <span>18 Evidence</span>
         <span>5 Confirmations</span>
@@ -670,7 +670,7 @@ const PhoneStepPassport: React.FC = () => (
     </div>
 
     {/* Share Passport / QR Card */}
-    <div className="bg-[#173F4F] text-white p-2.5 rounded-xl flex items-center justify-between shadow-xs">
+    <div className="bg-[#162B22] text-white p-2.5 rounded-xl flex items-center justify-between shadow-xs">
       <div className="flex items-center space-x-2">
         <QrCode className="w-4 h-4 text-emerald-300" />
         <span className="text-[10px] font-mono font-bold">SHARE PASSPORT / QR</span>

@@ -97,21 +97,21 @@ export const CategoriesCarousel: React.FC = () => {
   };
 
   return (
-    <section id="categories" className="py-20 sm:py-28 lg:py-32 bg-[#F4F0E6] border-t border-b border-[#E2DDD2] relative">
+    <section id="categories" className="py-20 sm:py-28 lg:py-32 bg-[#F5F2EB] border-t border-b border-[#DFD9CE] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header with Carousel Navigation Buttons */}
         <ScrollReveal delay={0} duration={600}>
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
             <div>
-              <p className="text-xs font-mono uppercase tracking-widest text-[#173F4F] font-bold mb-3">
+              <p className="text-xs font-mono uppercase tracking-widest text-[#162B22] font-bold mb-3">
                 07 / TRADE SPECIALIZATIONS
               </p>
-              <h2 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-6xl text-[#202322] tracking-tight leading-[1.08]">
+              <h2 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-6xl text-[#141715] tracking-tight leading-[1.08]">
                 BUILT FOR<br />
-                <span className="text-[#173F4F]">REAL WORK.</span>
+                <span className="text-[#162B22]">REAL WORK.</span>
               </h2>
-              <p className="text-lg text-[#4A524D] mt-4 max-w-xl">
+              <p className="text-lg text-[#484F4A] mt-4 max-w-xl">
                 Engineered for hands-on, site-tested vocations where physical work and verifiable technique define true professional caliber.
               </p>
             </div>
@@ -120,17 +120,17 @@ export const CategoriesCarousel: React.FC = () => {
             <div className="flex items-center space-x-3 shrink-0">
               <button
                 onClick={() => scroll('left')}
-                className="vouch-btn w-12 h-12 rounded-full border border-[#E2DDD2] bg-white hover:bg-[#F4F0E6] text-[#202322] flex items-center justify-center transition-colors shadow-2xs"
+                className="vouch-btn w-12 h-12 rounded-full border border-[#DFD9CE] bg-white hover:bg-[#F5F2EB] text-[#141715] flex items-center justify-center transition-colors shadow-2xs"
                 aria-label="Scroll left"
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={() => scroll('right')}
-                className="vouch-btn w-12 h-12 rounded-full border border-[#E2DDD2] bg-[#173F4F] hover:bg-[#0E2934] text-white flex items-center justify-center transition-colors shadow-2xs"
+                className="vouch-btn w-12 h-12 rounded-full border border-[#DFD9CE] bg-[#162B22] hover:bg-[#102019] text-white flex items-center justify-center transition-colors shadow-2xs"
                 aria-label="Scroll right"
               >
-                <ArrowRight className="w-5 h-5 text-[#C45B3C]" />
+                <ArrowRight className="w-5 h-5 text-[#C2672B]" />
               </button>
             </div>
           </div>
@@ -145,7 +145,7 @@ export const CategoriesCarousel: React.FC = () => {
             {categories.map((cat) => (
               <div
                 key={cat.title}
-                className="w-[280px] sm:w-[320px] md:w-[340px] shrink-0 bg-[#FFDFF7] rounded-2xl overflow-hidden border border-[#E2DDD2] shadow-[0_12px_24px_rgba(18,22,20,0.06)] hover:border-[#173F4F] transition-all group flex flex-col justify-between"
+                className="w-[280px] sm:w-[320px] md:w-[340px] shrink-0 bg-[#E6EDE8] rounded-2xl overflow-hidden border border-[#DFD9CE] shadow-[0_12px_24px_rgba(18,22,20,0.06)] hover:border-[#162B22] transition-all group flex flex-col justify-between"
               >
                 {/* Image Banner */}
                 <div className="relative h-48 sm:h-52 overflow-hidden bg-gray-100 reveal-image-container">
@@ -155,9 +155,9 @@ export const CategoriesCarousel: React.FC = () => {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter saturate-[0.95]"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#202322]/80 via-transparent to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#141715]/80 via-transparent to-transparent"></div>
                   
-                  <div className="absolute top-3 left-3 bg-[#F4F0E6]/90 backdrop-blur-xs px-2.5 py-1 rounded text-[10px] font-mono font-bold text-[#173F4F]">
+                  <div className="absolute top-3 left-3 bg-[#F5F2EB]/90 backdrop-blur-xs px-2.5 py-1 rounded text-[10px] font-mono font-bold text-[#162B22]">
                     {cat.count}
                   </div>
 
@@ -170,19 +170,19 @@ export const CategoriesCarousel: React.FC = () => {
 
                 {/* Description & Technical Skills */}
                 <div className="p-5 flex-1 flex flex-col justify-between">
-                  <p className="text-xs text-[#4A524D] leading-relaxed mb-4">
+                  <p className="text-xs text-[#484F4A] leading-relaxed mb-4">
                     {cat.description}
                   </p>
 
-                  <div className="pt-3 border-t border-[#EBE7DC]">
-                    <span className="text-[10px] font-mono text-[#737A75] uppercase block mb-1.5">
+                  <div className="pt-3 border-t border-[#ECE7DE]">
+                    <span className="text-[10px] font-mono text-[#727A75] uppercase block mb-1.5">
                       KEY EVIDENCE CRITERIA
                     </span>
                     <div className="flex flex-wrap gap-1">
                       {cat.skills.map((s, sIdx) => (
                         <span
                           key={sIdx}
-                          className="text-[11px] font-mono bg-[#F4F0E6] text-[#173F4F] px-2 py-0.5 rounded border border-[#E2DDD2]"
+                          className="text-[11px] font-mono bg-[#F5F2EB] text-[#162B22] px-2 py-0.5 rounded border border-[#DFD9CE]"
                         >
                           {s}
                         </span>

@@ -68,9 +68,9 @@ export const VerifierModal: React.FC = () => {
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in">
       <div className="bg-white w-full max-w-md rounded-[28px] border border-stone-300 shadow-2xl overflow-hidden flex flex-col">
         {/* Clean Header */}
-        <div className="bg-[#202322] text-white p-4 flex items-center justify-between">
+        <div className="bg-[#141715] text-white p-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <Shield className="w-5 h-5 text-[#C45B3C]" />
+            <Shield className="w-5 h-5 text-[#C2672B]" />
             <div>
               <span className="text-[10px] uppercase font-mono tracking-wider text-emerald-300 block">
                 INDEPENDENT PROVENANCE
@@ -99,11 +99,11 @@ export const VerifierModal: React.FC = () => {
           )}
 
           {/* Question Banner */}
-          <div className="p-3.5 bg-[#EDF4F0] rounded-2xl border border-[#3E6B52]/30">
-            <p className="text-[10px] font-bold text-[#173F4F] uppercase tracking-wider mb-0.5">
+          <div className="p-3.5 bg-[#E5EFE8] rounded-2xl border border-[#245E3F]/30">
+            <p className="text-[10px] font-bold text-[#162B22] uppercase tracking-wider mb-0.5">
               Work Confirmation Request
             </p>
-            <h4 className="text-sm font-bold text-[#202322]">
+            <h4 className="text-sm font-bold text-[#141715]">
               Did {worker.name} perform this work?
             </h4>
             <p className="text-[11px] text-gray-600 mt-1">
@@ -207,7 +207,7 @@ export const VerifierModal: React.FC = () => {
 
           {/* Feedback */}
           {confirmedState === 'CONFIRMED' && (
-            <div className="p-3 bg-[#173F4F] text-white rounded-xl text-center font-bold animate-in zoom-in-95 flex items-center justify-center space-x-2">
+            <div className="p-3 bg-[#162B22] text-white rounded-xl text-center font-bold animate-in zoom-in-95 flex items-center justify-center space-x-2">
               <Check className="w-5 h-5 text-emerald-400" />
               <span>Confirmation Recorded! Updating Skill Confidence...</span>
             </div>
@@ -226,7 +226,7 @@ export const VerifierModal: React.FC = () => {
               <button
                 onClick={() => handleDecision('CONFIRMED')}
                 disabled={isSubmitting}
-                className="w-full py-3 bg-[#173F4F] hover:bg-[#0E2934] text-white rounded-xl font-bold text-xs flex items-center justify-center space-x-2 shadow-xs transition-all active:translate-y-[1px] cursor-pointer disabled:opacity-50"
+                className="w-full py-3 bg-[#162B22] hover:bg-[#102019] text-white rounded-xl font-bold text-xs flex items-center justify-center space-x-2 shadow-xs transition-all active:translate-y-[1px] cursor-pointer disabled:opacity-50"
               >
                 {isSubmitting ? (
                   <>

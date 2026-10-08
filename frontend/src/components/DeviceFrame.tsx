@@ -24,7 +24,7 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({ children }) => {
             onClick={() => setIsDeviceFramed(true)}
             className={`flex items-center space-x-1 px-2.5 py-1 rounded-full font-medium transition-all ${
               isDeviceFramed
-                ? 'bg-[#173F4F] text-white shadow-xs'
+                ? 'bg-[#162B22] text-white shadow-xs'
                 : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
             }`}
           >
@@ -35,7 +35,7 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({ children }) => {
             onClick={() => setIsDeviceFramed(false)}
             className={`flex items-center space-x-1 px-2.5 py-1 rounded-full font-medium transition-all ${
               !isDeviceFramed
-                ? 'bg-[#173F4F] text-white shadow-xs'
+                ? 'bg-[#162B22] text-white shadow-xs'
                 : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
             }`}
           >
@@ -49,13 +49,13 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({ children }) => {
       <div
         className={`w-full transition-all duration-300 ${
           isDeviceFramed
-            ? 'max-w-[412px] min-h-screen sm:min-h-[890px] sm:max-h-[915px] sm:rounded-[52px] shadow-2xl relative overflow-hidden flex flex-col border-0 sm:border-[9px] sm:border-[#202322] bg-[#F4F0E6]'
-            : 'max-w-2xl min-h-screen sm:min-h-[850px] sm:rounded-[24px] shadow-xl relative overflow-hidden flex flex-col border border-gray-200 bg-[#F4F0E6]'
+            ? 'max-w-[412px] min-h-screen sm:min-h-[890px] sm:max-h-[915px] sm:rounded-[52px] shadow-2xl relative overflow-hidden flex flex-col border-0 sm:border-[9px] sm:border-[#141715] bg-[#F5F2EB]'
+            : 'max-w-2xl min-h-screen sm:min-h-[850px] sm:rounded-[24px] shadow-xl relative overflow-hidden flex flex-col border border-gray-200 bg-[#F5F2EB]'
         }`}
       >
         {/* iOS-Style Status Bar */}
         {isDeviceFramed && (
-          <div className="w-full pt-3 px-7 pb-1 flex justify-between items-center text-xs font-semibold text-[#202322] select-none z-20 shrink-0">
+          <div className="w-full pt-3 px-7 pb-1 flex justify-between items-center text-xs font-semibold text-[#141715] select-none z-20 shrink-0">
             <span>9:41</span>
             <div className="flex items-center space-x-1.5">
               {/* Cellular Signal Icon */}
@@ -84,7 +84,7 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({ children }) => {
 
         {/* Home Indicator Bar */}
         {isDeviceFramed && (
-          <div className="w-full pb-2 pt-1 flex justify-center bg-[#F4F0E6]/90 pointer-events-none z-30 shrink-0">
+          <div className="w-full pb-2 pt-1 flex justify-center bg-[#F5F2EB]/90 pointer-events-none z-30 shrink-0">
             <div className="w-32 h-1 bg-[#1F2937] rounded-full"></div>
           </div>
         )}

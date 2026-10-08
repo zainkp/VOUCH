@@ -26,7 +26,7 @@ export const QrModal: React.FC = () => {
         width: 220,
         margin: 2,
         color: {
-          dark: '#202322',
+          dark: '#141715',
           light: '#ffffff',
         },
       })
@@ -58,7 +58,7 @@ export const QrModal: React.FC = () => {
         {/* Header */}
         <div className="w-full flex justify-between items-center pb-2 border-b border-gray-100">
           <div className="flex items-center space-x-1.5 text-left">
-            <Shield className="w-4 h-4 text-[#173F4F]" />
+            <Shield className="w-4 h-4 text-[#162B22]" />
             <span className="text-xs font-bold text-gray-900">
               Share My Vouch Passport
             </span>
@@ -74,11 +74,11 @@ export const QrModal: React.FC = () => {
 
         {/* Worker Summary */}
         <div>
-          <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-800 bg-[#EDF4F0] px-2 py-0.5 rounded-full inline-block mb-1 border border-[#3E6B52]/20">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-800 bg-[#E5EFE8] px-2 py-0.5 rounded-full inline-block mb-1 border border-[#245E3F]/20">
             Worker-Owned Professional Record
           </span>
 
-          <h3 className="text-base font-bold text-[#202322]">
+          <h3 className="text-base font-bold text-[#141715]">
             {worker.name}
           </h3>
 
@@ -115,11 +115,11 @@ export const QrModal: React.FC = () => {
 
             <button
               onClick={handleCopy}
-              className="text-[#173F4F] hover:text-[#0E2934] p-1 font-sans font-semibold shrink-0 cursor-pointer"
+              className="text-[#162B22] hover:text-[#102019] p-1 font-sans font-semibold shrink-0 cursor-pointer"
               title="Copy URL"
             >
               {copied ? (
-                <Check className="w-4 h-4 text-[#3E6B52]" />
+                <Check className="w-4 h-4 text-[#245E3F]" />
               ) : (
                 <Copy className="w-4 h-4" />
               )}
@@ -128,7 +128,7 @@ export const QrModal: React.FC = () => {
 
           <button
             onClick={handleCopy}
-            className="w-full py-2.5 bg-[#173F4F] text-white rounded-xl text-xs font-bold hover:bg-[#0E2934] active:translate-y-[1px] transition-all flex items-center justify-center space-x-1.5 shadow-xs cursor-pointer"
+            className="w-full py-2.5 bg-[#162B22] text-white rounded-xl text-xs font-bold hover:bg-[#102019] active:translate-y-[1px] transition-all flex items-center justify-center space-x-1.5 shadow-xs cursor-pointer"
           >
             {copied ? (
               <>

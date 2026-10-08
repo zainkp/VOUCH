@@ -8,7 +8,7 @@ export const FinalCTASection: React.FC = () => {
   const { isAuthenticated, activeRole } = useApp();
   const buildPassportHref = isAuthenticated && activeRole === 'worker' ? '/build-passport' : '/login?redirect=/build-passport';
   return (
-    <section className="py-24 sm:py-32 lg:py-36 bg-[#173F4F] text-white relative overflow-hidden">
+    <section className="py-24 sm:py-32 lg:py-36 bg-[#162B22] text-white relative overflow-hidden">
       {/* Subtle background texture lines */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.06]">
         <div className="w-full h-full bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
@@ -20,20 +20,20 @@ export const FinalCTASection: React.FC = () => {
           {/* Subtle Tag & Giant Editorial Headline */}
           <ScrollReveal delay={0}>
             <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-white/10 text-emerald-200 text-xs font-mono mb-8 border border-white/15">
-              <ShieldCheck className="w-4 h-4 text-[#C45B3C]" />
+              <ShieldCheck className="w-4 h-4 text-[#C2672B]" />
               <span>START YOUR VOCATIONAL RECORD TODAY</span>
             </div>
 
-            <h2 className="font-display font-extrabold text-4xl sm:text-6xl lg:text-7xl text-[#F4F0E6] tracking-tight leading-[1.02] mb-8">
+            <h2 className="font-display font-extrabold text-4xl sm:text-6xl lg:text-7xl text-[#F5F2EB] tracking-tight leading-[1.02] mb-8">
               YOUR WORK<br />
               ALREADY HAS VALUE.<br />
-              <span className="text-[#C45B3C]">MAKE IT PORTABLE.</span>
+              <span className="text-[#C2672B]">MAKE IT PORTABLE.</span>
             </h2>
           </ScrollReveal>
 
           {/* Supporting text */}
           <ScrollReveal delay={100}>
-            <p className="text-lg sm:text-xl text-[#F4F0E6]/80 max-w-2xl mx-auto leading-relaxed mb-12 font-normal">
+            <p className="text-lg sm:text-xl text-[#F5F2EB]/80 max-w-2xl mx-auto leading-relaxed mb-12 font-normal">
               Build a professional identity that grows with every project, every confirmation and every year of experience.
             </p>
           </ScrollReveal>
@@ -43,10 +43,10 @@ export const FinalCTASection: React.FC = () => {
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-5">
               <Link
                 to={buildPassportHref}
-                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-9 py-4 rounded-xl bg-[#F4F0E6] text-[#173F4F] text-base font-bold tracking-wide hover:bg-white active:scale-[0.98] transition-all shadow-[0_4px_20px_rgba(0,0,0,0.25)] vouch-btn"
+                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-9 py-4 rounded-xl bg-[#F5F2EB] text-[#162B22] text-base font-bold tracking-wide hover:bg-white active:scale-[0.98] transition-all shadow-[0_4px_20px_rgba(0,0,0,0.25)] vouch-btn"
               >
                 <span>Build Your Passport</span>
-                <ArrowRight className="w-4 h-4 text-[#C45B3C]" />
+                <ArrowRight className="w-4 h-4 text-[#C2672B]" />
               </Link>
 
               <Link
@@ -54,14 +54,14 @@ export const FinalCTASection: React.FC = () => {
                 className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-8 py-4 rounded-xl bg-white/10 hover:bg-white/15 text-white text-base font-semibold border border-white/20 transition-colors vouch-btn"
               >
                 <span>For Employers</span>
-                <span className="text-[#C45B3C]">→</span>
+                <span className="text-[#C2672B]">→</span>
               </Link>
             </div>
           </ScrollReveal>
 
           {/* Micro-assurances */}
           <ScrollReveal delay={240}>
-            <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 text-xs text-[#F4F0E6]/60 font-mono">
+            <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 text-xs text-[#F5F2EB]/60 font-mono">
               <span>✓ 100% Free for Workers</span>
               <span>✓ Zero Middleman Commission</span>
               <span>✓ Worker Owns All Data</span>
