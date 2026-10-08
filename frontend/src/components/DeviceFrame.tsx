@@ -15,9 +15,9 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({ children }) => {
       <div className="w-full max-w-xl hidden sm:flex items-center justify-between mb-3 px-3 py-1.5 bg-white/80 backdrop-blur-md rounded-full border border-gray-300 text-xs shadow-sm">
         <div className="flex items-center space-x-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span className="font-semibold text-gray-800">VOUCH Prototype</span>
+          <span className="font-semibold text-gray-800">VOUCH Application</span>
           <span className="text-gray-400">|</span>
-          <span className="text-gray-600 font-mono text-[11px]">Google Stitch UI Integrated</span>
+          <span className="text-gray-600 font-mono text-[11px]">Verified Credential Suite</span>
         </div>
         <div className="flex items-center space-x-1.5">
           <button

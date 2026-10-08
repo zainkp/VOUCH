@@ -1,13 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
-import { nearbyWorkers } from '../data/mockData';
-import { Search, Bookmark, BookmarkCheck, ArrowRight, ShieldCheck, MapPin } from 'lucide-react';
+import { 
+  Search, 
+  Bookmark, 
+  BookmarkCheck, 
+  MapPin, 
+  FileCheck2, 
+  ShieldCheck, 
+  CheckCircle2, 
+  ArrowRight,
+  Filter,
+  X
+} from 'lucide-react';
 
-export const ContractorTab: React.FC = () => {
+interface ContractorTabProps {
+  onViewPassport: (workerData: any) => void;
+  defaultActiveTab?: 'DIRECTORY' | 'SAVED';
+}
+
+export const ContractorTab: React.FC<ContractorTabProps> = ({ 
+  onViewPassport, 
+  defaultActiveTab = 'DIRECTORY' 
+}) => {
   const { 
-    worker, 
-    setCurrentTab, 
-    setActiveRole, 
+    worker: liveWorker, 
     savedWorkerIds, 
     toggleSaveWorker, 
     isSavedWorker,
@@ -16,28 +32,121 @@ export const ContractorTab: React.FC = () => {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTrade, setSelectedTrade] = useState('All');
-  const [activeTab, setActiveTab] = useState<'DIRECTORY' | 'SAVED'>('DIRECTORY');
+  const [activeTab, setActiveTab] = useState<'DIRECTORY' | 'SAVED'>(defaultActiveTab);
 
-  // Directory includes Ravi with his live updated stats plus peer workers
-  const directoryWorkers = [
-    {
-      id: worker.id,
-      name: worker.name,
-      trade: worker.trade,
-      experienceYears: worker.experienceYears,
-      location: worker.location.split(',')[0],
-      confidenceLevel: 'HIGH',
-      workRecordsCount: stats.workCount,
-      confirmationsCount: stats.confirmationCount,
-      avatarUrl: worker.portraitUrl,
-      skillsSummary: 'Electrical Wiring, Commercial Panel Installation',
-    },
-    ...nearbyWorkers.filter(w => w.id !== worker.id).map(w => ({
-      ...w,
-      skillsSummary: w.primarySkill,
-    })),
+  useEffect(() => {
+    setActiveTab(defaultActiveTab);
+  }, [defaultActiveTab]);
+
+  // Quick trade filters specified in Section 7
+  const trades = [
+    'All',
+    'Electrician',
+    'Plumber',
+    'Welder',
+    'Carpenter',
+    'Technician',
+    'Mechanic',
+    'Painter',
+    'Construction'
   ];
 
+  // Authentic evidence-backed directory workers
+  const directoryWorkers = [
+    {
+      id: liveWorker.id,
+      name: liveWorker.name,
+      trade: liveWorker.trade,
+      experienceYears: liveWorker.experienceYears,
+      location: liveWorker.location.split(',')[0],
+      confidenceLevel: 'HIGH',
+      workRecordsCount: 8,
+      evidenceItemsCount: 12,
+      confirmationsCount: 3,
+      avatarUrl: liveWorker.portraitUrl,
+      skillsSummary: 'Electrical Wiring, Commercial Panel Installation',
+    },
+    {
+      id: 'worker_anil',
+      name: 'Anil Joseph',
+      trade: 'Electrician',
+      experienceYears: 5,
+      location: 'Mangaluru',
+      confidenceLevel: 'HIGH',
+      workRecordsCount: 6,
+      evidenceItemsCount: 9,
+      confirmationsCount: 2,
+      avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&auto=format&fit=crop&q=80',
+      skillsSummary: 'Residential Wiring, Panel Installation',
+    },
+    {
+      id: 'worker_002',
+      name: 'Suresh M.',
+      trade: 'Plumber',
+      experienceYears: 9,
+      location: 'Bengaluru',
+      confidenceLevel: 'HIGH',
+      workRecordsCount: 14,
+      evidenceItemsCount: 20,
+      confirmationsCount: 9,
+      avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
+      skillsSummary: 'Commercial Pipefitting, Drainage Systems',
+    },
+    {
+      id: 'worker_003',
+      name: 'Vikram Patil',
+      trade: 'Welder',
+      experienceYears: 5,
+      location: 'Udupi',
+      confidenceLevel: 'MEDIUM',
+      workRecordsCount: 6,
+      evidenceItemsCount: 8,
+      confirmationsCount: 3,
+      avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80',
+      skillsSummary: 'TIG & Arc Welding, Structural Fabrication',
+    },
+    {
+      id: 'worker_dinesh',
+      name: 'Dinesh Acharya',
+      trade: 'Carpenter',
+      experienceYears: 8,
+      location: 'Mangaluru',
+      confidenceLevel: 'HIGH',
+      workRecordsCount: 11,
+      evidenceItemsCount: 15,
+      confirmationsCount: 6,
+      avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&auto=format&fit=crop&q=80',
+      skillsSummary: 'Modular Formwork, Hardwood Joinery',
+    },
+    {
+      id: 'worker_riaz',
+      name: 'Mohammed Riaz',
+      trade: 'Technician',
+      experienceYears: 6,
+      location: 'Mangaluru',
+      confidenceLevel: 'HIGH',
+      workRecordsCount: 7,
+      evidenceItemsCount: 11,
+      confirmationsCount: 4,
+      avatarUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&auto=format&fit=crop&q=80',
+      skillsSummary: 'HVAC Installation, Chiller Commissioning',
+    },
+    {
+      id: 'worker_karthik',
+      name: 'Karthik Poojary',
+      trade: 'Construction',
+      experienceYears: 4,
+      location: 'Surathkal',
+      confidenceLevel: 'LOW',
+      workRecordsCount: 5,
+      evidenceItemsCount: 7,
+      confirmationsCount: 2,
+      avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
+      skillsSummary: 'Rebar Tying, Concrete Curing',
+    },
+  ];
+
+  // Filter based on search query, selected trade, and directory vs saved mode
   const filteredWorkers = directoryWorkers.filter(w => {
     const matchesSearch = 
       w.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -51,165 +160,254 @@ export const ContractorTab: React.FC = () => {
     return matchesSearch && matchesTrade && matchesSaved;
   });
 
+  const renderConfidenceBadge = (level: string) => {
+    switch (level) {
+      case 'HIGH':
+        return (
+          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#EBF6EE] text-[#059669] border border-[#059669]/20 inline-flex items-center space-x-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#059669]"></span>
+            <span>HIGH EVIDENCE CONFIDENCE</span>
+          </span>
+        );
+      case 'MEDIUM':
+        return (
+          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#FEF6EE] text-[#C27A38] border border-[#C27A38]/25 inline-flex items-center space-x-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C27A38]"></span>
+            <span>MEDIUM EVIDENCE CONFIDENCE</span>
+          </span>
+        );
+      default:
+        return (
+          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide bg-[#F4F1EA] text-[#737A75] border border-[#E5E1D8] inline-flex items-center space-x-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#737A75]"></span>
+            <span>BUILDING EVIDENCE</span>
+          </span>
+        );
+    }
+  };
+
   return (
-    <div className="flex-1 px-4 sm:px-5 pb-8 pt-3 space-y-4">
-      {/* Contractor Header */}
-      <div>
-        <span className="text-[10px] font-mono tracking-wider uppercase text-gray-500 font-bold bg-stone-100 px-2 py-0.5 rounded-full border border-stone-200 inline-block mb-1">
-          Contractor & Hirer Mode
-        </span>
-        <h2 className="text-xl font-bold text-[#111827]">Evaluate Evidence-Backed Workers</h2>
-        <p className="text-xs text-gray-600">
-          Inspect worker-owned passports and supervisor-vouched records before hiring.
-        </p>
-      </div>
+    <div className="w-full space-y-10 sm:space-y-12">
+      
+      {/* 1. Contractor Home Greeting & Search (Section 6) */}
+      <div className="space-y-6">
+        <div>
+          <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-[#121614] tracking-tight">
+            Good morning, Arjun.
+          </h1>
+          <p className="text-sm sm:text-base text-[#4A524D] mt-1">
+            Find skilled workers with experience you can verify.
+          </p>
+        </div>
 
-      {/* Search Input */}
-      <div className="relative">
-        <Search className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
-          placeholder="Search by trade, skill, or city (e.g. Electrician, Mangaluru)..."
-          className="w-full text-xs pl-9 pr-3 py-2.5 rounded-xl border border-stone-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#233B31]"
-        />
-      </div>
-
-      {/* Trade Filters & Tabs */}
-      <div className="space-y-2">
-        <div className="flex items-center space-x-1.5 overflow-x-auto custom-scrollbar pb-1 text-xs">
-          {['All', 'Electrician', 'Plumber', 'Welder'].map(trade => (
+        {/* Search Field */}
+        <div className="relative w-full max-w-3xl">
+          <div className="flex items-center bg-white rounded-2xl border border-[#E5E1D8] shadow-xs focus-within:border-[#1E3B2B] focus-within:ring-1 focus-within:ring-[#1E3B2B] transition-all p-1.5">
+            <div className="pl-3.5 pr-2 text-[#737A75]">
+              <Search className="w-5 h-5" />
+            </div>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              placeholder="Search by trade, skill or location (e.g. Electrician in Mangaluru)..."
+              className="flex-1 py-2.5 text-sm sm:text-base text-[#121614] placeholder:text-[#A1A7A2] focus:outline-none bg-transparent"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="p-1.5 text-[#737A75] hover:text-[#121614] transition-colors mr-1 cursor-pointer"
+                title="Clear Search"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
             <button
-              key={trade}
-              onClick={() => setSelectedTrade(trade)}
-              className={`px-3 py-1 rounded-full text-xs font-semibold shrink-0 transition-colors ${
-                selectedTrade === trade
-                  ? 'bg-[#233B31] text-white'
-                  : 'bg-white text-gray-600 hover:bg-stone-100 border border-stone-200'
+              type="button"
+              className="px-6 py-2.5 rounded-xl bg-[#1E3B2B] hover:bg-[#14281D] text-white text-xs sm:text-sm font-semibold transition-all cursor-pointer shadow-xs shrink-0"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+
+        {/* 2. Quick Trade Filters (Section 7) */}
+        <div className="space-y-2.5 pt-1">
+          <p className="text-xs font-mono uppercase tracking-wider text-[#737A75] font-semibold">
+            Browse by trade
+          </p>
+          <div className="flex items-center space-x-2 overflow-x-auto pb-1 text-xs">
+            {trades.map(trade => (
+              <button
+                key={trade}
+                onClick={() => setSelectedTrade(trade)}
+                className={`px-3.5 py-1.5 rounded-xl font-medium shrink-0 transition-all cursor-pointer ${
+                  selectedTrade === trade
+                    ? 'bg-[#1E3B2B] text-white shadow-xs font-semibold'
+                    : 'bg-white text-[#4A524D] hover:bg-[#FAF8F5] border border-[#E5E1D8]'
+                }`}
+              >
+                {trade}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Worker Discovery / Saved Section (Section 8, 9, 10, 12) */}
+      <section className="space-y-5">
+        
+        {/* Section Header & Subtext */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-[#E5E1D8] gap-2">
+          <div>
+            <h2 className="font-display font-extrabold text-xl text-[#121614] tracking-tight">
+              {activeTab === 'DIRECTORY' ? 'WORKERS WITH EVIDENCE' : 'SAVED WORKERS'}
+            </h2>
+            <p className="text-xs sm:text-sm text-[#737A75] mt-0.5">
+              {activeTab === 'DIRECTORY'
+                ? 'Explore workers whose experience is supported by real work records, evidence and confirmations.'
+                : 'Workers you have shortlisted for upcoming project sites.'}
+            </p>
+          </div>
+
+          <div className="flex items-center space-x-2 text-xs font-mono">
+            <button
+              onClick={() => setActiveTab('DIRECTORY')}
+              className={`px-3 py-1 rounded-lg transition-colors cursor-pointer ${
+                activeTab === 'DIRECTORY'
+                  ? 'bg-[#FAF8F5] text-[#1E3B2B] font-bold border border-[#E5E1D8]'
+                  : 'text-[#737A75] hover:text-[#121614]'
               }`}
             >
-              {trade}
+              All Workers ({directoryWorkers.length})
             </button>
-          ))}
-        </div>
-
-        <div className="flex border-b border-stone-200 text-xs">
-          <button
-            onClick={() => setActiveTab('DIRECTORY')}
-            className={`py-1.5 px-3 font-bold border-b-2 transition-colors ${
-              activeTab === 'DIRECTORY'
-                ? 'border-[#233B31] text-gray-900'
-                : 'border-transparent text-gray-400 hover:text-gray-600'
-            }`}
-          >
-            Nearby Workers ({directoryWorkers.length})
-          </button>
-          <button
-            onClick={() => setActiveTab('SAVED')}
-            className={`py-1.5 px-3 font-bold border-b-2 transition-colors ${
-              activeTab === 'SAVED'
-                ? 'border-[#233B31] text-gray-900'
-                : 'border-transparent text-gray-400 hover:text-gray-600'
-            }`}
-          >
-            Saved for Jobs ({savedWorkerIds.length})
-          </button>
-        </div>
-      </div>
-
-      {/* Worker Evaluation Cards (NO generic star ratings or rank scores) */}
-      <div className="space-y-3">
-        {filteredWorkers.map(w => {
-          const isSaved = isSavedWorker(w.id);
-
-          return (
-            <div
-              key={w.id}
-              className="bg-white rounded-2xl p-4 border border-[#ECEBE8] shadow-xs hover:border-stone-300 transition-all flex flex-col space-y-3"
+            <span>·</span>
+            <button
+              onClick={() => setActiveTab('SAVED')}
+              className={`px-3 py-1 rounded-lg transition-colors cursor-pointer ${
+                activeTab === 'SAVED'
+                  ? 'bg-[#FAF8F5] text-[#1E3B2B] font-bold border border-[#E5E1D8]'
+                  : 'text-[#737A75] hover:text-[#121614]'
+              }`}
             >
-              <div className="flex items-start justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 rounded-xl overflow-hidden bg-stone-100 border border-black/5 shrink-0">
-                    <img alt={w.name} src={w.avatarUrl} className="w-full h-full object-cover" />
+              Saved ({savedWorkerIds.length})
+            </button>
+          </div>
+        </div>
+
+        {/* Worker Cards Feed (Professional Editorial Layout) */}
+        <div className="space-y-4">
+          {filteredWorkers.map(w => {
+            const isSaved = isSavedWorker(w.id);
+
+            return (
+              <div
+                key={w.id}
+                className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E5E1D8] shadow-xs hover:border-[#1E3B2B]/40 transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-6"
+              >
+                
+                {/* Left & Center: Worker Photo, Identity, Trade & Skills */}
+                <div className="flex items-start space-x-5 min-w-0 flex-1">
+                  
+                  {/* Photo container */}
+                  <div className="w-16 h-20 sm:w-20 sm:h-24 rounded-2xl overflow-hidden bg-[#EFECE6] border border-[#E5E1D8] shrink-0 shadow-xs">
+                    <img
+                      src={w.avatarUrl}
+                      alt={w.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                  <div>
-                    <h3 className="text-sm font-bold text-gray-900">{w.name}</h3>
-                    <p className="text-xs text-gray-600">
-                      {w.trade} · {w.experienceYears} years
+
+                  {/* Identity details */}
+                  <div className="space-y-1.5 min-w-0 flex-1">
+                    <div className="flex items-center space-x-2">
+                      <h3 className="font-display font-extrabold text-lg sm:text-xl text-[#121614] tracking-tight uppercase truncate">
+                        {w.name}
+                      </h3>
+                    </div>
+
+                    <p className="text-sm font-semibold text-[#1E3B2B]">
+                      {w.trade}
                     </p>
-                    <div className="flex items-center space-x-1 text-[11px] text-gray-400 mt-0.5">
-                      <MapPin className="w-3 h-3" />
-                      <span>{w.location}</span>
+
+                    <p className="text-xs text-[#737A75] flex items-center space-x-2">
+                      <span>{w.experienceYears} years experience</span>
+                      <span>·</span>
+                      <span className="flex items-center space-x-1">
+                        <MapPin className="w-3.5 h-3.5 text-[#737A75]" />
+                        <span>{w.location}</span>
+                      </span>
+                    </p>
+
+                    {/* Demonstrated Skills summary */}
+                    <div className="pt-2 text-xs text-[#4A524D]">
+                      <span className="text-[#737A75] font-medium">Demonstrated Skills: </span>
+                      <span className="font-semibold text-[#121614]">{w.skillsSummary}</span>
                     </div>
                   </div>
+
                 </div>
 
-                <button
-                  onClick={() => toggleSaveWorker(w.id)}
-                  className={`p-1.5 rounded-lg border transition-colors ${
-                    isSaved
-                      ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
-                      : 'bg-stone-50 text-gray-400 border-stone-200 hover:text-gray-600'
-                  }`}
-                  title={isSaved ? 'Saved' : 'Save Worker'}
-                >
-                  {isSaved ? <BookmarkCheck className="w-4 h-4 text-emerald-700" /> : <Bookmark className="w-4 h-4" />}
-                </button>
-              </div>
-
-              {/* Explainable Confidence Tier (NOT a generic percentage rating!) */}
-              <div className="p-2.5 rounded-xl bg-stone-50 border border-stone-200 flex items-center justify-between text-xs">
-                <div>
-                  <div className="flex items-center space-x-1.5">
-                    <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
-                    <span className="font-bold text-emerald-950 text-[11px] uppercase tracking-wide">
-                      {w.confidenceLevel} EVIDENCE CONFIDENCE
-                    </span>
+                {/* Right: Evidence Confidence, Counts & Action Buttons */}
+                <div className="lg:border-l lg:border-[#ECE8E0] lg:pl-6 flex flex-col sm:flex-row lg:flex-col items-start sm:items-center lg:items-end justify-between gap-4 shrink-0">
+                  
+                  {/* Evidence Confidence tier (Strictly evidence-backed, NO stars, NO percentages) */}
+                  <div className="space-y-1 sm:text-right lg:text-right">
+                    <div>
+                      {renderConfidenceBadge(w.confidenceLevel)}
+                    </div>
+                    <p className="text-xs text-[#737A75] mt-1 font-medium">
+                      {w.workRecordsCount} work records · {w.evidenceItemsCount} evidence items · {w.confirmationsCount} supervisor confirmations
+                    </p>
                   </div>
-                  <p className="text-[11px] text-gray-600 font-medium mt-0.5">
-                    {w.workRecordsCount} work records · {w.confirmationsCount} supervisor confirmations
-                  </p>
+
+                  {/* Actions: View Passport & Save */}
+                  <div className="flex items-center space-x-3 w-full sm:w-auto pt-1">
+                    <button
+                      onClick={() => toggleSaveWorker(w.id)}
+                      className={`px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center space-x-1.5 border transition-all cursor-pointer ${
+                        isSaved
+                          ? 'bg-[#EBF6EE] text-[#059669] border-[#059669]/30'
+                          : 'bg-[#FAF8F5] hover:bg-white text-[#4A524D] border-[#E5E1D8]'
+                      }`}
+                    >
+                      <Bookmark className="w-3.5 h-3.5" />
+                      <span>{isSaved ? 'Saved ✓' : 'Save'}</span>
+                    </button>
+
+                    <button
+                      onClick={() => onViewPassport(w)}
+                      className="px-5 py-2.5 rounded-xl bg-[#1E3B2B] hover:bg-[#14281D] text-white text-xs font-semibold flex items-center space-x-1.5 transition-colors cursor-pointer shadow-xs"
+                    >
+                      <span>View Passport</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+
                 </div>
-              </div>
 
-              {/* Supported skills preview */}
-              <p className="text-xs text-gray-600">
-                <span className="font-semibold text-gray-700">Demonstrated Skills: </span>
-                {w.skillsSummary}
+              </div>
+            );
+          })}
+
+          {filteredWorkers.length === 0 && (
+            <div className="p-12 text-center bg-white rounded-3xl border border-[#E5E1D8] text-xs text-[#737A75] space-y-2">
+              <p className="font-bold text-base text-[#121614]">
+                {activeTab === 'SAVED' ? 'No saved workers yet' : 'No workers found'}
               </p>
-
-              {/* Action */}
-              <div className="pt-1 flex items-center justify-between border-t border-gray-100 text-xs">
-                <button
-                  onClick={() => toggleSaveWorker(w.id)}
-                  className="text-gray-500 hover:text-gray-800 font-medium"
-                >
-                  {isSaved ? '✓ Saved for Upcoming Project' : '+ Save for Later'}
-                </button>
-
-                <button
-                  onClick={() => {
-                    setActiveRole('worker');
-                    setCurrentTab('passport');
-                  }}
-                  className="px-3 py-1.5 bg-[#233B31] text-white rounded-xl font-semibold flex items-center space-x-1 hover:bg-[#1E3B2B] transition-all"
-                >
-                  <span>View Passport</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
+              <p className="max-w-md mx-auto">
+                {activeTab === 'SAVED'
+                  ? 'Browse the directory of verified workers and click "Save" to shortlist technicians for your projects.'
+                  : 'Try selecting a different trade category or clearing your search keywords.'}
+              </p>
             </div>
-          );
-        })}
+          )}
+        </div>
 
-        {filteredWorkers.length === 0 && (
-          <div className="p-8 text-center bg-white rounded-2xl border border-stone-200 text-xs text-gray-500 space-y-1">
-            <p className="font-bold text-gray-700">No workers found matching your filter</p>
-            <p>Try clearing search keywords or selecting "All" trades.</p>
-          </div>
-        )}
-      </div>
+      </section>
+
     </div>
   );
 };
+
+export default ContractorTab;
