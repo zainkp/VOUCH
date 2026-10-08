@@ -36,6 +36,9 @@ venv.bak/
 .env.production.local
 *.pem
 *.key
+*serviceAccountKey*.json
+serviceAccountKey.json
+
 
 # Build & Output Directories
 dist/
