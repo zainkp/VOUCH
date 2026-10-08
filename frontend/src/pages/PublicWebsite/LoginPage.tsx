@@ -53,7 +53,7 @@ export const LoginPage: React.FC = () => {
           className="inline-flex items-center space-x-2 text-sm font-medium text-[#4A524D] hover:text-[#121614] transition-colors"
         >
           <ArrowLeft className="w-4 h-4 text-[#737A75]" />
-          <span>← Back to Vouch</span>
+          <span>Back to Vouch</span>
         </Link>
 
         <Link to="/" className="flex items-center space-x-2.5 group">

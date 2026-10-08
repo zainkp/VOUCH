@@ -221,7 +221,7 @@ export const EvidenceSection: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                   <div className="md:col-span-5 rounded-xl overflow-hidden border border-[#E5E1D8] shadow-xs aspect-[4/3] bg-gray-100">
                     <img
-                      src="https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=600&auto=format&fit=crop&q=80"
+                      src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop&q=80"
                       alt="Digital insulation multimeter readout"
                       className="w-full h-full object-cover"
                     />

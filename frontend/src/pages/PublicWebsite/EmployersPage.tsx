@@ -18,7 +18,6 @@ import {
   Sparkles, 
   Check, 
   XCircle, 
-  ArrowUpRight,
   BookmarkCheck,
   FileCheck,
   MapPin,
@@ -166,7 +165,10 @@ export const EmployersPage: React.FC = () => {
                     {/* Authentic contractor/supervisor reviewing jobsite quality */}
                     <div className="relative rounded-2xl overflow-hidden border border-[#E5E1D8] shadow-xl bg-gray-100 aspect-[4/5] reveal-image-container">
                       <img
-                        src="https://images.unsplash.com/photo-1541888946425-d0fbb186f5f7?w=1000&auto=format&fit=crop&q=80"
+                        src="/images/supervisor-blueprints.jpg"
+                        onError={(e) => {
+                          e.currentTarget.src = 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1000&auto=format&fit=crop&q=80';
+                        }}
                         alt="Jobsite supervisor inspecting electrical engineering blueprints"
                         className="w-full h-full object-cover filter saturate-[0.95] reveal-image-zoom"
                       />
@@ -178,49 +180,6 @@ export const EmployersPage: React.FC = () => {
                         </span>
                       </div>
                     </div>
-
-                    {/* Subtle Vouch Worker Preview Card Overlay */}
-                    <div className="absolute -bottom-8 -left-4 sm:-left-8 right-4 sm:right-auto sm:w-[340px] bg-white/95 backdrop-blur-md p-5 rounded-2xl border-2 border-[#1E3B2B] shadow-2xl">
-                      <div className="flex items-center justify-between pb-3 border-b border-[#E5E1D8] mb-3">
-                        <div>
-                          <span className="text-[10px] uppercase font-mono font-bold tracking-wider text-[#1E3B2B] block">
-                            EVALUATE WORKER PROOF
-                          </span>
-                          <h4 className="font-display font-extrabold text-lg text-[#121614]">
-                            RAVI KUMAR
-                          </h4>
-                          <p className="text-xs text-[#737A75]">Electrician · 7 years experience · Mangaluru</p>
-                        </div>
-                        <div className="w-10 h-10 rounded-full overflow-hidden border border-[#1E3B2B] shrink-0">
-                          <img
-                            src="https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?w=150&auto=format&fit=crop&q=80"
-                            alt="Ravi Kumar"
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="bg-[#FAF8F5] p-3 rounded-xl border border-[#E5E1D8] mb-3">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-xs font-bold text-[#121614]">Panel Installation</span>
-                          <span className="text-[10px] font-mono font-bold bg-[#EBF6EE] text-[#059669] px-2 py-0.5 rounded border border-[#059669]/20">
-                            HIGH CONFIDENCE
-                          </span>
-                        </div>
-                        <p className="text-[11px] font-mono text-[#737A75]">
-                          8 work records · 12 evidence items · 3 confirmations
-                        </p>
-                      </div>
-
-                      <Link
-                        to="/passport/ravi-kumar-8821"
-                        className="flex items-center justify-between text-xs font-bold text-[#1E3B2B] hover:text-[#14281D] pt-1 group"
-                      >
-                        <span>VIEW PASSPORT</span>
-                        <ArrowUpRight className="w-3.5 h-3.5 text-[#C27A38] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                      </Link>
-                    </div>
-
                   </div>
                 </ScrollReveal>
               </div>

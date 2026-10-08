@@ -61,7 +61,7 @@ export const CategoriesCarousel: React.FC = () => {
       count: '930+ Verified Passports',
       description: 'HVAC chillers, elevator controls, solar inverters, telecom optic fiber.',
       skills: ['Chiller Charging', 'Fiber Splicing', 'Inverter Calibration'],
-      imageUrl: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=800&auto=format&fit=crop&q=80',
+      imageUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80',
     },
     {
       title: 'Construction Workers',

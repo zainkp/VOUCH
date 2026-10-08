@@ -17,7 +17,10 @@ export const WorkerSection: React.FC = () => {
             <ScrollReveal delay={0} duration={700}>
               <div className="relative rounded-2xl overflow-hidden border border-[#E5E1D8] shadow-[0_16px_36px_rgba(18,22,20,0.1)] bg-gray-100 aspect-[4/5] reveal-image-container">
                 <img
-                  src="https://images.unsplash.com/photo-1508873696983-2df5703bc20d?w=1000&auto=format&fit=crop&q=80"
+                  src="/images/skilled-tradesman.jpg"
+                  onError={(e) => {
+                    e.currentTarget.src = 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?w=1000&auto=format&fit=crop&q=80';
+                  }}
                   alt="Skilled tradesman in workshop"
                   className="w-full h-full object-cover object-center filter saturate-[0.95] reveal-image-zoom"
                 />

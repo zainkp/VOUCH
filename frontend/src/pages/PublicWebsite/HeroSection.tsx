@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, CheckCircle2, QrCode, FileText, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import { ScrollReveal } from '../../components/ScrollReveal';
 import { useApp } from '../../context/AppContext';
 
 export const HeroSection: React.FC = () => {
-  const navigate = useNavigate();
   const { isAuthenticated, activeRole } = useApp();
   const buildPassportHref = isAuthenticated && activeRole === 'worker' ? '/build-passport' : '/login?redirect=/build-passport';
 
@@ -107,79 +106,6 @@ export const HeroSection: React.FC = () => {
                   </div>
                 </div>
               </ScrollReveal>
-
-              {/* Floating Vouch Passport UI Element (Routes to /passport) */}
-              <ScrollReveal variant="passport" delay={300} duration={700} className="absolute -bottom-6 -left-4 sm:-left-8 sm:-bottom-8 w-[92%] sm:w-[320px] z-10">
-                <div 
-                  onClick={() => navigate('/passport')}
-                  className="bg-[#FAF8F5] rounded-xl p-4 sm:p-5 border border-[#E5E1D8] shadow-[0_16px_36px_rgba(18,22,20,0.14)] cursor-pointer hover:border-[#1E3B2B] transition-all group"
-                >
-                  {/* Passport Header */}
-                  <div className="flex items-center justify-between pb-3 border-b border-[#ECE8E0] mb-3">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-6 h-6 rounded bg-[#1E3B2B] flex items-center justify-center text-white text-[10px] font-bold">
-                        V
-                      </div>
-                      <div>
-                        <span className="text-[10px] font-mono tracking-wider uppercase text-[#737A75] block leading-none">
-                          Vouch Passport
-                        </span>
-                        <span className="text-xs font-semibold text-[#121614]">
-                          VOUCH-IN-2026-8842
-                        </span>
-                      </div>
-                    </div>
-                    <QrCode className="w-5 h-5 text-[#1E3B2B]" />
-                  </div>
-
-                  {/* Worker Identity Details */}
-                  <div className="flex items-center space-x-3 mb-3.5">
-                    <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 border border-[#E5E1D8] shrink-0">
-                      <img 
-                        src="https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?w=200&auto=format&fit=crop&q=80" 
-                        alt="Ravi Kumar Portrait"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h2 className="text-sm font-bold text-[#121614] leading-tight">
-                        Ravi Kumar
-                      </h2>
-                      <p className="text-xs text-[#4A524D]">
-                        Electrician · 7 years experience
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Demonstrated Skill with Confidence Badge */}
-                  <div className="bg-[#F4EFEB] rounded-lg p-2.5 mb-3 border border-[#E5E1D8]">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-semibold text-[#121614]">
-                        Electrical Wiring
-                      </span>
-                      <span className="inline-flex items-center space-x-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#EBF6EE] text-[#059669] border border-[#059669]/20 font-mono">
-                        <CheckCircle2 className="w-2.5 h-2.5" />
-                        <span>HIGH CONFIDENCE</span>
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between text-[11px] text-[#737A75]">
-                      <span>8 work records</span>
-                      <span>•</span>
-                      <span>3 confirmations</span>
-                    </div>
-                  </div>
-
-                  {/* Interactive Action */}
-                  <div className="flex items-center justify-between text-xs font-semibold text-[#1E3B2B] pt-1 group-hover:text-[#14281D]">
-                    <span className="inline-flex items-center space-x-1">
-                      <FileText className="w-3.5 h-3.5" />
-                      <span>View Verified Passport</span>
-                    </span>
-                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-              </ScrollReveal>
-
             </div>
           </div>
 
