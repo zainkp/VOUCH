@@ -1,14 +1,47 @@
-from typing import Optional, List
-from pydantic import BaseModel, Field
+from datetime import datetime, timezone
+from enum import Enum
+from typing import Optional, List, Any
+from pydantic import BaseModel, Field, model_validator
+
+class ConfidenceTier(str, Enum):
+    LOW = "LOW"
+    MEDIUM = "MEDIUM"
+    HIGH = "HIGH"
 
 class SkillConfidence(BaseModel):
     skill_name: str
-    confidence: int  # 0 to 100 percentage
-    work_count: int
-    confirmation_count: int
-    photo_count: int
-    document_count: int
+    tier: ConfidenceTier = ConfidenceTier.LOW
+    evidence_score: int = Field(
+        default=0,
+        description="Deterministic strength of available evidence (0-100). NOT a measure of innate skill ability."
+    )
+    confidence: int = Field(
+        default=0,
+        description="Backward-compatible alias for evidence_score."
+    )
+    work_count: int = 0
+    confirmation_count: int = 0
+    photo_count: int = 0
+    document_count: int = 0
     explanation: Optional[str] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def sync_evidence_score(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            if "confidence" in data and ("evidence_score" not in data or data["evidence_score"] == 0):
+                data["evidence_score"] = data["confidence"]
+            elif "evidence_score" in data and ("confidence" not in data or data["confidence"] == 0):
+                data["confidence"] = data["evidence_score"]
+        return data
+
+class PassportCompleteness(BaseModel):
+    score: int  # 0 to 100 percentage
+    profile_complete: bool = True
+    has_work_history: bool = True
+    has_evidence: bool = True
+    has_confirmations: bool = True
+    breakdown: Optional[str] = None
 
 class WorkerBase(BaseModel):
     name: str
@@ -18,9 +51,29 @@ class WorkerBase(BaseModel):
     bio: Optional[str] = None
     profile_photo_url: Optional[str] = None
 
+class WorkerProfileCreate(WorkerBase):
+    user_id: str
+    public_slug: Optional[str] = None
+
 class WorkerProfile(WorkerBase):
     id: str
+    user_id: Optional[str] = None  # FK to User; separate from authentication
+    public_slug: Optional[str] = None
     work_count: int = 0
     confirmation_count: int = 0
-    overall_confidence: int = 0
+    overall_evidence_confidence: int = 0
+    overall_confidence: int = 0  # Backward-compatible alias
     demonstrated_skills: List[SkillConfidence] = []
+    passport_completeness: Optional[PassportCompleteness] = None
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    updated_at: Optional[str] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def sync_overall_confidence(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            if "overall_confidence" in data and ("overall_evidence_confidence" not in data or data["overall_evidence_confidence"] == 0):
+                data["overall_evidence_confidence"] = data["overall_confidence"]
+            elif "overall_evidence_confidence" in data and ("overall_confidence" not in data or data["overall_confidence"] == 0):
+                data["overall_confidence"] = data["overall_evidence_confidence"]
+        return data
