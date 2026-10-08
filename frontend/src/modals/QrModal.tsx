@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import QRCode from 'qrcode';
 import { useApp } from '../context/AppContext';
 import { X, Copy, Check, ExternalLink, Shield } from 'lucide-react';
 
 export const QrModal: React.FC = () => {
-  const { isQrModalOpen, setIsQrModalOpen, worker, setActiveRole, setCurrentTab } = useApp();
+  const {
+    isQrModalOpen,
+    setIsQrModalOpen,
+    worker,
+    setActiveRole,
+    setCurrentTab,
+  } = useApp();
+
+  const navigate = useNavigate();
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
   const [copied, setCopied] = useState(false);
 
@@ -40,6 +49,7 @@ export const QrModal: React.FC = () => {
     setIsQrModalOpen(false);
     setActiveRole('contractor');
     setCurrentTab('home');
+    navigate('/contractor');
   };
 
   return (
@@ -49,8 +59,11 @@ export const QrModal: React.FC = () => {
         <div className="w-full flex justify-between items-center pb-2 border-b border-gray-100">
           <div className="flex items-center space-x-1.5 text-left">
             <Shield className="w-4 h-4 text-[#1E3B2B]" />
-            <span className="text-xs font-bold text-gray-900">Share My Vouch Passport</span>
+            <span className="text-xs font-bold text-gray-900">
+              Share My Vouch Passport
+            </span>
           </div>
+
           <button
             onClick={() => setIsQrModalOpen(false)}
             className="p-1 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 cursor-pointer"
@@ -64,14 +77,25 @@ export const QrModal: React.FC = () => {
           <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-800 bg-[#EBF6EE] px-2 py-0.5 rounded-full inline-block mb-1 border border-[#059669]/20">
             Worker-Owned Professional Record
           </span>
-          <h3 className="text-base font-bold text-[#121614]">{worker.name}</h3>
-          <p className="text-xs text-gray-600">{worker.trade} · {worker.experienceYears} Years Exp · {worker.location.split(',')[0]}</p>
+
+          <h3 className="text-base font-bold text-[#121614]">
+            {worker.name}
+          </h3>
+
+          <p className="text-xs text-gray-600">
+            {worker.trade} · {worker.experienceYears} Years Exp ·{' '}
+            {worker.location.split(',')[0]}
+          </p>
         </div>
 
         {/* QR Code */}
         <div className="p-3 bg-stone-50 rounded-2xl border border-stone-200 relative flex items-center justify-center">
           {qrDataUrl ? (
-            <img alt="Passport QR" src={qrDataUrl} className="w-44 h-44 rounded-lg shadow-2xs" />
+            <img
+              alt="Passport QR"
+              src={qrDataUrl}
+              className="w-44 h-44 rounded-lg shadow-2xs"
+            />
           ) : (
             <div className="w-44 h-44 flex items-center justify-center text-xs text-gray-400">
               Generating QR...
@@ -80,19 +104,25 @@ export const QrModal: React.FC = () => {
         </div>
 
         <p className="text-[11px] text-gray-500 max-w-[240px] leading-relaxed">
-          Contractors and employers can scan this to review your work history, verified evidence, and supervisor vouches.
+          Contractors and employers can scan this to review your work history,
+          verified evidence, and supervisor vouches.
         </p>
 
         {/* Link & Actions */}
         <div className="w-full space-y-2">
           <div className="flex items-center justify-between p-2 rounded-xl bg-stone-100 border border-stone-200 text-xs font-mono text-gray-700">
             <span className="truncate pr-2">{publicUrl}</span>
+
             <button
               onClick={handleCopy}
               className="text-[#1E3B2B] hover:text-[#14281D] p-1 font-sans font-semibold shrink-0 cursor-pointer"
               title="Copy URL"
             >
-              {copied ? <Check className="w-4 h-4 text-[#059669]" /> : <Copy className="w-4 h-4" />}
+              {copied ? (
+                <Check className="w-4 h-4 text-[#059669]" />
+              ) : (
+                <Copy className="w-4 h-4" />
+              )}
             </button>
           </div>
 

@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { ArrowLeft, ArrowRight, ShieldCheck } from 'lucide-react';
+import { ScrollReveal } from '../../components/ScrollReveal';
 
 interface TradeCategory {
   title: string;
@@ -100,96 +101,100 @@ export const CategoriesCarousel: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header with Carousel Navigation Buttons */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
-          <div>
-            <p className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold mb-3">
-              07 / TRADE SPECIALIZATIONS
-            </p>
-            <h2 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-6xl text-[#121614] tracking-tight leading-[1.08]">
-              BUILT FOR<br />
-              <span className="text-[#1E3B2B]">REAL WORK.</span>
-            </h2>
-            <p className="text-lg text-[#4A524D] mt-4 max-w-xl">
-              Engineered for hands-on, site-tested vocations where physical work and verifiable technique define true professional caliber.
-            </p>
-          </div>
+        <ScrollReveal delay={0} duration={600}>
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
+            <div>
+              <p className="text-xs font-mono uppercase tracking-widest text-[#1E3B2B] font-bold mb-3">
+                07 / TRADE SPECIALIZATIONS
+              </p>
+              <h2 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-6xl text-[#121614] tracking-tight leading-[1.08]">
+                BUILT FOR<br />
+                <span className="text-[#1E3B2B]">REAL WORK.</span>
+              </h2>
+              <p className="text-lg text-[#4A524D] mt-4 max-w-xl">
+                Engineered for hands-on, site-tested vocations where physical work and verifiable technique define true professional caliber.
+              </p>
+            </div>
 
-          {/* Carousel Arrow Controls */}
-          <div className="flex items-center space-x-3 shrink-0">
-            <button
-              onClick={() => scroll('left')}
-              className="w-12 h-12 rounded-full border border-[#E5E1D8] bg-white hover:bg-[#FAF8F5] text-[#121614] flex items-center justify-center transition-colors shadow-2xs"
-              aria-label="Scroll left"
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => scroll('right')}
-              className="w-12 h-12 rounded-full border border-[#E5E1D8] bg-[#1E3B2B] hover:bg-[#14281D] text-white flex items-center justify-center transition-colors shadow-2xs"
-              aria-label="Scroll right"
-            >
-              <ArrowRight className="w-5 h-5 text-[#C27A38]" />
-            </button>
+            {/* Carousel Arrow Controls */}
+            <div className="flex items-center space-x-3 shrink-0">
+              <button
+                onClick={() => scroll('left')}
+                className="vouch-btn w-12 h-12 rounded-full border border-[#E5E1D8] bg-white hover:bg-[#FAF8F5] text-[#121614] flex items-center justify-center transition-colors shadow-2xs"
+                aria-label="Scroll left"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => scroll('right')}
+                className="vouch-btn w-12 h-12 rounded-full border border-[#E5E1D8] bg-[#1E3B2B] hover:bg-[#14281D] text-white flex items-center justify-center transition-colors shadow-2xs"
+                aria-label="Scroll right"
+              >
+                <ArrowRight className="w-5 h-5 text-[#C27A38]" />
+              </button>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Horizontal Scrollable Carousel Container */}
-        <div
-          ref={scrollContainerRef}
-          className="flex space-x-6 overflow-x-auto no-scrollbar scroll-smooth pb-6 pt-2 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
-        >
-          {categories.map((cat) => (
-            <div
-              key={cat.title}
-              className="w-[280px] sm:w-[320px] md:w-[340px] shrink-0 bg-white rounded-2xl overflow-hidden border border-[#E5E1D8] shadow-[0_12px_24px_rgba(18,22,20,0.06)] hover:border-[#1E3B2B] transition-all group flex flex-col justify-between"
-            >
-              {/* Image Banner */}
-              <div className="relative h-48 sm:h-52 overflow-hidden bg-gray-100">
-                <img
-                  src={cat.imageUrl}
-                  alt={cat.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter saturate-[0.95]"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#121614]/80 via-transparent to-transparent"></div>
-                
-                <div className="absolute top-3 left-3 bg-[#FAF8F5]/90 backdrop-blur-xs px-2.5 py-1 rounded text-[10px] font-mono font-bold text-[#1E3B2B]">
-                  {cat.count}
-                </div>
+        <ScrollReveal delay={120} duration={650}>
+          <div
+            ref={scrollContainerRef}
+            className="flex space-x-6 overflow-x-auto no-scrollbar scroll-smooth pb-6 pt-2 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+          >
+            {categories.map((cat) => (
+              <div
+                key={cat.title}
+                className="w-[280px] sm:w-[320px] md:w-[340px] shrink-0 bg-white rounded-2xl overflow-hidden border border-[#E5E1D8] shadow-[0_12px_24px_rgba(18,22,20,0.06)] hover:border-[#1E3B2B] transition-all group flex flex-col justify-between"
+              >
+                {/* Image Banner */}
+                <div className="relative h-48 sm:h-52 overflow-hidden bg-gray-100 reveal-image-container">
+                  <img
+                    src={cat.imageUrl}
+                    alt={cat.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter saturate-[0.95]"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#121614]/80 via-transparent to-transparent"></div>
+                  
+                  <div className="absolute top-3 left-3 bg-[#FAF8F5]/90 backdrop-blur-xs px-2.5 py-1 rounded text-[10px] font-mono font-bold text-[#1E3B2B]">
+                    {cat.count}
+                  </div>
 
-                <div className="absolute bottom-3 left-3 right-3 text-white">
-                  <h3 className="font-display font-bold text-xl text-white">
-                    {cat.title}
-                  </h3>
-                </div>
-              </div>
-
-              {/* Description & Technical Skills */}
-              <div className="p-5 flex-1 flex flex-col justify-between">
-                <p className="text-xs text-[#4A524D] leading-relaxed mb-4">
-                  {cat.description}
-                </p>
-
-                <div className="pt-3 border-t border-[#ECE8E0]">
-                  <span className="text-[10px] font-mono text-[#737A75] uppercase block mb-1.5">
-                    KEY EVIDENCE CRITERIA
-                  </span>
-                  <div className="flex flex-wrap gap-1">
-                    {cat.skills.map((s, sIdx) => (
-                      <span
-                        key={sIdx}
-                        className="text-[11px] font-mono bg-[#FAF8F5] text-[#1E3B2B] px-2 py-0.5 rounded border border-[#E5E1D8]"
-                      >
-                        {s}
-                      </span>
-                    ))}
+                  <div className="absolute bottom-3 left-3 right-3 text-white">
+                    <h3 className="font-display font-bold text-xl text-white">
+                      {cat.title}
+                    </h3>
                   </div>
                 </div>
-              </div>
 
-            </div>
-          ))}
-        </div>
+                {/* Description & Technical Skills */}
+                <div className="p-5 flex-1 flex flex-col justify-between">
+                  <p className="text-xs text-[#4A524D] leading-relaxed mb-4">
+                    {cat.description}
+                  </p>
+
+                  <div className="pt-3 border-t border-[#ECE8E0]">
+                    <span className="text-[10px] font-mono text-[#737A75] uppercase block mb-1.5">
+                      KEY EVIDENCE CRITERIA
+                    </span>
+                    <div className="flex flex-wrap gap-1">
+                      {cat.skills.map((s, sIdx) => (
+                        <span
+                          key={sIdx}
+                          className="text-[11px] font-mono bg-[#FAF8F5] text-[#1E3B2B] px-2 py-0.5 rounded border border-[#E5E1D8]"
+                        >
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            ))}
+          </div>
+        </ScrollReveal>
 
       </div>
     </section>
