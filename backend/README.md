@@ -1,20 +1,29 @@
-# Backend Service
+# VOUCH Backend Service
 
-The server application handling business logic, database queries, and API endpoints.
+FastAPI backend with Firebase Firestore integration, deterministic Evidence Engine, and AI extraction service.
 
-## 🚀 Getting Started
+## 🚀 Running the Server
 
-```bash
-# Install dependencies
-npm install  # or: pip install -r requirements.txt
+```powershell
+# 1. Navigate to backend directory
+cd backend
 
-# Run server
-npm run dev  # or: uvicorn main:app --reload
+# 2. Activate virtual environment
+.\venv\Scripts\activate
+
+# 3. Start development server
+uvicorn app.main:app --reload --port 5000
 ```
 
-## 📂 Structure
+The interactive Swagger documentation will be available at:
+👉 **http://localhost:5000/docs**
 
-- `src/controllers/` or `routers/`: Route handlers
-- `src/models/`: Database schemas and ORM definitions
-- `src/services/`: Core business logic
-- `src/middlewares/`: Auth, logging, and error handling
+## 📂 Architecture
+
+- `app/api/`: REST route controllers (`workers`, `work`, `confirmations`, `passport`, `ai`)
+- `app/core/`: Configuration & Firebase Admin client
+- `app/schemas/`: Pydantic input/output contract models
+- `app/services/`: Core logic:
+  - `data_service.py`: Firestore CRUD & demo seed data
+  - `evidence_engine.py`: Deterministic 0–100% Evidence Confidence algorithm
+  - `ai_service.py`: Gemini & heuristic work extractor
