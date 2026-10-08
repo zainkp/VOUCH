@@ -29,10 +29,11 @@ class WorkerProfileExtraction(BaseModel):
     experience_years_claimed: Optional[Union[int, float]] = None
     skills: List[str] = Field(default_factory=list)
     location: Optional[str] = None
+    languages: List[str] = Field(default_factory=list)
     employers: List[str] = Field(default_factory=list)
     claims: List[WorkerClaim] = Field(default_factory=list)
 
-    @field_validator("occupation", "location", mode="before")
+    @field_validator("occupation", mode="before")
     @classmethod
     def clean_empty_strings(cls, v: Any) -> Optional[str]:
         if v is None:
@@ -40,6 +41,46 @@ class WorkerProfileExtraction(BaseModel):
         if isinstance(v, str):
             v_stripped = v.strip()
             return v_stripped if v_stripped else None
+        return str(v)
+
+    @field_validator("location", mode="before")
+    @classmethod
+    def normalize_location(cls, v: Any) -> Optional[str]:
+        if v is None:
+            return None
+        if isinstance(v, str):
+            v_stripped = v.strip()
+            if not v_stripped:
+                return None
+            aliases = {
+                "bangalore": "Bengaluru",
+                "bengaluru": "Bengaluru",
+                "बैंगलोर": "Bengaluru",
+                "बेंगलुरु": "Bengaluru",
+                "mangalore": "Mangaluru",
+                "mangaluru": "Mangaluru",
+                "मंगलौर": "Mangaluru",
+                "मंगलोर": "Mangaluru",
+                "bombay": "Mumbai",
+                "mumbai": "Mumbai",
+                "मुंबई": "Mumbai",
+                "calcutta": "Kolkata",
+                "kolkata": "Kolkata",
+                "कोलकाता": "Kolkata",
+                "madras": "Chennai",
+                "chennai": "Chennai",
+                "चेन्नई": "Chennai",
+                "cochin": "Kochi",
+                "kochi": "Kochi",
+                "कोच्चि": "Kochi",
+                "delhi": "Delhi",
+                "दिल्ली": "Delhi",
+                "pune": "Pune",
+                "पुणे": "Pune",
+                "hyderabad": "Hyderabad",
+                "हैदराबाद": "Hyderabad",
+            }
+            return aliases.get(v_stripped.lower(), v_stripped.title())
         return str(v)
 
     @field_validator("experience_years_claimed", mode="before")
@@ -55,7 +96,7 @@ class WorkerProfileExtraction(BaseModel):
         except (ValueError, TypeError):
             return None
 
-    @field_validator("skills", "employers", mode="before")
+    @field_validator("skills", "languages", "employers", mode="before")
     @classmethod
     def ensure_string_list(cls, v: Any) -> List[str]:
         if not v:

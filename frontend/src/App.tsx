@@ -11,6 +11,7 @@ import { HowItWorksPage } from './pages/PublicWebsite/HowItWorksPage';
 import { PassportPage } from './pages/PublicWebsite/PassportPage';
 import { AboutPage } from './pages/PublicWebsite/AboutPage';
 import { LoginPage } from './pages/PublicWebsite/LoginPage';
+import { SignupPage } from './pages/PublicWebsite/SignupPage';
 import { BuildPassportPage } from './pages/PublicWebsite/BuildPassportPage';
 import { PublicPassportPage } from './pages/PublicWebsite/PublicPassportPage';
 import { PublicVerifierPage } from './pages/PublicVerifierPage';
@@ -33,6 +34,7 @@ export function App() {
           <Route path="/passport" element={<PassportPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="/build-passport" element={<BuildPassportPage />} />
 
           {/* Vouch Application Portals & Verification */}

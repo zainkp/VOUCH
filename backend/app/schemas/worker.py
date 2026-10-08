@@ -48,8 +48,11 @@ class WorkerBase(BaseModel):
     trade: str
     experience_years: int
     location: str
+    email: Optional[str] = None
+    phone: Optional[str] = None
     bio: Optional[str] = None
     profile_photo_url: Optional[str] = None
+    languages: List[str] = Field(default_factory=list)
 
 class WorkerProfileCreate(WorkerBase):
     user_id: str
@@ -88,17 +91,25 @@ class InitialWorkRecord(BaseModel):
     skills: List[str] = Field(default_factory=list)
     verifierName: Optional[str] = None
     verifierRole: Optional[str] = None
+    # Supporting Evidence
+    evidence_url: Optional[str] = None
+    evidence_title: Optional[str] = None
+    evidence_type: Optional[str] = "PHOTO"
+    evidence_description: Optional[str] = None
 
 class WorkerOnboardingRequest(BaseModel):
     name: str
     trade: str
     experience_years: int = Field(default=0)
     location: str
+    email: Optional[str] = None
+    phone: Optional[str] = None
     bio: Optional[str] = None
     profile_photo_url: Optional[str] = None
     skills: List[str] = Field(default_factory=list)
-    languages: Optional[str] = None
+    languages: Optional[Any] = None
     initial_work: Optional[InitialWorkRecord] = None
+    initial_works: Optional[List[InitialWorkRecord]] = None
 
     @model_validator(mode="before")
     @classmethod
@@ -111,5 +122,15 @@ class WorkerOnboardingRequest(BaseModel):
                     data["experience_years"] = 0
             if "photoUrl" in data and "profile_photo_url" not in data:
                 data["profile_photo_url"] = data["photoUrl"]
+            # Normalize languages to list of strings
+            raw_langs = data.get("languages")
+            if isinstance(raw_langs, str):
+                cleaned = [l.strip() for l in raw_langs.split(",") if l.strip()]
+                data["languages"] = cleaned
+            elif isinstance(raw_langs, list):
+                data["languages"] = [str(l).strip() for l in raw_langs if str(l).strip()]
+            # Phone cleanup
+            if data.get("phone") and isinstance(data["phone"], str):
+                data["phone"] = data["phone"].strip() or None
         return data
 

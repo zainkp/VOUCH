@@ -25,6 +25,24 @@ export const initialWorker: WorkerProfile = {
   ],
 };
 
+export const emptyWorker: WorkerProfile = {
+  id: '',
+  name: '',
+  trade: 'Tradesperson',
+  experienceYears: 0,
+  location: '',
+  languages: ['English', 'Hindi'],
+  bio: '',
+  avatarUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=400&auto=format&fit=crop&q=80',
+  portraitUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=400&auto=format&fit=crop&q=80',
+  passportId: '',
+  passportCompleteness: 0,
+  overallConfidence: 0,
+  tier: 'LOW',
+  isWorkerOwned: true,
+  certifications: [],
+};
+
 export const initialSkills: SkillEvidenceBreakdown[] = [
   {
     id: 'skill_wiring',

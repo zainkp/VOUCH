@@ -15,12 +15,12 @@ import {
 } from 'lucide-react';
 
 export const ProfileTab: React.FC = () => {
-  const { worker, setActiveRole } = useApp();
+  const { worker, logout } = useApp();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Clear the current authenticated worker session and return to /login
-    setActiveRole('worker');
+    // Clear active worker ID, stored email, and authentication state
+    logout();
     navigate('/login');
   };
 
@@ -100,7 +100,7 @@ export const ProfileTab: React.FC = () => {
               </span>
               <div className="flex items-center space-x-2 text-xs text-[#121614] font-medium">
                 <Mail className="w-3.5 h-3.5 text-[#737A75]" />
-                <span>ravi.kumar@vouchwork.in</span>
+                <span>{worker.email || (typeof localStorage !== 'undefined' ? localStorage.getItem('vouch_user_email') : null) || 'registered@vouchwork.in'}</span>
               </div>
             </div>
             <div className="pt-2 border-t border-[#E5E1D8]">
@@ -109,7 +109,7 @@ export const ProfileTab: React.FC = () => {
               </span>
               <div className="flex items-center space-x-2 text-xs text-[#121614] font-medium">
                 <Phone className="w-3.5 h-3.5 text-[#737A75]" />
-                <span>+91 98450 71234</span>
+                <span>{worker.phone || 'Not provided'}</span>
               </div>
             </div>
           </div>
@@ -144,7 +144,7 @@ export const ProfileTab: React.FC = () => {
               </span>
               <div className="flex items-center space-x-1.5 font-medium text-[#121614]">
                 <Languages className="w-3.5 h-3.5 text-[#737A75]" />
-                <span>{worker.languages.join(', ')}</span>
+                <span>{worker.languages && worker.languages.length > 0 ? worker.languages.join(', ') : 'No languages added yet'}</span>
               </div>
             </div>
           </div>

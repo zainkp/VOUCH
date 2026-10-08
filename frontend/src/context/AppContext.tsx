@@ -7,9 +7,9 @@ import {
   ViewRole,
   EvidenceItem 
 } from '../types';
-import { initialWorker, initialWorkRecords, initialSkills } from '../data/mockData';
+import { initialWorker, initialWorkRecords, initialSkills, emptyWorker } from '../data/mockData';
 import { calculatePassportCompleteness } from '../utils/evidenceEngine';
-import { api, ApiError } from '../services/api';
+import { api, ApiError, AuthUser } from '../services/api';
 import { 
   mapWorkerProfile, 
   mapWorkRecord, 
@@ -40,6 +40,8 @@ interface AppContextType {
   setIsDeviceFramed: (framed: boolean) => void;
   
   // Authentication & Access Flow
+  currentUser: AuthUser | null;
+  setCurrentUser: (user: AuthUser | null) => void;
   isAuthenticated: boolean;
   setIsAuthenticated: (auth: boolean) => void;
 
@@ -55,6 +57,7 @@ interface AppContextType {
   confirmWorkRecord: (recordId: string, verifierName: string, verifierRole: string, organization?: string, notes?: string) => void;
   rejectWorkRecord: (recordId: string, verifierName: string) => void;
   resetDemoData: () => void;
+  logout: () => void;
   
   // Computed metrics
   stats: {
@@ -69,9 +72,9 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [worker, setWorker] = useState<WorkerProfile>(initialWorker);
-  const [workRecords, setWorkRecords] = useState<WorkRecord[]>(initialWorkRecords);
-  const [skills, setSkills] = useState<SkillEvidenceBreakdown[]>(initialSkills);
+  const [worker, setWorker] = useState<WorkerProfile>(emptyWorker);
+  const [workRecords, setWorkRecords] = useState<WorkRecord[]>([]);
+  const [skills, setSkills] = useState<SkillEvidenceBreakdown[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -83,6 +86,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
   const [isDeviceFramed, setIsDeviceFramed] = useState(true);
   const [activeRole, setActiveRole] = useState<ViewRole>('worker');
+  const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [savedWorkerIds, setSavedWorkerIds] = useState<string[]>(['worker_001']);
 
@@ -110,9 +114,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
       setWorker(mappedWorker);
       setWorkRecords(mappedWorks);
-      setSkills(mappedSkills.length > 0 ? mappedSkills : initialSkills);
+      setSkills(mappedSkills);
     } catch (err: any) {
       console.warn('Backend connection error in AppContext:', err);
+      setWorker(emptyWorker);
+      setWorkRecords([]);
+      setSkills([]);
       if (err instanceof ApiError) {
         setError(err.message);
       } else {
@@ -123,9 +130,67 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   }, []);
 
-  useEffect(() => {
-    loadApiData();
+  /**
+   * Hydrates authenticated user session on mount
+   */
+  const initSession = useCallback(async () => {
+    const token = typeof localStorage !== 'undefined' ? localStorage.getItem('vouch_auth_token') : null;
+    if (!token) {
+      setIsAuthenticated(false);
+      setCurrentUser(null);
+      setWorker(emptyWorker);
+      setWorkRecords([]);
+      setSkills([]);
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+    try {
+      const meRes = await api.getMe();
+      const user = (meRes as any)?.user || meRes;
+      if (user && user.email) {
+        setCurrentUser(user);
+        setIsAuthenticated(true);
+        if (user.role === 'contractor') {
+          setActiveRole('contractor');
+        } else {
+          setActiveRole('worker');
+        }
+        if (user.worker_id) {
+          localStorage.setItem('vouch_active_worker_id', user.worker_id);
+          localStorage.setItem('vouch_user_email', user.email);
+        }
+        await loadApiData();
+      } else {
+        throw new Error('Invalid user payload');
+      }
+    } catch (err: any) {
+      console.warn('Session hydration failed on mount:', err);
+      setWorker(emptyWorker);
+      setWorkRecords([]);
+      setSkills([]);
+      // Only clear storage if explicitly 401/403 (token expired/invalid)
+      if (err instanceof ApiError && (err.status === 401 || err.status === 403)) {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.removeItem('vouch_auth_token');
+          localStorage.removeItem('vouch_active_worker_id');
+          localStorage.removeItem('vouch_user_email');
+        }
+        setIsAuthenticated(false);
+        setCurrentUser(null);
+      } else {
+        // Network or connection failure — keep session intact, surface real connection error
+        setError(err?.message || 'Could not connect to VOUCH backend server.');
+      }
+      setIsLoading(false);
+    }
   }, [loadApiData]);
+
+  useEffect(() => {
+    initSession();
+  }, [initSession]);
 
   const addWorkRecord = (data: Partial<WorkRecord>): WorkRecord => {
     const supportedSkills = data.skills && data.skills.length > 0 ? data.skills : ['Electrical Wiring'];
@@ -234,13 +299,35 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const isSavedWorker = (workerId: string) => savedWorkerIds.includes(workerId);
 
   const resetDemoData = () => {
-    loadApiData();
+    setWorker(initialWorker);
+    setWorkRecords(initialWorkRecords);
+    setSkills(initialSkills);
+    setError(null);
   };
 
   const totalConfirmations = workRecords.reduce(
     (acc, r) => acc + (r.confirmations || []).filter(c => c.status === 'CONFIRMED').length, 
     0
   );
+
+  const logout = useCallback(async () => {
+    try {
+      await api.logout();
+    } catch {
+      // Ignore network error on logout
+    }
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('vouch_auth_token');
+      localStorage.removeItem('vouch_active_worker_id');
+      localStorage.removeItem('vouch_user_email');
+    }
+    setCurrentUser(null);
+    setIsAuthenticated(false);
+    setWorker(emptyWorker);
+    setWorkRecords([]);
+    setSkills([]);
+    setError(null);
+  }, []);
 
   const stats = {
     workCount: workRecords.length,
@@ -259,6 +346,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         isLoading,
         error,
         refreshData: loadApiData,
+        logout,
         currentTab,
         setCurrentTab,
         selectedWorkRecord,
@@ -273,6 +361,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setIsQrModalOpen,
         isDeviceFramed,
         setIsDeviceFramed,
+        currentUser,
+        setCurrentUser,
         isAuthenticated,
         setIsAuthenticated,
         activeRole,

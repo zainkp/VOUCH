@@ -69,7 +69,7 @@ export const WorkTab: React.FC = () => {
   // ---------------------------------------------------------------------------
   // 2. Error State
   // ---------------------------------------------------------------------------
-  if (error && workRecords.length === 0) {
+  if (error) {
     return (
       <div className="w-full max-w-5xl mx-auto py-12 px-6 bg-white rounded-3xl border border-[#E5E1D8] text-center space-y-5">
         <div className="w-12 h-12 rounded-2xl bg-[#FAF0F0] text-[#9E4545] flex items-center justify-center mx-auto">

@@ -18,9 +18,9 @@ class BaseLLMProvider(ABC):
 
 
 class GeminiProvider(BaseLLMProvider):
-    def __init__(self, api_key: Optional[str] = None, model: str = "gemini-1.5-flash", timeout: int = 10):
+    def __init__(self, api_key: Optional[str] = None, model: Optional[str] = None, timeout: int = 25):
         self.api_key = api_key or os.getenv("GEMINI_API_KEY")
-        self.model = model
+        self.model = model or os.getenv("GEMINI_EXTRACTION_MODEL") or os.getenv("GEMINI_MODEL") or "gemini-3.5-flash-lite"
         self.timeout = timeout
 
     def extract(self, text: str) -> Optional[Dict[str, Any]]:

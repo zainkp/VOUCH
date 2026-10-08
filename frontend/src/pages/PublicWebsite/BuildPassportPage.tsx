@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { PublicNavbar } from './PublicNavbar';
 import { PublicFooter } from './PublicFooter';
 import { ScrollReveal } from '../../components/ScrollReveal';
@@ -22,39 +22,94 @@ import {
   MicOff,
   Loader2,
   ExternalLink,
-  AlertCircle
+  AlertCircle,
+  Plus,
+  Trash2,
+  Phone,
+  HelpCircle,
+  Languages,
+  X
 } from 'lucide-react';
 
-export const BuildPassportPage: React.FC = () => {
-  const { worker, isAuthenticated, activeRole, addWorkRecord, setActiveRole, refreshData } = useApp();
-  const navigate = useNavigate();
+export interface WorkExperienceItem {
+  id: string;
+  title: string;
+  employer: string;
+  role: string;
+  location: string;
+  description: string;
+  evidenceUrl: string;
+  evidenceTitle: string;
+  evidenceType: string;
+  evidenceDescription: string;
+  verifierName: string;
+  verifierRole: string;
+}
 
-  // Redirect unauthenticated visitors to /login
+export const BuildPassportPage: React.FC = () => {
+  const { 
+    worker, 
+    currentUser, 
+    isAuthenticated, 
+    activeRole, 
+    setActiveRole, 
+    setIsAuthenticated, 
+    refreshData 
+  } = useApp();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const emailParam = (searchParams.get('email') || '').trim();
+
+  // Redirect unauthenticated visitors to /login unless routed with an email to onboard
   useEffect(() => {
-    if (!isAuthenticated || activeRole !== 'worker') {
+    if (!isAuthenticated && !emailParam && activeRole !== 'worker') {
       navigate('/login?redirect=/build-passport', { replace: true });
     }
-  }, [isAuthenticated, activeRole, navigate]);
+  }, [isAuthenticated, emailParam, activeRole, navigate]);
 
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
 
-  // Form State - Starts Completely Empty
-  const [name, setName] = useState('');
-  const [trade, setTrade] = useState('');
+  // Form State - Pre-fills from authenticated currentUser or email query param
+  const [name, setName] = useState(currentUser?.name || '');
+  const [email, setEmail] = useState(currentUser?.email || emailParam);
+  const [phone, setPhone] = useState(currentUser?.phone || '');
+  const [trade, setTrade] = useState('Electrician');
   const [experienceYears, setExperienceYears] = useState('');
   const [location, setLocation] = useState('');
-  const [languages, setLanguages] = useState('');
+  
+  // Languages State
+  const commonLanguages = [
+    'Kannada',
+    'Hindi',
+    'English',
+    'Tamil',
+    'Telugu',
+    'Malayalam',
+    'Marathi',
+    'Bengali',
+    'Gujarati',
+    'Odia',
+    'Punjabi'
+  ];
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+  const [customLanguage, setCustomLanguage] = useState('');
+
+  // Sync state if currentUser hydrates after initial mount
+  useEffect(() => {
+    if (currentUser) {
+      if (currentUser.name && !name) setName(currentUser.name);
+      if (currentUser.email && !email) setEmail(currentUser.email);
+    }
+  }, [currentUser]);
 
   // AI Extraction State
   const [aiTextPrompt, setAiTextPrompt] = useState('');
   const [isExtracting, setIsExtracting] = useState(false);
   const [aiFeedback, setAiFeedback] = useState<string | null>(null);
 
-  // Voice Recording State
+  // Voice Recording State using Browser SpeechRecognition
   const [isRecording, setIsRecording] = useState(false);
-  const [isTranscribing, setIsTranscribing] = useState(false);
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const audioChunksRef = useRef<Blob[]>([]);
+  const recognitionRef = useRef<any>(null);
 
   // Submission State
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -63,30 +118,42 @@ export const BuildPassportPage: React.FC = () => {
 
   // Validation States
   const [experienceError, setExperienceError] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
 
   // Selected Skills - Starts Empty
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
-  // First Work Record - Starts Empty
-  const [workTitle, setWorkTitle] = useState('');
-  const [employer, setEmployer] = useState('');
-  const [role, setRole] = useState('');
-  const [workDescription, setWorkDescription] = useState('');
-  const [photoUrl, setPhotoUrl] = useState('');
-  const [verifierName, setVerifierName] = useState('');
-  const [verifierRole, setVerifierRole] = useState('');
+  // Trade-specific answers bank
+  const [tradeAnswers, setTradeAnswers] = useState<Record<string, string[]>>({});
+
+  // Multiple Work Experiences - Starts with 1 empty item
+  const [workExperiences, setWorkExperiences] = useState<WorkExperienceItem[]>([
+    {
+      id: 'work_1',
+      title: '',
+      employer: '',
+      role: '',
+      location: '',
+      description: '',
+      evidenceUrl: '',
+      evidenceTitle: '',
+      evidenceType: 'PHOTO',
+      evidenceDescription: '',
+      verifierName: '',
+      verifierRole: '',
+    }
+  ]);
 
   const availableTrades = [
     'Electrician',
     'Plumber',
+    'Welder',
     'Carpenter',
-    'Mechanic',
-    'Welder & Fabricator',
+    'Mason',
+    'Solar Technician',
     'HVAC Technician',
-    'Heavy Equipment Operator',
-    'Construction Mason',
-    'Painter & Finisher',
+    'Painter',
   ];
 
   const skillOptionsByTrade: Record<string, string[]> = {
@@ -104,6 +171,55 @@ export const BuildPassportPage: React.FC = () => {
       'Sanitary Fixtures',
       'Drainage Grading',
       'Solar Water Heaters',
+      'Water Pump Maintenance',
+    ],
+    Welder: [
+      'SMAW Arc Welding',
+      'MIG Welding',
+      'TIG Stainless Welding',
+      'Structural Steel Fabrication',
+      'Pipe Joint Welding',
+      'Gas Cutting',
+    ],
+    Carpenter: [
+      'Modular Cabinetry',
+      'Architectural Joinery',
+      'Formwork & Shuttering',
+      'Wood Polishing',
+      'Power Tool Operation',
+      'Hardware Fitting',
+    ],
+    Mason: [
+      'Brick & Block Masonry',
+      'Plastering & Rendering',
+      'Tile & Stone Laying',
+      'Concrete Pouring & Leveling',
+      'Waterproofing Application',
+      'Plumb & Spirit Leveling',
+    ],
+    'Solar Technician': [
+      'PV Module Mounting',
+      'Solar Inverter Wiring',
+      'DC Combiner Box Setup',
+      'Net Metering Integration',
+      'Array Troubleshooting',
+      'Battery Bank Installation',
+    ],
+    'HVAC Technician': [
+      'Split AC Installation',
+      'VRF System Servicing',
+      'Refrigerant Gas Charging',
+      'Ductwork Installation',
+      'Compressor Diagnostics',
+      'Thermostat & Control Wiring',
+    ],
+    Painter: [
+      'Wall Putty Application',
+      'Interior Emulsion Painting',
+      'Exterior Weather Coating',
+      'Waterproof Coating',
+      'Airless Spray Application',
+      'Wood & Metal Enamel Polish',
     ],
     default: [
       'Site Safety Compliance',
@@ -113,7 +229,147 @@ export const BuildPassportPage: React.FC = () => {
     ]
   };
 
+  const tradeQuestionBank: Record<string, { id: string; question: string; options: string[] }[]> = {
+    Electrician: [
+      {
+        id: 'elec_voltage',
+        question: 'What voltage systems do you primarily work on?',
+        options: ['Single-phase (230V residential)', 'Three-phase (415V commercial/industrial)', 'High tension (11kV+)']
+      },
+      {
+        id: 'elec_tools',
+        question: 'Which specialized testing equipment do you operate?',
+        options: ['Megger / Insulation Tester', 'Digital Multimeter & Clamp Meter', 'Earth Resistance Tester', 'Cable Fault Locator']
+      },
+      {
+        id: 'elec_license',
+        question: 'Do you hold an electrical license or supervisor permit?',
+        options: ['Wireman Permit / License', 'Electrical Supervisor Permit', 'ITI / Diploma Certificate', 'No formal permit']
+      }
+    ],
+    Plumber: [
+      {
+        id: 'plumb_materials',
+        question: 'Which piping systems do you work with most?',
+        options: ['CPVC & UPVC pipelines', 'GI & Cast Iron pipes', 'PEX / PPR plumbing', 'Concealed copper piping']
+      },
+      {
+        id: 'plumb_pressure',
+        question: 'Do you perform hydrostatic pressure testing for leak detection?',
+        options: ['Yes, using manual/hydraulic test pump', 'Visual inspection & line gravity test', 'In collaboration with senior engineer']
+      },
+      {
+        id: 'plumb_install',
+        question: 'Which installations do you specialize in?',
+        options: ['Sanitary fixtures & concealed valves', 'Overhead & underground tank pumps', 'Solar water heating manifolds', 'Sewage & stormwater drainage']
+      }
+    ],
+    Welder: [
+      {
+        id: 'weld_process',
+        question: 'Which welding processes are you skilled in?',
+        options: ['SMAW / Shielded Metal Arc (Stick)', 'MIG / GMAW (Gas Metal Arc)', 'TIG / GTAW (Gas Tungsten Arc)', 'Oxy-Acetylene Cutting & Gas Welding']
+      },
+      {
+        id: 'weld_position',
+        question: 'What welding positions are you comfortable working in?',
+        options: ['Flat & Horizontal (1G, 2G)', 'Vertical & Overhead (3G, 4G)', 'Pipe all-position (5G, 6G)']
+      },
+      {
+        id: 'weld_metals',
+        question: 'Which materials do you commonly fabricate?',
+        options: ['Mild Carbon Steel (MS)', 'Stainless Steel (SS 304/316)', 'Structural I-Beams & Truss sections', 'Aluminium Alloys']
+      }
+    ],
+    Carpenter: [
+      {
+        id: 'carp_types',
+        question: 'What is your primary carpentry specialization?',
+        options: ['Modular kitchen & cabinet making', 'Door/window frames & architectural woodwork', 'Shuttering & concrete formwork', 'Hardwood furniture & polishing']
+      },
+      {
+        id: 'carp_tools',
+        question: 'Which power tools do you routinely operate?',
+        options: ['Table saw & miter saw', 'Router & trimmer', 'Planer & joiner', 'Pneumatic nailer & compressor']
+      },
+      {
+        id: 'carp_materials',
+        question: 'Which sheet goods and timber do you work with?',
+        options: ['BWP/BWR Plywood & Marine Ply', 'MDF / HDHMR boards', 'Teak & hardwood timber', 'Laminates & acrylic sheets']
+      }
+    ],
+    Mason: [
+      {
+        id: 'mason_work',
+        question: 'What types of masonry work do you execute?',
+        options: ['Red brick & fly-ash brick masonry', 'AAC block & hollow concrete block masonry', 'Stone rubble masonry & boundary walls', 'Plastering & ceiling rendering']
+      },
+      {
+        id: 'mason_mix',
+        question: 'Do you supervise cement mortar and concrete mix ratios?',
+        options: ['Yes (1:3, 1:4, 1:6 mortar ratios)', 'Yes, RMC pouring & vibrator compaction', 'Basic helper-assisted mixing']
+      },
+      {
+        id: 'mason_tools',
+        question: 'Which leveling and alignment tools do you use on site?',
+        options: ['Spirit level & plumb bob (साहुल)', 'Water tube leveling', 'Laser level tool', 'Right-angle square (गुनिया)']
+      }
+    ],
+    'Solar Technician': [
+      {
+        id: 'solar_type',
+        question: 'Which solar installations have you completed?',
+        options: ['Rooftop on-grid PV systems', 'Off-grid battery storage systems', 'Commercial/Industrial megawatt plants', 'Solar water pumps for agriculture']
+      },
+      {
+        id: 'solar_inverter',
+        question: 'Which inverter and balance of system (BOS) equipment do you configure?',
+        options: ['String inverters & micro-inverters', 'Hybrid solar inverters', 'DC combiner boxes & surge arrestors', 'Net-metering bidirectional meters']
+      },
+      {
+        id: 'solar_safety',
+        question: 'What safety gear or roof fall protection do you utilize?',
+        options: ['Full-body harness & safety lifeline', 'PV DC isolation lock-out tag-out (LOTO)', 'Standard PPE (helmet, gloves, boots)']
+      }
+    ],
+    'HVAC Technician': [
+      {
+        id: 'hvac_systems',
+        question: 'Which HVAC systems do you service and install?',
+        options: ['Split & multi-split air conditioners', 'VRF / VRV commercial multi-systems', 'Chiller plants & cooling towers', 'Ductable packaged units']
+      },
+      {
+        id: 'hvac_refrigerant',
+        question: 'Which refrigerants do you charge and recover?',
+        options: ['R-32 & R-410A eco refrigerants', 'R-134a commercial chillers', 'R-22 legacy units', 'Pressure vacuum leak testing']
+      },
+      {
+        id: 'hvac_diagnostics',
+        question: 'What diagnostic tools do you operate?',
+        options: ['Digital manifold gauge set', 'Vacuum micron gauge', 'Airflow anemometer & CFM hood', 'Thermal imaging leak camera']
+      }
+    ],
+    Painter: [
+      {
+        id: 'paint_surface',
+        question: 'What surface prep and finishing techniques do you master?',
+        options: ['Wall putty & primer sanding (smooth finish)', 'Waterproofing & damp-proofing treatment', 'Exterior weather-coat texturing', 'Wood polish (PU/melamine) & metal enamel']
+      },
+      {
+        id: 'paint_application',
+        question: 'Which application methods do you use?',
+        options: ['Airless paint sprayer', 'Roller & precision cut-in brush', 'Texture trowel & patterned rollers']
+      },
+      {
+        id: 'paint_safety',
+        question: 'What access equipment do you work on for high-reach projects?',
+        options: ['H-frame scaffolding', 'Suspended cradle / jhula', 'Extension ladders & mobile towers']
+      }
+    ]
+  };
+
   const currentTradeSkills = skillOptionsByTrade[trade] || skillOptionsByTrade['default'];
+  const currentTradeQuestions = tradeQuestionBank[trade] || [];
 
   // Experience Validation handler (0 to 80 numeric only)
   const handleExperienceChange = (val: string) => {
@@ -123,7 +379,6 @@ export const BuildPassportPage: React.FC = () => {
       return;
     }
 
-    // Reject non-numeric characters (no negatives, no letters, no symbols)
     if (!/^\d+$/.test(val)) {
       setExperienceError('Experience must be between 0 and 80 years.');
       return;
@@ -137,6 +392,78 @@ export const BuildPassportPage: React.FC = () => {
     } else {
       setExperienceError(null);
     }
+  };
+
+  // Phone Validation handler
+  const handlePhoneChange = (val: string) => {
+    setPhone(val);
+    if (!val.trim()) {
+      setPhoneError(null);
+      return;
+    }
+    if (!/^[\d+\s\-()]{7,18}$/.test(val.trim())) {
+      setPhoneError('Please enter a valid phone number (e.g. +91 98450 71234)');
+    } else {
+      setPhoneError(null);
+    }
+  };
+
+  // Language management
+  const toggleLanguage = (lang: string) => {
+    setSelectedLanguages(prev =>
+      prev.includes(lang) ? prev.filter(l => l !== lang) : [...prev, lang]
+    );
+  };
+
+  const handleAddCustomLanguage = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const clean = customLanguage.trim();
+    if (clean && !selectedLanguages.includes(clean)) {
+      setSelectedLanguages(prev => [...prev, clean]);
+      setCustomLanguage('');
+    }
+  };
+
+  // Work experience management
+  const handleAddWorkExperience = () => {
+    if (workExperiences.length >= 5) return;
+    setWorkExperiences(prev => [
+      ...prev,
+      {
+        id: `work_${Date.now()}`,
+        title: '',
+        employer: '',
+        role: '',
+        location: '',
+        description: '',
+        evidenceUrl: '',
+        evidenceTitle: '',
+        evidenceType: 'PHOTO',
+        evidenceDescription: '',
+        verifierName: '',
+        verifierRole: '',
+      }
+    ]);
+  };
+
+  const handleRemoveWorkExperience = (id: string) => {
+    if (workExperiences.length <= 1) return;
+    setWorkExperiences(prev => prev.filter(w => w.id !== id));
+  };
+
+  const handleUpdateWorkExperience = (id: string, field: keyof WorkExperienceItem, value: any) => {
+    setWorkExperiences(prev => prev.map(w => w.id === id ? { ...w, [field]: value } : w));
+  };
+
+  // Trade question answer toggle
+  const toggleTradeAnswer = (questionId: string, option: string) => {
+    setTradeAnswers(prev => {
+      const existing = prev[questionId] || [];
+      const updated = existing.includes(option)
+        ? existing.filter(o => o !== option)
+        : [...existing, option];
+      return { ...prev, [questionId]: updated };
+    });
   };
 
   // Step 1 Validation & Proceed
@@ -157,6 +484,10 @@ export const BuildPassportPage: React.FC = () => {
     const num = parseInt(experienceYears, 10);
     if (isNaN(num) || num < 0 || num > 80 || !/^\d+$/.test(experienceYears.trim())) {
       setExperienceError('Experience must be between 0 and 80 years.');
+      return;
+    }
+
+    if (phoneError) {
       return;
     }
 
@@ -184,7 +515,6 @@ export const BuildPassportPage: React.FC = () => {
       let updatedCount = 0;
 
       if (extracted.occupation) {
-        // Find best match in available trades
         const matched = availableTrades.find(
           t => t.toLowerCase() === extracted.occupation!.toLowerCase()
         ) || (extracted.occupation.charAt(0).toUpperCase() + extracted.occupation.slice(1));
@@ -202,8 +532,12 @@ export const BuildPassportPage: React.FC = () => {
         updatedCount++;
       }
 
+      if (extracted.languages && extracted.languages.length > 0) {
+        setSelectedLanguages(prev => Array.from(new Set([...prev, ...extracted.languages])));
+        updatedCount += extracted.languages.length;
+      }
+
       if (extracted.skills && extracted.skills.length > 0) {
-        // Capitalize and add skills
         const formattedSkills = extracted.skills.map(
           s => s.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
         );
@@ -211,7 +545,7 @@ export const BuildPassportPage: React.FC = () => {
         updatedCount += extracted.skills.length;
       }
 
-      setAiFeedback(`Extracted claims successfully: updated occupation, experience, and ${extracted.skills.length} skills for your review.`);
+      setAiFeedback(`Extracted claims successfully: updated occupation, experience, location, ${extracted.languages?.length || 0} languages, and ${extracted.skills.length} skills for your review.`);
     } catch (err: any) {
       console.warn('AI Profile extraction error:', err);
       setAiFeedback('AI extraction service temporarily unavailable. You can fill the details manually below.');
@@ -220,56 +554,65 @@ export const BuildPassportPage: React.FC = () => {
     }
   };
 
-  // Voice Recording & Transcription Handler
-  const handleToggleVoice = async () => {
+  // Voice Recording Handler via Browser SpeechRecognition (reusing proven AddWork pattern)
+  const handleToggleVoice = () => {
     if (isRecording) {
-      // Stop recording
-      if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
-        mediaRecorderRef.current.stop();
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.stop();
+        } catch (_) {}
       }
       setIsRecording(false);
       return;
     }
 
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      audioChunksRef.current = [];
-      const recorder = new MediaRecorder(stream);
-      mediaRecorderRef.current = recorder;
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      setAiFeedback('Voice input is not supported in this browser. You can type instead.');
+      return;
+    }
 
-      recorder.ondataavailable = (e) => {
-        if (e.data.size > 0) audioChunksRef.current.push(e.data);
+    try {
+      const recognition = new SpeechRecognition();
+      recognitionRef.current = recognition;
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'en-IN';
+
+      recognition.onstart = () => {
+        setIsRecording(true);
+        setAiFeedback('Listening...');
       };
 
-      recorder.onstop = async () => {
-        stream.getTracks().forEach(t => t.stop());
-        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
-        
-        setIsTranscribing(true);
-        setAiFeedback('Transcribing speech with Gemini...');
-        try {
-          const res = await api.transcribeAudio(audioBlob, 'voice_profile.webm');
-          if (res.transcript && res.transcript.trim()) {
-            setAiTextPrompt(res.transcript);
-            setAiFeedback(`Heard: "${res.transcript}". Extracting profile details...`);
-            await handleAIExtract(res.transcript);
-          } else {
-            setAiFeedback('No clear speech detected. Please speak clearly or type your experience.');
-          }
-        } catch (err: any) {
-          console.warn('Voice transcription error:', err);
-          setAiFeedback('Voice transcription unavailable. Please type your experience in the box.');
-        } finally {
-          setIsTranscribing(false);
+      recognition.onresult = async (event: any) => {
+        setIsRecording(false);
+        const transcript = event.results?.[0]?.[0]?.transcript;
+        if (transcript && transcript.trim()) {
+          setAiTextPrompt(transcript);
+          setAiFeedback(`Heard: "${transcript}". Extracting profile details...`);
+          await handleAIExtract(transcript);
+        } else {
+          setAiFeedback('No speech detected. Please try again or type instead.');
         }
       };
 
-      recorder.start();
-      setIsRecording(true);
-      setAiFeedback('Listening... Speak your experience in English, Hindi, or Hinglish.');
-    } catch (err) {
-      console.warn('Microphone error:', err);
-      setAiFeedback('Microphone permission required for speech recording.');
+      recognition.onerror = (event: any) => {
+        setIsRecording(false);
+        if (event.error === 'no-speech') {
+          setAiFeedback('No speech detected. Please try again or type instead.');
+        } else {
+          setAiFeedback('Voice input unavailable. You can type instead.');
+        }
+      };
+
+      recognition.onend = () => {
+        setIsRecording(false);
+      };
+
+      recognition.start();
+    } catch (err: any) {
+      setIsRecording(false);
+      setAiFeedback('Voice input unavailable. You can type instead.');
     }
   };
 
@@ -278,39 +621,59 @@ export const BuildPassportPage: React.FC = () => {
     setSubmitError(null);
 
     try {
-      const payload: WorkerOnboardingPayload = {
-        name,
-        trade,
-        experience_years: parseInt(experienceYears, 10) || 0,
-        location,
-        skills: selectedSkills,
-        languages,
-        initial_work: {
-          title: workTitle,
-          employer,
-          role,
-          description: workDescription,
-          location,
-          imageUrl: photoUrl,
+      const cleanEmail = (email || currentUser?.email || '').trim().toLowerCase();
+      
+      // Build initial_works array (up to 5 entries)
+      const initialWorksPayload = workExperiences
+        .filter(w => w.title.trim().length > 0)
+        .map(w => ({
+          title: w.title.trim(),
+          employer: w.employer.trim() || undefined,
+          role: w.role.trim() || undefined,
+          description: w.description.trim() || undefined,
+          location: w.location.trim() || location.trim() || undefined,
+          imageUrl: w.evidenceUrl.trim() || undefined,
+          evidence_url: w.evidenceUrl.trim() || undefined,
+          evidence_title: w.evidenceTitle.trim() || undefined,
+          evidence_type: w.evidenceType || 'PHOTO',
+          evidence_description: w.evidenceDescription.trim() || undefined,
           skills: selectedSkills,
-          verifierName: verifierName || undefined,
-          verifierRole: verifierRole || undefined,
-        }
+          verifierName: w.verifierName.trim() || undefined,
+          verifierRole: w.verifierRole.trim() || undefined,
+        }));
+
+      const payload: WorkerOnboardingPayload = {
+        name: (name || currentUser?.name || 'Skilled Worker').trim(),
+        trade: trade.trim() || 'Electrician',
+        experience_years: parseInt(experienceYears, 10) || 0,
+        location: location.trim() || 'India',
+        email: cleanEmail || undefined,
+        phone: phone.trim() || undefined,
+        skills: selectedSkills,
+        languages: selectedLanguages,
+        initial_work: initialWorksPayload[0] || undefined,
+        initial_works: initialWorksPayload.length > 0 ? initialWorksPayload : undefined,
       };
 
-      // Persist to Firestore: POST /api/workers
+      // Persist to backend: POST /api/workers
       const created = await api.createWorker(payload);
       setCreatedProfile(created);
 
-      // Save active worker ID to localStorage so profile survives page reload
-      if (created.id) {
-        localStorage.setItem('vouch_active_worker_id', created.id);
+      // Save active worker ID & email to localStorage so profile survives page reload
+      const finalWorkerId = created.id || currentUser?.worker_id;
+      if (finalWorkerId) {
+        localStorage.setItem('vouch_active_worker_id', finalWorkerId);
       }
+      if (cleanEmail) {
+        localStorage.setItem('vouch_user_email', cleanEmail);
+      }
+
+      setIsAuthenticated(true);
+      setActiveRole('worker');
 
       // Refresh global context from backend
       await refreshData();
 
-      setActiveRole('worker');
       setStep(4);
     } catch (err: any) {
       console.error('Failed to create worker profile:', err);
@@ -320,8 +683,8 @@ export const BuildPassportPage: React.FC = () => {
     }
   };
 
-  // Do not render if unauthenticated (redirecting in useEffect)
-  if (!isAuthenticated || activeRole !== 'worker') {
+  // Do not render if unauthenticated unless arriving with an email to build passport
+  if (!isAuthenticated && !emailParam && activeRole !== 'worker') {
     return null;
   }
 
@@ -375,28 +738,25 @@ export const BuildPassportPage: React.FC = () => {
                     <span className="text-[10px] font-mono text-[#737A75]">HINDI / ENGLISH / HINGLISH</span>
                   </div>
                   <p className="text-xs text-[#525B54] mb-3">
-                    Describe your trade experience naturally, or speak into the microphone. AI will extract your trade, experience years, location, and skills into the form fields below for your review.
+                    Describe your trade experience naturally, or speak into the microphone. AI will extract your trade, experience years, location, languages, and skills into the form fields below for your review.
                   </p>
                   <div className="relative mb-3">
                     <textarea
                       rows={2}
                       value={aiTextPrompt}
                       onChange={(e) => setAiTextPrompt(e.target.value)}
-                      placeholder='e.g., "I have been working as an electrician for 10 years in Pune. I know 3-phase wiring and motor repair."'
+                      placeholder='e.g., "I have been working as an electrician for 8 years in Bengaluru. I speak Kannada, Hindi and English."'
                       className="w-full p-3 pr-12 rounded-xl border border-[#D8D2C5] bg-white text-xs text-[#121614] placeholder-[#8C938E] focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none resize-none"
                     />
                     <button
                       type="button"
                       onClick={handleToggleVoice}
-                      title={isRecording ? "Stop recording" : "Record voice with microphone"}
+                      title={isRecording ? "Stop recording" : "Use voice"}
                       className={`absolute right-2.5 top-2.5 p-2 rounded-lg transition-colors cursor-pointer ${
                         isRecording 
                           ? 'bg-red-600 text-white animate-pulse' 
-                          : isTranscribing 
-                            ? 'bg-[#E5E1D8] text-[#737A75]' 
-                            : 'bg-[#1E3B2B] text-white hover:bg-[#14281D]'
+                          : 'bg-[#1E3B2B] text-white hover:bg-[#14281D]'
                       }`}
-                      disabled={isTranscribing}
                     >
                       {isRecording ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
                     </button>
@@ -405,7 +765,7 @@ export const BuildPassportPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => handleAIExtract()}
-                      disabled={isExtracting || isTranscribing || !aiTextPrompt.trim()}
+                      disabled={isExtracting || isRecording || !aiTextPrompt.trim()}
                       className="px-4 py-2 rounded-lg bg-[#1E3B2B] text-white text-xs font-bold hover:bg-[#14281D] disabled:opacity-50 transition-colors flex items-center space-x-1.5 cursor-pointer"
                     >
                       {isExtracting ? (
@@ -455,6 +815,42 @@ export const BuildPassportPage: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                        Registered Email Address
+                      </label>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="e.g. name@example.com"
+                        className="w-full p-3.5 rounded-xl border border-[#E5E1D8] text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold flex items-center justify-between">
+                        <span>Phone Number (Optional)</span>
+                        <span className="text-[10px] text-[#737A75]">SMS Alerts</span>
+                      </label>
+                      <input
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => handlePhoneChange(e.target.value)}
+                        placeholder="e.g. +91 98450 71234"
+                        className={`w-full p-3.5 rounded-xl border text-sm font-semibold focus:outline-none transition-colors ${
+                          phoneError 
+                            ? 'border-red-500 bg-red-50/20 focus:border-red-500 focus:ring-1 focus:ring-red-500' 
+                            : 'border-[#E5E1D8] focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B]'
+                        }`}
+                      />
+                      {phoneError && (
+                        <p className="text-xs text-red-600 mt-1 font-medium">{phoneError}</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
                         Primary Profession / Trade
                       </label>
                       <select
@@ -465,7 +861,6 @@ export const BuildPassportPage: React.FC = () => {
                         }}
                         className="w-full p-3.5 rounded-xl border border-[#E5E1D8] text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none bg-white text-[#121614]"
                       >
-                        <option value="" disabled>Select a trade ▼</option>
                         {availableTrades.map(t => (
                           <option key={t} value={t}>{t}</option>
                         ))}
@@ -496,32 +891,78 @@ export const BuildPassportPage: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
-                        Primary Work Location
-                      </label>
-                      <input
-                        type="text"
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                        placeholder="e.g. City, State"
-                        className="w-full p-3.5 rounded-xl border border-[#E5E1D8] text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
-                      />
+                  <div>
+                    <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                      Primary Work Location (City, State)
+                    </label>
+                    <input
+                      type="text"
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      placeholder="e.g. Bengaluru, Karnataka"
+                      className="w-full p-3.5 rounded-xl border border-[#E5E1D8] text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
+                    />
+                  </div>
+
+                  {/* Languages UI */}
+                  <div>
+                    <label className="text-xs font-mono uppercase text-[#737A75] block mb-2 font-semibold flex items-center justify-between">
+                      <span className="flex items-center space-x-1.5">
+                        <Languages className="w-3.5 h-3.5 text-[#1E3B2B]" />
+                        <span>Languages Spoken On-Site</span>
+                      </span>
+                      <span className="text-[10px] text-[#737A75]">Select all that apply</span>
+                    </label>
+                    
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      {commonLanguages.map(lang => {
+                        const isSelected = selectedLanguages.includes(lang);
+                        return (
+                          <button
+                            type="button"
+                            key={lang}
+                            onClick={() => toggleLanguage(lang)}
+                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border ${
+                              isSelected
+                                ? 'bg-[#1E3B2B] border-[#1E3B2B] text-white'
+                                : 'bg-white border-[#E5E1D8] text-[#4A524D] hover:bg-[#FAF8F5]'
+                            }`}
+                          >
+                            {isSelected ? '✓ ' : '+ '}{lang}
+                          </button>
+                        );
+                      })}
                     </div>
 
-                    <div>
-                      <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
-                        Languages Spoken On-Site
-                      </label>
+                    <div className="flex items-center space-x-2">
                       <input
                         type="text"
-                        value={languages}
-                        onChange={(e) => setLanguages(e.target.value)}
-                        placeholder="e.g. Hindi, Kannada, English"
-                        className="w-full p-3.5 rounded-xl border border-[#E5E1D8] text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
+                        value={customLanguage}
+                        onChange={(e) => setCustomLanguage(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleAddCustomLanguage();
+                          }
+                        }}
+                        placeholder="Add another language (e.g. Tulu, Konkani, Marwari)..."
+                        className="flex-1 p-2.5 rounded-xl border border-[#E5E1D8] text-xs font-medium focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
                       />
+                      <button
+                        type="button"
+                        onClick={() => handleAddCustomLanguage()}
+                        disabled={!customLanguage.trim()}
+                        className="px-4 py-2.5 rounded-xl bg-[#FAF8F5] border border-[#E5E1D8] text-xs font-bold text-[#1E3B2B] hover:bg-[#E5E1D8] disabled:opacity-50 cursor-pointer"
+                      >
+                        Add
+                      </button>
                     </div>
+
+                    {selectedLanguages.length > 0 && (
+                      <p className="text-[11px] text-[#737A75] mt-2 font-mono">
+                        Active languages: <span className="font-semibold text-[#1E3B2B]">{selectedLanguages.join(', ')}</span>
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -540,44 +981,98 @@ export const BuildPassportPage: React.FC = () => {
               </div>
             )}
 
-            {/* STEP 2: Demonstrated Skills Selection */}
+            {/* STEP 2: Demonstrated Skills & Trade-Specific Questions */}
             {step === 2 && (
               <div>
                 <div className="mb-8">
                   <span className="text-xs font-mono text-[#059669] font-bold uppercase tracking-wider block mb-1">
-                    STEP 02 · TRADE COMPETENCIES
+                    STEP 02 · TRADE COMPETENCIES & SPECIALIZATION
                   </span>
                   <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#121614]">
-                    WHAT ARE YOUR CORE TRADE CAPABILITIES?
+                    WHAT ARE YOUR CORE {trade.toUpperCase()} CAPABILITIES?
                   </h2>
                   <p className="text-sm text-[#4A524D] mt-2">
                     Select the specific skills you demonstrate on-site. You will anchor these skills with evidence in the next step.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                  {currentTradeSkills.map((sk) => {
-                    const isSelected = selectedSkills.includes(sk);
-                    return (
-                      <div
-                        key={sk}
-                        onClick={() => toggleSkill(sk)}
-                        className={`p-4 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${
-                          isSelected
-                            ? 'border-[#1E3B2B] bg-[#EBF6EE] ring-1 ring-[#1E3B2B]'
-                            : 'border-[#E5E1D8] hover:bg-gray-50'
-                        }`}
-                      >
-                        <span className="text-sm font-bold text-[#121614]">{sk}</span>
-                        <div className={`w-5 h-5 rounded-md flex items-center justify-center border ${
-                          isSelected ? 'bg-[#1E3B2B] border-[#1E3B2B] text-white' : 'border-gray-300'
-                        }`}>
-                          {isSelected && <CheckCircle2 className="w-4 h-4 text-white" />}
+                <div className="mb-6">
+                  <label className="text-xs font-mono uppercase text-[#737A75] block mb-2 font-semibold">
+                    Core Technical Skills ({trade})
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {currentTradeSkills.map((sk) => {
+                      const isSelected = selectedSkills.includes(sk);
+                      return (
+                        <div
+                          key={sk}
+                          onClick={() => toggleSkill(sk)}
+                          className={`p-4 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${
+                            isSelected
+                              ? 'border-[#1E3B2B] bg-[#EBF6EE] ring-1 ring-[#1E3B2B]'
+                              : 'border-[#E5E1D8] hover:bg-gray-50'
+                          }`}
+                        >
+                          <span className="text-sm font-bold text-[#121614]">{sk}</span>
+                          <div className={`w-5 h-5 rounded-md flex items-center justify-center border ${
+                            isSelected ? 'bg-[#1E3B2B] border-[#1E3B2B] text-white' : 'border-gray-300'
+                          }`}>
+                            {isSelected && <CheckCircle2 className="w-4 h-4 text-white" />}
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
+
+                {/* Trade-Specific Onboarding Questions (Non-mandatory question bank) */}
+                {currentTradeQuestions.length > 0 && (
+                  <div className="mt-8 pt-6 border-t border-[#ECE8E0] space-y-5">
+                    <div>
+                      <div className="flex items-center space-x-1.5 mb-1">
+                        <HelpCircle className="w-4 h-4 text-[#C27A38]" />
+                        <span className="text-xs font-mono uppercase text-[#1E3B2B] font-bold">
+                          TRADE SPECIALIZATION QUESTIONS (OPTIONAL)
+                        </span>
+                      </div>
+                      <p className="text-xs text-[#737A75]">
+                        Help contractors understand your specialized equipment and techniques.
+                      </p>
+                    </div>
+
+                    <div className="space-y-4">
+                      {currentTradeQuestions.map((q) => {
+                        const selectedOptions = tradeAnswers[q.id] || [];
+                        return (
+                          <div key={q.id} className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E5E1D8]">
+                            <p className="text-xs font-bold text-[#121614] mb-2.5">
+                              {q.question}
+                            </p>
+                            <div className="flex flex-wrap gap-2">
+                              {q.options.map((opt) => {
+                                const isOptSelected = selectedOptions.includes(opt);
+                                return (
+                                  <button
+                                    type="button"
+                                    key={opt}
+                                    onClick={() => toggleTradeAnswer(q.id, opt)}
+                                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer border ${
+                                      isOptSelected
+                                        ? 'bg-[#1E3B2B] border-[#1E3B2B] text-white'
+                                        : 'bg-white border-[#E5E1D8] text-[#4A524D] hover:bg-[#F5F2EB]'
+                                    }`}
+                                  >
+                                    {isOptSelected ? '✓ ' : ''}{opt}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
 
                 <div className="mt-8 pt-6 border-t border-[#ECE8E0] flex items-center justify-between">
                   <button
@@ -592,110 +1087,224 @@ export const BuildPassportPage: React.FC = () => {
                     disabled={selectedSkills.length === 0}
                     className="px-7 py-3.5 rounded-xl bg-[#1E3B2B] text-white font-bold text-sm hover:bg-[#14281D] disabled:opacity-50 transition-colors flex items-center space-x-2 cursor-pointer shadow-sm vouch-btn"
                   >
-                    <span>Next: Add First Work Record</span>
+                    <span>Next: Add Work Experiences</span>
                     <ArrowRight className="w-4 h-4 text-[#C27A38]" />
                   </button>
                 </div>
               </div>
             )}
 
-            {/* STEP 3: Add First Work Record & Site Evidence */}
+            {/* STEP 3: Multiple Work Records & Supporting Evidence */}
             {step === 3 && (
               <div>
                 <div className="mb-8">
-                  <span className="text-xs font-mono text-[#059669] font-bold uppercase tracking-wider block mb-1">
-                    STEP 03 · YOUR FIRST VERIFIED WORK RECORD
-                  </span>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono text-[#059669] font-bold uppercase tracking-wider block mb-1">
+                      STEP 03 · VERIFIED WORK EXPERIENCES
+                    </span>
+                    <span className="text-xs font-mono text-[#737A75]">
+                      {workExperiences.length} of 5 ENTRIES
+                    </span>
+                  </div>
                   <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#121614]">
-                    ATTACH REAL WORK EVIDENCE
+                    ATTACH YOUR COMPLETED WORK & EVIDENCE
                   </h2>
                   <p className="text-sm text-[#4A524D] mt-2">
-                    Enter a real project you completed. This anchors your passport with verified empirical proof.
+                    Enter up to 5 real projects you have executed. You can attach photos or documents to anchor each project with verifiable empirical proof.
                   </p>
                 </div>
 
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
-                      Work Record Title
-                    </label>
-                    <input
-                      type="text"
-                      value={workTitle}
-                      onChange={(e) => setWorkTitle(e.target.value)}
-                      placeholder="e.g. 3BHK Conduit Wiring & Main Distribution Board"
-                      className="w-full p-3.5 rounded-xl border border-[#E5E1D8] text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
-                    />
-                  </div>
+                <div className="space-y-6">
+                  {workExperiences.map((w, index) => (
+                    <div 
+                      key={w.id} 
+                      className="p-5 sm:p-6 rounded-2xl bg-[#FAF8F5] border border-[#E5E1D8] shadow-xs space-y-4"
+                    >
+                      <div className="flex items-center justify-between pb-3 border-b border-[#ECE8E0]">
+                        <span className="text-xs font-mono uppercase font-bold text-[#1E3B2B] flex items-center space-x-2">
+                          <Briefcase className="w-4 h-4 text-[#C27A38]" />
+                          <span>WORK EXPERIENCE #{index + 1}</span>
+                        </span>
+                        {workExperiences.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveWorkExperience(w.id)}
+                            className="text-xs text-red-600 hover:text-red-800 flex items-center space-x-1 font-semibold cursor-pointer"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                            <span>Remove</span>
+                          </button>
+                        )}
+                      </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
-                        Employer / Subcontractor Name
-                      </label>
-                      <input
-                        type="text"
-                        value={employer}
-                        onChange={(e) => setEmployer(e.target.value)}
-                        placeholder="e.g. ABC Electricals"
-                        className="w-full p-3.5 rounded-xl border border-[#E5E1D8] text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
-                      />
+                      <div>
+                        <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                          Project / Work Title *
+                        </label>
+                        <input
+                          type="text"
+                          value={w.title}
+                          onChange={(e) => handleUpdateWorkExperience(w.id, 'title', e.target.value)}
+                          placeholder="e.g. 3BHK Conduit Wiring & Main Distribution Board"
+                          className="w-full p-3.5 rounded-xl border border-[#E5E1D8] bg-white text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                            Employer / Client / Contractor
+                          </label>
+                          <input
+                            type="text"
+                            value={w.employer}
+                            onChange={(e) => handleUpdateWorkExperience(w.id, 'employer', e.target.value)}
+                            placeholder="e.g. Metro Infra Contracting"
+                            className="w-full p-3.5 rounded-xl border border-[#E5E1D8] bg-white text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                            Your Role
+                          </label>
+                          <input
+                            type="text"
+                            value={w.role}
+                            onChange={(e) => handleUpdateWorkExperience(w.id, 'role', e.target.value)}
+                            placeholder="e.g. Lead Electrician"
+                            className="w-full p-3.5 rounded-xl border border-[#E5E1D8] bg-white text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                          Job Location
+                        </label>
+                        <input
+                          type="text"
+                          value={w.location}
+                          onChange={(e) => handleUpdateWorkExperience(w.id, 'location', e.target.value)}
+                          placeholder={location || "e.g. Kadri Hills, Mangaluru"}
+                          className="w-full p-3.5 rounded-xl border border-[#E5E1D8] bg-white text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                          Technical Scope of Work
+                        </label>
+                        <textarea
+                          rows={2}
+                          value={w.description}
+                          onChange={(e) => handleUpdateWorkExperience(w.id, 'description', e.target.value)}
+                          placeholder="Describe conduit cabling, panel connections, safety grounding, or equipment serviced..."
+                          className="w-full p-3 rounded-xl border border-[#E5E1D8] bg-white text-sm font-medium focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none resize-none"
+                        />
+                      </div>
+
+                      {/* Supporting Evidence Section */}
+                      <div className="pt-3 border-t border-[#ECE8E0] space-y-3">
+                        <span className="text-[11px] font-mono uppercase text-[#1E3B2B] font-bold flex items-center space-x-1.5">
+                          <Camera className="w-3.5 h-3.5 text-[#C27A38]" />
+                          <span>SUPPORTING EVIDENCE (OPTIONAL PHOTO OR DOCUMENT)</span>
+                        </span>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div>
+                            <label className="text-[11px] font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                              Evidence Type
+                            </label>
+                            <select
+                              value={w.evidenceType}
+                              onChange={(e) => handleUpdateWorkExperience(w.id, 'evidenceType', e.target.value)}
+                              className="w-full p-2.5 rounded-xl border border-[#E5E1D8] bg-white text-xs font-semibold focus:border-[#1E3B2B] focus:outline-none"
+                            >
+                              <option value="PHOTO">Jobsite Photo</option>
+                              <option value="CERTIFICATE">Completion Certificate</option>
+                              <option value="DOCUMENT">Work Order / Invoice</option>
+                              <option value="DECLARATION">Self Declaration</option>
+                            </select>
+                          </div>
+
+                          <div>
+                            <label className="text-[11px] font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                              Photo / Document URL
+                            </label>
+                            <input
+                              type="url"
+                              value={w.evidenceUrl}
+                              onChange={(e) => handleUpdateWorkExperience(w.id, 'evidenceUrl', e.target.value)}
+                              placeholder="https://example.com/photo.jpg"
+                              className="w-full p-2.5 rounded-xl border border-[#E5E1D8] bg-white text-xs font-medium focus:border-[#1E3B2B] focus:outline-none"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="text-[11px] font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                            Evidence Caption / Short Description
+                          </label>
+                          <input
+                            type="text"
+                            value={w.evidenceDescription}
+                            onChange={(e) => handleUpdateWorkExperience(w.id, 'evidenceDescription', e.target.value)}
+                            placeholder="e.g. Sub-panel conduit cabling and color code routing"
+                            className="w-full p-2.5 rounded-xl border border-[#E5E1D8] bg-white text-xs font-medium focus:border-[#1E3B2B] focus:outline-none"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Site Verifier Section */}
+                      <div className="pt-3 border-t border-[#ECE8E0] space-y-3">
+                        <span className="text-[11px] font-mono uppercase text-[#1E3B2B] font-bold flex items-center space-x-1.5">
+                          <CheckCheck className="w-3.5 h-3.5 text-[#059669]" />
+                          <span>SITE VERIFIER / VOUCHER (OPTIONAL)</span>
+                        </span>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div>
+                            <label className="text-[11px] font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                              Supervisor / Verifier Name
+                            </label>
+                            <input
+                              type="text"
+                              value={w.verifierName}
+                              onChange={(e) => handleUpdateWorkExperience(w.id, 'verifierName', e.target.value)}
+                              placeholder="e.g. Anil Sharma"
+                              className="w-full p-2.5 rounded-xl border border-[#E5E1D8] bg-white text-xs font-medium focus:border-[#1E3B2B] focus:outline-none"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-[11px] font-mono uppercase text-[#737A75] block mb-1 font-semibold">
+                              Verifier Role
+                            </label>
+                            <input
+                              type="text"
+                              value={w.verifierRole}
+                              onChange={(e) => handleUpdateWorkExperience(w.id, 'verifierRole', e.target.value)}
+                              placeholder="e.g. Site Supervisor"
+                              className="w-full p-2.5 rounded-xl border border-[#E5E1D8] bg-white text-xs font-medium focus:border-[#1E3B2B] focus:outline-none"
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
+                  ))}
 
-                    <div>
-                      <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
-                        Your Role on the Jobsite
-                      </label>
-                      <input
-                        type="text"
-                        value={role}
-                        onChange={(e) => setRole(e.target.value)}
-                        placeholder="e.g. Lead Electrician"
-                        className="w-full p-3.5 rounded-xl border border-[#E5E1D8] text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
-                      Technical Description of Completed Tasks
-                    </label>
-                    <textarea
-                      rows={3}
-                      value={workDescription}
-                      onChange={(e) => setWorkDescription(e.target.value)}
-                      placeholder="Describe cable sizing, conduit routing, breaker amperage, or test procedures..."
-                      className="w-full p-3.5 rounded-xl border border-[#E5E1D8] text-sm font-medium focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
-                        Site Supervisor / Verifier Name
-                      </label>
-                      <input
-                        type="text"
-                        value={verifierName}
-                        onChange={(e) => setVerifierName(e.target.value)}
-                        placeholder="e.g. Mahesh Shetty"
-                        className="w-full p-3.5 rounded-xl border border-[#E5E1D8] text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="text-xs font-mono uppercase text-[#737A75] block mb-1 font-semibold">
-                        Verifier Role
-                      </label>
-                      <input
-                        type="text"
-                        value={verifierRole}
-                        onChange={(e) => setVerifierRole(e.target.value)}
-                        placeholder="e.g. Site Supervisor / Engineer"
-                        className="w-full p-3.5 rounded-xl border border-[#E5E1D8] text-sm font-semibold focus:border-[#1E3B2B] focus:ring-1 focus:ring-[#1E3B2B] focus:outline-none"
-                      />
-                    </div>
-                  </div>
+                  {/* Add another work experience button (max 5) */}
+                  {workExperiences.length < 5 && (
+                    <button
+                      type="button"
+                      onClick={handleAddWorkExperience}
+                      className="w-full py-3.5 rounded-2xl border-2 border-dashed border-[#D8D2C5] text-xs font-bold text-[#1E3B2B] hover:bg-[#FAF8F5] transition-colors flex items-center justify-center space-x-2 cursor-pointer"
+                    >
+                      <Plus className="w-4 h-4 text-[#C27A38]" />
+                      <span>+ Add Another Work Experience (Up to 5 Projects)</span>
+                    </button>
+                  )}
                 </div>
 
                 {submitError && (
@@ -751,7 +1360,7 @@ export const BuildPassportPage: React.FC = () => {
                 </h2>
 
                 <p className="text-sm text-[#4A524D] max-w-md mx-auto leading-relaxed mb-6">
-                  Your professional identity and first work record have been persisted to Firestore. Your profile survives reloads and can be verified across all employers.
+                  Your professional identity and verified work history have been persisted to Firestore. Your profile survives reloads and can be independently verified across all employers.
                 </p>
 
                 {/* Passport Card Mini-Preview */}
@@ -769,7 +1378,7 @@ export const BuildPassportPage: React.FC = () => {
                     {createdProfile?.trade || trade || 'Trade'} · {(createdProfile?.experience_years ?? experienceYears ?? '0')} Years Documented {(createdProfile?.location || location) ? `· ${createdProfile?.location || location}` : ''}
                   </p>
                   <div className="mt-3 text-xs font-mono text-[#1E3B2B] bg-white p-2.5 rounded border border-[#E5E1D8] flex items-center justify-between">
-                    <span>1 Initial Work Record Logged</span>
+                    <span>{createdProfile?.work_count || workExperiences.filter(w => w.title.trim()).length || 1} Work Record(s) Logged</span>
                     <span className="text-[10px] text-[#737A75]">Active ID: {(createdProfile?.id || 'saved').slice(0, 16)}</span>
                   </div>
                 </div>

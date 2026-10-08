@@ -27,17 +27,25 @@ export const WorkerAppPage: React.FC = () => {
     currentTab, 
     setCurrentTab, 
     worker, 
-    setActiveRole, 
-    setIsAddWorkOpen 
+    setIsAddWorkOpen,
+    isAuthenticated,
+    isLoading,
+    currentUser,
+    logout
   } = useApp();
   
   const navigate = useNavigate();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
-  const handleLogout = () => {
-    // Clear authenticated worker session and return to /login
-    setActiveRole('worker');
+  React.useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      navigate('/login?redirect=/worker', { replace: true });
+    }
+  }, [isAuthenticated, isLoading, navigate]);
+
+  const handleLogout = async () => {
+    await logout();
     navigate('/login');
   };
 
@@ -47,6 +55,21 @@ export const WorkerAppPage: React.FC = () => {
     { id: 'passport', label: 'Passport', icon: Award },
     { id: 'profile', label: 'Profile', icon: User },
   ];
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#FAF8F5] flex items-center justify-center">
+        <div className="flex flex-col items-center space-y-3">
+          <div className="w-8 h-8 border-2 border-[#1E3B2B] border-t-transparent rounded-full animate-spin"></div>
+          <span className="text-xs font-mono uppercase text-[#737A75]">Loading your professional passport...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-[#121614] flex flex-col font-sans selection:bg-[#1E3B2B] selection:text-white">

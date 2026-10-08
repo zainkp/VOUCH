@@ -35,6 +35,8 @@ def _sanitize_and_validate(raw_data: Dict[str, Any], raw_text: str) -> WorkerPro
             claims.append(WorkerClaim(field="skills", value=extraction.skills, source="worker_statement"))
         if extraction.location:
             claims.append(WorkerClaim(field="location", value=extraction.location, source="worker_statement"))
+        if extraction.languages:
+            claims.append(WorkerClaim(field="languages", value=extraction.languages, source="worker_statement"))
         if extraction.employers:
             claims.append(WorkerClaim(field="employers", value=extraction.employers, source="worker_statement"))
         extraction.claims = claims

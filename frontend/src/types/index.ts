@@ -72,6 +72,8 @@ export interface WorkerProfile {
   specialization?: string;
   experienceYears: number;
   location: string;
+  email?: string;
+  phone?: string;
   languages: string[];
   bio: string;
   avatarUrl: string;

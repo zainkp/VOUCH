@@ -7,14 +7,24 @@ from app.services.data_service import (
     create_work_record,
     get_active_worker_id
 )
+from app.api.auth import get_token_from_headers
+from app.services.auth_service import get_user_by_token
 
 router = APIRouter(prefix="/work", tags=["Work"])
 
 @router.get("", response_model=List[WorkRecord])
 def list_work_records(
     worker_id: Optional[str] = Query(None),
-    x_worker_id: Optional[str] = Header(None)
+    x_worker_id: Optional[str] = Header(None),
+    authorization: Optional[str] = Header(None),
+    x_auth_token: Optional[str] = Header(None)
 ):
+    token = get_token_from_headers(authorization, x_auth_token)
+    if token:
+        user = get_user_by_token(token)
+        if user and user.get("worker_id"):
+            return get_work_records(user["worker_id"])
+
     target = worker_id or x_worker_id or get_active_worker_id()
     return get_work_records(target)
 
@@ -22,10 +32,19 @@ def list_work_records(
 def add_work_record(
     payload: WorkRecordCreate,
     worker_id: Optional[str] = Query(None),
-    x_worker_id: Optional[str] = Header(None)
+    x_worker_id: Optional[str] = Header(None),
+    authorization: Optional[str] = Header(None),
+    x_auth_token: Optional[str] = Header(None)
 ):
-    target = worker_id or x_worker_id or get_active_worker_id()
-    created = create_work_record(target, payload.dict())
+    token = get_token_from_headers(authorization, x_auth_token)
+    target = None
+    if token:
+        user = get_user_by_token(token)
+        if user and user.get("worker_id"):
+            target = user["worker_id"]
+    if not target:
+        target = worker_id or x_worker_id or get_active_worker_id()
+    created = create_work_record(target, payload.model_dump())
     return created
 
 @router.get("/{work_id}", response_model=WorkRecord)

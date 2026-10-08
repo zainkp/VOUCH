@@ -37,6 +37,9 @@ export interface WorkerProfileResponse {
   trade: string;
   experience_years: number;
   location: string;
+  email?: string | null;
+  phone?: string | null;
+  languages?: string[];
   bio?: string | null;
   profile_photo_url?: string | null;
   public_slug?: string | null;
@@ -170,6 +173,37 @@ export interface PassportDataResponse {
   share_url: string;
 }
 
+export interface UserRegisterPayload {
+  name: string;
+  email: string;
+  password: string;
+  role?: 'worker' | 'contractor';
+}
+
+export interface UserLoginPayload {
+  email: string;
+  password: string;
+}
+
+export interface AuthResponse {
+  token: string;
+  user_id: string;
+  name: string;
+  email: string;
+  role: 'worker' | 'contractor';
+  worker_id?: string | null;
+}
+
+export interface AuthUser {
+  user_id: string;
+  name: string;
+  email: string;
+  role: 'worker' | 'contractor';
+  worker_id?: string | null;
+}
+
+export type CurrentUserResponse = AuthUser;
+
 // ============================================================================
 // Centralized Error Handling
 // ============================================================================
@@ -209,6 +243,18 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const defaultHeaders: Record<string, string> = {
     'Accept': 'application/json',
   };
+
+  if (typeof localStorage !== 'undefined') {
+    const token = localStorage.getItem('vouch_auth_token');
+    if (token) {
+      defaultHeaders['Authorization'] = `Bearer ${token}`;
+      defaultHeaders['X-Auth-Token'] = token;
+    }
+    const activeWorkerId = localStorage.getItem('vouch_active_worker_id');
+    if (activeWorkerId) {
+      defaultHeaders['X-Worker-Id'] = activeWorkerId;
+    }
+  }
 
   if (options.body && typeof options.body === 'string') {
     defaultHeaders['Content-Type'] = 'application/json';
@@ -297,6 +343,10 @@ export interface InitialWorkRecordPayload {
   skills?: string[];
   verifierName?: string;
   verifierRole?: string;
+  evidence_url?: string;
+  evidence_title?: string;
+  evidence_type?: string;
+  evidence_description?: string;
 }
 
 export interface WorkerOnboardingPayload {
@@ -304,11 +354,14 @@ export interface WorkerOnboardingPayload {
   trade: string;
   experience_years: number;
   location: string;
+  email?: string;
+  phone?: string;
   bio?: string;
   profile_photo_url?: string;
   skills?: string[];
-  languages?: string;
+  languages?: string[] | string;
   initial_work?: InitialWorkRecordPayload;
+  initial_works?: InitialWorkRecordPayload[];
 }
 
 export interface WorkerClaimResponse {
@@ -322,6 +375,7 @@ export interface WorkerProfileExtractionResponse {
   experience_years_claimed?: number | null;
   skills: string[];
   location?: string | null;
+  languages: string[];
   employers: string[];
   claims: WorkerClaimResponse[];
 }
@@ -336,6 +390,46 @@ export interface AudioTranscriptionResponse {
 
 export const api = {
   /**
+   * Register: Creates a new user account and associated worker profile
+   * POST /api/auth/register
+   */
+  register(payload: UserRegisterPayload): Promise<AuthResponse> {
+    return request<AuthResponse>('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  },
+
+  /**
+   * Login: Authenticates user credentials and returns session token
+   * POST /api/auth/login
+   */
+  login(payload: UserLoginPayload): Promise<AuthResponse> {
+    return request<AuthResponse>('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  },
+
+  /**
+   * Current Authenticated User: Returns authenticated user identity
+   * GET /api/auth/me
+   */
+  getMe(): Promise<CurrentUserResponse> {
+    return request<CurrentUserResponse>('/auth/me');
+  },
+
+  /**
+   * Logout: Invalidates session token
+   * POST /api/auth/logout
+   */
+  logout(): Promise<{ success: boolean; message: string }> {
+    return request<{ success: boolean; message: string }>('/auth/logout', {
+      method: 'POST',
+    });
+  },
+
+  /**
    * Health Check: Verifies frontend ↔ backend connectivity
    * GET /api/health
    */
@@ -348,9 +442,25 @@ export const api = {
    * GET /api/workers/me
    */
   getMyProfile(workerId?: string): Promise<WorkerProfileResponse> {
-    const activeId = workerId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vouch_active_worker_id') : null);
+    if (workerId) {
+      return request<WorkerProfileResponse>(`/workers/me?worker_id=${encodeURIComponent(workerId)}`);
+    }
+    const token = typeof localStorage !== 'undefined' ? localStorage.getItem('vouch_auth_token') : null;
+    if (token) {
+      return request<WorkerProfileResponse>('/workers/me');
+    }
+    const activeId = typeof localStorage !== 'undefined' ? localStorage.getItem('vouch_active_worker_id') : null;
     const query = activeId ? `?worker_id=${encodeURIComponent(activeId)}` : '';
     return request<WorkerProfileResponse>(`/workers/me${query}`);
+  },
+
+  /**
+   * Lookup Worker by Email: Finds worker profile matching registered email
+   * GET /api/workers/lookup?email={email}
+   */
+  lookupWorkerByEmail(email: string): Promise<WorkerProfileResponse> {
+    const cleanEmail = email.trim().toLowerCase();
+    return request<WorkerProfileResponse>(`/workers/lookup?email=${encodeURIComponent(cleanEmail)}`);
   },
 
   /**
@@ -360,6 +470,17 @@ export const api = {
   createWorker(payload: WorkerOnboardingPayload): Promise<WorkerProfileResponse> {
     return request<WorkerProfileResponse>('/workers', {
       method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  },
+
+  /**
+   * Update My Worker Profile: Updates authenticated worker profile
+   * PUT /api/workers/me
+   */
+  updateMyProfile(payload: WorkerOnboardingPayload): Promise<WorkerProfileResponse> {
+    return request<WorkerProfileResponse>('/workers/me', {
+      method: 'PUT',
       body: JSON.stringify(payload),
     });
   },
@@ -377,7 +498,14 @@ export const api = {
    * GET /api/work
    */
   getWork(workerId?: string): Promise<WorkRecordResponse[]> {
-    const activeId = workerId || (typeof localStorage !== 'undefined' ? localStorage.getItem('vouch_active_worker_id') : null);
+    if (workerId) {
+      return request<WorkRecordResponse[]>(`/work?worker_id=${encodeURIComponent(workerId)}`);
+    }
+    const token = typeof localStorage !== 'undefined' ? localStorage.getItem('vouch_auth_token') : null;
+    if (token) {
+      return request<WorkRecordResponse[]>('/work');
+    }
+    const activeId = typeof localStorage !== 'undefined' ? localStorage.getItem('vouch_active_worker_id') : null;
     const query = activeId ? `?worker_id=${encodeURIComponent(activeId)}` : '';
     return request<WorkRecordResponse[]>(`/work${query}`);
   },

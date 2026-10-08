@@ -96,7 +96,7 @@ export const HomeTab: React.FC = () => {
   // ---------------------------------------------------------------------------
   // 2. Error State (with Retry Action)
   // ---------------------------------------------------------------------------
-  if (error && workRecords.length === 0) {
+  if (error) {
     return (
       <div className="w-full py-12 px-6 bg-white rounded-3xl border border-[#E5E1D8] text-center space-y-5">
         <div className="w-12 h-12 rounded-2xl bg-[#FAF0F0] text-[#9E4545] flex items-center justify-center mx-auto">
@@ -128,14 +128,14 @@ export const HomeTab: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-[#E5E1D8]">
         <div>
           <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-[#121614] tracking-tight">
-            Good morning, {worker.name.split(' ')[0]}.
+            Good morning{worker.name ? `, ${worker.name.split(' ')[0]}` : ''}.
           </h1>
           <p className="text-sm sm:text-base text-[#4A524D] mt-1 flex items-center space-x-2">
             <span>{worker.trade}</span>
             <span>·</span>
             <span>{worker.experienceYears} years experience</span>
             <span>·</span>
-            <span>{worker.location.split(',')[0]}</span>
+            <span>{(worker.location || 'India').split(',')[0]}</span>
           </p>
         </div>
 

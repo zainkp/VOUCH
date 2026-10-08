@@ -11,12 +11,14 @@ import {
   Languages, 
   FileText, 
   Image, 
-  ExternalLink 
+  ExternalLink,
+  AlertCircle,
+  RefreshCw
 } from 'lucide-react';
 import { SkillConfidenceLevel } from '../types';
 
 export const PassportTab: React.FC = () => {
-  const { worker, skills, workRecords, stats, setIsQrModalOpen, setSelectedWorkRecord } = useApp();
+  const { worker, skills, workRecords, stats, setIsQrModalOpen, setSelectedWorkRecord, error, refreshData } = useApp();
   const [expandedSkillId, setExpandedSkillId] = useState<string | null>('skill_wiring');
 
   const getConfidenceBadge = (level: SkillConfidenceLevel) => {
@@ -41,6 +43,31 @@ export const PassportTab: React.FC = () => {
         );
     }
   };
+
+  if (error) {
+    return (
+      <div className="w-full max-w-4xl mx-auto py-12 px-6 bg-white rounded-3xl border border-[#E5E1D8] text-center space-y-5">
+        <div className="w-12 h-12 rounded-2xl bg-[#FAF0F0] text-[#9E4545] flex items-center justify-center mx-auto">
+          <AlertCircle className="w-6 h-6" />
+        </div>
+        <div className="max-w-md mx-auto space-y-1.5">
+          <h2 className="font-display font-bold text-xl text-[#121614]">
+            Unable to Load Digital Passport
+          </h2>
+          <p className="text-sm text-[#737A75]">
+            {error || "Could not retrieve passport credentials from the server."}
+          </p>
+        </div>
+        <button
+          onClick={() => refreshData()}
+          className="inline-flex items-center space-x-2 px-6 py-2.5 bg-[#1E3B2B] text-white text-xs font-semibold rounded-xl hover:bg-[#14281D] transition-colors cursor-pointer shadow-xs"
+        >
+          <RefreshCw className="w-3.5 h-3.5" />
+          <span>Retry Connection</span>
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-6 sm:space-y-8">

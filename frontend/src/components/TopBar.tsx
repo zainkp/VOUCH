@@ -20,23 +20,6 @@ export const TopBar: React.FC = () => {
       </div>
 
       <div className="flex items-center space-x-2">
-        {/* Quick Role Toggle for Demo */}
-        <button
-          onClick={() => {
-            setActiveRole(activeRole === 'worker' ? 'contractor' : 'worker');
-            setCurrentTab('home');
-          }}
-          className={`flex items-center space-x-1 px-2.5 py-1 rounded-full text-xs font-semibold border transition-all ${
-            activeRole === 'contractor'
-              ? 'bg-[#1E293B] text-white border-transparent'
-              : 'bg-white text-gray-700 border-stone-300 hover:bg-stone-50'
-          }`}
-          title="Switch perspective between Worker and Contractor"
-        >
-          <ArrowLeftRight className="w-3 h-3 text-emerald-600" />
-          <span className="text-[11px]">{activeRole === 'worker' ? 'Contractor' : 'Worker'}</span>
-        </button>
-
         {/* Profile Avatar */}
         <button
           onClick={() => {

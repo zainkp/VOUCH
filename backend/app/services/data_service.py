@@ -19,6 +19,9 @@ _MEMORY_STORE = {
         "location": "Mangaluru, Karnataka",
         "bio": "Certified electrical technician specializing in commercial power distribution, industrial motor maintenance, and residential rewiring.",
         "profile_photo_url": "https://images.unsplash.com/photo-1544717305-2782549b5136?w=400&auto=format&fit=crop&q=80",
+        "email": "ravi.kumar@vouchwork.in",
+        "phone": "+91 98450 71234",
+        "languages": ["Kannada", "Hindi", "English"],
         "public_slug": "ravi-kumar-82a7"
     },
     "work_records": [
@@ -258,8 +261,11 @@ def set_active_worker_id(worker_id: str):
 def get_active_worker_id() -> str:
     return _ACTIVE_WORKER_ID or "ravi_kumar_001"
 
-def get_current_worker(worker_id: Optional[str] = None) -> Dict[str, Any]:
-    target_id = worker_id or "ravi_kumar_001"
+def get_current_worker(worker_id: Optional[str] = None, allow_ravi_fallback: bool = True) -> Optional[Dict[str, Any]]:
+    target_id = worker_id or ("ravi_kumar_001" if allow_ravi_fallback else None)
+    if not target_id:
+        return None
+
     db = get_db()
     if db:
         try:
@@ -277,7 +283,10 @@ def get_current_worker(worker_id: Optional[str] = None) -> Dict[str, Any]:
         if w.get("id") == target_id:
             return _enrich_worker_data(w)
 
-    return _enrich_worker_data(_MEMORY_STORE["worker"])
+    if allow_ravi_fallback:
+        return _enrich_worker_data(_MEMORY_STORE["worker"])
+
+    return None
 
 def get_worker_by_slug(public_slug: str) -> Optional[Dict[str, Any]]:
     db = get_db()
@@ -299,6 +308,85 @@ def get_worker_by_slug(public_slug: str) -> Optional[Dict[str, Any]]:
 
     return None
 
+def get_worker_by_email(email: str) -> Optional[Dict[str, Any]]:
+    if not email or not isinstance(email, str):
+        return None
+    clean_email = email.strip().lower()
+    if not clean_email:
+        return None
+
+    db = get_db()
+    if db:
+        try:
+            from google.cloud.firestore_v1.base_query import FieldFilter
+            docs = list(db.collection("workers").where(filter=FieldFilter("email", "==", clean_email)).limit(1).stream())
+            if docs:
+                return _enrich_worker_data(docs[0].to_dict())
+        except Exception as e:
+            logger.warning(f"Error querying worker by email {clean_email} in Firestore: {e}")
+
+    for w in _MEMORY_STORE.get("custom_workers", []):
+        if (w.get("email") or "").strip().lower() == clean_email:
+            return _enrich_worker_data(w)
+
+    seed_email = (_MEMORY_STORE["worker"].get("email") or "").strip().lower()
+    if seed_email and seed_email == clean_email:
+        return _enrich_worker_data(_MEMORY_STORE["worker"])
+
+    return None
+
+def _process_initial_works(worker_id: str, trade: Optional[str], default_location: Optional[str], data: Dict[str, Any]):
+    raw_works = data.get("initial_works")
+    if not raw_works:
+        single = data.get("initial_work")
+        raw_works = [single] if single else []
+
+    for item in raw_works[:5]:
+        if not item:
+            continue
+        if not isinstance(item, dict):
+            if hasattr(item, "model_dump"):
+                item = item.model_dump()
+            elif hasattr(item, "dict"):
+                item = item.dict()
+            else:
+                continue
+        title = item.get("title")
+        if not title or not str(title).strip():
+            continue
+
+        work_payload = {
+            "title": str(title).strip() or f"{trade or 'Trade'} Project",
+            "description": item.get("description") or "Work project logged during onboarding.",
+            "employer_name": item.get("employer") or item.get("employer_name"),
+            "role": item.get("role"),
+            "location": item.get("location") or default_location,
+            "trade": trade,
+            "skills": item.get("skills") or data.get("skills", []),
+            "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+        }
+        created_work = create_work_record(worker_id, work_payload)
+
+        # Evidence support (imageUrl or evidence_url)
+        ev_url = item.get("evidence_url") or item.get("imageUrl")
+        if ev_url:
+            add_evidence(created_work["id"], {
+                "type": item.get("evidence_type") or "PHOTO",
+                "url": ev_url,
+                "description": item.get("evidence_description") or item.get("evidence_title") or f"{title} completion evidence"
+            })
+
+        # Verifier support
+        verifier_name = item.get("verifierName") or item.get("verifier_name")
+        if verifier_name:
+            request_confirmation(
+                work_id=created_work["id"],
+                verifier_name=verifier_name,
+                verifier_type="SUPERVISOR",
+                relationship=item.get("verifierRole") or item.get("verifier_role") or "Site Supervisor",
+                note="Initial onboarding project verification request."
+            )
+
 def create_worker_profile(data: Dict[str, Any]) -> Dict[str, Any]:
     import re
     worker_id = f"worker_{uuid.uuid4().hex[:8]}"
@@ -306,14 +394,19 @@ def create_worker_profile(data: Dict[str, Any]) -> Dict[str, Any]:
     slug_base = re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-') or "worker"
     public_slug = f"{slug_base}-{uuid.uuid4().hex[:4]}"
     now_iso = datetime.now(timezone.utc).isoformat()
+    raw_email = data.get("email")
+    clean_email = raw_email.strip().lower() if raw_email and isinstance(raw_email, str) else None
     
     worker_record = {
         "id": worker_id,
         "user_id": data.get("user_id") or f"user_{uuid.uuid4().hex[:8]}",
         "name": name,
+        "email": clean_email,
+        "phone": data.get("phone"),
         "trade": data.get("trade", "Tradesperson"),
         "experience_years": data.get("experience_years", 0),
         "location": data.get("location", "India"),
+        "languages": data.get("languages") or [],
         "bio": data.get("bio") or f"Skilled {data.get('trade', 'professional')} with {data.get('experience_years', 0)} years documented experience.",
         "profile_photo_url": data.get("profile_photo_url") or "https://images.unsplash.com/photo-1544717305-2782549b5136?w=400&auto=format&fit=crop&q=80",
         "public_slug": public_slug,
@@ -330,38 +423,80 @@ def create_worker_profile(data: Dict[str, Any]) -> Dict[str, Any]:
         except Exception as e:
             logger.warning(f"Error persisting worker {worker_id} to Firestore: {e}")
             
-    initial_work = data.get("initial_work")
-    if initial_work and isinstance(initial_work, dict):
-        work_payload = {
-            "title": initial_work.get("title") or f"{data.get('trade', 'Trade')} Project",
-            "description": initial_work.get("description") or "First verified work project logged during onboarding.",
-            "employer_name": initial_work.get("employer"),
-            "role": initial_work.get("role"),
-            "location": initial_work.get("location") or data.get("location"),
-            "trade": data.get("trade"),
-            "skills": initial_work.get("skills") or data.get("skills", []),
-            "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-        }
-        created_work = create_work_record(worker_id, work_payload)
-        
-        if initial_work.get("imageUrl"):
-            add_evidence(created_work["id"], {
-                "type": "PHOTO",
-                "url": initial_work.get("imageUrl"),
-                "description": f"{initial_work.get('title')} completion evidence photo"
-            })
-            
-        if initial_work.get("verifierName"):
-            request_confirmation(
-                work_id=created_work["id"],
-                verifier_name=initial_work.get("verifierName"),
-                verifier_type="SUPERVISOR",
-                relationship=initial_work.get("verifierRole") or "Site Supervisor",
-                note="Initial onboarding project verification request."
-            )
+    _process_initial_works(worker_id, data.get("trade"), data.get("location"), data)
 
-    set_active_worker_id(worker_id)
+    if not data.get("user_id"):
+        set_active_worker_id(worker_id)
     return _enrich_worker_data(worker_record)
+
+def update_worker_profile(worker_id: str, data: Dict[str, Any]) -> Dict[str, Any]:
+    db = get_db()
+    existing: Optional[Dict[str, Any]] = None
+
+    if db:
+        try:
+            doc = db.collection("workers").document(worker_id).get()
+            if doc.exists:
+                existing = doc.to_dict()
+        except Exception as e:
+            logger.warning(f"Error fetching worker {worker_id} from Firestore: {e}")
+
+    if not existing:
+        for w in _MEMORY_STORE.get("custom_workers", []):
+            if w.get("id") == worker_id:
+                existing = w
+                break
+
+    if not existing:
+        # If record not yet found, create it with this worker_id
+        payload = dict(data)
+        payload["id"] = worker_id
+        return create_worker_profile(payload)
+
+    # Update existing record fields
+    if data.get("name"):
+        existing["name"] = data["name"].strip()
+    if data.get("trade"):
+        existing["trade"] = data["trade"].strip()
+    if data.get("experience_years") is not None:
+        existing["experience_years"] = data["experience_years"]
+    if data.get("location"):
+        existing["location"] = data["location"].strip()
+    if data.get("email"):
+        existing["email"] = data["email"].strip().lower()
+    if data.get("phone"):
+        existing["phone"] = data["phone"]
+    if data.get("bio"):
+        existing["bio"] = data["bio"]
+    if data.get("languages") is not None:
+        existing["languages"] = data["languages"]
+    if data.get("skills"):
+        existing["skills"] = data["skills"]
+    if data.get("profile_photo_url"):
+        existing["profile_photo_url"] = data["profile_photo_url"]
+
+    # Persist in Firestore
+    if db:
+        try:
+            db.collection("workers").document(worker_id).set(existing, merge=True)
+            logger.info(f"Updated worker profile {worker_id} in Firestore")
+        except Exception as e:
+            logger.warning(f"Error updating worker {worker_id} in Firestore: {e}")
+
+    # Persist in Memory Store
+    found = False
+    for i, w in enumerate(_MEMORY_STORE.get("custom_workers", [])):
+        if w.get("id") == worker_id:
+            _MEMORY_STORE["custom_workers"][i] = existing
+            found = True
+            break
+    if not found:
+        _MEMORY_STORE.setdefault("custom_workers", []).append(existing)
+
+    # Handle initial_works / initial_work
+    _process_initial_works(worker_id, existing.get("trade"), existing.get("location"), data)
+
+    return _enrich_worker_data(existing)
 
 def get_work_records(worker_id: Optional[str] = None) -> List[Dict[str, Any]]:
     worker_id = worker_id or "ravi_kumar_001"
@@ -674,6 +809,8 @@ def _enrich_worker_data(worker_dict: Dict[str, Any]) -> Dict[str, Any]:
     completeness_score = 25 + (25 if has_history else 0) + (25 if has_ev else 0) + (25 if has_conf else 0)
 
     enriched = dict(worker_dict)
+    enriched["languages"] = worker_dict.get("languages") or []
+    enriched["phone"] = worker_dict.get("phone")
     enriched["work_count"] = len(works)
     enriched["confirmation_count"] = total_confirms
     enriched["overall_confidence"] = overall_conf

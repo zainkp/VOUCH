@@ -18,7 +18,7 @@ WORD_TO_NUM: Dict[str, float] = {
 # Trade / Occupation keywords
 OCCUPATION_MAP = [
     (["electrician", "bijli", "बिजली", "इलेक्ट्रीशियन", "wireman"], "electrician"),
-    (["plumber", "प्लंबर", "नल मिस्त्री", "nal mistri", "pipe fitter"], "plumber"),
+    (["plumber", "प्लंबर", "नल मिस्त्री", "nal mistri", "pipe fitter", "plumbing", "नलसाज", "नल"], "plumber"),
     (["carpenter", "बढ़ई", "badhai", "woodwork", "कार्पेंटर"], "carpenter"),
     (["welder", "वेल्डर", "welding"], "welder"),
     (["painter", "पेंटर", "rang mistri"], "painter"),
@@ -31,9 +31,11 @@ SKILL_MAP = [
     (["house wiring", "घर की वायरिंग", "house wire"], "house wiring"),
     (["panel wiring", "panel installation", "पैनल वायरिंग"], "panel wiring"),
     (["motor repair", "मोटर रिपेयर", "motor maintenance"], "motor repair"),
-    (["pipe fitting", "पाइप फिटिंग", "pipe fit"], "pipe fitting"),
-    (["sanitary", "सैनिटरी", "bathroom maintenance"], "bathroom maintenance"),
-    (["drainage", "drain cleaning"], "drainage"),
+    (["pipe fitting", "पाइप फिटिंग", "pipe fit", "नल फिटिंग"], "pipe fitting"),
+    (["bathroom plumbing", "बाथरूम प्लंबिंग", "bathroom maintenance", "bathroom fitting", "बाथरूम"], "bathroom plumbing"),
+    (["sanitary", "सैनिटरी", "sanitary fitting", "सैनिटरी फिटिंग"], "sanitary installation"),
+    (["drainage", "drain cleaning", "ड्रेनेज"], "drainage"),
+    (["leakage repair", "लीकेज", "वाटर लीकेज"], "leakage repair"),
     (["maintenance", "रखरखाव", "servicing"], "maintenance"),
     (["welding", "आर्क वेल्डिंग"], "welding"),
     (["tile fixing", "टाइल्स"], "tile fixing")
@@ -41,23 +43,44 @@ SKILL_MAP = [
 
 # Common Indian cities / locations
 LOCATIONS = [
-    "mangalore", "mangaluru", "delhi", "mumbai", "bangalore", "bengaluru",
-    "pune", "hyderabad", "chennai", "kolkata", "ahmedabad", "jaipur",
-    "lucknow", "chandigarh", "bhopal", "patna", "दिल्ली", "मुंबई", "बैंगलोर", "मंगलौर"
+    "mangalore", "mangaluru", "delhi", "mumbai", "bombay", "bangalore", "bengaluru",
+    "pune", "hyderabad", "chennai", "kolkata", "calcutta", "ahmedabad", "jaipur",
+    "lucknow", "chandigarh", "bhopal", "patna", "kochi", "cochin",
+    "दिल्ली", "मुंबई", "बैंगलोर", "बेंगलुरु", "मंगलौर", "मंगलोर", "पुणे", "हैदराबाद"
 ]
 
 LOCATION_DISPLAY_MAP = {
-    "mangaluru": "Mangalore",
-    "mangalore": "Mangalore",
-    "मंगलौर": "Mangalore",
+    "mangaluru": "Mangaluru",
+    "mangalore": "Mangaluru",
+    "मंगलौर": "Mangaluru",
+    "मंगलोर": "Mangaluru",
     "delhi": "Delhi",
     "दिल्ली": "Delhi",
     "mumbai": "Mumbai",
+    "bombay": "Mumbai",
     "मुंबई": "Mumbai",
-    "bangalore": "Bangalore",
-    "bengaluru": "Bangalore",
-    "बैंगलोर": "Bangalore"
+    "bangalore": "Bengaluru",
+    "bengaluru": "Bengaluru",
+    "बैंगलोर": "Bengaluru",
+    "बेंगलुरु": "Bengaluru",
+    "pune": "Pune",
+    "पुणे": "Pune",
+    "hyderabad": "Hyderabad",
+    "हैदराबाद": "Hyderabad",
+    "chennai": "Chennai",
+    "चेन्नई": "Chennai",
+    "kolkata": "Kolkata",
+    "calcutta": "Kolkata",
+    "कोलकाता": "Kolkata",
+    "kochi": "Kochi",
+    "cochin": "Kochi",
+    "कोच्चि": "Kochi"
 }
+
+KNOWN_LANGUAGES = [
+    "Kannada", "Hindi", "English", "Tamil", "Telugu",
+    "Malayalam", "Marathi", "Bengali", "Gujarati", "Punjabi", "Odia", "Urdu"
+]
 
 VAGUE_PATTERNS = [
     r"\bmany years\b", r"\bseveral years\b", r"\ba long time\b",
@@ -123,7 +146,20 @@ def extract_claims_fallback(text: str) -> WorkerProfileExtraction:
             location = LOCATION_DISPLAY_MAP.get(loc, loc.capitalize())
             break
 
-    # 5. Employers
+    # 5. Languages (Strict Anti-Hallucination: only extract when explicitly stated)
+    languages: List[str] = []
+    lang_triggers = [
+        "speak", "speaks", "fluent", "language", "languages",
+        "bolta", "bolti", "aati hai", "aata hai", "baat kar", "malum", "jaan", "bhasha", "boli"
+    ]
+    has_lang_claim = any(trig in text_lower for trig in lang_triggers)
+    if has_lang_claim:
+        for lang in KNOWN_LANGUAGES:
+            if re.search(rf"\b{lang}\b", text_clean, re.IGNORECASE):
+                if lang not in languages:
+                    languages.append(lang)
+
+    # 6. Employers
     employers: List[str] = []
     # Pattern: with <Company> or ke sath <Company>
     emp_patterns = [
@@ -137,7 +173,7 @@ def extract_claims_fallback(text: str) -> WorkerProfileExtraction:
             if found and found not in employers:
                 employers.append(found)
 
-    # 6. Build Claims array explicitly labeled with source: worker_statement
+    # 7. Build Claims array explicitly labeled with source: worker_statement
     claims: List[WorkerClaim] = []
     if occupation:
         claims.append(WorkerClaim(field="occupation", value=occupation, source="worker_statement"))
@@ -147,6 +183,8 @@ def extract_claims_fallback(text: str) -> WorkerProfileExtraction:
         claims.append(WorkerClaim(field="skills", value=skills, source="worker_statement"))
     if location:
         claims.append(WorkerClaim(field="location", value=location, source="worker_statement"))
+    if languages:
+        claims.append(WorkerClaim(field="languages", value=languages, source="worker_statement"))
     if employers:
         claims.append(WorkerClaim(field="employers", value=employers, source="worker_statement"))
 
@@ -155,6 +193,7 @@ def extract_claims_fallback(text: str) -> WorkerProfileExtraction:
         experience_years_claimed=experience_years,
         skills=skills,
         location=location,
+        languages=languages,
         employers=employers,
         claims=claims
     )

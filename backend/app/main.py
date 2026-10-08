@@ -14,6 +14,7 @@ from app.api.evidence import router as evidence_router
 from app.api.confirmations import router as confirmations_router
 from app.api.passport import router as passport_router
 from app.api.ai import router as ai_router
+from app.api.auth import router as auth_router
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -37,6 +38,7 @@ app.mount("/uploads", StaticFiles(directory=str(upload_dir)), name="uploads")
 
 # Include Routers under /api
 api_prefix = settings.API_V1_STR
+app.include_router(auth_router, prefix=api_prefix)
 app.include_router(workers_router, prefix=api_prefix)
 app.include_router(work_router, prefix=api_prefix)
 app.include_router(evidence_router, prefix=api_prefix)
