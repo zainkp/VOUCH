@@ -16,7 +16,7 @@ Worker → Describe Work → AI extracts structured record → Add Evidence → 
 
 - `01-product-spec.md` — product vision, users, scope, requirements, UX flows
 - `02-engineering-architecture.md` — system architecture and implementation boundaries
-- `03-data-model.md` — database entities and relationships
+- `03-data-model.md` — Firestore collections and relationships
 - `04-api-contract.md` — frontend/backend API contracts
 - `05-ui-design-system.md` — visual language and component rules
 - `06-ai-evidence-engine.md` — AI responsibilities and deterministic evidence scoring
@@ -40,10 +40,17 @@ Worker → Describe Work → AI extracts structured record → Add Evidence → 
 ## Current technical direction
 
 Frontend: React + TypeScript + Tailwind CSS  
-Backend: FastAPI  
-Database: PostgreSQL / Supabase  
-Storage: Supabase Storage or equivalent  
+Backend: FastAPI + Python + Pydantic  
+Database: Firebase Firestore  
+File storage: Firebase Storage  
+Authentication: Firebase Auth (optional for MVP; seeded/demo worker can be used first)  
 AI: Gemini or OpenAI API  
 Public sharing: QR code → public passport URL
+
+## Firebase architecture rule
+
+Use the Firebase Admin SDK from FastAPI for database/storage operations. Keep React → FastAPI → Firebase as the main data path so validation and evidence-scoring logic remain centralized in the backend.
+
+Do not introduce PostgreSQL, Supabase, SQLAlchemy, SQL migrations, or relational join tables for the MVP.
 
 The implementation may change libraries if the team has a faster path, but the product contracts and architectural boundaries should remain stable.
