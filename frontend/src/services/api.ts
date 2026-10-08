@@ -494,6 +494,14 @@ export const api = {
   },
 
   /**
+   * List Workers: Retrieves all verified workers in the VOUCH directory
+   * GET /api/workers
+   */
+  getWorkers(): Promise<WorkerProfileResponse[]> {
+    return request<WorkerProfileResponse[]>('/workers');
+  },
+
+  /**
    * List Work: Retrieves all work records for the active worker
    * GET /api/work
    */

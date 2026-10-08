@@ -6,10 +6,14 @@ router = APIRouter(prefix="/passport", tags=["Passport"])
 
 @router.get("/{public_slug}", response_model=PassportData)
 def get_public_passport(public_slug: str, request: Request):
+    # Support lookup either by public_slug or worker_id
     worker = get_worker_by_slug(public_slug)
     if not worker:
-        worker = get_current_worker()
-        if worker.get("public_slug") != public_slug and public_slug != "ravi-kumar-82a7":
+        worker = get_current_worker(public_slug, allow_ravi_fallback=False)
+    if not worker:
+        if public_slug in ["ravi-kumar-82a7", "ravi_kumar_001"]:
+            worker = get_current_worker("ravi_kumar_001", allow_ravi_fallback=True)
+        else:
             raise HTTPException(status_code=404, detail="Public passport profile not found")
         
     works = get_work_records(worker["id"])
@@ -18,18 +22,19 @@ def get_public_passport(public_slug: str, request: Request):
     total_conf = sum(len([c for c in w.get("confirmations", []) if c.get("status") == "CONFIRMED"]) for w in works)
     
     base_url = str(request.base_url).rstrip("/")
-    share_url = f"{base_url}/passport/{public_slug}"
+    resolved_slug = worker.get("public_slug") or worker.get("id") or public_slug
+    share_url = f"{base_url}/passport/{resolved_slug}"
     
     completeness_score = worker["passport_completeness"].score if worker.get("passport_completeness") else None
 
     return PassportData(
         worker=worker,
-        overall_evidence_confidence=worker["overall_confidence"],
-        demonstrated_skills=worker["demonstrated_skills"],
+        overall_evidence_confidence=worker.get("overall_confidence", 0),
+        demonstrated_skills=worker.get("demonstrated_skills", []),
         work_history=works,
         total_evidence_count=total_ev,
         total_confirmations_count=total_conf,
-        public_slug=public_slug,
+        public_slug=resolved_slug,
         share_url=share_url,
         passport_completeness=completeness_score
     )

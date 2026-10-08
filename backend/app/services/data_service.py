@@ -224,8 +224,319 @@ _MEMORY_STORE = {
             "created_at": "2026-08-30T16:00:00Z",
             "verified_at": None
         }
+    ],
+    "seed_workers": [
+        {
+            "id": "worker_anil",
+            "user_id": "user_anil_001",
+            "name": "Anil Joseph",
+            "trade": "Electrician",
+            "experience_years": 5,
+            "location": "Mangaluru, Karnataka",
+            "bio": "Certified electrician focused on residential conduit wiring, sub-distribution boards, and solar inverter integration.",
+            "profile_photo_url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&auto=format&fit=crop&q=80",
+            "email": "anil.joseph@vouchwork.in",
+            "phone": "+91 98451 23456",
+            "languages": ["Kannada", "English"],
+            "public_slug": "anil-joseph-93b1"
+        },
+        {
+            "id": "worker_002",
+            "user_id": "user_suresh_002",
+            "name": "Suresh M.",
+            "trade": "Plumber",
+            "experience_years": 9,
+            "location": "Bengaluru, Karnataka",
+            "bio": "Commercial plumber specializing in high-rise drainage systems, water manifold assembly, and booster pump setups.",
+            "profile_photo_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80",
+            "email": "suresh.m@vouchwork.in",
+            "phone": "+91 98860 34567",
+            "languages": ["Kannada", "Tamil", "English"],
+            "public_slug": "suresh-m-44c2"
+        },
+        {
+            "id": "worker_003",
+            "user_id": "user_vikram_003",
+            "name": "Vikram Patil",
+            "trade": "Welder",
+            "experience_years": 5,
+            "location": "Udupi, Karnataka",
+            "bio": "Certified structural welder experienced with TIG & Arc welding, structural steel trusses, and industrial gate fabrication.",
+            "profile_photo_url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80",
+            "email": "vikram.patil@vouchwork.in",
+            "phone": "+91 98440 45678",
+            "languages": ["Kannada", "Hindi"],
+            "public_slug": "vikram-patil-17d9"
+        },
+        {
+            "id": "worker_dinesh",
+            "user_id": "user_dinesh_004",
+            "name": "Dinesh Acharya",
+            "trade": "Carpenter",
+            "experience_years": 8,
+            "location": "Mangaluru, Karnataka",
+            "bio": "Master carpenter skilled in modular shuttering formwork, hardwood joinery, and architectural framing.",
+            "profile_photo_url": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&auto=format&fit=crop&q=80",
+            "email": "dinesh.acharya@vouchwork.in",
+            "phone": "+91 98455 56789",
+            "languages": ["Kannada", "Tulu", "Hindi"],
+            "public_slug": "dinesh-acharya-62e5"
+        },
+        {
+            "id": "worker_riaz",
+            "user_id": "user_riaz_005",
+            "name": "Mohammed Riaz",
+            "trade": "Technician",
+            "experience_years": 6,
+            "location": "Mangaluru, Karnataka",
+            "bio": "HVAC and refrigeration technician specializing in commercial chiller commissioning, VRF ducting, and leak testing.",
+            "profile_photo_url": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&auto=format&fit=crop&q=80",
+            "email": "mohammed.riaz@vouchwork.in",
+            "phone": "+91 99001 67890",
+            "languages": ["Urdu", "Kannada", "English"],
+            "public_slug": "mohammed-riaz-51f8"
+        },
+        {
+            "id": "worker_karthik",
+            "user_id": "user_karthik_006",
+            "name": "Karthik Poojary",
+            "trade": "Construction",
+            "experience_years": 4,
+            "location": "Surathkal, Karnataka",
+            "bio": "Construction site craftsman specializing in RCC foundation rebar tying, scaffolding, and curing inspection.",
+            "profile_photo_url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80",
+            "email": "karthik.poojary@vouchwork.in",
+            "phone": "+91 99160 78901",
+            "languages": ["Kannada", "Tulu"],
+            "public_slug": "karthik-poojary-78a3"
+        }
     ]
 }
+
+# Attach rich demo work records for the seed workers
+_ADDITIONAL_SEED_WORKS = [
+    {
+        "id": "work_anil_01",
+        "worker_id": "worker_anil",
+        "title": "Apartment Submeter & DB Installation",
+        "description": "Installed sub-distribution boards and modular MCBs across 8 residential apartments in Mangaluru.",
+        "date": "2026-09-10",
+        "location": "Bejai, Mangaluru",
+        "quantity": 8.0,
+        "quantity_unit": "units",
+        "trade": "Electrical",
+        "skills": ["Residential Wiring", "Panel Installation"],
+        "status": "CONFIRMED",
+        "created_at": "2026-09-10T10:00:00Z",
+        "evidence": [
+            {
+                "id": "ev_anil_01",
+                "work_record_id": "work_anil_01",
+                "type": "PHOTO",
+                "url": "https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?w=800&auto=format&fit=crop&q=80",
+                "description": "Submeter and MCB enclosure dressed and tested",
+                "created_at": "2026-09-10T11:00:00Z"
+            }
+        ],
+        "confirmations": [
+            {
+                "id": "conf_anil_01",
+                "work_record_id": "work_anil_01",
+                "verifier_name": "Prakash Rao",
+                "verifier_type": "SUPERVISOR",
+                "status": "CONFIRMED",
+                "token": "tok_anil_01",
+                "created_at": "2026-09-10T12:00:00Z",
+                "verified_at": "2026-09-11T09:00:00Z"
+            }
+        ]
+    },
+    {
+        "id": "work_suresh_01",
+        "worker_id": "worker_002",
+        "title": "Commercial Drainage & Soil Pipe Line",
+        "description": "Installed 110mm PVC multi-floor soil pipe network and grease traps at commercial tech park.",
+        "date": "2026-08-22",
+        "location": "Whitefield, Bengaluru",
+        "quantity": 180.0,
+        "quantity_unit": "meters",
+        "trade": "Plumbing",
+        "skills": ["Commercial Pipefitting", "Drainage Systems"],
+        "status": "CONFIRMED",
+        "created_at": "2026-08-22T09:30:00Z",
+        "evidence": [
+            {
+                "id": "ev_suresh_01",
+                "work_record_id": "work_suresh_01",
+                "type": "PHOTO",
+                "url": "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=800&auto=format&fit=crop&q=80",
+                "description": "Vertical stack piping alignment and brackets",
+                "created_at": "2026-08-22T10:00:00Z"
+            }
+        ],
+        "confirmations": [
+            {
+                "id": "conf_suresh_01",
+                "work_record_id": "work_suresh_01",
+                "verifier_name": "Bengaluru Infra Lead",
+                "verifier_type": "SUPERVISOR",
+                "status": "CONFIRMED",
+                "token": "tok_suresh_01",
+                "created_at": "2026-08-22T11:00:00Z",
+                "verified_at": "2026-08-23T10:00:00Z"
+            }
+        ]
+    },
+    {
+        "id": "work_vikram_01",
+        "worker_id": "worker_003",
+        "title": "Structural MS Truss Fabrication & Arc Welding",
+        "description": "Fabricated and welded heavy MS structural steel trusses for commercial warehouse shed.",
+        "date": "2026-07-15",
+        "location": "Industrial Area, Udupi",
+        "quantity": 12.0,
+        "quantity_unit": "trusses",
+        "trade": "Welding",
+        "skills": ["Arc Welding", "Structural Fabrication"],
+        "status": "CONFIRMED",
+        "created_at": "2026-07-15T08:30:00Z",
+        "evidence": [
+            {
+                "id": "ev_vikram_01",
+                "work_record_id": "work_vikram_01",
+                "type": "PHOTO",
+                "url": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&auto=format&fit=crop&q=80",
+                "description": "Gusset plate fillet welds and truss alignment",
+                "created_at": "2026-07-15T11:00:00Z"
+            }
+        ],
+        "confirmations": [
+            {
+                "id": "conf_vikram_01",
+                "work_record_id": "work_vikram_01",
+                "verifier_name": "Coastal Engineering Works",
+                "verifier_type": "EMPLOYER",
+                "status": "CONFIRMED",
+                "token": "tok_vikram_01",
+                "created_at": "2026-07-15T12:00:00Z",
+                "verified_at": "2026-07-16T09:00:00Z"
+            }
+        ]
+    },
+    {
+        "id": "work_dinesh_01",
+        "worker_id": "worker_dinesh",
+        "title": "Modular Formwork Shuttering",
+        "description": "Erected precision aluminum formwork for residential tower columns and lift core walls.",
+        "date": "2026-06-12",
+        "location": "Kankanady, Mangaluru",
+        "quantity": 450.0,
+        "quantity_unit": "sqm",
+        "trade": "Carpentry",
+        "skills": ["Modular Formwork"],
+        "status": "CONFIRMED",
+        "created_at": "2026-06-12T08:00:00Z",
+        "evidence": [
+            {
+                "id": "ev_dinesh_01",
+                "work_record_id": "work_dinesh_01",
+                "type": "PHOTO",
+                "url": "https://images.unsplash.com/photo-1541888946425-d0fbb1861564?w=800&auto=format&fit=crop&q=80",
+                "description": "Plumb line verified column shuttering assembly",
+                "created_at": "2026-06-12T09:30:00Z"
+            }
+        ],
+        "confirmations": [
+            {
+                "id": "conf_dinesh_01",
+                "work_record_id": "work_dinesh_01",
+                "verifier_name": "Mangalore Builders Consortium",
+                "verifier_type": "SUPERVISOR",
+                "status": "CONFIRMED",
+                "token": "tok_dinesh_01",
+                "created_at": "2026-06-12T14:00:00Z",
+                "verified_at": "2026-06-13T10:00:00Z"
+            }
+        ]
+    },
+    {
+        "id": "work_riaz_01",
+        "worker_id": "worker_riaz",
+        "title": "Commercial Chiller Duct & Refrigerant Line",
+        "description": "Installed copper refrigerant lines and VRF cassette units for medical center.",
+        "date": "2026-05-20",
+        "location": "Balmatta, Mangaluru",
+        "quantity": 6.0,
+        "quantity_unit": "cassettes",
+        "trade": "HVAC",
+        "skills": ["HVAC Installation", "Chiller Commissioning"],
+        "status": "CONFIRMED",
+        "created_at": "2026-05-20T10:00:00Z",
+        "evidence": [
+            {
+                "id": "ev_riaz_01",
+                "work_record_id": "work_riaz_01",
+                "type": "PHOTO",
+                "url": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&auto=format&fit=crop&q=80",
+                "description": "Pressure tested nitrogen line and braze joints",
+                "created_at": "2026-05-20T11:30:00Z"
+            }
+        ],
+        "confirmations": [
+            {
+                "id": "conf_riaz_01",
+                "work_record_id": "work_riaz_01",
+                "verifier_name": "Horizon Clinic Facilities",
+                "verifier_type": "SUPERVISOR",
+                "status": "CONFIRMED",
+                "token": "tok_riaz_01",
+                "created_at": "2026-05-20T14:00:00Z",
+                "verified_at": "2026-05-21T09:00:00Z"
+            }
+        ]
+    },
+    {
+        "id": "work_karthik_01",
+        "worker_id": "worker_karthik",
+        "title": "RCC Slab Rebar Tying & Footing Inspection",
+        "description": "Tied reinforcement steel cages for foundation footings and grade beams.",
+        "date": "2026-04-10",
+        "location": "Surathkal, Karnataka",
+        "quantity": 4.5,
+        "quantity_unit": "tons",
+        "trade": "Construction",
+        "skills": ["Rebar Tying", "Concrete Curing"],
+        "status": "CONFIRMED",
+        "created_at": "2026-04-10T09:00:00Z",
+        "evidence": [
+            {
+                "id": "ev_karthik_01",
+                "work_record_id": "work_karthik_01",
+                "type": "PHOTO",
+                "url": "https://images.unsplash.com/photo-1590496793929-36417d3117de?w=800&auto=format&fit=crop&q=80",
+                "description": "Rebar spacing and chair support placement",
+                "created_at": "2026-04-10T10:30:00Z"
+            }
+        ],
+        "confirmations": [
+            {
+                "id": "conf_karthik_01",
+                "work_record_id": "work_karthik_01",
+                "verifier_name": "Surathkal Engineering Works",
+                "verifier_type": "SUPERVISOR",
+                "status": "CONFIRMED",
+                "token": "tok_karthik_01",
+                "created_at": "2026-04-10T12:00:00Z",
+                "verified_at": "2026-04-11T10:00:00Z"
+            }
+        ]
+    }
+]
+
+# Merge additional seed works into _MEMORY_STORE["work_records"]
+for _sw in _ADDITIONAL_SEED_WORKS:
+    if not any(w["id"] == _sw["id"] for w in _MEMORY_STORE["work_records"]):
+        _MEMORY_STORE["work_records"].append(_sw)
 
 def sync_seed_to_firestore():
     """Initializes Firestore collections if empty."""
@@ -236,7 +547,13 @@ def sync_seed_to_firestore():
         worker_ref = db.collection("workers").document(_MEMORY_STORE["worker"]["id"])
         if not worker_ref.get().exists:
             worker_ref.set(_MEMORY_STORE["worker"])
-            logger.info("Seeded worker profile to Firestore")
+            logger.info("Seeded primary worker profile to Firestore")
+            
+        for sw in _MEMORY_STORE.get("seed_workers", []):
+            sw_ref = db.collection("workers").document(sw["id"])
+            if not sw_ref.get().exists:
+                sw_ref.set(sw)
+                logger.info(f"Seeded worker {sw['id']} to Firestore")
             
         for w in _MEMORY_STORE["work_records"]:
             w_ref = db.collection("work_records").document(w["id"])
@@ -279,6 +596,10 @@ def get_current_worker(worker_id: Optional[str] = None, allow_ravi_fallback: boo
     if target_id == _MEMORY_STORE["worker"].get("id"):
         return _enrich_worker_data(_MEMORY_STORE["worker"])
 
+    for w in _MEMORY_STORE.get("seed_workers", []):
+        if w.get("id") == target_id:
+            return _enrich_worker_data(w)
+
     for w in _MEMORY_STORE.get("custom_workers", []):
         if w.get("id") == target_id:
             return _enrich_worker_data(w)
@@ -302,11 +623,56 @@ def get_worker_by_slug(public_slug: str) -> Optional[Dict[str, Any]]:
     if _MEMORY_STORE["worker"].get("public_slug") == public_slug or public_slug == "ravi-kumar-82a7":
         return _enrich_worker_data(_MEMORY_STORE["worker"])
 
+    for w in _MEMORY_STORE.get("seed_workers", []):
+        if w.get("public_slug") == public_slug:
+            return _enrich_worker_data(w)
+
     for w in _MEMORY_STORE.get("custom_workers", []):
         if w.get("public_slug") == public_slug:
             return _enrich_worker_data(w)
 
     return None
+
+def get_all_workers() -> List[Dict[str, Any]]:
+    """Retrieves and enriches all real workers in the system (Firestore + memory)."""
+    workers_by_id: Dict[str, Dict[str, Any]] = {}
+
+    # 1. Firestore workers
+    db = get_db()
+    if db:
+        try:
+            docs = list(db.collection("workers").stream())
+            for doc in docs:
+                data = doc.to_dict()
+                if data and "id" in data:
+                    workers_by_id[data["id"]] = data
+        except Exception as e:
+            logger.warning(f"Error reading all workers from Firestore: {e}")
+
+    # 2. Seed worker (Ravi Kumar)
+    seed_w = _MEMORY_STORE.get("worker")
+    if seed_w and seed_w.get("id") and seed_w["id"] not in workers_by_id:
+        workers_by_id[seed_w["id"]] = seed_w
+
+    # 3. Seed demo workers
+    for sw in _MEMORY_STORE.get("seed_workers", []):
+        if sw and sw.get("id") and sw["id"] not in workers_by_id:
+            workers_by_id[sw["id"]] = sw
+
+    # 4. In-memory custom workers
+    for cw in _MEMORY_STORE.get("custom_workers", []):
+        if cw and cw.get("id") and cw["id"] not in workers_by_id:
+            workers_by_id[cw["id"]] = cw
+
+    results = []
+    for w_data in workers_by_id.values():
+        try:
+            results.append(_enrich_worker_data(w_data))
+        except Exception as e:
+            logger.warning(f"Error enriching worker {w_data.get('id')}: {e}")
+            results.append(w_data)
+
+    return results
 
 def get_worker_by_email(email: str) -> Optional[Dict[str, Any]]:
     if not email or not isinstance(email, str):

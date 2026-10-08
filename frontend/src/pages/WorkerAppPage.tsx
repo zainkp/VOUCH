@@ -137,7 +137,7 @@ export const WorkerAppPage: React.FC = () => {
               className="hidden lg:flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-[#F5F2EB] border border-[#DFD9CE] text-xs font-semibold text-[#162B22] hover:bg-[#ECE7DE] transition-colors cursor-pointer"
             >
               <Plus className="w-3.5 h-3.5 text-[#162B22]" />
-              <span>+ Add Work</span>
+              <span>Add Work</span>
             </button>
 
             {/* Profile Menu Trigger */}
@@ -270,7 +270,7 @@ export const WorkerAppPage: React.FC = () => {
                 className="py-2 px-3 rounded-xl bg-[#162B22] text-white text-xs font-semibold flex items-center space-x-1.5 cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
-                <span>+ Add Work</span>
+                <span>Add Work</span>
               </button>
 
               <button

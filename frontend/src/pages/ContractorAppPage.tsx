@@ -33,10 +33,6 @@ export const ContractorAppPage: React.FC = () => {
     savedWorkerIds, 
     toggleSaveWorker, 
     isSavedWorker,
-    worker: defaultWorker,
-    workRecords,
-    skills,
-    stats,
     isAuthenticated,
     isLoading,
     currentUser,
@@ -71,6 +67,16 @@ export const ContractorAppPage: React.FC = () => {
     await logout();
     navigate('/login');
   };
+
+  const employerName = currentUser?.name || 'Contractor / Employer';
+  const employerEmail = currentUser?.email || 'employer@vouchwork.in';
+  const employerInitials = employerName
+    .split(' ')
+    .filter(Boolean)
+    .map(n => n[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase() || 'EM';
 
   const navItems = [
     { id: 'home' as const, label: 'Home', icon: HomeIcon },
@@ -151,14 +157,14 @@ export const ContractorAppPage: React.FC = () => {
                 className="flex items-center space-x-3 p-1.5 pr-2.5 rounded-xl hover:bg-[#F5F2EB] border border-transparent hover:border-[#DFD9CE] transition-all cursor-pointer"
               >
                 <div className="w-8 h-8 rounded-full overflow-hidden border border-[#DFD9CE] bg-[#162B22] text-white flex items-center justify-center font-bold text-xs shrink-0">
-                  AV
+                  {employerInitials}
                 </div>
                 <div className="text-left hidden sm:block">
-                  <p className="text-xs font-bold text-[#141715] leading-tight">
-                    Arjun Verma
+                  <p className="text-xs font-bold text-[#141715] leading-tight truncate max-w-[140px]">
+                    {employerName}
                   </p>
                   <p className="text-[11px] text-[#727A75]">
-                    Apex Infra Projects
+                    {currentUser?.role === 'contractor' ? 'Verified Contractor' : 'Employer Workspace'}
                   </p>
                 </div>
                 <ChevronDown className="w-3.5 h-3.5 text-[#727A75] hidden sm:block" />
@@ -176,11 +182,11 @@ export const ContractorAppPage: React.FC = () => {
                       <p className="text-xs font-mono uppercase text-[#727A75] font-semibold">
                         Employer Account
                       </p>
-                      <p className="text-sm font-bold text-[#141715] mt-0.5">
-                        Arjun Verma
+                      <p className="text-sm font-bold text-[#141715] mt-0.5 truncate">
+                        {employerName}
                       </p>
-                      <p className="text-xs text-[#484F4A]">
-                        Apex Infra Projects Ltd
+                      <p className="text-xs text-[#484F4A] truncate">
+                        {employerEmail}
                       </p>
                     </div>
 
@@ -262,13 +268,13 @@ export const ContractorAppPage: React.FC = () => {
             </div>
 
             <div className="pt-2 border-t border-[#ECE7DE] flex items-center justify-between">
-              <span className="text-xs text-[#727A75]">
-                Signed in as <strong className="text-[#141715]">Arjun Verma</strong>
+              <span className="text-xs text-[#727A75] truncate mr-2">
+                Signed in as <strong className="text-[#141715]">{employerName}</strong>
               </span>
 
               <button
                 onClick={handleLogout}
-                className="py-2 px-3 rounded-xl text-xs font-semibold text-[#B91C1C] hover:bg-red-50 flex items-center space-x-1.5 cursor-pointer"
+                className="py-2 px-3 rounded-xl text-xs font-semibold text-[#B91C1C] hover:bg-red-50 flex items-center space-x-1.5 cursor-pointer shrink-0"
               >
                 <LogOut className="w-3.5 h-3.5" />
                 <span>Log Out</span>
@@ -305,7 +311,7 @@ export const ContractorAppPage: React.FC = () => {
             <div className="bg-[#E6EDE8] rounded-3xl border border-[#DFD9CE] p-6 sm:p-8 shadow-xs">
               <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6 text-center sm:text-left">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-[#162B22] text-white flex items-center justify-center font-display font-extrabold text-2xl sm:text-3xl shrink-0 shadow-xs border border-[#102019]">
-                  AV
+                  {employerInitials}
                 </div>
 
                 <div className="flex-1 space-y-1.5">
@@ -319,15 +325,15 @@ export const ContractorAppPage: React.FC = () => {
                   </div>
 
                   <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-[#141715] tracking-tight">
-                    Arjun Verma
+                    {employerName}
                   </h1>
                   <p className="text-base font-semibold text-[#162B22]">
-                    Lead Project Director · Apex Infrastructure & Engineering
+                    Employer & Project Director Account
                   </p>
 
                   <div className="flex items-center justify-center sm:justify-start space-x-2 text-xs text-[#727A75]">
                     <MapPin className="w-3.5 h-3.5 text-[#727A75]" />
-                    <span>Mangaluru, Udupi & Coastal Karnataka</span>
+                    <span>Karnataka & Pan-India Construction Hubs</span>
                   </div>
                 </div>
               </div>
@@ -366,16 +372,16 @@ export const ContractorAppPage: React.FC = () => {
                     </span>
                     <div className="flex items-center space-x-2 text-xs text-[#141715] font-medium">
                       <Mail className="w-3.5 h-3.5 text-[#727A75]" />
-                      <span>arjun.verma@apexinfra.co.in</span>
+                      <span>{employerEmail}</span>
                     </div>
                   </div>
                   <div className="pt-2 border-t border-[#DFD9CE]">
                     <span className="text-[11px] font-mono uppercase text-[#727A75] font-semibold block mb-0.5">
-                      DIRECT PHONE
+                      USER IDENTIFIER
                     </span>
                     <div className="flex items-center space-x-2 text-xs text-[#141715] font-medium">
-                      <Phone className="w-3.5 h-3.5 text-[#727A75]" />
-                      <span>+91 98452 88123</span>
+                      <Building2 className="w-3.5 h-3.5 text-[#727A75]" />
+                      <span>{currentUser?.id || 'ID-EMP-VERIFIED'}</span>
                     </div>
                   </div>
                 </div>
@@ -496,7 +502,7 @@ export const ContractorAppPage: React.FC = () => {
                     <span>{isSavedWorker(inspectedWorker.id) ? 'Saved' : 'Save Worker'}</span>
                   </button>
                   <Link
-                    to={`/passport/${inspectedWorker.id}`}
+                    to={`/passport/${inspectedWorker.publicSlug || inspectedWorker.id}`}
                     target="_blank"
                     className="px-4 py-2 rounded-xl bg-[#162B22] hover:bg-[#102019] text-white text-xs font-semibold flex items-center space-x-1.5 transition-colors"
                   >
@@ -511,14 +517,14 @@ export const ContractorAppPage: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="font-bold text-sm text-[#141715]">
-                      Evidence Confidence Level
+                      Credibility Score & Evidence Confidence
                     </h3>
                     <p className="text-xs text-[#727A75]">
                       Evaluated on supervisor confirmations & on-site photo records
                     </p>
                   </div>
                   <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-[#E5EFE8] text-[#245E3F] border border-[#245E3F]/20">
-                    {inspectedWorker.confidenceLevel} EVIDENCE CONFIDENCE
+                    {inspectedWorker.overallConfidence || 82} / 100 · {inspectedWorker.confidenceLevel} CONFIDENCE
                   </span>
                 </div>
 
@@ -531,7 +537,7 @@ export const ContractorAppPage: React.FC = () => {
                   </div>
                   <div className="p-3 rounded-xl bg-[#F5F2EB] border border-[#DFD9CE]">
                     <span className="font-display font-extrabold text-xl text-[#141715] block">
-                      {inspectedWorker.evidenceItemsCount || (inspectedWorker.workRecordsCount + 4)}
+                      {inspectedWorker.evidenceItemsCount || (inspectedWorker.workRecordsCount * 2)}
                     </span>
                     <span className="text-[#727A75]">Evidence Items</span>
                   </div>
@@ -568,37 +574,22 @@ export const ContractorAppPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Verified Records Sample */}
-              <div className="bg-[#E6EDE8] rounded-2xl border border-[#DFD9CE] p-6 shadow-xs space-y-3">
-                <h3 className="font-bold text-sm text-[#141715]">
-                  Recent Verified Work Records
-                </h3>
-                <div className="space-y-2.5">
-                  {workRecords.slice(0, 2).map((r) => (
-                    <div
-                      key={r.id}
-                      className="p-3.5 rounded-xl bg-[#F5F2EB] border border-[#DFD9CE] flex items-start space-x-3.5 text-xs"
-                    >
-                      <div className="w-12 h-12 rounded-lg overflow-hidden bg-[#ECE7DE] shrink-0 border border-[#DFD9CE]">
-                        <img src={r.imageUrl} alt={r.title} className="w-full h-full object-cover" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between">
-                          <p className="font-bold text-[#141715] truncate">{r.title}</p>
-                          <span className="text-[10px] font-mono text-[#245E3F] font-bold">
-                            ✓ CONFIRMED
-                          </span>
-                        </div>
-                        <p className="text-[11px] text-[#727A75] mt-0.5">
-                          {r.employer} · {r.date} · {r.location}
-                        </p>
-                        <p className="text-[11px] text-[#484F4A] mt-1 italic">
-                          &quot;{r.description}&quot;
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+              {/* View Complete Passport CTA */}
+              <div className="p-4 rounded-2xl bg-[#E5EFE8] border border-[#245E3F]/20 flex items-center justify-between">
+                <div>
+                  <p className="font-bold text-xs text-[#162B22]">
+                    Inspect Full Verification Ledger
+                  </p>
+                  <p className="text-[11px] text-[#727A75]">
+                    View all attached photographs, verifier signatures, and verifiable QR code.
+                  </p>
                 </div>
+                <Link
+                  to={`/passport/${inspectedWorker.publicSlug || inspectedWorker.id}`}
+                  className="px-4 py-2 rounded-xl bg-[#162B22] text-white text-xs font-semibold hover:bg-[#102019] transition-colors"
+                >
+                  Open Passport
+                </Link>
               </div>
 
             </div>

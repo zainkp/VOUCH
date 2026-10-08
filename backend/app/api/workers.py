@@ -1,16 +1,22 @@
-from typing import Optional
+from typing import Optional, List
 from fastapi import APIRouter, HTTPException, Header, Query
 from app.schemas.worker import WorkerProfile, WorkerOnboardingRequest
 from app.services.data_service import (
     get_current_worker, 
     create_worker_profile, 
     update_worker_profile,
-    get_worker_by_email
+    get_worker_by_email,
+    get_all_workers
 )
 from app.api.auth import get_token_from_headers
 from app.services.auth_service import get_user_by_token
 
 router = APIRouter(prefix="/workers", tags=["Workers"])
+
+@router.get("", response_model=List[WorkerProfile])
+def list_workers():
+    """Returns all verified and registered workers in the VOUCH directory."""
+    return get_all_workers()
 
 @router.post("", response_model=WorkerProfile, status_code=201)
 def create_worker(

@@ -111,7 +111,7 @@ export const WorkTab: React.FC = () => {
           className="self-start sm:self-auto flex items-center space-x-2 px-5 py-2.5 bg-[#162B22] text-white rounded-xl text-xs font-semibold hover:bg-[#102019] active:translate-y-[1px] transition-all shadow-xs cursor-pointer"
         >
           <Plus className="w-4 h-4 text-white" />
-          <span>+ Add Work Record</span>
+          <span>Add Work Record</span>
         </button>
       </div>
 

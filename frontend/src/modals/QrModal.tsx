@@ -17,8 +17,8 @@ export const QrModal: React.FC = () => {
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
   const [copied, setCopied] = useState(false);
 
-  const slug = 'ravi-kumar-82a7';
-  const publicUrl = `${window.location.origin}/passport/p/${slug}`;
+  const slug = (worker as any)?.publicSlug || (worker as any)?.public_slug || worker?.id || 'ravi-kumar-82a7';
+  const publicUrl = `${window.location.origin}/passport/${slug}`;
 
   useEffect(() => {
     if (isQrModalOpen) {

@@ -145,7 +145,7 @@ export const HomeTab: React.FC = () => {
             className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-[#162B22] hover:bg-[#102019] text-white text-sm font-semibold transition-all shadow-xs cursor-pointer active:scale-[0.99]"
           >
             <Plus className="w-4 h-4 text-white" />
-            <span>+ Add Work</span>
+            <span>Add Work</span>
           </button>
         </div>
       </div>

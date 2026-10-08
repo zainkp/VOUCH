@@ -155,14 +155,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setIsAuthenticated(true);
         if (user.role === 'contractor') {
           setActiveRole('contractor');
+          // Contractors/employers do not have a personal worker profile; they browse all workers
         } else {
           setActiveRole('worker');
+          if (user.worker_id) {
+            localStorage.setItem('vouch_active_worker_id', user.worker_id);
+            localStorage.setItem('vouch_user_email', user.email);
+          }
+          await loadApiData();
         }
-        if (user.worker_id) {
-          localStorage.setItem('vouch_active_worker_id', user.worker_id);
-          localStorage.setItem('vouch_user_email', user.email);
-        }
-        await loadApiData();
       } else {
         throw new Error('Invalid user payload');
       }
