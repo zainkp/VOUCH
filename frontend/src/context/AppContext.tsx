@@ -156,6 +156,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         if (user.role === 'contractor') {
           setActiveRole('contractor');
           // Contractors/employers do not have a personal worker profile; they browse all workers
+          setIsLoading(false);
         } else {
           setActiveRole('worker');
           if (user.worker_id) {
@@ -185,6 +186,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         // Network or connection failure — keep session intact, surface real connection error
         setError(err?.message || 'Could not connect to VOUCH backend server.');
       }
+    } finally {
       setIsLoading(false);
     }
   }, [loadApiData]);
