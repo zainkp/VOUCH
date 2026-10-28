@@ -48,61 +48,7 @@ A worker's reputation should not disappear when they change employers or work si
 
 ---
 
-## How It Works / Architecture
-
-### Data Flow & Verification Loop
-
-```mermaid
-flowchart TD
-    subgraph Client ["Client Layer (React 18 + Vite)"]
-        W[Worker Portal]
-        V[Public Verifier Flow]
-        P[Public Passport & QR]
-        C[Contractor Directory]
-    end
-
-    subgraph API ["Backend API (FastAPI)"]
-        AUTH["/api/auth (JWT & RBAC)"]
-        AI_ROUTE["/api/ai (NLP & Audio Bridge)"]
-        WORK_ROUTE["/api/work & /api/evidence"]
-        CONF_ROUTE["/api/confirmations"]
-        PASS_ROUTE["/api/passport"]
-    end
-
-    subgraph Engine ["Core Processing"]
-        EXTRACT["AI Work Extractor\n(Gemini 1.5 / OpenAI / Heuristic)"]
-        VOICE["Voice Transcription\n(ai.voice_transcription)"]
-        EVIDENCE_ENG["Deterministic Evidence Engine\n(app.services.evidence_engine)"]
-    end
-
-    subgraph Data ["Persistence Layer"]
-        FIRESTORE[("Firebase Firestore\n(Cloud Database)")]
-        MEMCACHE[("In-Memory Store\n(Local Seed Fallback)")]
-    end
-
-    W -->|Natural description| AI_ROUTE
-    AI_ROUTE --> EXTRACT
-    AI_ROUTE --> VOICE
-    EXTRACT -->|Normalized JSON| W
-
-    W -->|Save work & photos| WORK_ROUTE
-    WORK_ROUTE --> FIRESTORE
-    WORK_ROUTE --> MEMCACHE
-
-    W -->|Request confirmation| CONF_ROUTE
-    CONF_ROUTE -->|Generate secure token| V
-    V -->|Confirm / Reject| CONF_ROUTE
-
-    CONF_ROUTE --> EVIDENCE_ENG
-    EVIDENCE_ENG -->|Recalculate confidence & tiers| FIRESTORE
-    EVIDENCE_ENG -->|Update aggregate profile| MEMCACHE
-
-    P -->|Lookup slug / ID| PASS_ROUTE
-    C -->|Search verified trades| PASS_ROUTE
-    PASS_ROUTE --> FIRESTORE
-```
-
-### Architectural Principles
+## Architectural Principles
 
 1. **Separation of Work Claims from Evidence**: A worker's self-declaration provides baseline context (10%), but high confidence tiers (`MEDIUM` 40-69%, `HIGH` 70-98%) strictly require tangible artifacts (photos/documents) and independent third-party confirmations.
 2. **AI as Infrastructure, Not the Product**: AI is strictly scoped to natural language structuring and skill categorization. AI is **never** used to assign confidence scores or evaluate worker competency.
@@ -299,53 +245,6 @@ This concurrently boots the FastAPI backend on port `8000` and the Vite frontend
 
 ---
 
-## Usage & API Examples
-
-### 1. Health Check
-```bash
-curl -X GET http://127.0.0.1:8000/api/health
-```
-```json
-{
-  "status": "healthy",
-  "service": "VOUCH API",
-  "version": "1.0.0"
-}
-```
-
-### 2. AI Work Record Extraction
-Send a natural-language description of work performed:
-```bash
-curl -X POST http://127.0.0.1:8000/api/ai/extract-work \
-  -H "Content-Type: application/json" \
-  -d "{\"text\": \"I installed and wired six 415V commercial distribution panels at Mangalore Trade Center.\"}"
-```
-```json
-{
-  "title": "Commercial Panel Installation",
-  "trade": "Electrical",
-  "skills": ["Panel Installation", "Commercial Electrical"],
-  "quantity": 6.0,
-  "quantity_unit": "panels",
-  "date": "2026-10-07",
-  "location": "Mangaluru",
-  "confidence": 0.88,
-  "summary": "Completed commercial panel installation with demonstrated expertise in Panel Installation, Commercial Electrical."
-}
-```
-
-### 3. Retrieve Worker Profile & Confidence Breakdown
-```bash
-curl -X GET http://127.0.0.1:8000/api/workers/me
-```
-
-### 4. Fetch Public Passport
-```bash
-curl -X GET http://127.0.0.1:8000/api/passport/ravi-kumar-82a7
-```
-
----
-
 ## Testing
 
 The backend includes a comprehensive `pytest` suite validating core workflows, authentication tokens, schema serialization, voice transcription, and the end-to-end golden path.
@@ -400,15 +299,3 @@ Contributions, issues, and feature requests are welcome!
 
 ---
 
-## License
-
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
-
----
-
-## Author & Acknowledgements
-
-- **Developer**: Zain ([@zainkp](https://github.com/zainkp))
-- **Email**: [zainkp777@gmail.com](mailto:zainkp777@gmail.com)
-- **Repository**: [https://github.com/zainkp/VOUCH](https://github.com/zainkp/VOUCH)
-- **Built for**: CSE Hackathon — Empowering skilled and informal workers with verified digital professional identity.
